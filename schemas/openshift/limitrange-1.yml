@@ -1,0 +1,110 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/limitrange-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  limits:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+          - Container
+          - Pod
+        default:
+          type: object
+          additionalProperties: false
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+          anyOf:
+          - required:
+            - cpu
+          - required:
+            - memory
+        defaultRequest:
+          type: object
+          additionalProperties: false
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+          anyOf:
+          - required:
+            - cpu
+          - required:
+            - memory
+        max:
+          type: object
+          additionalProperties: false
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+          anyOf:
+          - required:
+            - cpu
+          - required:
+            - memory
+        maxLimitRequestRatio:
+          type: object
+          additionalProperties: false
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+          anyOf:
+          - required:
+            - cpu
+          - required:
+            - memory
+        min:
+          type: object
+          additionalProperties: false
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+          anyOf:
+          - required:
+            - cpu
+          - required:
+            - memory
+      anyOf:
+      - required:
+        - default
+      - required:
+        - defaultRequest
+      - required:
+        - max
+      - required:
+        - maxLimitRequestRatio
+      - required:
+        - min
+required:
+- "$schema"
+- labels
+- name
+- description
+- limits

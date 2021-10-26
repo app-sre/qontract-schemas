@@ -1,0 +1,184 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/prometheus-rule-1.yml
+  apiVersion:
+    type: string
+    enum:
+    - monitoring.coreos.com/v1
+  kind:
+    type: string
+    enum:
+    - PrometheusRule
+  metadata:
+    type: object
+    properties:
+      name:
+        type: string
+      labels:
+        type: object
+        properties:
+          prometheus:
+            type: string
+            enum:
+            - app-sre
+          role:
+            type: string
+            enum:
+            - alert-rules
+        required:
+        - prometheus
+        - role
+    required:
+    - name
+    - labels
+  spec:
+    type: object
+    additionalProperties: false
+    properties:
+      groups:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+            interval:
+              type: string
+            rules:
+              type: array
+              items:
+                oneOf:
+                - type: object
+                  additionalProperties: false
+                  properties:
+                    record:
+                      type: string
+                    expr:
+                      type: string
+                    labels:
+                      type: object
+                  required:
+                  - record
+                  - expr
+                - type: object
+                  additionalProperties: false
+                  properties:
+                    alert:
+                      type: string
+                    labels:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        severity:
+                          type: string
+                          enum:
+                          - deadman
+                          - critical
+                          - critical-fts
+                          - high
+                          - warning
+                          - medium
+                          - info
+                          - test
+                        service:
+                          type: string
+                        team:
+                          type: string
+                        component:
+                          type: string
+                        channel:
+                          type: string
+                        route:
+                          type: string
+                        handler:
+                          type: string
+                        job:
+                          type: string
+                        email:
+                          type: string
+                        env:
+                          type: string
+                        app_team:
+                          type: string
+                        namespace:
+                          type: string
+                        operation:
+                          type: string
+                        jobType:
+                          type: string
+                        latency:
+                          type: string
+                        quantile:
+                          type: string
+                        exported_namespace:
+                          type: string
+                        exported_service:
+                          type: string
+                        jiralert:
+                          type: string
+                          enum:
+                          - ASIC
+                      dependencies:
+                        app_team:
+                        - service
+                        - env
+                      required:
+                      - service
+                    expr:
+                      type: string
+                    interval:
+                      type: string
+                    for:
+                      type: string
+                    annotations:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        summary:
+                          type: string
+                        description:
+                          type: string
+                        message:
+                          type: string
+                        runbook:
+                          type: string
+                          format: uri
+                        dashboard:
+                          type: string
+                          format: uri
+                        link_url:
+                          type: string
+                          format: uri
+                        redhat_cloud_url:
+                          type: string
+                          format: uri
+                        kibana_url:
+                          type: string
+                          format: uri
+                        logs_url:
+                          type: string
+                          format: uri
+                      required:
+                      - message
+                  required:
+                  - alert
+                  - expr
+          required:
+          - name
+          - rules
+    required:
+    - groups
+required:
+- "$schema"
+- apiVersion
+- kind
+- metadata
+- spec

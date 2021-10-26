@@ -1,0 +1,41 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/openshift-cluster-manager-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  url:
+    type: string
+    format: uri
+  accessTokenClientId:
+    type: string
+  accessTokenUrl:
+    type: string
+    format: uri
+  offlineToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  blockedVersions:
+    description: "List of versions that will be rejected for upgrades. They can be regular expressions"
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- labels
+- name
+- url
+- description
+- accessTokenClientId
+- accessTokenUrl
+- offlineToken

@@ -1,0 +1,42 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/product-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+
+  description:
+    type: string
+
+  productOwners:
+    description: Teams or individuals who is/are responsible for the running instance of the software.
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - name
+      - email
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- productOwners

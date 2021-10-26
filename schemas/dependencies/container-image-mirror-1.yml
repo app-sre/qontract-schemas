@@ -1,0 +1,26 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/container-image-mirror-1.yml
+  url:
+    type: string
+  pullCredentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  tags:
+    type: array
+    items:
+      type: string
+  tagsExclude:
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- url

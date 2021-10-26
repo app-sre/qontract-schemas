@@ -1,0 +1,137 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/namespace-1.yml
+
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    type: string
+
+  delete:
+    type: boolean
+
+  description:
+    type: string
+
+  grafanaUrl:
+    type: string
+    format: uri
+
+  cluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/cluster-1.yml"
+
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+
+  environment:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/environment-1.yml"
+
+  limitRanges:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/limitrange-1.yml"
+
+  quota:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/quota-1.yml"
+
+  networkPoliciesAllow:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
+
+  managedRoles:
+    type: boolean
+
+  managedResourceTypes:
+    type: array
+    items:
+      type: string
+  managedResourceTypeOverrides:
+    type: array
+    items:
+      type: object
+      properties:
+        resource:
+          type: string
+        override:
+          type: string
+
+  managedResourceNames:
+    type: array
+    items:
+      type: object
+      properties:
+        resource:
+          type: string
+        resourceNames:
+          type: array
+          items:
+            type: string
+
+  sharedResources:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/shared-resources-1.yml"
+
+  openshiftResources:
+    type: array
+    items:
+      "$ref": "/openshift/openshift-resource-1.yml"
+
+  managedTerraformResources:
+    type: boolean
+
+  terraformResources:
+    type: array
+    items:
+      "$ref": "/openshift/terraform-resource-1.yml"
+
+  openshiftServiceAccountTokens:
+    type: array
+    items:
+      type: object
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        serviceAccountName:
+          type: string
+      required:
+      - namespace
+      - serviceAccountName
+
+  kafkaCluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/kafka/cluster-1.yml"
+
+dependencies:
+  terraformResources:
+    properties:
+      managedTerraformResources:
+        enum:
+        - true
+    required:
+    - managedTerraformResources
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- cluster
+- app
+- environment

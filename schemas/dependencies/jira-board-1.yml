@@ -1,0 +1,36 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/jira-board-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  server:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/jira-server-1.yml"
+  slack:
+    type: object
+    properties:
+      workspace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/slack-workspace-1.yml"
+      channel:
+        type: string
+    required:
+    - workspace
+required:
+- "$schema"
+- labels
+- name
+- description
+- server

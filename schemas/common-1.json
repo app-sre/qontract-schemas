@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema",
+  "version": "1.0",
+  "type": "object",
+  "definitions": {
+    "query": {
+      "type": "string",
+      "pattern": "(?i)^(select|explain) (?!analyze (?!select))[^;\\*]+;$"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-_]{0,30}[A-Za-z0-9]$"
+    },
+    "extendedIdentifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-_\\.]{0,30}[A-Za-z0-9]$"
+    },
+    "longIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{3,63}[a-z0-9]$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "k8sValidContainerName": {
+      "type": "string",
+      "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*",
+      "minLength": 1,
+      "maxLength": 63
+    },
+    "nonEmptyArray": {
+      "type": "array",
+      "minItems": 1
+    },
+    "secretKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]{0,253}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "stableIndexList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "deleted",
+              "active"
+            ],
+            "default": "active",
+            "description": "List items must never be removed. To signal that a list item should be deleted the state should be set to deleted and downstream integrations will remove the corresponding object if it exists."
+          }
+        }
+      }
+    },
+    "stableIdentifierList": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array"
+        },
+        "stableIdentifierField": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "items",
+        "stableIdentifierField"
+      ]
+    },
+    "serviceLevel": {
+      "type": "number",
+      "minimum": 90,
+      "exclusiveMaximum": 100
+    },
+    "crossref": {
+      "type": "object",
+      "properties": {
+        "$ref": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      },
+      "required": [
+        "$ref"
+      ],
+      "additionalProperties": false
+    },
+    "vaultSecret": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "plain",
+            "base64"
+          ],
+          "default": "plain"
+        },
+        "version": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "field"
+      ]
+    },
+    "promSelector": {
+      "type": "string",
+      "description": "Valid instant-vector selector: https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels",
+      "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*(=|!=|=~|!~)\".+\"$"
+    }
+  }
+}

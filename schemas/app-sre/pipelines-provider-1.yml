@@ -1,0 +1,52 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/pipelines-provider-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  provider:
+    type: string
+    enum:
+    - tekton
+  namespace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+  retention:
+    additionalProperties: false
+    properties:
+      days:
+        type: integer
+      minimum:
+        type: integer
+    required:
+    - days
+oneOf:
+- properties:
+    provider:
+      type: string
+      enum:
+      - tekton
+    namespace:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
+  required:
+  - namespace
+required:
+- $schema
+- labels
+- name
+- description
+- provider
+- retention

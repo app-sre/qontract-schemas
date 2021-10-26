@@ -1,0 +1,522 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/cluster-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  consoleUrl:
+    type: string
+    format: uri
+  kibanaUrl:
+    type: string
+    format: uri
+  prometheusUrl:
+    type: string
+    format: uri
+  alertmanagerUrl:
+    type: string
+    format: uri
+  serverUrl:
+    type: string
+    format: uri
+  elbFQDN:
+    type: string
+    format: uri
+  auth:
+    type: object
+    properties:
+      service:
+        type: string
+        enum:
+        - github-org
+        - github-org-team
+      org:
+        type: string
+      team:
+        type: string
+    oneOf:
+    - properties:
+        service:
+          type: string
+          enum:
+          - github-org
+        org:
+          type: string
+      required:
+      - service
+      - org
+    - properties:
+        service:
+          type: string
+          enum:
+          - github-org-team
+        org:
+          type: string
+        team:
+          type: string
+      required:
+      - service
+      - org
+      - team
+  observabilityNamespace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+  grafanaUrl:
+    type: string
+    format: uri
+  ocm:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+  managedGroups:
+    type: array
+    items:
+      type: string
+  managedClusterRoles:
+    type: boolean
+  spec:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+      external_id:
+        type: string
+      provider:
+        type: string
+        enum:
+        - aws
+      region:
+        type: string
+      channel:
+        type: string
+        enum:
+        - stable
+        - fast
+        - candidate
+      version:
+        type: string
+      initial_version:
+        type: string
+      multi_az:
+        type: boolean
+      nodes:
+        type: integer
+      instance_type:
+        type: string
+      private:
+        type: boolean
+      storage:
+        type: integer
+        enum:
+        - 1
+        - 100
+        - 600
+        - 1100
+        - 1600
+        - 2100
+        - 2600
+        - 3100
+        - 3600
+        - 4100
+        - 7100
+      load_balancers:
+        type: integer
+        enum:
+        - 0
+        - 4
+      provision_shard_id:
+        type: string
+      autoscale:
+        type: object
+        additionalProperties: false
+        properties:
+          min_replicas:
+            type: integer
+            minimum: 4
+          max_replicas:
+            type: integer
+        required:
+        - min_replicas
+        - max_replicas
+    required:
+    - provider
+    - region
+    - version
+    - initial_version
+    - multi_az
+    - instance_type
+    - private
+    - storage
+    - load_balancers
+    oneOf:
+    - required:
+      - nodes
+    - required:
+      - autoscale
+  externalConfiguration:
+    type: object
+    additionalProperties: false
+    properties:
+      labels:
+        "$ref": "/common-1.json#/definitions/labels"
+    required:
+    - labels
+  upgradePolicy:
+    type: object
+    additionalProperties: false
+    properties:
+      schedule_type:
+        type: string
+        enum:
+        - automatic
+      schedule:
+        type: string
+        pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+      workloads:
+        type: array
+        items:
+          type: string
+      conditions:
+        additionalProperties: false
+        properties:
+          soakDays:
+            type: integer
+        oneOf:
+        - required:
+          - soakDays
+    required:
+    - workloads
+    - schedule
+    - conditions
+  additionalRouters:
+    type: array
+    maxItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        private:
+          type: boolean
+        route_selectors:
+          "$ref": "/common-1.json#/definitions/labels"
+      required:
+      - private
+  network:
+    type: object
+    additionalProperties: false
+    properties:
+      vpc:
+        type: string
+      service:
+        type: string
+      pod:
+        type: string
+  machinePools:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          maxLength: 15
+        instance_type:
+          type: string
+        replicas:
+          type: integer
+        labels:
+          "$ref": "/common-1.json#/definitions/labels"
+        taints:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+              effect:
+                type: string
+                enum:
+                - NoSchedule
+                - NoExecute
+                - PreferNoSchedule
+            required:
+            - key
+            - value
+            - effect
+      required:
+      - id
+      - instance_type
+      - replicas
+  peering:
+    type: object
+    additionalProperties: false
+    properties:
+      connections:
+        type: array
+        items:
+          type: object
+          properties:
+            provider:
+              type: string
+              enum:
+              - account-vpc
+              - account-vpc-mesh
+              - account-tgw
+              - cluster-vpc-requester
+              - cluster-vpc-accepter
+            name:
+              type: string
+            vpc:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/vpc-1.yml"
+            cluster:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/openshift/cluster-1.yml"
+            account:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/account-1.yml"
+            tags:
+              type: object
+            manageRoutes:
+              type: boolean
+            manageSecurityGroups:
+              type: boolean
+            cidrBlock:
+              type: string
+            delete:
+              type: boolean
+            assumeRole:
+              type: string
+          oneOf:
+          - properties:
+              provider:
+                type: string
+                enum:
+                - account-vpc
+              name:
+                type: string
+              vpc:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/vpc-1.yml"
+              manageRoutes:
+                type: boolean
+              delete:
+                type: boolean
+            required:
+            - provider
+            - name
+            - vpc
+          - properties:
+              provider:
+                type: string
+                enum:
+                - account-vpc-mesh
+              name:
+                type: string
+              account:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/account-1.yml"
+              tags:
+                type: object
+              manageRoutes:
+                type: boolean
+              delete:
+                type: boolean
+            required:
+            - provider
+            - name
+            - account
+          - properties:
+              provider:
+                type: string
+                enum:
+                - account-tgw
+              name:
+                type: string
+              account:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/account-1.yml"
+              tags:
+                type: object
+              manageRoutes:
+                type: boolean
+              manageSecurityGroups:
+                type: boolean
+              cidrBlock:
+                type: string
+              delete:
+                type: boolean
+              assumeRole:
+                type: string
+            required:
+            - provider
+            - name
+            - account
+          - properties:
+              provider:
+                type: string
+                enum:
+                - cluster-vpc-requester
+              name:
+                type: string
+              cluster:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/openshift/cluster-1.yml"
+              manageRoutes:
+                type: boolean
+              delete:
+                type: boolean
+            required:
+            - provider
+            - name
+            - cluster
+          - properties:
+              provider:
+                type: string
+                enum:
+                - cluster-vpc-accepter
+              name:
+                type: string
+              cluster:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/openshift/cluster-1.yml"
+              manageRoutes:
+                type: boolean
+              delete:
+                type: boolean
+            required:
+            - provider
+            - name
+            - cluster
+    required:
+    - connections
+  addons:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-addon-1.yml"
+  jumpHost:
+    type: object
+    additionalProperties: false
+    properties:
+      hostname:
+        type: string
+        format: uri
+      knownHosts:
+        type: string
+      user:
+        type: string
+      port:
+        type: integer
+      identity:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - hostname
+    - user
+    - identity
+  automationToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  clusterAdminAutomationToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  description:
+    type: string
+  internal:
+    type: boolean
+  disable:
+    type: object
+    additionalProperties: false
+    properties:
+      integrations:
+        type: array
+        items:
+          type: string
+          enum:
+          - openshift-groups
+          - openshift-namespaces
+          - openshift-namespace-labels
+          - openshift-resources
+          - openshift-rolebindings
+          - openshift-users
+          - openshift-vault-secrets
+          - openshift-routes
+          - openshift-network-policies
+          - openshift-resourcequotas
+          - openshift-limitranges
+          - openshift-serviceaccount-tokens
+      e2eTests:
+        type: array
+        items:
+          type: string
+          enum:
+          - create-namespace
+          - dedicated-admin-rolebindings
+          - default-network-policies
+          - default-project-labels
+  awsInfrastructureAccess:
+    type: array
+    items:
+      type: object
+      properties:
+        awsGroup:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/group-1.yml"
+        accessLevel:
+          type: string
+          enum:
+          - read-only
+          - network-mgmt
+      required:
+      - awsGroup
+      - accessLevel
+  prometheus:
+    type: object
+    additionalProperties: false
+    properties:
+      url:
+        type: string
+      auth:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - url
+    - auth
+required:
+- "$schema"
+- labels
+- name
+- consoleUrl
+- kibanaUrl
+- prometheusUrl
+- serverUrl
+- elbFQDN
+- description
+- internal
+dependencies:
+  jumpHost:
+  - automationToken
+  ocm:
+  - spec
+  - network
+  externalConfiguration:
+  - ocm
+  machinePools:
+  - ocm
+  awsInfrastructureAccess:
+  - ocm
+  addons:
+  - ocm
+  automationToken:
+    properties:
+      serverUrl:
+        minLength: 1

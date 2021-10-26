@@ -1,0 +1,64 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/integration-1.yml
+
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    type: string
+
+  description:
+    type: string
+
+  upstream:
+    type: string
+    format: uri-reference
+
+  schemas:
+    type: array
+    items:
+      type: string
+      pattern: '^\/.+$'
+    allOf:
+    - contains:
+        const: /app-interface/app-interface-settings-1.yml
+    - contains:
+        const: /app-sre/integration-1.yml
+
+  pr_check:
+    type: object
+    additionalProperties: false
+    properties:
+      cmd:
+        type: string
+      state:
+        type: boolean
+      sqs:
+        type: boolean
+      disabled:
+        type: boolean
+      always_run:
+        type: boolean
+      no_validate_schemas:
+        type: boolean
+      run_for_valid_saas_file_changes:
+        type: boolean
+    required:
+    - cmd
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- schemas

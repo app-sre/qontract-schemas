@@ -1,0 +1,121 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/jenkins-config-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+  type:
+    type: string
+    enum:
+    - defaults
+    - global-defaults
+    - views
+    - secrets
+    - base-templates
+    - global-base-templates
+    - job-templates
+    - jobs
+  config_path:
+    type: string
+  config:
+    type: array
+    items:
+      type: object
+      oneOf:
+      - additionalProperties: false
+        properties:
+          view:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              view-type:
+                type: string
+              job-filters:
+                type: object
+                properties:
+                  regex-job:
+                    type: object
+                    properties:
+                      regex-name:
+                        type: string
+                      regex:
+                        type: string
+                    required:
+                    - regex-name
+                    - regex
+                required:
+                - regex-job
+            required:
+            - name
+            - description
+            - view-type
+            - job-filters
+        required:
+        - view
+      - additionalProperties: false
+        properties:
+          project:
+            type: object
+            properties:
+              name:
+                type: string
+              label:
+                type: string
+              node:
+                type: string
+              gl_group:
+                type: string
+              gl_project:
+                type: string
+              gh_org:
+                type: string
+              gh_repo:
+                type: string
+              quay_org:
+                type: string
+              build_deploy_script_path:
+                type: string
+              pr_check_script_path:
+                type: string
+              jobs:
+                type: array
+                items:
+                  type: object
+            required:
+            - name
+            - label
+            - node
+        required:
+        - project
+required:
+- "$schema"
+- labels
+- name
+- description
+- instance
+- type
+oneOf:
+- required:
+  - config
+- required:
+  - config_path

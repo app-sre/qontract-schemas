@@ -1,0 +1,30 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/group-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  name:
+    type: string
+  description:
+    type: string
+  policies:
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- labels
+- account
+- name
+- description

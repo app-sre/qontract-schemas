@@ -1,0 +1,54 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/gitlab-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  backupOrgs:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/identifier"
+  managedGroups:
+    type: array
+    items:
+      type: string
+  projectRequests:
+    type: array
+    items:
+      type: object
+      properties:
+        group:
+          type: string
+          enum:
+          - service
+        projects:
+          type: array
+          items:
+            type: string
+      required:
+      - group
+      - projects
+  description:
+    type: string
+  url:
+    type: string
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  sslVerify:
+    type: boolean
+required:
+- "$schema"
+- labels
+- name
+- managedGroups
+- description
+- url

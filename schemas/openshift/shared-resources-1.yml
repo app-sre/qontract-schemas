@@ -1,0 +1,51 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/shared-resources-1.yml
+
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    type: string
+
+  description:
+    type: string
+
+  openshiftResources:
+    type: array
+    items:
+      "$ref": "/openshift/openshift-resource-1.yml"
+
+  openshiftServiceAccountTokens:
+    type: array
+    items:
+      type: object
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        serviceAccountName:
+          type: string
+      required:
+      - namespace
+      - serviceAccountName
+
+  terraformResources:
+    type: array
+    items:
+      "$ref": "/openshift/terraform-resource-1.yml"
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- openshiftResources

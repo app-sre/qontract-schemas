@@ -1,0 +1,72 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/dependency-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  statefulness:
+    type: string
+    enum:
+    - Durable
+    - Cache
+    - Stateless
+  opsModel:
+    type: string
+    enum:
+    - Hosted
+    - External
+    - Internal
+  statusPage:
+    type: string
+    format: uri
+  SLA:
+    "$ref": "/common-1.json#/definitions/serviceLevel"
+  dependencyFailureImpact:
+    type: string
+    enum:
+    - No Impact
+    - Partial Outage
+    - Major Outage
+    - Complete Outage
+  monitoring:
+    type: object
+    properties:
+      url:
+        type: string
+        format: url
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+      provider:
+        type: string
+        enum:
+        - resource
+        - resource-template
+      path:
+        type: string
+    anyOf:
+    - required:
+      - url
+    - required:
+      - namespace
+required:
+- $schema
+- labels
+- name
+- description
+- statefulness
+- opsModel
+- SLA
+- dependencyFailureImpact
+- monitoring

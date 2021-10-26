@@ -1,0 +1,185 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/permission-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  service:
+    type: string
+  org:
+    type: string
+  team:
+    type: string
+  cluster:
+    type: string
+  namespace:
+    type: string
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+  quayOrg:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/quay-org-1.yml"
+  role:
+    type: string
+  group:
+    type: string
+  access:
+    type: string
+    enum:
+    - "owner"
+    - "maintainer"
+    - "developer"
+    - "reporter"
+    - "guest"
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  workspace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/slack-workspace-1.yml"
+  handle:
+    type: string
+  pagerduty:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+  ownersFromRepos:
+    type: array
+    items:
+      type: string
+      format: uri
+  channels:
+    type: array
+    items:
+      type: string
+  schedule:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/schedule-1.yml"
+oneOf:
+- properties:
+    service:
+      enum:
+      - github-org
+    org:
+      type: string
+    role:
+      type: string
+      enum:
+      - owner
+  required:
+  - org
+- properties:
+    service:
+      enum:
+      - github-org-team
+    org:
+      type: string
+    team:
+      type: string
+    role:
+      type: string
+      enum:
+      - owner
+  required:
+  - org
+  - team
+- properties:
+    service:
+      enum:
+      - gitlab-group-membership
+    group:
+      type: string
+    access:
+      type: string
+      enum:
+      - "owner"
+      - "maintainer"
+      - "developer"
+      - "reporter"
+      - "guest"
+  required:
+  - group
+  - access
+- properties:
+    service:
+      enum:
+      - quay-membership
+    quayOrg:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/quay-org-1.yml"
+    team:
+      type: string
+  required:
+  - quayOrg
+  - team
+- properties:
+    service:
+      enum:
+      - jenkins-role
+    instance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+    role:
+      type: string
+  required:
+  - instance
+  - role
+- properties:
+    service:
+      enum:
+      - slack-usergroup
+    handle:
+      type: string
+    workspace:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/slack-workspace-1.yml"
+    pagerduty:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+    ownersFromRepos:
+      type: array
+      items:
+        type: string
+        format: uri
+    channels:
+      type: array
+      items:
+        type: string
+    schedule:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/schedule-1.yml"
+    description:
+      type: string
+      maxLength: 140
+  required:
+  - handle
+  - description
+  - workspace
+- properties:
+    service:
+      enum:
+      - sentry-team-membership
+    team:
+      "$ref": "/dependencies/sentry-team-1.yml"
+  required:
+  - team
+required:
+- $schema
+- labels
+- name
+- description
+- service

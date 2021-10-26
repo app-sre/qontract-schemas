@@ -1,0 +1,107 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/app-interface-settings-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  vault:
+    type: boolean
+  kubeBinary:
+    type: string
+    enum:
+    - kubectl
+    - oc
+  pullRequestGateway:
+    type: string
+    enum:
+    - gitlab
+    - sqs
+  mergeRequestGateway:
+    type: string
+    enum:
+    - gitlab
+    - sqs
+  saasDeployJobTemplate:
+    type: string
+    enum:
+    - openshift-saas-deploy
+  hashLength:
+    type: integer
+    enum:
+    - 7
+  dependencies:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - openshift
+          - aws
+          - github
+          - gitlab
+          - quay
+          - ci-int
+          - ci-ext
+          - kafka
+        services:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/dependencies/dependency-1.yml"
+      required:
+      - type
+      - services
+  credentials:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - app-interface-production-dev-access
+          - app-interface-production-cicd-access
+        secret:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - name
+      - secret
+  sqlQuery:
+    type: object
+    additionalProperties: false
+    properties:
+      imageRepository:
+        type: string
+        enum:
+        - quay.io/app-sre
+      pullSecret:
+        "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
+    required:
+    - imageRepository
+    - pullSecret
+  pushGatewayCluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/cluster-1.yml"
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- vault
+- kubeBinary
+- saasDeployJobTemplate
+- hashLength

@@ -1,0 +1,35 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/app-interface-slack-notification-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  subject:
+    "$ref": "/common-1.json#/definitions/nonEmptyString"
+  channel:
+    "$ref": "/common-1.json#/definitions/nonEmptyString"
+  to:
+    type: object
+    properties:
+      users:
+        type: array
+        items:
+          type: string
+  body:
+    "$ref": "/common-1.json#/definitions/nonEmptyString"
+required:
+- "$schema"
+- labels
+- name
+- subject
+- to
+- body

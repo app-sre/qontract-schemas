@@ -1,0 +1,42 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/user-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  org_username:
+    "$ref": "/common-1.json#/definitions/identifier"
+  github_username:
+    "$ref": "/common-1.json#/definitions/identifier"
+  quay_username:
+    "$ref": "/common-1.json#/definitions/identifier"
+  slack_username:
+    type: string
+  pagerduty_username:
+    type: string
+  roles:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/role-1.yml"
+  public_gpg_key:
+    type: string
+  tag_on_merge_requests:
+    type: boolean
+  tag_on_cluster_updates:
+    type: boolean
+required:
+- $schema
+- labels
+- name
+- org_username
+- github_username

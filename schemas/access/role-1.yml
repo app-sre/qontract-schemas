@@ -1,0 +1,116 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/role-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  expiration_hours:
+    type: integer
+  permissions:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/permission-1.yml"
+  tag_on_cluster_updates:
+    type: boolean
+  access:
+    type: array
+    items:
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - view
+          - tekton-trigger-access
+        cluster:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/cluster-1.yml"
+        group:
+          type: string
+        clusterRole:
+          type: string
+      dependencies:
+        role:
+        - namespace
+        namespace:
+        - role
+        group:
+        - cluster
+        clusterRole:
+        - cluster
+      oneOf:
+      - required:
+        - namespace
+        - role
+      - required:
+        - cluster
+        - group
+      - required:
+        - cluster
+        - clusterRole
+  aws_groups:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/group-1.yml"
+  user_policies:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/policy-1.yml"
+  sentry_teams:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/sentry-team-1.yml"
+  sentry_roles:
+    type: array
+    items:
+      properties:
+        instance:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/sentry-instance-1.yml"
+        role:
+          type: string
+          enum:
+          - member
+          - admin
+          - manager
+          - owner
+  sendgrid_accounts:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/sendgrid-account-1.yml"
+  owned_saas_files:
+    type: array
+    items:
+      anyOf:
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-sre/saas-file-1.yml"
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-sre/saas-file-2.yml"
+required:
+- $schema
+- labels
+- name
+- permissions
+dependencies:
+  tag_on_cluster_updates:
+  - access

@@ -1,0 +1,348 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/app-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+
+  description:
+    type: string
+
+  onboardingStatus:
+    type: string
+    enum:
+    - Proposed         # The App is being proposed to be running by the App SRE team
+    - InProgress       # The app is currently being on-boarded
+    - TransitionPeriod # The app is proving SLI/SLOs for a determined period of time
+    - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
+    - BestEffort       # The app is supported on a best effort basis
+
+  grafanaUrl:
+    type: string
+    format: uri
+
+  sopsUrl:
+    type: string
+    format: uri
+    description: |
+      Link to the git repo path that contains the top-level for the service
+      SOPs.
+
+  architectureDocument:
+    type: string
+    format: uri
+    description: |
+      Link to the architectureDocument. This can be a git link or a link to a
+      Google Doc.
+
+  parentApp:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+
+  serviceOwners:
+    description: Teams or individuals who is/are responsible for the running instance of the software.
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - name
+      - email
+
+  serviceNotifications:
+    description: Teams or individuals who is/are should get notifications related to the service.
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - name
+      - email
+
+  serviceDocs:
+    description: List of service docs
+    type: array
+    items:
+      description: Service document link
+      type: string
+
+  dependencies:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/dependency-1.yml"
+
+  gcrRepos:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        project:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/gcp-project-1.yml"
+        items:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              public:
+                type: boolean
+              mirror:
+                "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+            required:
+            - name
+            - description
+            - public
+      required:
+      - project
+      - items
+
+  quayRepos:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        org:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/quay-org-1.yml"
+        teams:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              permissions:
+                type: array
+                items:
+                  "$ref": "/common-1.json#/definitions/crossref"
+                  "$schemaRef": "/access/permission-1.yml"
+              role:
+                type: string
+                enum:
+                - read
+            required:
+            - permissions
+            - role
+        notifications:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              event:
+                type: string
+                enum:
+                - vulnerability_found
+              severity:
+                type: string
+                enum:
+                - Defcon 1
+                - Critical
+                - High
+                - Medium
+                - Low
+                - Negligible
+                - Unknown
+              method:
+                type: string
+                enum:
+                - email
+              escalationPolicy:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/app-sre/escalation-policy-1.yml"
+              verificationMethod:
+                type: object
+                additionalProperties: false
+                properties:
+                  jiraBoard:
+                    "$ref": "/common-1.json#/definitions/crossref"
+                    "$schemaRef": "/dependencies/jira-board-1.yml"
+            required:
+            - event
+            - method
+            - escalationPolicy
+        items:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              public:
+                type: boolean
+              mirror:
+                "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+            required:
+            - name
+            - description
+            - public
+      required:
+      - org
+      - items
+
+  endPoints:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - description
+      - url
+
+  escalationPolicy:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/escalation-policy-1.yml"
+
+  codeComponents:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        resource:
+          type: string
+          enum:
+          - upstream
+          - cicd
+          - saasrepo
+          - bundle
+          - other
+        url:
+          type: string
+        gitlabRepoOwners:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        gitlabHousekeeping:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            rebase:
+              type: boolean
+            days_interval:
+              type: integer
+              not:
+                enum:
+                - 0
+            limit:
+              type: integer
+              not:
+                enum:
+                - 0
+            enable_closing:
+              type: boolean
+            pipeline_timeout:
+              type: integer
+          required:
+          - enabled
+          - rebase
+        jira:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/jira-server-1.yml"
+      required:
+      - name
+      - resource
+      - url
+
+  sentryProjects:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        team:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/sentry-team-1.yml"
+        projects:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                type: string
+                maxLength: 30
+              description:
+                type: string
+              email_prefix:
+                type: string
+              platform:
+                type: string
+              sensitive_fields:
+                type: array
+                items:
+                  type: string
+              safe_fields:
+                type: array
+                items:
+                  type: string
+              auto_resolve_age:
+                type: integer
+              allowed_domains:
+                type: array
+                items:
+                  type: string
+            required:
+            - name
+            - description
+            - email_prefix
+            - platform
+      required:
+      - team
+      - projects
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- escalationPolicy
+- onboardingStatus
+- serviceOwners
+- grafanaUrl
+- sopsUrl
+- architectureDocument

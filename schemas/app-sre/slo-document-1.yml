@@ -1,0 +1,113 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/slo-document-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifier"
+  namespaces:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
+  slos:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        SLIType:
+          type: string
+          enum:
+          - latency
+          - availability
+          - correctness
+          - quality
+          - freshness
+          - coverage
+          - correcteness
+          - throughput
+          - durability
+          description: SLI type. See https://sre.google/workbook/implementing-slos/ for details
+        SLISpecification:
+          type: string
+          description: |
+            SLI specification, e.g 'The proportion of valid requests served successfully'
+        SLODetails:
+          type: string
+          format: uri
+          description: |
+            Thorough description of this SLO. Do not use a Google doc for this. It must contain
+              * SLI description - What do we want to measure
+              * SLI rationale -  Why do we want to measure it
+              * Implementation details - How do we want to measure it
+              * SLO rationale - Why we have chosen the targets
+              * Alerting: How we are doing it on top of our SLIs/SLOs
+          pattern: "^https?://(github.com|gitlab.cee.redhat.com)/"
+        SLOTargetUnit:
+          type: string
+          enum:
+          - percent_0_1
+          - percent_0_100
+          description: |
+            Unit in which the 'expr' and 'SLOTarget' will be expressed:
+              * Use 'percentage_0_1' if the your PromQL query is going to return values for 0 to 1
+              * Use 'percentage_0_100' if the your PromQL query is going to return values for 0 to 100
+        SLOParameters:
+          type: object
+          additionalProperties: false
+          properties:
+            window:
+              type: string
+              pattern: "^[0-9]+d"
+          required:
+          - window
+        expr:
+          type: string
+          description: |
+            Prometheus expression to calculate the SLO. It should be expressed
+            in the units of the 'SLOTargetUnit'. It will be processed with jinja,
+            with the SLOParameters as input.
+        SLOTarget:
+          type: number
+          description: SLO target. It should be expressed by means of the 'SLOTargetUnit' field
+        prometheusRules:
+          type: string
+          description: |
+            Location of the prometheus rules associated to this SLO definition
+            (currently only a path in app-interface)
+        prometheusRulesTests:
+          type: string
+          description: Location of the prometheus rules tests for the prometheus rules
+        dashboard:
+          type: string
+          format: uri
+          description: Related grafana dashboard
+      required:
+      - name
+      - SLIType
+      - SLISpecification
+      - SLODetails
+      - SLOTargetUnit
+      - SLOParameters
+      - SLOTarget
+      - expr
+      - prometheusRules
+      - dashboard
+required:
+- "$schema"
+- labels
+- name
+- namespaces
+- slos

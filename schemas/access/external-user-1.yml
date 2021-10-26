@@ -1,0 +1,29 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/external-user-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  github_username:
+    "$ref": "/common-1.json#/definitions/identifier"
+  sponsors:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/user-1.yml"
+    minItems: 2
+required:
+- $schema
+- labels
+- name
+- github_username
+- sponsors

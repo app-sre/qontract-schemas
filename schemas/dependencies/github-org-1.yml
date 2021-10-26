@@ -1,0 +1,35 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/github-org-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  url:
+    type: string
+  two_factor_authentication:
+    type: boolean
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  managedTeams:
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- labels
+- name
+- description
+- url
+- two_factor_authentication
+- token

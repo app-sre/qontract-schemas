@@ -1,0 +1,84 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/slack-workspace-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  api_client:
+    type: object
+    properties:
+      global:
+        type: object
+        properties:
+          max_retries:
+            type: integer
+          timeout:
+            type: integer
+        additionalProperties: false
+      methods:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            args:
+              type: object
+          required:
+            - name
+            - args
+          additionalProperties: false
+    additionalProperties: false
+  integrations:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - jira-watcher
+          - openshift-saas-deploy
+          - unleash-watcher
+          - sentry-helper
+          - slack-sender
+          - openshift-upgrade-watcher
+          - slack-cluster-usergroups
+          - qontract-cli
+      token:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      channel:
+        type: string
+      icon_emoji:
+        type: string
+      username:
+        type: string
+      required:
+      - name
+      - token
+      - channel
+      - icon_emoji
+      - username
+  managedUsergroups:
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- labels
+- name
+- description
+- token

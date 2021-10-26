@@ -1,0 +1,57 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/jenkins-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  serverUrl:
+    type: string
+    format: uri
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  previousUrls:
+    type: array
+    items:
+      type: string
+      format: uri
+  plugins:
+    type: array
+    items:
+      type: string
+  deleteMethod:
+    type: string
+    enum:
+    - manual
+  managedProjects:
+    type: array
+    items:
+      type: string
+  buildsCleanupRules:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        keep_hours:
+          type: integer
+      required:
+      - name
+      - keep_hours
+required:
+- "$schema"
+- labels
+- name
+- description

@@ -1,0 +1,59 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/app-interface-sql-query-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+  namespace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+  requestor:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/access/user-1.yml"
+  overrides:
+    type: object
+    properties:
+      db_port:
+        type: string
+      db_name:
+        type: string
+      db_user:
+        type: string
+  output:
+    type: string
+    enum:
+      - stdout
+      - filesystem
+      - encrypted
+  schedule:
+    type: string
+    pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+  query:
+    "$ref": "/common-1.json#/definitions/query"
+  queries:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/query"
+required:
+- "$schema"
+- labels
+- name
+- namespace
+- identifier
+- output
+oneOf:
+  - required:
+    - query
+  - required:
+    - queries

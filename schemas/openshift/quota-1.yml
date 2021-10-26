@@ -1,0 +1,78 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/quota-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  quotas:
+    type: array
+    items:
+      name:
+        type: string
+      resources:
+        type: object
+        additionalProperties: false
+        properties:
+          limits:
+            type: object
+            additionalProperties: false
+            properties:
+              cpu:
+                type: string
+              memory:
+                type: string
+            anyOf:
+            - required:
+              - cpu
+            - required:
+              - memory
+          requests:
+            type: object
+            additionalProperties: false
+            properties:
+              cpu:
+                type: string
+              memory:
+                type: string
+            anyOf:
+            - required:
+              - cpu
+            - required:
+              - memory
+          pods:
+            type: integer
+            minimum: 1
+        anyOf:
+        - required:
+          - limits
+        - required:
+          - requests
+        - required:
+          - pods
+      scopes:
+        type: array
+        items:
+          type: string
+          enum:
+          - Terminating
+          - NotTerminating
+    required:
+    - name
+    - resources
+required:
+- "$schema"
+- labels
+- name
+- description
+- quotas

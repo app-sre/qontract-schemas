@@ -1,0 +1,40 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/kinesis-defaults-1.yml
+
+  name:
+    type: string
+  shard_count:
+    type: integer
+  retention_period:
+    type: integer
+    minimum: 24
+    maximum: 168
+  encryption_type:
+    type: string
+    enum:
+    - NONE
+    - KMS
+  kms_key_id:
+    type: string
+
+required:
+- "$schema"
+- name
+- shard_count
+
+dependencies:
+  kms_key_id:
+    properties:
+      encryption_type:
+        enum:
+        - KMS
+    required:
+    - encryption_type

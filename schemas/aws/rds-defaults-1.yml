@@ -1,0 +1,78 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/rds-defaults-1.yml
+  engine:
+    type: string
+    enum:
+    - postgres
+    - mysql
+  engine_version:
+    type: string
+  name:
+    type: string
+  username:
+    type: string
+  port:
+    type: integer
+  instance_class:
+    type: string
+  allocated_storage:
+    type: integer
+  max_allocated_storage:
+    type: integer
+  storage_encrypted:
+    type: boolean
+  auto_minor_version_upgrade:
+    type: boolean
+  skip_final_snapshot:
+    type: boolean
+  backup_retention_period:
+    type: integer
+  storage_type:
+    type: string
+  multi_az:
+    type: boolean
+  db_subnet_group_name:
+    type: string
+  vpc_security_group_ids:
+    type: array
+    items:
+      type: string
+  enabled_cloudwatch_logs_exports:
+    type: array
+    items:
+      type: string
+  backup_window:
+    type: string
+  copy_tags_to_snapshot:
+    type: boolean
+  monitoring_interval:
+    type: integer
+  performance_insights_enabled:
+    type: boolean
+  maintenance_window:
+    type: string
+  kms_key_id:
+    type: string
+  deletion_protection:
+    type: boolean
+  option_group_name:
+    type: string
+  license_model:
+    type: string
+  allow_major_version_upgrade:
+    type: boolean
+  iops:
+    type: integer
+required:
+- "$schema"
+- engine
+- engine_version
+- instance_class

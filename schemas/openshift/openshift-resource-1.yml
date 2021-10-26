@@ -1,0 +1,97 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/openshift-resource-1.yml
+  provider:
+    type: string
+  path:
+    type: string
+  validate_json:
+    type: boolean
+  validate_alertmanager_config:
+    type: boolean
+  alertmanager_config_key:
+    type: string
+  type:
+    type: string
+  variables:
+    type: object
+  name:
+    type: string
+  version:
+    type: integer
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  annotations:
+    "$ref": "/common-1.json#/definitions/annotations"
+  vault_tls_secret_path:
+    type: string
+  vault_tls_secret_version:
+    type: integer
+oneOf:
+- "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - resource
+    path:
+      type: string
+    validate_json:
+      type: boolean
+    validate_alertmanager_config:
+      type: boolean
+    alertmanager_config_key:
+      type: string
+  required:
+  - path
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - resource-template
+    path:
+      type: string
+    type:
+      type: string
+      enum:
+      - jinja2
+      - extracurlyjinja2
+    variables:
+      type: object
+    validate_alertmanager_config:
+      type: boolean
+    alertmanager_config_key:
+      type: string
+  required:
+  - path
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - route
+    path:
+      type: string
+    vault_tls_secret_path:
+      type: string
+    vault_tls_secret_version:
+      type: integer
+  required:
+  - path
+  dependencies:
+    vault_tls_secret_path:
+    - vault_tls_secret_version
+    vault_tls_secret_version:
+    - vault_tls_secret_path
+required:
+- provider

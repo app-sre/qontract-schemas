@@ -1,0 +1,54 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/escalation-policy-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+
+  description:
+    type: string
+
+  channels:
+    type: object
+    additionalProperties: false
+    properties:
+      slackUserGroup:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/access/permission-1.yml"
+        minItems: 1
+      email:
+        type: array
+        items:
+          type: string
+          format: email
+        minItems: 1
+      pagerduty:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+      jiraBoard:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/jira-board-1.yml"
+      nextEscalationPolicy:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-sre/escalation-policy-1.yml"
+    required:
+    - slackUserGroup
+    - email
+required:
+- name
+- description
+- channels

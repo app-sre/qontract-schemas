@@ -1,0 +1,113 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/prometheus-rule-test-1.yml
+
+  rule_files:
+    type: array
+    items:
+      type: string
+
+  evaluation_interval:
+    type: string
+
+  group_eval_order:
+    type: array
+    items:
+      type: string
+
+  tests:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        interval:
+          type: string
+
+        input_series:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              series:
+                type: string
+              values:
+                type: string
+            required:
+            - series
+            - values
+
+        alert_rule_test:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              eval_time:
+                type: string
+              alertname:
+                type: string
+              exp_alerts:
+                type:
+                - array
+                - "null"
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    exp_labels:
+                      type: object
+                    exp_annotations:
+                      type: object
+                  required:
+                  - exp_labels
+                  - exp_annotations
+            required:
+            - eval_time
+            - alertname
+
+        promql_expr_test:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              expr:
+                type: string
+              eval_time:
+                type: string
+              exp_samples:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    labels:
+                      type: string
+                    value:
+                      type: integer
+                  required:
+                  - labels
+                  - value
+
+        external_labels:
+          type: object
+
+      required:
+      - interval
+      - input_series
+
+required:
+- "$schema"
+- rule_files
+- tests

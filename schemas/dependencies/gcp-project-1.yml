@@ -1,0 +1,30 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/gcp-project-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  managedTeams:
+    type: array
+    items:
+      type: string
+  description:
+    type: string
+  automationToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  pushCredentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+required:
+- "$schema"
+- labels
+- name
+- description

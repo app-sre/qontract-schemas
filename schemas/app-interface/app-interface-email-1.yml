@@ -1,0 +1,66 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/app-interface-email-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  subject:
+    "$ref": "/common-1.json#/definitions/nonEmptyString"
+  to:
+    type: object
+    properties:
+      aliases:
+        type: array
+        items:
+          type: string
+          enum:
+          - all-users
+          - all-service-owners
+      services:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/app-sre/app-1.yml"
+      clusters:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/cluster-1.yml"
+      namespaces:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+      aws_accounts:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+      roles:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/access/role-1.yml"
+      users:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/access/user-1.yml"
+  body:
+    "$ref": "/common-1.json#/definitions/nonEmptyString"
+required:
+- "$schema"
+- labels
+- name
+- subject
+- to
+- body

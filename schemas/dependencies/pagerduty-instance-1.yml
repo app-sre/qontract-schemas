@@ -1,0 +1,25 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/pagerduty-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+required:
+- "$schema"
+- labels
+- name
+- description
+- token

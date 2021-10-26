@@ -1,0 +1,56 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/gabi-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+  description:
+    type: string
+  signoffManagers:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/user-1.yml"
+  users:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/user-1.yml"
+  instances:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+        identifier:
+          "$ref": "/common-1.json#/definitions/longIdentifier"
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+      required:
+      - account
+      - identifier
+      - namespace
+  expirationDate:
+    type: string
+    pattern: "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$"
+required:
+- "$schema"
+- labels
+- name
+- description
+- signoffManagers
+- users
+- instances
+- expirationDate

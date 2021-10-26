@@ -1,0 +1,95 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/account-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  consoleUrl:
+    type: string
+    format: uri
+  uid:
+    type: string
+  resourcesDefaultRegion:
+    type: string
+  supportedDeploymentRegions:
+    type: array
+    items:
+      type: string
+  providerVersion:
+    type: string
+  terraformUsername:
+    type: string
+    enum:
+    - terraform
+  accountOwners:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - name
+      - email
+  automationToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  garbageCollection:
+    type: boolean
+  enableDeletion:
+    type: boolean
+  disable:
+    type: object
+    additionalProperties: false
+    properties:
+      integrations:
+        type: array
+        items:
+          type: string
+          enum:
+          - terraform-resources
+  deleteKeys:
+    type: array
+    items:
+      type: string
+  resetPasswords:
+    type: array
+    items:
+      additionalProperties: false
+      properties:
+        user:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/access/user-1.yml"
+        requestId:
+          type: string
+          pattern: ^[^\s]*$
+      required:
+      - user
+      - requestId
+  premiumSupport:
+    type: boolean
+required:
+- "$schema"
+- labels
+- name
+- description
+- consoleUrl
+- uid
+- resourcesDefaultRegion
+- providerVersion
+- accountOwners
+- automationToken
+- premiumSupport

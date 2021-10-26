@@ -1,0 +1,64 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/unleash-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+  description:
+    type: string
+  url:
+    type: string
+    format: uri
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  notifications:
+    type: object
+    properties:
+      slack:
+        type: array
+        items:
+          type: object
+          properties:
+            workspace:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/dependencies/slack-workspace-1.yml"
+            channel:
+              type: string
+            icon_emoji:
+              type: string
+            username:
+              type: string
+          required:
+          - workspace
+          - channel
+  featureToggles:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        enabled:
+          type: boolean
+        reason:
+          type: string
+      required:
+      - name
+      - enabled
+required:
+- "$schema"
+- labels
+- name
+- description
+- url
+- token
+- featureToggles
