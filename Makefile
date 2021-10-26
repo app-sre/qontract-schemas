@@ -1,6 +1,6 @@
 .PHONY: build push
 
-IMAGE_NAME := quay.io/maorfr/qontract-schemas
+IMAGE_NAME := quay.io/app-sre/qontract-schemas
 IMAGE_TAG := $(shell git rev-parse --short=7 HEAD)
 
 ifneq (,$(wildcard $(CURDIR)/.docker))
