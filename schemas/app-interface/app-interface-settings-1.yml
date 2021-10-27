@@ -85,8 +85,6 @@ properties:
     properties:
       imageRepository:
         type: string
-        enum:
-        - quay.io/app-sre
       pullSecret:
         "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
     required:
@@ -95,6 +93,10 @@ properties:
   pushGatewayCluster:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/cluster-1.yml"
+  alertingServices:
+    type: array
+    items:
+      type: string
 
 required:
 - "$schema"
