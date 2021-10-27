@@ -37,6 +37,7 @@ properties:
     description: |
       Link to the git repo path that contains the top-level for the service
       SOPs.
+    pattern: "^https://(?!docs.google.com).*"
 
   architectureDocument:
     type: string

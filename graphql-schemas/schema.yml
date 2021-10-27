@@ -15,6 +15,7 @@
   - { name: credentials, type: CredentialsRequestMap_v1, isList: true }
   - { name: sqlQuery, type: SqlQuerySettings_v1 }
   - { name: pushGatewayCluster, type: Cluster_v1 }
+  - { name: alertingServices, type: string, isList: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
