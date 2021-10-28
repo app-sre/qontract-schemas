@@ -30,8 +30,6 @@ properties:
     type: string
   terraformUsername:
     type: string
-    enum:
-    - terraform
   accountOwners:
     type: array
     items:
@@ -61,6 +59,7 @@ properties:
           type: string
           enum:
           - terraform-resources
+          - terraform-resources-wrapper
   deleteKeys:
     type: array
     items:
