@@ -437,6 +437,7 @@
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
+  - { name: disable_user_workload_monitoring, type: boolean }
 
 - name: ClusterSpecAutoScale_v1
   fields:
@@ -1626,6 +1627,12 @@
   - { name: channels, type: string, isList: true }
   - { name: ownersFromRepos, type: string, isList: true }
   - { name: schedule, type: Schedule_v1 }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: permissions
 
 - name: Schedule_v1
   fields:
