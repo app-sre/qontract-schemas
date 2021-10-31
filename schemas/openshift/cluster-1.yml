@@ -147,6 +147,8 @@ properties:
         required:
         - min_replicas
         - max_replicas
+      disable_user_workload_monitoring:
+        type: boolean
     required:
     - provider
     - region
@@ -516,7 +518,3 @@ dependencies:
   - ocm
   addons:
   - ocm
-  automationToken:
-    properties:
-      serverUrl:
-        minLength: 1
