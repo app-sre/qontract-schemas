@@ -80,6 +80,12 @@ properties:
       - requestId
   premiumSupport:
     type: boolean
+  partition:
+    type: string
+    description: the partition used in ARNs in the account (arn:aws:...)
+    enum:
+    - aws
+    - aws-us-gov
 required:
 - "$schema"
 - labels
