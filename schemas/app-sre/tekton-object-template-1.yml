@@ -1,0 +1,28 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+description: TODO
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/tekton-object-template-1.yml
+  # TODO: set max length per type
+  name:
+    type: string
+  type:
+    type: string
+    enum:
+    - onePerSaasFile
+    - onePerNamespace
+  path:
+    type: string
+  variables:
+    type: object
+required:
+- name
+- type
+- path

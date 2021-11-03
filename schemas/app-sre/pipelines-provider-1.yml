@@ -32,6 +32,19 @@ properties:
         type: integer
     required:
     - days
+  taskTemplates:
+    type: array
+    items:
+      "$ref": "/app-sre/tekton-object-template-1.yml"
+  pipelineTemplates:
+    additionalProperties: false
+    properties:
+      openshiftSaasDeploy:
+        "$ref": "/app-sre/tekton-object-template-1.yml"
+    required:
+    - openshiftSaasDeploy
+  deployResources:
+    "$ref": "/openshift/deploy-resources-1.yml"
 oneOf:
 - properties:
     provider:
@@ -41,8 +54,24 @@ oneOf:
     namespace:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
+    taskTemplates:
+      type: array
+      items:
+        "$ref": "/app-sre/tekton-object-template-1.yml"
+    pipelineTemplates:
+      additionalProperties: false
+      properties:
+        openshiftSaasDeploy:
+          "$ref": "/app-sre/tekton-object-template-1.yml"
+      required:
+      - openshiftSaasDeploy
+    deployResources:
+      "$ref": "/openshift/deploy-resources-1.yml"
   required:
   - namespace
+  # These two will need to be required eventually
+  # - taskTemplates
+  # - pipelineTemplates
 required:
 - $schema
 - labels

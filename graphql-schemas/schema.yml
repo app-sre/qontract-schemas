@@ -1434,12 +1434,24 @@
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }
+  - { name: configurableResources, type: boolean }
+  - { name: deployResources, type: DeployResources_v1 }
   - name: roles
     type: Role_v1
     isList: true
     synthetic:
       schema: /access/role-1.yml
       subAttr: owned_saas_files
+
+- name: DeployResources_v1
+  fields:
+  - { name: requests, type: ResourceRequirements_v1, isRequired: true }
+  - { name: limits, type: ResourceRequirements_v1, isRequired: true }
+
+- name: ResourceRequirements_v1
+  fields:
+  - { name: cpu, type: string, isRequired: true }
+  - { name: memory, type: string, isRequired: true }
 
 - name: SlackOutputNotifications_v1
   fields:
@@ -1537,11 +1549,26 @@
   - { name: provider, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: retention, type: PipelinesProviderRetention_v1 }
+  - { name: deployResources, type: DeployResources_v1 }
+  # these two will need to be required at some point
+  - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isList: true }
+  - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1 }
 
 - name: PipelinesProviderRetention_v1
   fields:
   - { name: days, type: int }
   - { name: minimum, type: int }
+
+- name: PipelinesProviderTektonObjectTemplate_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: variables, type: json }
+
+- name: PipelinesProviderPipelineTemplates_v1
+  fields:
+  - { name: openshiftSaasDeploy, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true }
 
 - name: Permission_v1
   isInterface: true
