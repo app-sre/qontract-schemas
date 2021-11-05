@@ -26,7 +26,9 @@ properties:
   user_policy:
     type: object
   assume_role:
-    type: string
+    type: array
+    items:
+      type: string
   inline_policy:
     type: object
   output_resource_name:
@@ -154,7 +156,9 @@ oneOf:
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     assume_role:
-      type: string
+      type: array
+      items:
+        type: string
     inline_policy:
       type: object
     output_resource_name:
