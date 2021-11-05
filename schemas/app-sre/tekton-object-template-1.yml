@@ -10,7 +10,6 @@ properties:
     type: string
     enum:
     - /app-sre/tekton-object-template-1.yml
-  # TODO: set max length per type
   name:
     type: string
   type:
@@ -22,6 +21,30 @@ properties:
     type: string
   variables:
     type: object
+oneOf:
+- properties:
+    name:
+      type: string
+      maxLength: 61
+      description: |
+        One per namespace file Template name. It is limited in size as the tekton
+        object name is limited to 63 characters
+    type:
+      type: string
+      enum:
+      - onePerNamespace
+- properties:
+    name:
+      type: string
+      maxLength: 21
+      description: |
+        One per saas file Template name. It is very limited in size as the tekton
+        object final name will also contain the saas file and the total size is
+        limited to 63 characters
+    type:
+      type: string
+      enum:
+      - onePerSaasFile
 required:
 - name
 - type
