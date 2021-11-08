@@ -1708,6 +1708,12 @@
     synthetic:
       schema: /app-interface/app-interface-sql-query-1.yml
       subAttr: user
+  - name: gabi_instances
+    type: GabiInstance_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/gabi-instance-1.yml
+      subAttr: users
 
 - name: Bot_v1
   fields:
