@@ -1628,6 +1628,7 @@
   - { name: channels, type: string, isList: true }
   - { name: ownersFromRepos, type: string, isList: true }
   - { name: schedule, type: Schedule_v1 }
+  - { name: skip, type: boolean }
   - name: roles
     type: Role_v1
     isList: true
