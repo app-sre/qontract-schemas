@@ -67,6 +67,8 @@ properties:
   schedule:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/schedule-1.yml"
+  skip:
+    type: boolean
 oneOf:
 - properties:
     service:
@@ -165,6 +167,8 @@ oneOf:
     description:
       type: string
       maxLength: 140
+    skip:
+      type: boolean
   required:
   - handle
   - description
