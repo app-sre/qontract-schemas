@@ -71,6 +71,8 @@ properties:
     type: boolean
   iops:
     type: integer
+  publicly_accessible:
+    type: boolean
 required:
 - "$schema"
 - engine
