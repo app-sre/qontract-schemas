@@ -515,6 +515,7 @@
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
+  - { name: assumeRole, type: string }
 
 - name: ClusterPeeringConnectionAccountVPCMesh_v1
   interface: ClusterPeeringConnection_v1
