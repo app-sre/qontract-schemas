@@ -233,6 +233,16 @@ oneOf:
           type: integer
         allow_major_version_upgrade:
           type: boolean
+        timeouts:
+          type: object
+          additionalProperties: false
+          properties:
+            create:
+              type: string
+            update:
+              type: string
+            delete:
+              type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_db_name:
