@@ -1,0 +1,27 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+description: |
+  CPU and memory resources used by the openshift-saas-deploy step of the
+  openshift-saas-deploy tasks created by the openshit-tekton-resources integration
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/deploy-resources-1.yml
+  requests:
+    description: "cpu and memory pod requests"
+    "$ref": "/openshift/resource-requirements-1.yml"
+  limits:
+    description: "cpu and memory pod limits"
+    "$ref": "/openshift/resource-requirements-1.yml"
+anyOf:
+- required:
+  - requests
+- required:
+  - limits

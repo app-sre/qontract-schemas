@@ -97,7 +97,6 @@ properties:
     type: array
     items:
       type: string
-
 required:
 - "$schema"
 - labels

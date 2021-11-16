@@ -158,6 +158,13 @@ properties:
       pattern: '^(quay\.io|registry\.redhat\.io|[^.]+\.dkr\.ecr\.[^.]+\.amazonaws\.com).*$'
   use_channel_in_image_tag:
     type: boolean
+  configurableResources:
+    description: |
+      If set to true, tekton resources associated with this file will be managed
+      by openshift-tekton-resources
+    type: boolean
+  deployResources:
+    "$ref": "/openshift/deploy-resources-1.yml"
 required:
 - "$schema"
 - labels

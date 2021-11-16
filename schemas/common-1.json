@@ -134,6 +134,11 @@
       "type": "string",
       "description": "Valid instant-vector selector: https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels",
       "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*(=|!=|=~|!~)\".+\"$"
+    },
+    "k8sResourceRequirementQuantity": {
+      "type": "string",
+      "description": "Kubernetes resource (request, limit) quantity",
+      "pattern": "^([+-]?[0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$"
     }
   }
 }
