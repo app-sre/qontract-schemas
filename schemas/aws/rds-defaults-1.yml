@@ -73,6 +73,16 @@ properties:
     type: integer
   publicly_accessible:
     type: boolean
+  timeouts:
+    type: object
+    additionalProperties: false
+    properties:
+      create:
+        type: string
+      update:
+        type: string
+      delete:
+        type: string
 required:
 - "$schema"
 - engine
