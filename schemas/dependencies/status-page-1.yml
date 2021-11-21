@@ -1,0 +1,37 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/status-page-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  url:
+    type: string
+  provider:
+    type: string
+  apiUrl:
+    type: string
+  credentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  pageId:
+    type: string
+required:
+- "$schema"
+- labels
+- name
+- description
+- url
+- provider
+- apiUrl
+- credentials
+- pageId
