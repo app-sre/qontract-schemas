@@ -1543,6 +1543,7 @@
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: ref, type: string, isRequired: true }
+  - { name: parent_config_sha, type: string }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
   - { name: upstream, type: string }
@@ -1553,6 +1554,7 @@
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: ref, type: string, isRequired: true }
+  - { name: parent_config_sha, type: string }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }

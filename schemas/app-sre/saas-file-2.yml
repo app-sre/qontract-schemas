@@ -94,6 +94,9 @@ properties:
                 type: string
                 # pattern: '^([0-9a-f]{40}|master|main|quayio|development-4\.0|internal|mk-release)$'
                 pattern: '^([0-9a-f]{40}|master|main|internal|quayio)$'
+              parent_config_sha:
+                type: string
+                pattern: '^[0-9a-f]{16}$'
               promotion:
                 type: object
                 additionalProperties: false
