@@ -1068,7 +1068,8 @@
   - { name: name, type: string, isRequired: true }
   - { name: default, type: boolean, isRequired: true }
   - { name: weights, type: NamespaceTerraformResourceALBTargetWeights_v1, isRequired: true }
-  - { name: ips, type: string, isRequired: true, isList: true }
+  - { name: ips, type: string, isList: true }
+  - { name: openshift_service, type: string }
 
 - name: NamespaceTerraformResourceALBTargetWeights_v1
   fields:

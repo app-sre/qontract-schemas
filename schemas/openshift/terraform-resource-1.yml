@@ -615,11 +615,17 @@ oneOf:
             type: array
             items:
               type: string
+          openshift_service:
+            type: string
         required:
         - name
         - default
         - weights
-        - ips
+        oneOf:
+        - required:
+          - ips
+        - required:
+          - openshift_service
     paths:
       type: object
       additionalProperties: false
