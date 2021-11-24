@@ -95,6 +95,12 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/dependency-1.yml"
 
+  statusPageComponents:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/status-page-component-1.yml"
+
   gcrRepos:
     type: array
     items:
