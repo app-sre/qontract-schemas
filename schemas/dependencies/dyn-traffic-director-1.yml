@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/dyn-traffic-director-1.yml
+  name:
+    type: string
+  ttl:
+    type: integer
+  records:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        hostname:
+          type: string
+        cluster:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/cluster-1.yml"
+        weight:
+          type: integer
+      oneOf:
+      - required:
+        - hostname
+        - weight
+      - required:
+        - cluster
+        - weight
+required:
+- "$schema"
+- name
+- records
