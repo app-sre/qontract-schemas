@@ -1722,6 +1722,7 @@
   - { name: quay_username, type: string }
   - { name: slack_username, type: string }
   - { name: pagerduty_username, type: string }
+  - { name: aws_username, type: string }
   - { name: public_gpg_key, type: string }
   - { name: tag_on_merge_requests, type: boolean }
   - { name: tag_on_cluster_updates, type: boolean }
