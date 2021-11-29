@@ -97,9 +97,10 @@ properties:
   advanced_options:
     type: object
     additionalProperties: false
-    rest.action.multi.allow_explicit_index:
-      type: string
-    indices.query.bool.max_clause_count:
-      type: string
+    properties:
+      rest.action.multi.allow_explicit_index:
+        type: string
+      indices.query.bool.max_clause_count:
+        type: string
 required:
 - "$schema"
