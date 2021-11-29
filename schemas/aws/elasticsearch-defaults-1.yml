@@ -1,0 +1,105 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/elasticsearch-defaults-1.yml
+  elasticsearch_version:
+    type: string
+  ebs_options:
+    type: object
+    additionalProperties: false
+    properties:
+      ebs_enabled:
+        type: boolean
+      volume_size:
+        type: integer
+    required:
+    - ebs_enabled
+  encrypt_at_rest:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
+    required:
+    - enabled
+  node_to_node_encryption:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
+    required:
+    - enabled
+  domain_endpoint_options:
+    type: object
+    additionalProperties: false
+    properties:
+      enforce_https:
+        type: boolean
+      tls_security_policy:
+        type: string
+        enum:
+        - Policy-Min-TLS-1-0-2019-07
+        - Policy-Min-TLS-1-2-2019-07
+  cluster_config:
+    type: object
+    additionalProperties: false
+    properties:
+      instance_type:
+        type: string
+      instance_count:
+        type: integer
+      dedicated_master_enabled:
+        type: boolean
+      dedicated_master_type:
+        type: string
+      dedicated_master_count:
+        type: integer
+      zone_awareness_enabled:
+        type: boolean
+      zone_awareness_config:
+        type: object
+        additionalProperties: false
+        properties:
+          availability_zone_count:
+            type: integer
+            enum:
+            - 2
+            - 3
+  snapshot_options:
+    type: object
+    additionalProperties: false
+    properties:
+      automated_snapshot_start_hour:
+        type: integer
+    required:
+    - automated_snapshot_start_hour
+  vpc_options:
+    type: object
+    additionalProperties: false
+    properties:
+      security_group_ids:
+        type: array
+        items:
+          type: string
+      subnet_ids:
+        type: array
+        items:
+          type: string
+    required:
+    - subnet_ids
+  advanced_options:
+    type: object
+    additionalProperties: false
+    rest.action.multi.allow_explicit_index:
+      type: string
+    indices.query.bool.max_clause_count:
+      type: string
+required:
+- "$schema"
