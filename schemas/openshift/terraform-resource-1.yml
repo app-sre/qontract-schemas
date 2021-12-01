@@ -646,5 +646,27 @@ oneOf:
   - vpc
   - certificate_arn
   - targets
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - secrets-manager
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    secret:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - account
+  - identifier
+  - secret
 required:
 - provider
