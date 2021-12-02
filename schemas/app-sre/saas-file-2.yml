@@ -14,7 +14,7 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
-    maxLength: 40
+    maxLength: 39
   description:
     type: string
   app:
