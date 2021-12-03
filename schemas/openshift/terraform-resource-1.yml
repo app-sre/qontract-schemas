@@ -26,9 +26,7 @@ properties:
   user_policy:
     type: object
   assume_role:
-    type: array
-    items:
-      type: string
+    type: object
   inline_policy:
     type: object
   output_resource_name:
@@ -156,9 +154,22 @@ oneOf:
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     assume_role:
-      type: array
-      items:
-        type: string
+      type: object
+      additionalProperties: false
+      properties:
+        AWS:
+          type: array
+          items:
+            type: string
+        Service:
+          type: array
+          items:
+            type: string
+      anyOf:
+      - required:
+        - AWS
+      - required:
+        - Service      
     inline_policy:
       type: object
     output_resource_name:
