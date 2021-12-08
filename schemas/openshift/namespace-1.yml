@@ -49,8 +49,37 @@ properties:
   networkPoliciesAllow:
     type: array
     items:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/openshift/namespace-1.yml"
+      type: object
+      required:
+        - namespace
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        pods:
+          type: object
+          properties:
+            matchLabels:
+              type: object
+              additionalProperties:
+                type: string
+          required:
+          - matchLabels
+        ports:
+          type: object
+          properties:
+            protocol:
+              type: string
+              enum:
+              - TCP
+              - UDP
+            port:
+              type: integer
+              minimum: 0
+              maximum: 65535
+          required:
+            - protocol
+            - port
 
   clusterAdmin:
     type: boolean
