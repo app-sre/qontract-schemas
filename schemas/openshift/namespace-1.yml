@@ -59,6 +59,8 @@ properties:
     type: array
     items:
       type: string
+      pattern: "[^Task|^Pipeline].+"
+
   managedResourceTypeOverrides:
     type: array
     items:
