@@ -93,6 +93,8 @@ properties:
     "$schemaRef": "/aws/vpc-1.yml"
   certificate_arn:
     type: string
+  idle_timeout:
+    type: integer
   targets:
     type: array
     items:
@@ -169,7 +171,7 @@ oneOf:
       - required:
         - AWS
       - required:
-        - Service      
+        - Service
     inline_policy:
       type: object
     output_resource_name:
@@ -600,6 +602,8 @@ oneOf:
       "$schemaRef": "/aws/vpc-1.yml"
     certificate_arn:
       type: string
+    idle_timeout:
+      type: integer
     targets:
       type: array
       # force a minimum of 2 items due to
