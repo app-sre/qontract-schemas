@@ -26,6 +26,7 @@ properties:
     - TransitionPeriod # The app is proving SLI/SLOs for a determined period of time
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
     - BestEffort       # The app is supported on a best effort basis
+    - PreApproval      # The app is not yet approved for onboarding
 
   grafanaUrl:
     type: string
