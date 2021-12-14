@@ -1543,7 +1543,6 @@
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: ref, type: string, isRequired: true }
-  - { name: parent_config_sha, type: string }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
   - { name: upstream, type: string }
@@ -1554,7 +1553,6 @@
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: ref, type: string, isRequired: true }
-  - { name: parent_config_sha, type: string }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
@@ -1571,6 +1569,30 @@
   - { name: auto, type: boolean }
   - { name: publish, type: string, isList: true }
   - { name: subscribe, type: string, isList: true }
+  - { name: promotion_data, type: PromotionData_v1, isList: true }
+
+- name: PromotionData_v1
+  fields:
+  - { name: channel, type: string }
+  - { name: data, type: PromotionChannelData_v1, isList: true, isInterface: true }
+
+- name: PromotionChannelData_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: type
+    fieldMap:
+      parent_saas_config: ParentSaasPromotion_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+
+- name: ParentSaasPromotion_v1
+  interface: PromotionChannelData_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: parent_saas, type: string }
+  - { name: target_config_hash, type: string }
+
 
 - name: PipelinesProvider_v1
   isInterface: true
