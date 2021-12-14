@@ -1210,6 +1210,15 @@
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: terraformResources, type: NamespaceTerraformResource_v1, isList: true, isInterface: true }
 
+- name: PodSelector_v1
+  fields:
+    - { name: matchLabels, isRequired: true, type: json }
+
+- name: NetworkPoliciesAllow_v1
+  fields:
+    - { name: namespace, type: Namespace_v1 }
+    - { name: pods, type: PodSelector_v1, isList: false, isRequired: false }
+
 - name: Namespace_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1224,7 +1233,7 @@
   - { name: environment, type: Environment_v1, isRequired: true}
   - { name: limitRanges, type: LimitRange_v1 }
   - { name: quota, type: ResourceQuota_v1 }
-  - { name: networkPoliciesAllow, type: Namespace_v1, isList: true }
+  - { name: networkPoliciesAllow, type: NetworkPoliciesAllow_v1, isList: true }
   - { name: clusterAdmin, type: boolean }
   - { name: managedRoles, type: boolean }
   - { name: managedResourceTypes, type: string, isList: true }
