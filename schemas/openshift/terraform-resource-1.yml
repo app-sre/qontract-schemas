@@ -101,6 +101,10 @@ properties:
       type: object
   paths:
     type: object
+  cloudinit_configs:
+    type: array
+    items:
+      type: object
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -683,5 +687,42 @@ oneOf:
   - account
   - identifier
   - secret
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - asg
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    defaults:
+      type: string
+    cloudinit_configs:
+      type: array
+      items:
+        type: object
+        properties:
+          filename:
+            type: string
+          content_type:
+            type: string
+          content:
+            type: string
+        required:
+        - content
+    variables:
+      type: object
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - account
+  - identifier
+  - defaults
 required:
 - provider
