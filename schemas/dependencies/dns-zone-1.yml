@@ -18,6 +18,9 @@ properties:
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+  vpc:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/vpc-1.yml"
   unmanaged_record_names:
     type: array
     items:
