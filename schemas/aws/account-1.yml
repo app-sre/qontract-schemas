@@ -49,6 +49,22 @@ properties:
     type: boolean
   enableDeletion:
     type: boolean
+  deletionApprovals:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        expiration:
+          type: string
+      required:
+      - type
+      - name
+      - expiration
   disable:
     type: object
     additionalProperties: false
