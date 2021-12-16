@@ -23,6 +23,10 @@ properties:
     type: array
     items:
       type: string
+  policy:
+    type: object
+  fifo_topic:
+    type: boolean 
   user_policy:
     type: object
   assume_role:
@@ -67,6 +71,8 @@ properties:
       type: string
   sqs_identifier:
     type: string
+  sns_identifier:
+    type: string
   bucket_policy:
     type: object
   kms_encryption:
@@ -103,6 +109,29 @@ properties:
     type: object
 oneOf:
 - "$ref": "/aws/s3-1.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - sns 
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    defaults:
+      type: string
+    policy:
+      type: object
+    fifo_topic:
+      type: boolean 
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+    - account
+    - identifier
 - additionalProperties: false
   properties:
     provider:

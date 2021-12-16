@@ -33,6 +33,8 @@ properties:
         - public-read
   sqs_identifier:
     type: string
+  sns_identifier:
+    type: string
   s3_events:
     type: array
     items:
