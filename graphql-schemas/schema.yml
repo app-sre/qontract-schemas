@@ -660,7 +660,7 @@
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
   - { name: uid, type: string, isRequired: true }
