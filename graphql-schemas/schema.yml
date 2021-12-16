@@ -672,6 +672,7 @@
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
+  - { name: deletionApprovals, type: AWSAccountDeletionApproval_v1, isList: true }
   - { name: disable, type: DisableClusterAutomations_v1 }
   - { name: deleteKeys, type: string, isList: true }
   - { name: resetPasswords, type: AWSAccountResetPassword_v1, isList: true }
@@ -699,6 +700,12 @@
     synthetic:
       schema: /access/role-1.yml
       subAttr: aws_groups
+
+- name: AWSAccountDeletionApproval_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: expiration, type: string, isRequired: true }
 
 - name: AWSAccountResetPassword_v1
   fields:
