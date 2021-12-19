@@ -29,6 +29,8 @@ properties:
     items:
       type: object
       properties:
+        name:
+          type: string
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
