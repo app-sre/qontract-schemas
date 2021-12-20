@@ -1113,7 +1113,7 @@
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: idle_timeout, type: int }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
-  - { name: paths, type: NamespaceTerraformResourceALBPaths_v1 }
+  - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: annotations, type: json }
@@ -1122,19 +1122,23 @@
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: default, type: boolean, isRequired: true }
-  - { name: weights, type: NamespaceTerraformResourceALBTargetWeights_v1, isRequired: true }
   - { name: ips, type: string, isList: true }
   - { name: openshift_service, type: string }
 
-- name: NamespaceTerraformResourceALBTargetWeights_v1
+- name: NamespaceTerraformResourceALBRules_v1
   fields:
-  - { name: read, type: int, isRequired: true }
-  - { name: write, type: int, isRequired: true }
+  - { name: condition: type: NamespaceTerraformResourceALBConditon_v1, isRequired: true}
+  - { name: action: type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isList: true}
 
-- name: NamespaceTerraformResourceALBPaths_v1
+- name: NamespaceTerraformResourceALBConditon_v1
   fields:
-  - { name: read, type: string, isList: true }
-  - { name: write, type: string, isList: true }
+  - { name: path: type: string, isRequired: true}
+  - { name: methods: type: string, isRequired: true}
+
+- name: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: target: type: string, isRequired: true}
+  - { name: weight: type: int, isRequired: true}
 
 - name: ResourceValues_v1
   fields:

@@ -646,14 +646,6 @@ oneOf:
             type: string
           default:
             type: boolean
-          weights:
-            type: object
-            additionalProperties: false
-            properties:
-              read:
-                type: integer
-              write:
-                type: integer
           ips:
             type: array
             items:
@@ -663,24 +655,47 @@ oneOf:
         required:
         - name
         - default
-        - weights
         oneOf:
         - required:
           - ips
         - required:
           - openshift_service
-    paths:
-      type: object
-      additionalProperties: false
-      properties:
-        read:
-          type: array
-          items:
-            type: string
-        write:
-          type: array
-          items:
-            type: string
+    rules:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          condition:
+            type: object
+            additionalProperties: false
+            properties:
+              path:
+                type: string
+              methods:
+                type: string
+                enum:
+                - read
+                - write
+            required:
+            - path
+            - methods
+          action:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                target:
+                  type: string
+                weight:
+                  type: integer
+              required:
+              - target
+              - weight
+        required:
+        - condition
+        - action 
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -689,6 +704,7 @@ oneOf:
   - vpc
   - certificate_arn
   - targets
+  - rules
 - additionalProperties: false
   properties:
     provider:
