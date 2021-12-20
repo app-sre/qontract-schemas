@@ -1,0 +1,86 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/asg-defaults-1.yml
+  max_size:
+    type: integer
+  min_size:
+    type: integer
+  image_id:
+    type: string
+  iam_role_name:
+    type: string
+  instance_types:
+    type: array
+    items:
+      type: string
+  availability_zones:
+    type: array
+    items:
+      type: string
+  capacity_rebalance:
+    type: boolean
+  instances_distribution:
+    type: object
+    additionalProperties: false
+    properties:
+      spot_allocation_strategy:
+        type: string
+        enum:
+        - lowest-price
+        - capacity-optimized
+        - capacity-optimized-prioritized
+      on_demand_base_capacity:
+        type: integer
+      on_demand_percentage_above_base_capacity:
+        type: integer
+  instance_refresh_preferences:
+    type: object
+    additionalProperties: false
+    properties:
+      instance_warmup:
+        type: integer
+      min_healthy_percentage:
+        type: integer
+  vpc_security_group_ids:
+    type: array
+    items:
+      type: string
+  update_default_version:
+    type: boolean
+  block_device_mappings:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        device_name:
+          type: string
+        ebs:
+          type: object
+          additionalProperties: false
+          properties:
+            volume_size:
+              type: integer
+            volume_type:
+              type: string
+              enum:
+              - standard
+              - gp2
+              - gp3
+              - io1
+              - io2
+              - sc1
+              - st1
+            encrypted:
+              type: boolean
+required:
+- "$schema"
+- max_size
+- min_size
