@@ -1180,6 +1180,7 @@
 
 - name: ServiceAccountTokenSpec_v1
   fields:
+  - { name: name, type: string }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: serviceAccountName, type: string, isRequired: true }
 
