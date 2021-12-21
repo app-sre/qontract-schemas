@@ -749,6 +749,14 @@
   - { name: description, type: string }
   - { name: region, type: string, isRequired: true }
 
+- name: AWSS3EventNotification_v1
+  fields:
+  - { name: event_type, type: string, isRequired: true, isList: true}
+  - { name: destination, type: string, isRequired: true}
+  - { name: destination_type, type: string, isRequired: true}
+  - { name: filters_prefix, type: string}
+  - { name: filters_suffix, type: string}
+
 - name: ACMDomain_v1
   fields:
   - { name: domain_name, type: string, isRequired: true }
@@ -930,6 +938,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
   - { name: overrides, type: json }
+  - { name: event_notifications, type: AWSS3EventNotification_v1, isList: true }
   - { name: sqs_identifier, type: string }
   - { name: s3_events, type: string, isList: true }
   - { name: bucket_policy, type: json }

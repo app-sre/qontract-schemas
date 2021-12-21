@@ -23,6 +23,10 @@ properties:
     type: array
     items:
       type: string
+  policy:
+    type: object
+  fifo_topic:
+    type: boolean 
   user_policy:
     type: object
   assume_role:
@@ -65,6 +69,26 @@ properties:
     type: array
     items:
       type: string
+  event_notifications:
+    type: array
+    items:
+      type: object
+      properties:
+        event_type:
+          type: array
+          items:
+            type: string 
+        destination:
+          type: string
+        destination_type:
+          type: string
+          enum:
+          - sns
+          - sqs
+        filters_prefix:
+          type: string
+        filters_suffix:
+          type: string
   sqs_identifier:
     type: string
   bucket_policy:
