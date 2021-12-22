@@ -1,0 +1,71 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/endpoint-monitoring-provider-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  provider:
+    type: string
+    enum:
+    - blackbox-exporter
+  timeout:
+    type: string
+  checkInterval:
+    type: string
+  metricLabels:
+    "$ref": "/common-1.json#/definitions/labels"
+  blackboxExporter:
+      type: object
+      additionalProperties: false
+      properties:
+        module:
+          type: string
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        exporterUrl:
+          type: string
+      required:
+      - module
+      - namespace
+      - exporterUrl
+oneOf:
+- properties:
+    provider:
+      type: string
+      enum:
+      - blackbox-exporter
+    blackboxExporter:
+      type: object
+      additionalProperties: false
+      properties:
+        module:
+          type: string
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        exporterUrl:
+          type: string
+      required:
+      - module
+      - namespace
+  required:
+  - blackboxExporter
+required:
+- "$schema"
+- labels
+- name
+- description
+- provider
