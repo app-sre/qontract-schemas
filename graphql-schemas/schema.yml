@@ -1219,6 +1219,7 @@
   - { name: limitRanges, type: LimitRange_v1 }
   - { name: quota, type: ResourceQuota_v1 }
   - { name: networkPoliciesAllow, type: Namespace_v1, isList: true }
+  - { name: clusterAdmin, type: boolean }
   - { name: managedRoles, type: boolean }
   - { name: managedResourceTypes, type: string, isList: true }
   - { name: managedResourceTypeOverrides, type: NamespaceManagedResourceTypeOverrides_v1, isList: true }
