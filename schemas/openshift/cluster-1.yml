@@ -413,6 +413,8 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/cluster-addon-1.yml"
+  insecureSkipTLSVerify:
+    type: boolean
   jumpHost:
     type: object
     additionalProperties: false
