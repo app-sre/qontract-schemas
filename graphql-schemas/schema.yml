@@ -587,6 +587,7 @@
   - { name: machinePools, type: ClusterMachinePool_v1, isList: true }
   - { name: peering, type: ClusterPeering_v1 }
   - { name: addons, type: ClusterAddon_v1, isList: true }
+  - { name: insecureSkipTLSVerify, type: boolean }
   - { name: jumpHost, type: ClusterJumpHost_v1 }
   - { name: automationToken, type: VaultSecret_v1 }
   - { name: clusterAdminAutomationToken, type: VaultSecret_v1 }
