@@ -548,6 +548,7 @@
   - { name: cluster, type: Cluster_v1, isRequired: true }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
+  - { name: assumeRole, type: string }
 
 - name: ClusterPeeringConnectionClusterAccepter_v1
   interface: ClusterPeeringConnection_v1
@@ -557,6 +558,7 @@
   - { name: cluster, type: Cluster_v1, isRequired: true }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
+  - { name: assumeRole, type: string }
 
 - name: ClusterPeering_v1
   fields:

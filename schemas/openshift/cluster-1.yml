@@ -391,6 +391,8 @@ properties:
                 type: boolean
               delete:
                 type: boolean
+              assumeRole:
+                type: string
             required:
             - provider
             - name
@@ -409,6 +411,8 @@ properties:
                 type: boolean
               delete:
                 type: boolean
+              assumeRole:
+                type: string
             required:
             - provider
             - name
