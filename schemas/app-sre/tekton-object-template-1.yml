@@ -4,7 +4,9 @@ version: '1.0'
 type: object
 
 additionalProperties: false
-description: TODO
+description: |
+  Properties of tekton object templates deployed in tekton pipelines providers
+  namespaces
 properties:
   "$schema":
     type: string

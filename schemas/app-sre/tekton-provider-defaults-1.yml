@@ -1,0 +1,48 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/tekton-provider-defaults-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  retention:
+    additionalProperties: false
+    properties:
+      days:
+        type: integer
+      minimum:
+        type: integer
+    required:
+    - days
+  taskTemplates:
+    type: array
+    items:
+      "$ref": "/app-sre/tekton-object-template-1.yml"
+  pipelineTemplates:
+    additionalProperties: false
+    properties:
+      openshiftSaasDeploy:
+        "$ref": "/app-sre/tekton-object-template-1.yml"
+    required:
+    - openshiftSaasDeploy
+  deployResources:
+    "$ref": "/openshift/deploy-resources-1.yml"
+required:
+- $schema
+- labels
+- name
+- description
+- retention
+- taskTemplates
+- pipelineTemplates
