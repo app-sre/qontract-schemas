@@ -1127,18 +1127,18 @@
 
 - name: NamespaceTerraformResourceALBRules_v1
   fields:
-  - { name: condition: type: NamespaceTerraformResourceALBConditon_v1, isRequired: true}
-  - { name: action: type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isList: true}
+  - { name: condition, type: NamespaceTerraformResourceALBConditon_v1, isRequired: true}
+  - { name: action, type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isList: true}
 
 - name: NamespaceTerraformResourceALBConditon_v1
   fields:
-  - { name: path: type: string, isRequired: true}
-  - { name: methods: type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
+  - { name: methods, type: string, isRequired: true}
 
 - name: NamespaceTerraformResourceALBAction_v1
   fields:
-  - { name: target: type: string, isRequired: true}
-  - { name: weight: type: int, isRequired: true}
+  - { name: target, type: string, isRequired: true}
+  - { name: weight, type: int, isRequired: true}
 
 - name: ResourceValues_v1
   fields:
