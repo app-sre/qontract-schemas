@@ -26,7 +26,7 @@ properties:
   policy:
     type: object
   fifo_topic:
-    type: boolean 
+    type: boolean
   user_policy:
     type: object
   assume_role:
@@ -77,7 +77,7 @@ properties:
         event_type:
           type: array
           items:
-            type: string 
+            type: string
         destination:
           type: string
         destination_type:
@@ -123,8 +123,10 @@ properties:
     type: array
     items:
       type: object
-  paths:
-    type: object
+  rules:
+    type: array
+    items:
+      type: object
   cloudinit_configs:
     type: array
     items:
@@ -695,7 +697,7 @@ oneOf:
               - weight
         required:
         - condition
-        - action 
+        - action
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
