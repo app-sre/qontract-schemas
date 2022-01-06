@@ -679,10 +679,8 @@ oneOf:
                 enum:
                 - read
                 - write
-                - all
             required:
             - path
-            - methods
           action:
             type: array
             items:
