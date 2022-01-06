@@ -683,6 +683,8 @@ oneOf:
             - path
           action:
             type: array
+            # https://github.com/hashicorp/terraform-provider-aws/pull/12574#issuecomment-639642524
+            minItems: 2
             items:
               type: object
               additionalProperties: false
