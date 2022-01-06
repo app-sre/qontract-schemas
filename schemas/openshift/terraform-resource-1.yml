@@ -85,9 +85,9 @@ properties:
           enum:
           - sns
           - sqs
-        filters_prefix:
+        filter_prefix:
           type: string
-        filters_suffix:
+        filter_suffix:
           type: string
   sqs_identifier:
     type: string
