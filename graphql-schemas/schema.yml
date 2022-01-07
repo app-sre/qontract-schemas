@@ -755,8 +755,8 @@
   - { name: event_type, type: string, isRequired: true, isList: true}
   - { name: destination, type: string, isRequired: true}
   - { name: destination_type, type: string, isRequired: true}
-  - { name: filters_prefix, type: string}
-  - { name: filters_suffix, type: string}
+  - { name: filter_prefix, type: string}
+  - { name: filter_suffix, type: string}
 
 - name: ACMDomain_v1
   fields:
