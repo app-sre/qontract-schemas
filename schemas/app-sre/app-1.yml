@@ -238,6 +238,7 @@ properties:
             provider:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/dependencies/endpoint-monitoring-provider-1.yml"
+              description: Reference to a monitoring provider to use for this endpoint
           required:
           - provider
       required:
