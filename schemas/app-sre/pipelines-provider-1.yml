@@ -82,7 +82,11 @@ oneOf:
     pipelineTemplates:
       description: |
         Tekton Pipeline jinja2 templates that will be used to create the corresponding
-        objects in the provider namespace
+        objects in the provider namespace. This object defines the types of pipeline
+        templates that we support. Since they have to be referred from the integration
+        that triggers the pipeline via a PipelineRun this is actually an object rather
+        than a list. Properties of this object will be the different pipelines supported
+        in qontract-reconcile code.
       additionalProperties: false
       properties:
         openshiftSaasDeploy:
