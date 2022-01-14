@@ -1623,6 +1623,8 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
+  # This will be removed, it is only here so that the schema change
+  # is backwards compatible
   - { name: retention, type: PipelinesProviderRetention_v1 }
 
 - name: PipelinesProviderTekton_v1
@@ -1634,12 +1636,12 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
+  - { name: defaults, type: PipelinesProviderTektonProviderDefaults_v1 }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: retention, type: PipelinesProviderRetention_v1 }
-  - { name: deployResources, type: DeployResources_v1 }
-  # these two will need to be required at some point
   - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isList: true }
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1 }
+  - { name: deployResources, type: DeployResources_v1 }
 
 - name: PipelinesProviderRetention_v1
   fields:
@@ -1656,6 +1658,16 @@
 - name: PipelinesProviderPipelineTemplates_v1
   fields:
   - { name: openshiftSaasDeploy, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true }
+
+- name: PipelinesProviderTektonProviderDefaults_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: labels, type: json, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: retention, type: PipelinesProviderRetention_v1, isRequired: true }
+  - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true, isList: true }
+  - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1, isRequired: true }
+  - { name: deployResources, type: DeployResources_v1 }
 
 - name: Permission_v1
   isInterface: true
