@@ -96,8 +96,7 @@ oneOf:
       "$ref": "/openshift/deploy-resources-1.yml"
   required:
   - namespace
-  # This will need to be addded in a subsequent step
-  #- defaults
+  - defaults
 required:
 - $schema
 - labels

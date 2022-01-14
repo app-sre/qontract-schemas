@@ -1623,9 +1623,6 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
-  # This will be removed, it is only here so that the schema change
-  # is backwards compatible
-  - { name: retention, type: PipelinesProviderRetention_v1 }
 
 - name: PipelinesProviderTekton_v1
   interface: PipelinesProvider_v1
@@ -1636,7 +1633,7 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
-  - { name: defaults, type: PipelinesProviderTektonProviderDefaults_v1 }
+  - { name: defaults, type: PipelinesProviderTektonProviderDefaults_v1, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: retention, type: PipelinesProviderRetention_v1 }
   - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isList: true }
