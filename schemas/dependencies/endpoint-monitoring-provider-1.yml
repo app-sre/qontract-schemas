@@ -30,7 +30,7 @@ properties:
     description: Interval between endpoint checks, e.g. 10s
     pattern: "^\\d+[smhd]$"
   metricLabels:
-    "$ref": "/common-1.json#/definitions/labels"
+    "$ref": "/common-1.json#/definitions/prometheusLabels"
     description: Labels to be added to the resulting Prometheus metrics
   blackboxExporter:
       type: object
