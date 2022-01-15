@@ -24,9 +24,11 @@ properties:
   timeout:
     type: string
     description: Timeout for the monitoring check, e.g. 10s
+    pattern: "^\\d+[smhd]$"
   checkInterval:
     type: string
     description: Interval between endpoint checks, e.g. 10s
+    pattern: "^\\d+[smhd]$"
   metricLabels:
     "$ref": "/common-1.json#/definitions/labels"
     description: Labels to be added to the resulting Prometheus metrics
