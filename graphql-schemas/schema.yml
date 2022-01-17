@@ -1134,7 +1134,7 @@
 - name: NamespaceTerraformResourceALBConditon_v1
   fields:
   - { name: path, type: string, isRequired: true}
-  - { name: methods, type: string, isRequired: false}
+  - { name: methods, type: string, isList: true, isRequired: false}
 
 - name: NamespaceTerraformResourceALBAction_v1
   fields:

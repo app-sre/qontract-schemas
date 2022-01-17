@@ -677,8 +677,13 @@ oneOf:
               methods:
                 type: string
                 enum:
-                - read
-                - write
+                - GET
+                - HEAD
+                - OPTIONS
+                - POST
+                - PUT
+                - PATCH
+                - DELETE
             required:
             - path
           action:
