@@ -18,6 +18,9 @@ else
 	DOCKER_CONF := $(HOME)/.docker
 endif
 
+help: ## Prints help for targets with comments
+	@grep -E '^[a-zA-Z0-9.\ _-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 build:
 	@docker build -t $(IMAGE_NAME):latest -f Dockerfile .
 	@docker tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
@@ -26,7 +29,7 @@ push:
 	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):latest
 	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):$(IMAGE_TAG)
 
-bundle:
+bundle: ## Use qontract-validator image to bundle schemas into $BUNDLE_FILENAME NOTE
 	mkdir -p $(OUTPUT_DIR) fake_data fake_resources
 	@$(CONTAINER_ENGINE) run --rm \
 		-v $(PWD)/schemas:/schemas:z \
@@ -37,8 +40,10 @@ bundle:
 		qontract-bundler /schemas /graphql/schema.yml /data /resources $(GIT_COMMIT) $(GIT_COMMIT_TIMESTAMP) > $(OUTPUT_DIR)/$(BUNDLE_FILENAME)
 	rm -rf fake_data fake_resources
 
-validate:
+validate: ## Use qcontract-validator image to show any validation errors of schemas in $BUNDLE_FILENAME
 	@$(CONTAINER_ENGINE) run --rm \
 		-v $(OUTPUT_DIR):/bundle:z \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
+
+bundle-and-validate-schema: bundle validate ## Same as successively running 'bundle' and 'validate'
