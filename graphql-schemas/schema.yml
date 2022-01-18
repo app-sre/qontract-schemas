@@ -466,6 +466,7 @@
 
 - name: ClusterNetwork_v1
   fields:
+  - { name: type, type: string }
   - { name: vpc, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
   - { name: pod, type: string, isRequired: true }
