@@ -675,15 +675,17 @@ oneOf:
               path:
                 type: string
               methods:
-                type: string
-                enum:
-                - GET
-                - HEAD
-                - OPTIONS
-                - POST
-                - PUT
-                - PATCH
-                - DELETE
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - GET
+                  - HEAD
+                  - OPTIONS
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
             required:
             - path
           action:
