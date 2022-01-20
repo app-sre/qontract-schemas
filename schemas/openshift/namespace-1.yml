@@ -66,20 +66,22 @@ properties:
           required:
           - matchLabels
         ports:
-          type: object
-          properties:
-            protocol:
-              type: string
-              enum:
-              - TCP
-              - UDP
-            port:
-              type: integer
-              minimum: 0
-              maximum: 65535
-          required:
-            - protocol
-            - port
+          type: array
+          items: 
+            type: object
+            properties:
+              protocol:
+                type: string
+                enum:
+                  - TCP
+                  - UDP
+              port:
+                type: integer
+                minimum: 0
+                maximum: 65535
+                required:
+                  - protocol
+                  - port
 
   clusterAdmin:
     type: boolean
