@@ -466,6 +466,7 @@
 
 - name: ClusterNetwork_v1
   fields:
+  - { name: type, type: string }
   - { name: vpc, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
   - { name: pod, type: string, isRequired: true }
@@ -755,8 +756,8 @@
   - { name: event_type, type: string, isRequired: true, isList: true}
   - { name: destination, type: string, isRequired: true}
   - { name: destination_type, type: string, isRequired: true}
-  - { name: filters_prefix, type: string}
-  - { name: filters_suffix, type: string}
+  - { name: filter_prefix, type: string}
+  - { name: filter_suffix, type: string}
 
 - name: ACMDomain_v1
   fields:
@@ -1113,7 +1114,7 @@
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: idle_timeout, type: int }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
-  - { name: paths, type: NamespaceTerraformResourceALBPaths_v1 }
+  - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: annotations, type: json }
@@ -1122,19 +1123,23 @@
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: default, type: boolean, isRequired: true }
-  - { name: weights, type: NamespaceTerraformResourceALBTargetWeights_v1, isRequired: true }
   - { name: ips, type: string, isList: true }
   - { name: openshift_service, type: string }
 
-- name: NamespaceTerraformResourceALBTargetWeights_v1
+- name: NamespaceTerraformResourceALBRules_v1
   fields:
-  - { name: read, type: int, isRequired: true }
-  - { name: write, type: int, isRequired: true }
+  - { name: condition, type: NamespaceTerraformResourceALBConditon_v1, isRequired: true}
+  - { name: action, type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isList: true}
 
-- name: NamespaceTerraformResourceALBPaths_v1
+- name: NamespaceTerraformResourceALBConditon_v1
   fields:
-  - { name: read, type: string, isList: true }
-  - { name: write, type: string, isList: true }
+  - { name: path, type: string, isRequired: true}
+  - { name: methods, type: string, isList: true, isRequired: false}
+
+- name: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: target, type: string, isRequired: true}
+  - { name: weight, type: int, isRequired: true}
 
 - name: ResourceValues_v1
   fields:
@@ -1220,6 +1225,7 @@
   - { name: limitRanges, type: LimitRange_v1 }
   - { name: quota, type: ResourceQuota_v1 }
   - { name: networkPoliciesAllow, type: Namespace_v1, isList: true }
+  - { name: clusterAdmin, type: boolean }
   - { name: managedRoles, type: boolean }
   - { name: managedResourceTypes, type: string, isList: true }
   - { name: managedResourceTypeOverrides, type: NamespaceManagedResourceTypeOverrides_v1, isList: true }
@@ -1623,7 +1629,6 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
-  - { name: retention, type: PipelinesProviderRetention_v1 }
 
 - name: PipelinesProviderTekton_v1
   interface: PipelinesProvider_v1
@@ -1634,12 +1639,12 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true }
+  - { name: defaults, type: PipelinesProviderTektonProviderDefaults_v1, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: retention, type: PipelinesProviderRetention_v1 }
-  - { name: deployResources, type: DeployResources_v1 }
-  # these two will need to be required at some point
   - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isList: true }
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1 }
+  - { name: deployResources, type: DeployResources_v1 }
 
 - name: PipelinesProviderRetention_v1
   fields:
@@ -1656,6 +1661,16 @@
 - name: PipelinesProviderPipelineTemplates_v1
   fields:
   - { name: openshiftSaasDeploy, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true }
+
+- name: PipelinesProviderTektonProviderDefaults_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: labels, type: json, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: retention, type: PipelinesProviderRetention_v1, isRequired: true }
+  - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true, isList: true }
+  - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1, isRequired: true }
+  - { name: deployResources, type: DeployResources_v1 }
 
 - name: Permission_v1
   isInterface: true

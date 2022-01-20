@@ -26,6 +26,8 @@ properties:
           "$schemaRef": "/openshift/cluster-1.yml"
         weight:
           type: integer
+          minimum: 1
+          maximum: 255
       oneOf:
       - required:
         - hostname

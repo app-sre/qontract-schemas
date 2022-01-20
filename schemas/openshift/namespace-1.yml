@@ -52,6 +52,9 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
 
+  clusterAdmin:
+    type: boolean
+
   managedRoles:
     type: boolean
 

@@ -20,15 +20,21 @@ properties:
     type: string
     enum:
     - tekton
+  defaults:
+    description: "Pipeline provider defaults"
+    "$ref": "/common-1.json#/definitions/crossref"
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
   retention:
+    description: "Describes the amount of builds that will be kept"
     additionalProperties: false
     properties:
       days:
+        description: "Maximum retention expressed in days"
         type: integer
       minimum:
+        description: "Minimum amount of builds that will be kept no matter what 'days' says"
         type: integer
     required:
     - days
@@ -51,14 +57,36 @@ oneOf:
       type: string
       enum:
       - tekton
+    defaults:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/tekton-provider-defaults-1.yml"
     namespace:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
+    retention:
+      additionalProperties: false
+      properties:
+        days:
+          type: integer
+        minimum:
+          type: integer
+      required:
+      - days
     taskTemplates:
+      description: |
+        Tekton Task jinja2 templates that will be used to create the corresponding
+        objects in the provider namespace
       type: array
       items:
         "$ref": "/app-sre/tekton-object-template-1.yml"
     pipelineTemplates:
+      description: |
+        Tekton Pipeline jinja2 templates that will be used to create the corresponding
+        objects in the provider namespace. This object defines the types of pipeline
+        templates that we support. Since they have to be referred from the integration
+        that triggers the pipeline via a PipelineRun this is actually an object rather
+        than a list. Properties of this object will be the different pipelines supported
+        in qontract-reconcile code.
       additionalProperties: false
       properties:
         openshiftSaasDeploy:
@@ -66,16 +94,16 @@ oneOf:
       required:
       - openshiftSaasDeploy
     deployResources:
+      description:
+        CPU and memory resources used by the openshift-saas-deploy step of the
+        openshift-saas-deploy tasks created by the openshit-tekton-resources integration
       "$ref": "/openshift/deploy-resources-1.yml"
   required:
   - namespace
-  # These two will need to be required eventually
-  # - taskTemplates
-  # - pipelineTemplates
+  - defaults
 required:
 - $schema
 - labels
 - name
 - description
 - provider
-- retention
