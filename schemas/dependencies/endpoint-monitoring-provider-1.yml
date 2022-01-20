@@ -1,0 +1,81 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/endpoint-monitoring-provider-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  provider:
+    type: string
+    enum:
+    - blackbox-exporter
+    description: The provider defines which monitoring implementation will be used for endpoints
+  timeout:
+    type: string
+    description: Timeout for the monitoring check, e.g. 10s
+    pattern: "^\\d+[smhd]$"
+  checkInterval:
+    type: string
+    description: Interval between endpoint checks, e.g. 10s
+    pattern: "^\\d+[smhd]$"
+  metricLabels:
+    "$ref": "/common-1.json#/definitions/prometheusLabels"
+    description: Labels to be added to the resulting Prometheus metrics
+  blackboxExporter:
+      type: object
+      description: blackbox-exporter specific configuration options
+      additionalProperties: false
+      properties:
+        module:
+          type: string
+          description: the blackbox exporter module to use for the endpoint check, e.g. http_2xx
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+          description: the namespace where the prometheus Probe CR will be created
+        exporterUrl:
+          type: string
+          description: the blackbox-exporter URL to use, must be a full URL including potential URL paths
+      required:
+      - module
+      - namespace
+      - exporterUrl
+oneOf:
+- properties:
+    provider:
+      type: string
+      enum:
+      - blackbox-exporter
+    blackboxExporter:
+      type: object
+      additionalProperties: false
+      properties:
+        module:
+          type: string
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        exporterUrl:
+          type: string
+      required:
+      - module
+      - namespace
+  required:
+  - blackboxExporter
+required:
+- "$schema"
+- labels
+- name
+- description
+- provider

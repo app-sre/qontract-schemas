@@ -231,6 +231,18 @@ properties:
           type: string
         url:
           type: string
+        monitoring:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              provider:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/dependencies/endpoint-monitoring-provider-1.yml"
+                description: Reference to a monitoring provider to use for this endpoint
+            required:
+            - provider
       required:
       - name
       - description
