@@ -1,4 +1,4 @@
-.PHONY: build push
+.PHONY: build push test
 
 IMAGE_NAME := quay.io/app-sre/qontract-schemas
 IMAGE_TAG := $(shell git rev-parse --short=7 HEAD)
@@ -42,3 +42,5 @@ validate:
 		-v $(OUTPUT_DIR):/bundle:z \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
+test:
+	tox
