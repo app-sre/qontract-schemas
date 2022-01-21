@@ -9,7 +9,6 @@ valid_sql_queries = [
     "select a from table_a;",
     "SELECT A FROM TABLE_A;",
     "select a from table order by id;",
-    "select a from table order by id;",
     "select a from ( select a,b from table_b );",
     "explain select a from table_a;"
 ]
@@ -34,10 +33,11 @@ def new_query_spec(query: str) -> Dict[str, Any]:
         "query": query,
     }
 
-@pytest.fixture(scope='session')
-def sql_validator():
+@pytest.fixture(scope='module')
+def sql_validator(schemas):
     """ Gets the schema validator for the sql-query objects"""
     validator = get_schema_object_validator(
+        schemas,
         "/app-interface/app-interface-sql-query-1.yml"
     )
     return validator

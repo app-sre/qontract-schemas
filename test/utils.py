@@ -20,12 +20,11 @@ def load_schemas(work_dir: str = "schemas") -> Dict[str, Any]:
     return schemas
 
 
-def get_schema_object_validator(schema_ref: str) -> Draft6Validator:
+def get_schema_object_validator(store: Dict[str, Any], schema_ref: str) -> Draft6Validator:
     """ Function to get a Draft6Validator object for an object.
     It gets the schema definition from the store loaded in load_schemas and it
     has a resolver with a store pointing to the same structure.
     """
-    store = load_schemas()
     resolver = RefResolver('', '', store=store)
 
     return Draft6Validator(
