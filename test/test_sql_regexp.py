@@ -7,18 +7,27 @@ from utils import get_schema_object_validator
 
 valid_sql_queries = [
     "select a from table_a;",
+    "select analyze from table b;",
     "SELECT A FROM TABLE_A;",
-    "select a from table order by id;",
+    "select a from table /* let's order by Id */ order by id;",
+    "select a /* comment */ from table /* comment 2 */ a;",
     "select a from ( select a,b from table_b );",
-    "explain select a from table_a;"
+    "explain select a from table_a;",
+    "explain analyze select a from table_a;"
 ]
 
 not_valid_sql_queries = [
-    "select * from table_a",
-    "SELECT * FROM TABLE_A",
-    "select a from ( select * from table_b )",
-    "explain analyze select a from table b"
+    "select * from table_a;",
+    "SELECT * FROM TABLE_A;",
+    "select a from table -- order by id order by id;",
+    "select a from ( select * from table_b );",
+    "select a from ( select /*comment*/* from table_b );",
+    "explain analyze update table set a='b' where id=1;",
+    "explain analyze insert table set a='b' where id=1;",
+    "update table set a='b' where id=1;",
+    "select /* comment */* from a;"
 ]
+
 
 def new_query_spec(query: str) -> Dict[str, Any]:
     return {
