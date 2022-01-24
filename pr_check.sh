@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make bundle validate
+make test bundle validate
