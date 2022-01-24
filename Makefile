@@ -1,6 +1,7 @@
-.PHONY: build push test
+.PHONY: build push build-test test
 
 IMAGE_NAME := quay.io/app-sre/qontract-schemas
+IMAGE_TEST := $(IMAGE_NAME)-test
 IMAGE_TAG := $(shell git rev-parse --short=7 HEAD)
 VALIDATOR_IMAGE := quay.io/app-sre/qontract-validator
 VALIDATOR_IMAGE_TAG := latest
@@ -42,5 +43,14 @@ validate:
 		-v $(OUTPUT_DIR):/bundle:z \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
-test:
-	tox
+
+build-test: clean
+	@docker build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .
+
+test: build-test
+	@docker run --rm $(IMAGE_TEST)
+
+clean:
+	@rm -rf .tox .eggs *.egg-info buid .pytest_cache
+	@find . -name "__pycache__" -type d -print0 | xargs -0 rm -rf
+	@find . -name "*.pyc" -delete
