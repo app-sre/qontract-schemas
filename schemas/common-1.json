@@ -5,7 +5,7 @@
   "definitions": {
     "query": {
       "type": "string",
-      "pattern": "(?i)^(select|explain) (?!analyze (?!select))[^;\\*]+;$"
+      "pattern": "(?i)^(select|explain(?!\\s+analyze\\s+(insert|update|delete)))\\s+((?:\\/\\*.*?\\*\\/)|[^;\\*-])+;$"
     },
     "labels": {
       "type": "object",
