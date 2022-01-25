@@ -13,7 +13,8 @@ valid_sql_queries = [
     "select a /* comment */ from table /* comment 2 */ a;",
     "select a from ( select a,b from table_b );",
     "explain select a from table_a;",
-    "explain analyze select a from table_a;"
+    "explain analyze select a from table_a;",
+    "SELECT a from table b where id ='3ec6f667-4083**';"
 ]
 
 not_valid_sql_queries = [
