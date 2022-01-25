@@ -149,7 +149,7 @@
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
-  - { name: options, type: VaultSecretEngineOptions_v1, isInterface: true, isRequired: true }
+  - { name: options, type: VaultSecretEngineOptions_v1, isInterface: true }
 
 - name: VaultRoleOptions_v1
   isInterface: true
@@ -1875,7 +1875,7 @@
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: expirationDate, type: string }
   - { name: permissions, type: Permission_v1, isList: true, isInterface: true }
