@@ -131,6 +131,15 @@ properties:
     type: array
     items:
       type: object
+  publish_log_types:
+    type: array
+    items:
+      type: string
+      enum:
+      - INDEX_SLOW_LOGS
+      - SEARCH_SLOW_LOGS
+      - ES_APPLICATION_LOGS
+      - AUDIT_LOGS
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -528,6 +537,15 @@ oneOf:
       type: string
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    publish_log_types:
+      type: array
+      items:
+        type: string
+        enum:
+        - INDEX_SLOW_LOGS
+        - SEARCH_SLOW_LOGS
+        - ES_APPLICATION_LOGS
+        - AUDIT_LOGS
   required:
   - account
   - identifier
