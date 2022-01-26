@@ -76,6 +76,7 @@ properties:
           enum:
           - terraform-resources
           - terraform-resources-wrapper
+          - terraform-users
   deleteKeys:
     type: array
     items:
