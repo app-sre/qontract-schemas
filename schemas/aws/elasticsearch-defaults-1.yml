@@ -115,6 +115,9 @@ properties:
         additionalProperties: false
         properties:
           master_user_secret:
+            description: |
+              Secret containing the user/password authentication data. It must only
+              contain the "master_user_name" and "master_user_password" keys
             type: object
             additionalProperties: false
             properties:
