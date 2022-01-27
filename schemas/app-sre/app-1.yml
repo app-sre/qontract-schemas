@@ -31,6 +31,25 @@ properties:
     type: string
     format: uri
 
+  grafanaUrls:
+    type: array
+    description: |
+      List of links to Grafana Dashboard/Folders associated with the service. Please provide 
+      a title together with the link.
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - url
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+      minItems: 1
+
   sopsUrl:
     type: string
     format: uri
@@ -362,6 +381,5 @@ required:
 - escalationPolicy
 - onboardingStatus
 - serviceOwners
-- grafanaUrl
 - sopsUrl
 - architectureDocument
