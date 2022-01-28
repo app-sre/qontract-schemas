@@ -118,6 +118,8 @@ properties:
                           type: string
                         quantile:
                           type: string
+                        query:
+                          type: string
                         exported_namespace:
                           type: string
                         exported_service:
