@@ -236,6 +236,11 @@
   - { name: automationToken, type: VaultSecret_v1 }
   - { name: pushCredentials, type: VaultSecret_v1 }
 
+- name: GrafanaDashboardUrls_v1
+  fields:
+  - { name: title, type: string, isRequired: true}
+  - { name: url, type: string, isRequired: true}
+
 - name: QuayOrg_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1403,7 +1408,8 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: onboardingStatus, type: string, isRequired: true }
-  - { name: grafanaUrl, type: string, isRequired: true }
+  - { name: grafanaUrl, type: string }
+  - { name: grafanaUrls, isList: true, type: GrafanaDashboardUrls_v1 }
   - { name: sopsUrl, type: string, isRequired: true }
   - { name: architectureDocument, type: string, isRequired: true }
   - { name: parentApp, type: App_v1 }
