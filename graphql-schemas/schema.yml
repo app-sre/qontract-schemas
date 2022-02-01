@@ -847,6 +847,7 @@
       alb: NamespaceTerraformResourceALB_v1
       secrets-manager: NamespaceTerraformResourceSecretsManager_v1
       asg: NamespaceTerraformResourceASG_v1
+      route53-zone: NamespaceTerraformResourceRoute53Zone_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1121,6 +1122,16 @@
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: annotations, type: json }
+
+- name: NamespaceTerraformResourceRoute53Zone_v1
+  interface: NamespaceTerraformResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: account, type: string, isRequired: true }
+  - { name: region, type: string }
+  - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: annotations, type: json }
 

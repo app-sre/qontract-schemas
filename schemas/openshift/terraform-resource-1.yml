@@ -774,5 +774,24 @@ oneOf:
   - account
   - identifier
   - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - route53-zone
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      type: string
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - account
+  - identifier
 required:
 - provider
