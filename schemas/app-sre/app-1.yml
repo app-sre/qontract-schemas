@@ -27,10 +27,6 @@ properties:
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
     - BestEffort       # The app is supported on a best effort basis
 
-  grafanaUrl:
-    type: string
-    format: uri
-
   grafanaUrls:
     type: array
     description: |
@@ -383,3 +379,4 @@ required:
 - serviceOwners
 - sopsUrl
 - architectureDocument
+- grafanaUrls
