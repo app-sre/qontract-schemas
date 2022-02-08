@@ -507,9 +507,25 @@ properties:
       required:
       - awsGroup
       - accessLevel
-  awsInfrastructureManagementAccount:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/aws/account-1.yml"
+  awsInfrastructureManagementAccounts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        accessLevel:
+          type: string
+          enum:
+          - read-only
+          - network-mgmt
+        default:
+          type: boolean
+      required:
+      - account
+      - accessLevel
   prometheus:
     type: object
     additionalProperties: false
