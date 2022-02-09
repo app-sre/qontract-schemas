@@ -20,7 +20,7 @@
 
 - name: SmtpSettings_v1
   fields:
-  - { name: mailAdress, type: string, isRequired: true }
+  - { name: mailAddress, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
