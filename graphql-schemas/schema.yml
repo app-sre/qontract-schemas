@@ -11,11 +11,17 @@
   - { name: mergeRequestGateway, type: string }
   - { name: saasDeployJobTemplate, type: string, isRequired: true }
   - { name: hashLength, type: int, isRequired: true }
+  - { name: smtp, type: SmtpSettings_v1 }
   - { name: dependencies, type: AppInterfaceDependencyMapping_v1, isList: true }
   - { name: credentials, type: CredentialsRequestMap_v1, isList: true }
   - { name: sqlQuery, type: SqlQuerySettings_v1 }
   - { name: pushGatewayCluster, type: Cluster_v1 }
   - { name: alertingServices, type: string, isList: true }
+
+- name: SmtpSettings_v1
+  fields:
+  - { name: mailAdress, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
