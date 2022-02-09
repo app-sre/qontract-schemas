@@ -377,6 +377,7 @@
   - { name: description, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: two_factor_authentication, type: boolean, isRequired: true }
+  - { name: default, type: boolean }
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: managedTeams, type: string, isList: true, isRequired: false }
 

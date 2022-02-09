@@ -19,6 +19,8 @@ properties:
     type: string
   two_factor_authentication:
     type: boolean
+  default:
+    type: boolean
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   managedTeams:
