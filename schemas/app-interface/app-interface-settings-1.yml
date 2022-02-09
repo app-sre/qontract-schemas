@@ -40,6 +40,13 @@ properties:
     type: integer
     enum:
     - 7
+  smtp:
+    type: object
+    additionalProperties: false
+    properties:
+      mailAdress: string
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
   dependencies:
     type: array
     items:
