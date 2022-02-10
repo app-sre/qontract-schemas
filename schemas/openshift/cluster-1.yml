@@ -298,6 +298,9 @@ properties:
             account:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/aws/account-1.yml"
+            awsInfrastructureManagementAccount:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/account-1.yml"
             tags:
               type: object
             manageRoutes:
@@ -407,6 +410,9 @@ properties:
               cluster:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/openshift/cluster-1.yml"
+              awsInfrastructureManagementAccount:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/account-1.yml"
               manageRoutes:
                 type: boolean
               delete:
@@ -500,6 +506,25 @@ properties:
           - network-mgmt
       required:
       - awsGroup
+      - accessLevel
+  awsInfrastructureManagementAccounts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        accessLevel:
+          type: string
+          enum:
+          - read-only
+          - network-mgmt
+        default:
+          type: boolean
+      required:
+      - account
       - accessLevel
   prometheus:
     type: object

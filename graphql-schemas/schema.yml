@@ -563,6 +563,7 @@
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: cluster, type: Cluster_v1, isRequired: true }
+  - { name: awsInfrastructureManagementAccount, type: AWSAccount_v1 }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
@@ -610,6 +611,7 @@
   - { name: internal, type: boolean }
   - { name: disable, type: DisableClusterAutomations_v1 }
   - { name: awsInfrastructureAccess, type: AWSInfrastructureAccess_v1, isList: true }
+  - { name: awsInfrastructureManagementAccounts, type: AWSInfrastructureManagementAccount_v1, isList: true }
   - { name: prometheus, type: ClusterPrometheus_v1}
   - name: namespaces
     type: Namespace_v1
@@ -671,6 +673,12 @@
   fields:
   - { name: awsGroup, type: AWSGroup_v1, isRequired: true }
   - { name: accessLevel, type: string, isRequired: true }
+
+- name: AWSInfrastructureManagementAccount_v1
+  fields:
+  - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: accessLevel, type: string, isRequired: true }
+  - { name: default, type: boolean }
 
 - name: AWSAccount_v1
   fields:
