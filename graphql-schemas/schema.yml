@@ -688,7 +688,7 @@
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
-  - { name: uid, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: uid, type: string, isRequired: true, isSearchable: true }
   - { name: resourcesDefaultRegion, type: string, isRequired: true }
   - { name: supportedDeploymentRegions, type: string, isList: true }
   - { name: providerVersion, type: string, isRequired: true }
