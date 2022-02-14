@@ -289,6 +289,8 @@ properties:
               - cluster-vpc-accepter
             name:
               type: string
+            description:
+              type: string
             vpc:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/aws/vpc-1.yml"
@@ -321,6 +323,8 @@ properties:
                 - account-vpc
               name:
                 type: string
+              description:
+                type: string
               vpc:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/vpc-1.yml"
@@ -341,6 +345,8 @@ properties:
                 - account-vpc-mesh
               name:
                 type: string
+              description:
+                type: string
               account:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/account-1.yml"
@@ -360,6 +366,8 @@ properties:
                 enum:
                 - account-tgw
               name:
+                type: string
+              description:
                 type: string
               account:
                 "$ref": "/common-1.json#/definitions/crossref"
@@ -387,6 +395,8 @@ properties:
                 - cluster-vpc-requester
               name:
                 type: string
+              description:
+                type: string
               cluster:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/openshift/cluster-1.yml"
@@ -406,6 +416,8 @@ properties:
                 enum:
                 - cluster-vpc-accepter
               name:
+                type: string
+              description:
                 type: string
               cluster:
                 "$ref": "/common-1.json#/definitions/crossref"
