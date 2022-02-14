@@ -511,6 +511,7 @@
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
 
@@ -520,6 +521,7 @@
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
+  - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
@@ -530,6 +532,7 @@
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: description, type: string }
   - { name: tags, type: json }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
@@ -540,6 +543,7 @@
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: description, type: string }
   - { name: tags, type: json }
   - { name: manageRoutes, type: boolean }
   - { name: manageSecurityGroups, type: boolean }
@@ -553,6 +557,7 @@
   - { name: provider, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: cluster, type: Cluster_v1, isRequired: true }
+  - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
@@ -564,6 +569,7 @@
   - { name: name, type: string, isRequired: true }
   - { name: cluster, type: Cluster_v1, isRequired: true }
   - { name: awsInfrastructureManagementAccount, type: AWSAccount_v1 }
+  - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
