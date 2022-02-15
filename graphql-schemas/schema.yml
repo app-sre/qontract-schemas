@@ -942,6 +942,7 @@
   - { name: defaults, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: annotations, type: json }
+  - { name: publish_log_types, type: string, isList: true }
 
 - name: NamespaceTerraformResourceRDS_v1
   interface: NamespaceTerraformResource_v1
