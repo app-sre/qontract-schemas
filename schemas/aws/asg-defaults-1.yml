@@ -12,8 +12,6 @@ properties:
     type: integer
   min_size:
     type: integer
-  image_id:
-    type: string
   iam_role_name:
     type: string
   instance_types:

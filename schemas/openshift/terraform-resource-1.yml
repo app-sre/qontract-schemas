@@ -135,6 +135,14 @@ properties:
     type: array
     items:
       type: string
+  image:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+    required:
+    - id
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -778,6 +786,14 @@ oneOf:
         - content
     variables:
       type: object
+    image:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+      required:
+      - id
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     annotations:
@@ -786,6 +802,7 @@ oneOf:
   - account
   - identifier
   - defaults
+  - image
 - additionalProperties: false
   properties:
     provider:
