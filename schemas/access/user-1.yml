@@ -25,7 +25,7 @@ properties:
     type: string
   aws_username:
     type: string
-    pattern: '^[a-z]+_[a-z]+_[a-z]+$'
+    pattern: '^[a-zA-Z_]+$'
   roles:
     type: array
     items:
