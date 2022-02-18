@@ -17,6 +17,7 @@
   - { name: sqlQuery, type: SqlQuerySettings_v1 }
   - { name: pushGatewayCluster, type: Cluster_v1 }
   - { name: alertingServices, type: string, isList: true }
+  - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
 
 - name: SmtpSettings_v1
   fields:

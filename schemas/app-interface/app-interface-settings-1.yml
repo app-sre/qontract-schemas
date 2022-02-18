@@ -105,6 +105,13 @@ properties:
     type: array
     items:
       type: string
+  endpointMonitoringBlackboxExporterModules:
+    type: array
+    description: |
+      the blackbox exporter modules that can be used for /dependencies/endpoint-monitoring-provider-1.yml#blackboxExporter.module
+      if none are listed, no restrictions apply
+    items:
+      type: string
 required:
 - "$schema"
 - labels
