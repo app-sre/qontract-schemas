@@ -18,6 +18,9 @@ properties:
     type: string
   description:
     type: string
+  mandatory:
+    type: boolean
+    description: is policy mandatory in the account
   policy:
     type: object
 required:

@@ -716,6 +716,12 @@
     synthetic:
       schema: /aws/ecr-1.yml
       subAttr: account
+  - name: policies
+    type: AWSUserPolicy_v1
+    isList: true
+    synthetic:
+      schema: /aws/policy-1.yml
+      subAttr: account
 
 - name: AWSGroup_v1
   fields:
@@ -752,6 +758,7 @@
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
+  - { name: mandatory, type: boolean }
   - { name: policy, type: json, isRequired: true }
 
 - name: AWSVPC_v1
