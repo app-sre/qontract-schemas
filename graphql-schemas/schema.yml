@@ -1416,6 +1416,7 @@
   - { name: gitlabRepoOwners, type: CodeComponentGitlabOwners_v1 }
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
   - { name: jira, type: JiraServer_v1 }
+  - { name: mirror, type: string }
 
 - name: Product_v1
   fields:
