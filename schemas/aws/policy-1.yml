@@ -18,6 +18,8 @@ properties:
     type: string
   description:
     type: string
+  mandatory:
+    type: boolean
   policy:
     type: object
 required:
