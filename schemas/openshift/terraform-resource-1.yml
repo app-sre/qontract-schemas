@@ -818,6 +818,7 @@ oneOf:
     name:
       description: base fqdn of the zone
       type: string
+      format: uri
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
