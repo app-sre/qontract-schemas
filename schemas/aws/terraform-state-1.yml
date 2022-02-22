@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /aws/account-1.yml
+    - /aws/terraform-state-1.yml
   bucket:
     type: string
   key:

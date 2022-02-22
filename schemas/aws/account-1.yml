@@ -108,6 +108,11 @@ properties:
     type: array
     items:
       "$ref": "/aws/sharing-option-1.yml"
+  terraformState:
+    type: array
+    terraform_resources:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/terraformstate-1.yml"
 required:
 - "$schema"
 - labels
