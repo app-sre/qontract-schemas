@@ -17,6 +17,8 @@ properties:
     "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+  name:
+    type: string
   variables:
     type: object
   policies:
@@ -813,6 +815,9 @@ oneOf:
       "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
     identifier:
       type: string
+    name:
+      description: base fqdn of the zone
+      "$ref": "/common-1.json#/definitions/k8sValidContainerName"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
@@ -822,5 +827,6 @@ oneOf:
   required:
   - account
   - identifier
+  - name
 required:
 - provider
