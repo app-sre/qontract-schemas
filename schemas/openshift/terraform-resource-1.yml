@@ -16,7 +16,7 @@ properties:
   account:
     "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
   identifier:
-    "$ref": "/common-1.json#/definitions/longIdentifier"
+    type: string
   variables:
     type: object
   policies:
