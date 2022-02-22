@@ -816,6 +816,7 @@ oneOf:
     identifier:
       type: string
     name:
+      description: base fqdn of the zone
       type: string
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
