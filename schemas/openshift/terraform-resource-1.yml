@@ -817,8 +817,7 @@ oneOf:
       type: string
     name:
       description: base fqdn of the zone
-      type: string
-      format: uri
+      "$ref": "/common-1.json#/definitions/k8sValidContainerName"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
