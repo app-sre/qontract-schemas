@@ -18,11 +18,17 @@
   - { name: pushGatewayCluster, type: Cluster_v1 }
   - { name: alertingServices, type: string, isList: true }
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
+  - { name: ldap, type: LdapSettings_v1, isRequired: true}
 
 - name: SmtpSettings_v1
   fields:
   - { name: mailAddress, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
+
+- name: LdapSettings_v1
+  fields:
+  - { name: serverUrl, type: string, isRequired: true }
+  - { name: baseDn, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
