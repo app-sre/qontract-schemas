@@ -2,6 +2,7 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+description: bucket properties for each integration
 
 additionalProperties: false
 properties:
@@ -14,4 +15,6 @@ properties:
   key:
     type: string
   region:
+    type: string
+  integration:
     type: string
