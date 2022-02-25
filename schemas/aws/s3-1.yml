@@ -15,8 +15,6 @@ properties:
     - s3
     - s3-cloudfront
     - s3-sqs
-  account:
-    "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   identifier:
@@ -105,6 +103,5 @@ properties:
   kms_encryption:
     type: boolean
 required:
-- account
 - identifier
 - defaults

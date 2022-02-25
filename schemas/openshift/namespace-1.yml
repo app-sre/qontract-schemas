@@ -103,7 +103,19 @@ properties:
   terraformResources:
     type: array
     items:
-      "$ref": "/openshift/terraform-resource-1.yml"
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        resources:
+          type: array
+          items:
+            "$ref": "/openshift/terraform-resource-1.yml"
+      required:
+      - account
+      - resources
 
   openshiftServiceAccountTokens:
     type: array
