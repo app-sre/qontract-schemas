@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /openshift/terraform-resource-2.yml
+    - /aws/terraform-resource-2.yml
   provider:
     type: string
   annotations:
