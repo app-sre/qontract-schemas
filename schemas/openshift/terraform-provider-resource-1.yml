@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/terraform-provider-resource-1.yml
+  provider:
+    type: string
+    enum:
+    - aws
+  provisioner:
+    "$ref": "/common-1.json#/definitions/crossref"
+  resources:
+    type: array
+    items:
+      type: object
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - aws
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/aws/terraform-resource-2.yml"
+required:
+- provider
+- provisioner
+- resources

@@ -783,7 +783,16 @@
   - { name: accessLevel, type: string, isRequired: true }
   - { name: default, type: boolean }
 
+- name: TerraformProvisioner_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    fieldMap: {}
+  fields:
+  - { name: name, type: string, isRequired: true }
+
 - name: AWSAccount_v1
+  interface: TerraformProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -993,6 +1002,24 @@
   - { name: path, type: string, isRequired: true }
   - { name: vault_tls_secret_path, type: string }
   - { name: vault_tls_secret_version, type: int }
+
+- name: NamespaceTerraformProviderResource_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      aws: NamespaceTerraformProviderResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: provisioner, type: TerraformProvisioner_v1, isRequired: true, isInterface: true }
+
+- name: NamespaceTerraformProviderResourceAWS_v1
+  interface: NamespaceTerraformProviderResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: provisioner, type: AWSAccount_v1, isRequired: true }
+  - { name: resources, type: NamespaceTerraformResource_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: NamespaceTerraformResource_v1
   isInterface: true
@@ -1482,6 +1509,7 @@
   - { name: sharedResources, type: SharedResources_v1, isList: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedTerraformResources, type: boolean }
+  - { name: terraformProviderResources, type: NamespaceTerraformProviderResource_v1, isList: true, isInterface: true }
   - { name: terraformResources, type: NamespaceTerraformResource_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
