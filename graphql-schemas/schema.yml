@@ -2415,7 +2415,7 @@
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
   - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
-  - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /dependencies/gcp-project-1.yml }
+  - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
   - { name: quay_orgs_v1, type: QuayOrg_v1, isList: true, datafileSchema: /dependencies/quay-org-1.yml }
   - { name: quay_instances_v1, type: QuayInstance_v1, isList: true, datafileSchema: /dependencies/quay-instance-1.yml }
   - { name: jenkins_instances_v1, type: JenkinsInstance_v1, isList: true, datafileSchema: /dependencies/jenkins-instance-1.yml }

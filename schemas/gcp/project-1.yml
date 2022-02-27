@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /dependencies/gcp-project-1.yml
+    - /gcp/project-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
