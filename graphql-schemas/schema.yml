@@ -1019,9 +1019,9 @@
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: AWSAccount_v1, isRequired: true }
-  - { name: resources, type: NamespaceTerraformResource_v1, isRequired: true, isList: true, isInterface: true }
+  - { name: resources, type: NamespaceTerraformResourceAWS_v1, isRequired: true, isList: true, isInterface: true }
 
-- name: NamespaceTerraformResource_v1
+- name: NamespaceTerraformResourceAWS_v1
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1073,7 +1073,7 @@
   - { name: data, type: json }
 
 - name: NamespaceTerraformResourceASG_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1101,7 +1101,7 @@
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
 
 - name: NamespaceTerraformResourceSecretsManager_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1113,7 +1113,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceS3CloudFrontPublicKey_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1125,7 +1125,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceACM_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1138,7 +1138,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceElasticSearch_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1151,7 +1151,7 @@
   - { name: publish_log_types, type: string, isList: true }
 
 - name: NamespaceTerraformResourceRDS_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1171,7 +1171,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceS3_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1195,7 +1195,7 @@
   - { name: assume_role, type: string }
 
 - name: NamespaceTerraformResourceServiceAccount_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1225,7 +1225,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRole_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1238,7 +1238,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceElastiCache_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1257,7 +1257,7 @@
   - { name: queues, type: KeyValue_v1, isRequired: true, isList: true }
 
 - name: NamespaceTerraformResourceSQS_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1274,7 +1274,7 @@
   - { name: tables, type: KeyValue_v1, isRequired: true, isList: true }
 
 - name: NamespaceTerraformResourceDynamoDB_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1286,7 +1286,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceECR_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1300,7 +1300,7 @@
 
 
 - name: NamespaceTerraformResourceS3CloudFront_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1313,7 +1313,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceS3SQS_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1327,7 +1327,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceCloudWatch_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1341,7 +1341,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceKMS_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1354,7 +1354,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceKinesis_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1367,7 +1367,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceALB_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1384,7 +1384,7 @@
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRoute53Zone_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
@@ -1484,7 +1484,7 @@
   - { name: description, type: string, isRequired: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
-  - { name: terraformResources, type: NamespaceTerraformResource_v1, isList: true, isInterface: true }
+  - { name: terraformResources, type: NamespaceTerraformResourceAWS_v1, isList: true, isInterface: true }
 
 - name: Namespace_v1
   fields:
@@ -1510,7 +1510,7 @@
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedTerraformResources, type: boolean }
   - { name: terraformProviderResources, type: NamespaceTerraformProviderResource_v1, isList: true, isInterface: true }
-  - { name: terraformResources, type: NamespaceTerraformResource_v1, isList: true, isInterface: true }
+  - { name: terraformResources, type: NamespaceTerraformResourceAWS_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
 
