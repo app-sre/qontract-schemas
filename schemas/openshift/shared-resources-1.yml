@@ -43,7 +43,7 @@ properties:
   terraformResources:
     type: array
     items:
-      "$ref": "/openshift/terraform-resource-1.yml"
+      "$ref": "/aws/terraform-resource-1.yml"
 
 required:
 - "$schema"
