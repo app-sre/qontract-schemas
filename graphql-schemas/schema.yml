@@ -289,6 +289,7 @@
   - { name: e2eTests, type: string, isList: true }
 
 - name: GcpProject_v1
+  interface: TerraformProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -1010,6 +1011,7 @@
     field: provider
     fieldMap:
       aws: NamespaceTerraformProviderResourceAWS_v1
+      gcp-project: NamespaceTerraformProviderResourceGCPProject_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: TerraformProvisioner_v1, isRequired: true, isInterface: true }
@@ -1020,6 +1022,35 @@
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: AWSAccount_v1, isRequired: true }
   - { name: resources, type: NamespaceTerraformResourceAWS_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: NamespaceTerraformProviderResourceGCPProject_v1
+  interface: NamespaceTerraformProviderResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: provisioner, type: GcpProject_v1, isRequired: true }
+  - { name: resources, type: NamespaceTerraformResourceGCP_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: NamespaceTerraformResourceGCP_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      managed-zone: NamespaceTerraformResourceManagedZone_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: annotations, type: json }
+
+- name: NamespaceTerraformResourceManagedZone_v1
+  interface: NamespaceTerraformResourceGCP_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceAWS_v1
   isInterface: true

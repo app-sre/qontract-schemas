@@ -13,6 +13,7 @@ properties:
     type: string
     enum:
     - aws
+    - gcp-project
   provisioner:
     "$ref": "/common-1.json#/definitions/crossref"
   resources:
@@ -33,6 +34,19 @@ oneOf:
       type: array
       items:
         "$ref": "/aws/terraform-resource-2.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - gcp-project
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/gcp/project-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/gcp/terraform-resource-1.yml"
 required:
 - provider
 - provisioner
