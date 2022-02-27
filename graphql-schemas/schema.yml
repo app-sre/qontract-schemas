@@ -1036,7 +1036,7 @@
     strategy: fieldMap
     field: provider
     fieldMap:
-      managed-zone: NamespaceTerraformResourceManagedZone_v1
+      dns-zone: NamespaceTerraformResourceManagedZone_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
@@ -1078,7 +1078,7 @@
       alb: NamespaceTerraformResourceALB_v1
       secrets-manager: NamespaceTerraformResourceSecretsManager_v1
       asg: NamespaceTerraformResourceASG_v1
-      route53-zone: NamespaceTerraformResourceRoute53Zone_v1
+      dns-zone: NamespaceTerraformResourceRoute53Zone_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }

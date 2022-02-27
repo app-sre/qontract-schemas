@@ -25,7 +25,7 @@ oneOf:
     provider:
       type: string
       enum:
-      - managed-zone
+      - dns-zone
     identifier:
       type: string
     name:
