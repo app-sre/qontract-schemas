@@ -48,6 +48,14 @@ properties:
         type: string
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+  ldap:
+    type: object
+    additionalProperties: false
+    properties:
+      serverUrl:
+        type: string
+      baseDn:
+        type: string
   dependencies:
     type: array
     items:
