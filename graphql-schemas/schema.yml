@@ -1081,6 +1081,8 @@
       route53-zone: NamespaceTerraformResourceRoute53Zone_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  # keeping account as required for backwards compatibility.
+  # as long as we do not query for it, things will work.
   - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
