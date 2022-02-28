@@ -18,7 +18,7 @@
   - { name: pushGatewayCluster, type: Cluster_v1 }
   - { name: alertingServices, type: string, isList: true }
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
-  - { name: ldap, type: LdapSettings_v1, isRequired: true}
+  - { name: ldap, type: LdapSettings_v1, isRequired: false}
 
 - name: SmtpSettings_v1
   fields:
