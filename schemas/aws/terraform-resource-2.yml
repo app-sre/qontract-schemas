@@ -760,7 +760,7 @@ oneOf:
     provider:
       type: string
       enum:
-      - dns-zone
+      - route53-zone
     identifier:
       type: string
     name:
