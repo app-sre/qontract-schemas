@@ -28,7 +28,7 @@ Sub schema definition and validation are made with the `common-1.json/crossdef` 
 
 **IMPORTANT:** A `crossref` is not a common json cross reference schema definition, it just defines a `string` to point to the sub-schema definition file.
 
-### common-1.json
+#### common-1.json
 
 ```json
     "crossref": {
@@ -61,9 +61,9 @@ With the `$schemaRef` attribute, qontract-validator is able to validate that the
 or a inline fragment of json schema definition. If it's a string, `qontract-validator` validates the destination file `$schema` attribute has the correct schema. If it's a json schema snippet, it validates
 the data with a json validator (Draft-06).
 
-Examples:
+### Examples:
 
-### Multiple allowed schemas for a crossref
+#### Multiple allowed schemas for a crossref
 
 What if we want to define a crossref with multiple allowed types? (owned_saas_files case in role-1)
 
