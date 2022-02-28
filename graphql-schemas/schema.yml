@@ -1004,7 +1004,7 @@
   - { name: vault_tls_secret_path, type: string }
   - { name: vault_tls_secret_version, type: int }
 
-- name: NamespaceTerraformProviderResource_v1
+- name: NamespaceTerraformProvisionProvider_v1
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1016,15 +1016,15 @@
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: TerraformProvisioner_v1, isRequired: true, isInterface: true }
 
-- name: NamespaceTerraformProviderResourceAWS_v1
-  interface: NamespaceTerraformProviderResource_v1
+- name: NamespaceTerraformProvisionProviderAWS_v1
+  interface: NamespaceTerraformProvisionProvider_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: AWSAccount_v1, isRequired: true }
   - { name: resources, type: NamespaceTerraformResourceAWS_v1, isRequired: true, isList: true, isInterface: true }
 
-- name: NamespaceTerraformProviderResourceGCPProject_v1
-  interface: NamespaceTerraformProviderResource_v1
+- name: NamespaceTerraformProvisionProviderGCPProject_v1
+  interface: NamespaceTerraformProvisionProvider_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: GcpProject_v1, isRequired: true }
@@ -1540,7 +1540,7 @@
   - { name: sharedResources, type: SharedResources_v1, isList: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedTerraformResources, type: boolean }
-  - { name: terraformProviderResources, type: NamespaceTerraformProviderResource_v1, isList: true, isInterface: true }
+  - { name: terraformProviderResources, type: NamespaceTerraformProvisionProvider_v1, isList: true, isInterface: true }
   - { name: terraformResources, type: NamespaceTerraformResourceAWS_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
