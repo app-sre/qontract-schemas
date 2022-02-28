@@ -101,11 +101,15 @@ properties:
   owned_saas_files:
     type: array
     items:
-      anyOf:
-      - "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/app-sre/saas-file-1.yml"
-      - "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/app-sre/saas-file-2.yml"
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+              - "/app-sre/saas-file-1.yml"
+              - "/app-sre/saas-file-2.yml"
 required:
 - $schema
 - labels
