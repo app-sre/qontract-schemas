@@ -915,13 +915,10 @@
 
 - name: AWSTerraformState_v1
   fields:
-  - { name: terraform_resources, type: AWSTerraformResources_v1, isRequired: true }
-
-- name: AWSTerraformResources_v1
-  fields:
   - { name: bucket, type: string, isRequired: true }
   - { name: key, type: string, isRequired: true }
   - { name: region, type: string, isRequired: true }
+  - { name: integration, type: string, isRequired: true }
 
 - name: ACMDomain_v1
   fields:
