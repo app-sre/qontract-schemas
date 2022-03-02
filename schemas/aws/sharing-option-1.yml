@@ -1,0 +1,43 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+description: define sharing options between aws accounts
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/sharing-options-1.yml
+  provider:
+    type: string
+    description: type of sharing to implement
+    enum:
+    - ami
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  regex:
+    type: string
+    description: regex expression to filter items by
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      description: share AMIs and AMI tags
+      enum:
+      - ami
+    account:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+    regex:
+      type: string
+  required:
+  - provider
+  - account
+  - regex
+required:
+- provider
+- account

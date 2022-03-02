@@ -103,6 +103,10 @@ properties:
     enum:
     - aws
     - aws-us-gov
+  sharing:
+    type: array
+    items:
+      "$ref": "/aws/sharing-option-1.yml"
 required:
 - "$schema"
 - labels
