@@ -101,7 +101,7 @@ properties:
   owned_saas_files:
     type: array
     description: |
-      Saas files owner by the role. All saas files must have an owner.
+      Role owned saas files. All saas files must have an owner.
       This list must accept all supported saas file versions by AppInterface.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
