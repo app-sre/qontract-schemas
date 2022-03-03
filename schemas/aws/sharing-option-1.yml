@@ -21,6 +21,8 @@ properties:
   regex:
     type: string
     description: regex expression to filter items by
+  region:
+    "$ref": "/aws/regions-1.yml#/properties/region"
 oneOf:
 - additionalProperties: false
   properties:
@@ -34,6 +36,8 @@ oneOf:
       "$schemaRef": "/aws/account-1.yml"
     regex:
       type: string
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
   required:
   - provider
   - account
