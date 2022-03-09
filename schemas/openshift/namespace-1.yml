@@ -97,13 +97,16 @@ properties:
     items:
       "$ref": "/openshift/openshift-resource-1.yml"
 
-  managedTerraformResources:
+  managedExternalResources:
     type: boolean
 
-  terraformProviderResources:
+  externalResources:
     type: array
     items:
-      "$ref": "/openshift/terraform-provider-resource-1.yml"
+      "$ref": "/openshift/external-resource-1.yml"
+
+  managedTerraformResources:
+    type: boolean
 
   terraformResources:
     type: array
@@ -138,13 +141,13 @@ dependencies:
         - true
     required:
     - managedTerraformResources
-  terraformProviderResources:
+  externalResources:
     properties:
-      managedTerraformResources:
+      managedExternalResources:
         enum:
         - true
     required:
-    - managedTerraformResources
+    - managedExternalResources
 
 required:
 - "$schema"
