@@ -33,6 +33,8 @@ properties:
     type: object
   assume_role:
     type: object
+  assume_condition:
+    type: object
   inline_policy:
     type: object
   output_resource_name:
@@ -217,6 +219,9 @@ oneOf:
         - AWS
       - required:
         - Service
+    assume_condition:
+      description: condition context keys for IAM and AWS STS
+      type: object
     inline_policy:
       type: object
     output_resource_name:
