@@ -935,7 +935,9 @@
 
 - name: ASGImage_v1
   fields:
-  - { name: id, type: string, isRequired: true }
+  - { name: tag_name, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: ref, type: string, isRequired: true }
 
 - name: NamespaceTerraformResourceSecretsManager_v1
   interface: NamespaceTerraformResource_v1
