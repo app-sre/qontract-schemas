@@ -139,12 +139,6 @@ properties:
       type: string
   image:
     type: object
-    additionalProperties: false
-    properties:
-      id:
-        type: string
-    required:
-    - id
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -792,10 +786,21 @@ oneOf:
       type: object
       additionalProperties: false
       properties:
-        id:
+        tag_name:
+          description: name of tag to use to correlate AMI ID to commit
           type: string
+        url:
+          description: url of source code repository
+          type: string
+          format: uri
+        ref:
+          description: commit or branch name
+          type: string
+          pattern: '^([0-9a-f]{40}|master|main)$'
       required:
-      - id
+      - tag_name
+      - url
+      - ref
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     annotations:
