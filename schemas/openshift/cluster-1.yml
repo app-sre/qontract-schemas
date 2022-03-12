@@ -39,6 +39,7 @@ properties:
         enum:
         - github-org
         - github-org-team
+        - oidc
       org:
         type: string
       team:
@@ -67,6 +68,13 @@ properties:
       - service
       - org
       - team
+    - properties:
+        service:
+          type: string
+        enum:
+        - oidc
+      required:
+      - service
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
