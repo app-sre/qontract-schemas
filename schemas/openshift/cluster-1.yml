@@ -71,8 +71,8 @@ properties:
     - properties:
         service:
           type: string
-        enum:
-        - oidc
+          enum:
+          - oidc
       required:
       - service
   observabilityNamespace:
