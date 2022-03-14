@@ -139,6 +139,13 @@ properties:
       type: string
   image:
     type: object
+    properties:
+      upstream:
+        type: object
+        properties:
+          instance:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/dependencies/jenkins-instance-1.yml"
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -797,6 +804,20 @@ oneOf:
           description: commit or branch name
           type: string
           pattern: '^([0-9a-f]{40}|master|main)$'
+        upstream:
+          description: jenkins instance and job to wait for
+          type: object
+          additionalProperties: false
+          properties:
+            instance:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+            name:
+              description: name of jenkins job to wait for
+              type: string
+          required:
+          - instance
+          - name
       required:
       - tag_name
       - url
