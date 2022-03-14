@@ -204,6 +204,14 @@ properties:
         properties:
           soakDays:
             type: integer
+          mutexes:
+            type: array
+            description: |
+              list of named upgrade mutex locks for this cluster. A cluster needs
+              to acquire all its mutex locks in order to be upgraded. A mutex lock
+              can be held by only one cluster at a time.
+            items:
+              type: string
         oneOf:
         - required:
           - soakDays
