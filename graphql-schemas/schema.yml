@@ -938,6 +938,7 @@
   - { name: tag_name, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: ref, type: string, isRequired: true }
+  - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
 
 - name: NamespaceTerraformResourceSecretsManager_v1
   interface: NamespaceTerraformResource_v1
