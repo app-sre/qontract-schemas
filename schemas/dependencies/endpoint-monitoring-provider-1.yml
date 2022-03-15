@@ -40,6 +40,7 @@ properties:
       properties:
         module:
           type: string
+          format: uri
           description: the blackbox exporter module to use for the endpoint check, e.g. http_2xx
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
@@ -47,6 +48,7 @@ properties:
           description: the namespace where the prometheus Probe CR will be created
         exporterUrl:
           type: string
+          format: uri
           description: the blackbox-exporter URL to use, must be a full scrape URL
       required:
       - module
