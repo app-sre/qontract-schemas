@@ -28,6 +28,7 @@
 
 - name: GithubRepoInvites_v1
   fields:
+  - { name: description, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: LdapSettings_v1

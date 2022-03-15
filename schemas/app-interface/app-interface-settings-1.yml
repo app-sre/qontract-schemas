@@ -52,8 +52,13 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      description:
+        type: string
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - description
+    - credentials
   ldap:
     type: object
     additionalProperties: false
