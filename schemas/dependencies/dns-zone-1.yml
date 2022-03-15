@@ -113,6 +113,9 @@ properties:
               "$schemaRef": "/openshift/namespace-1.yml"
             name:
               "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+          required:
+          - namespace
+          - name
       oneOf:
       - required:
         - records
