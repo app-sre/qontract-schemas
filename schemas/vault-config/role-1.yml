@@ -93,6 +93,105 @@ properties:
       - policies
       - secret_id_bound_cidrs
       - token_bound_cidrs
+    - properties:
+        _type:
+          type: string
+          enum:
+          - oidc
+        allowed_redirect_uris:
+          type: array
+          items:
+            type: string
+        bound_audiences:
+          type: array
+          items:
+            type: string
+        bound_claims:
+          type: object
+        bound_claims_type:
+          type: string
+        bound_subject:
+          type: string
+        claim_mappings:
+          type: object
+        clock_skew_leeway:
+          type: string
+          pattern: '^\d+$'
+        expiration_leeway:
+          type: string
+          pattern: '^\d+$'
+        groups_claim:
+          type: string
+        max_age:
+          type: string
+          pattern: '^\d+$'
+        not_before_leeway:
+          type: string
+          pattern: '^\d+$'
+        oidc_scopes:
+          type: array
+          items:
+            type: string
+        role_type:
+          type: string
+          enum:
+          - oidc
+          - jwt
+        token_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_max_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_explicit_max_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_type:
+          type: string
+        token_period:
+          type: string
+          pattern: '^\d+$'
+        token_policies:
+          type: array
+          items:
+            type: string
+        token_bound_cidrs:
+          type: array
+          items:
+            type: string
+        token_no_default_policy:
+          type: boolean
+        token_num_uses:
+          type: string
+          pattern: '^\d+$'
+        user_claim:
+          type: string
+        verbose_oidc_logging:
+          type: boolean
+      required:
+      - allowed_redirect_uris
+      - bound_audiences
+      - bound_claims
+      - bound_claims_type
+      - bound_subject
+      - claim_mappings
+      - clock_skew_leeway
+      - expiration_leeway
+      - groups_claim
+      - max_age
+      - not_before_leeway
+      - oidc_scopes
+      - token_ttl
+      - token_max_ttl
+      - token_explicit_max_ttl
+      - token_type
+      - token_period
+      - token_policies
+      - token_bound_cidrs
+      - token_no_default_policy
+      - token_num_uses
+      - user_claim
+      - verbose_oidc_logging
     required:
     - _type
 required:
