@@ -103,11 +103,23 @@ properties:
         _target_cluster:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
+        _target_namespace_zone:
+          type: object
+          description: a namespace and a route53 zone name provisioned within that namespace
+          additionalProperties: false
+          properties:
+            namespace:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/openshift/namespace-1.yml"
+            name:
+              "$ref": "/common-1.json#/definitions/k8sValidContainerName"
       oneOf:
       - required:
         - records
       - required:
         - _target_cluster
+      - required:
+        - _target_namespace_zone
       - required:
         - alias
       required:
