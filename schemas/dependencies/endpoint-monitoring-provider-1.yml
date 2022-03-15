@@ -47,7 +47,7 @@ properties:
           description: the namespace where the prometheus Probe CR will be created
         exporterUrl:
           type: string
-          description: the blackbox-exporter URL to use, must be a full URL including potential URL paths
+          description: the blackbox-exporter URL to use, must be a full scrape URL
       required:
       - module
       - namespace
@@ -63,7 +63,7 @@ properties:
         description: the namespace where the prometheus Probe CR will be created
       exporterUrl:
         type: string
-        description: the signalfx-prometheus-exporter URL to use, must be a full URL including potential URL paths
+        description: the signalfx-prometheus-exporter URL to use, must be a full scrape URL
       targetFilterLabel:
         type: string
         description: the signalfx label that holds the target value to be filtered on
