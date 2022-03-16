@@ -111,7 +111,7 @@ properties:
   terraformState:
     type: array
     description: key information for a terraform's state location and integration
-    terraform_resources:
+    items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/terraform-state-1.yml"
 required:

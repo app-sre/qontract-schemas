@@ -18,3 +18,4 @@ properties:
     type: string
   integration:
     type: string
+    description: terraform state integration file

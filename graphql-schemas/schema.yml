@@ -808,6 +808,7 @@
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: AWSTerraformState_v1, isList: true }
+  - { name: terraformState, type: AWSTerraformState_v1, isList: true, isRequired: false }
   - name: ecrs
     type: AWSECR_v1
     isList: true
