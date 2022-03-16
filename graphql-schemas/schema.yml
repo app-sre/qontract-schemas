@@ -504,6 +504,7 @@
 - name: ClusterUpgradePolicyConditions_v1
   fields:
   - { name: soakDays, type: int }
+  - { name: mutexes, type: string, isList: true }
 
 - name: ClusterUpgradePolicy_v1
   fields:
