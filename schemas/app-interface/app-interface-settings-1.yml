@@ -48,6 +48,19 @@ properties:
         type: string
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+  githubRepoInvites:
+    type: object
+    additionalProperties: false
+    properties:
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Configuration for github-repo-invites integration.
+      Currently contains information for fetching the
+      token of the github app-sre bot for accepting
+      invitations to repositories.
+    required:
+    - credentials
   ldap:
     type: object
     additionalProperties: false
