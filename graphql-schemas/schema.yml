@@ -2229,6 +2229,11 @@
   - { name: db_user, type: string }
   - { name: db_password, type: string }
 
+- name: DnsNamespaceZone_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+
 - name: DnsRecordHealthcheck_v1
   fields:
   - { name: fqdn, type: string }
@@ -2260,6 +2265,7 @@
   - { name: records, type: string, isList: true }
   - { name: _healthcheck, type: DnsRecordHealthcheck_v1 }
   - { name: _target_cluster, type: Cluster_v1 }
+  - { name: _target_namespace_zone, type: DnsNamespaceZone_v1 }
 
 - name: DnsZone_v1
   fields:
