@@ -1624,6 +1624,7 @@
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: resourceTemplates, type: SaasResourceTemplate_v1, isRequired: true, isList: true }
   - { name: imagePatterns, type: string, isRequired: true, isList: true }
   - { name: takeover, type: boolean }
@@ -1705,6 +1706,7 @@
   - { name: provider, type: string }
   - { name: hash_length, type: int }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: targets, type: SaasResourceTemplateTarget_v1, isRequired: true, isList: true }
 
 - name: SaasResourceTemplate_v2
