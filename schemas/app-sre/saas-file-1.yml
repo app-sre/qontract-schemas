@@ -58,6 +58,11 @@ properties:
         "$ref": "/common-1.json#/definitions/vaultSecret"
   parameters:
     type: object
+  secretParameters:
+    type: array
+    description: saas file level parameters from vault secrets
+    items:
+      "$ref": "/app-sre/vault-secret-parameter-1.yml"
   resourceTemplates:
     type: array
     items:
@@ -81,6 +86,11 @@ properties:
           type: integer
         parameters:
           type: object
+        secretParameters:
+          type: array
+          description: resource template level parameters from vault secrets
+          items:
+            "$ref": "/app-sre/vault-secret-parameter-1.yml"
         targets:
           type: array
           items:
@@ -129,6 +139,11 @@ properties:
                   - subscribe
               parameters:
                 type: object
+              secretParameters:
+                type: array
+                description: target level parameters from vault secrets
+                items:
+                  "$ref": "/app-sre/vault-secret-parameter-1.yml"
               upstream:
                 type: string
               disable:

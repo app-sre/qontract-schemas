@@ -1542,6 +1542,7 @@
   - { name: description, type: string, isRequired: true }
   - { name: product, type: Product_v1, isRequired: true }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: dependsOn, type: Environment_v1 }
   - name: namespaces
     type: Namespace_v1
@@ -1651,6 +1652,7 @@
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: resourceTemplates, type: SaasResourceTemplate_v2, isRequired: true, isList: true }
   - { name: imagePatterns, type: string, isRequired: true, isList: true }
   - { name: takeover, type: boolean }
@@ -1713,6 +1715,7 @@
   - { name: provider, type: string }
   - { name: hash_length, type: int }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: targets, type: SaasResourceTemplateTarget_v2, isRequired: true, isList: true }
 
 - name: SaasResourceTemplateTarget_v1
@@ -1721,6 +1724,7 @@
   - { name: ref, type: string, isRequired: true }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: string }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
@@ -1731,6 +1735,7 @@
   - { name: ref, type: string, isRequired: true }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
@@ -1746,6 +1751,11 @@
   - { name: publish, type: string, isList: true }
   - { name: subscribe, type: string, isList: true }
   - { name: promotion_data, type: PromotionData_v1, isList: true }
+
+- name: SaasSecretParameters_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: secret, type: VaultSecret_v1, isRequired: true }
 
 - name: PromotionData_v1
   fields:
