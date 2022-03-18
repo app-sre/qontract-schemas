@@ -1972,6 +1972,22 @@
   - { name: settings, type: VaultAuthSettings_v1 }
   - { name: policy_mappings, type: VaultPolicyMapping_v1, isList: true }
 
+- name: VaultEntityAlias_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: auth_type, type: string, isRequired: true }
+  - { name: custom_metadata, type: json }
+
+- name: VaultEntity_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: mount, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: policies, type: string, isList: true, isRequired: true }
+  - { name: metadata, type: json }
+  - { name: disabled, type: boolean }
+  - { name: aliases, type: VaultEntityAlias_v1, isList: true, isRequired: true }
+
 - name: PermissionQuayOrgTeam_v1
   interface: Permission_v1
   fields:
