@@ -13,9 +13,6 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
-  mount:
-    type: string
-    pattern: '.+\/$'
   type:
     type: string
     enum:
@@ -49,7 +46,6 @@ required:
 - "$schema"
 - labels
 - name
-- mount
 - type
 - policies
 - aliases

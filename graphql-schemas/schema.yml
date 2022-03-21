@@ -1966,7 +1966,6 @@
 - name: VaultEntity_v1
   fields:
   - { name: name, type: string, isRequired: true }
-  - { name: mount, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: policies, type: string, isList: true, isRequired: true }
   - { name: metadata, type: json }
