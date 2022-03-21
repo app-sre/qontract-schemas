@@ -2243,6 +2243,7 @@
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
   - { name: vault_roles_v1, type: VaultRole_v1, isList: true, datafileSchema: /vault-config/role-1.yml }
   - { name: vault_policies_v1, type: VaultPolicy_v1, isList: true, datafileSchema: /vault-config/policy-1.yml }
+  - { name: vault_entities_v1, type: VaultEntity_v1, isList: true, datafileSchema: /vault-config/entity-1.yml }
   - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
