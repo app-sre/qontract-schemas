@@ -170,17 +170,7 @@ properties:
           type: boolean
       required:
       - allowed_redirect_uris
-      - bound_audiences
-      - bound_claims
-      - bound_claims_type
-      - bound_subject
-      - claim_mappings
-      - clock_skew_leeway
-      - expiration_leeway
-      - groups_claim
-      - max_age
-      - not_before_leeway
-      - oidc_scopes
+      - role_type
       - token_ttl
       - token_max_ttl
       - token_explicit_max_ttl
@@ -191,7 +181,6 @@ properties:
       - token_no_default_policy
       - token_num_uses
       - user_claim
-      - verbose_oidc_logging
     required:
     - _type
 required:

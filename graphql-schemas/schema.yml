@@ -215,17 +215,17 @@
   fields:
   - { name: _type, type: string, isRequired: true }
   - { name: allowed_redirect_uris, type: string, isList: true, isRequired: true }
-  - { name: bound_audiences, type: string, isList: true, isRequired: true}
-  - { name: bound_claims, type: json, isRequired: true}
-  - { name: bound_claims_type, type: string, isRequired: true}
-  - { name: bound_subject, type: string, isRequired: true}
-  - { name: claim_mappings, type: json, isRequired: true}
-  - { name: clock_skew_leeway, type: string, isRequired: true}
-  - { name: expiration_leeway, type: string, isRequired: true}
-  - { name: groups_claim, type: string, isRequired: true}
-  - { name: max_age, type: string, isRequired: true}
-  - { name: not_before_leeway, type: string, isRequired: true}
-  - { name: oidc_scopes, type: string, isList: true, isRequired: true}
+  - { name: bound_audiences, type: string, isList: true }
+  - { name: bound_claims, type: json }
+  - { name: bound_claims_type, type: string }
+  - { name: bound_subject, type: string }
+  - { name: claim_mappings, type: json }
+  - { name: clock_skew_leeway, type: string }
+  - { name: expiration_leeway, type: string }
+  - { name: groups_claim, type: string }
+  - { name: max_age, type: string }
+  - { name: not_before_leeway, type: string }
+  - { name: oidc_scopes, type: string, isList: true }
   - { name: role_type, type: string, isRequired: true }
   - { name: token_ttl, type: string, isRequired: true }
   - { name: token_max_ttl, type: string, isRequired: true }
@@ -237,7 +237,7 @@
   - { name: token_no_default_policy, type: boolean, isRequired: true }
   - { name: token_num_uses, type: string, isRequired: true }
   - { name: user_claim, type: string, isRequired: true }
-  - { name: verbose_oidc_logging, type: boolean, isRequired: true}
+  - { name: verbose_oidc_logging, type: boolean }
 
 - name: VaultRole_v1
   fields:
