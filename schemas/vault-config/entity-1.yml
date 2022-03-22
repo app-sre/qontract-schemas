@@ -35,6 +35,8 @@ properties:
           enum:
           - oidc
           - approle
+          - github
+          - userpass
         name:
           type: string
         custom_metadata:
