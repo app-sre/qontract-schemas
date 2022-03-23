@@ -2420,6 +2420,7 @@
     field: provider
     fieldMap:
       blackbox-exporter: EndpointMonitoringProviderBlackboxExporter_v1
+      signalfx: EndpointMonitoringProviderSignalFx_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2450,3 +2451,23 @@
   - { name: module, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: exporterUrl, type: string, isRequired: true }
+
+- name: EndpointMonitoringProviderSignalFx_v1
+  interface: EndpointMonitoringProvider_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: provider, type: string, isRequired: true }
+  - { name: metricLabels, type: json }
+  - { name: timeout, type: string }
+  - { name: checkInterval, type: string }
+  - { name: signalFx, type: EndpointMonitoringProviderSignalFxSettings_v1, isRequired: true }
+
+- name: EndpointMonitoringProviderSignalFxSettings_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: exporterUrl, type: string, isRequired: true }
+  - { name: targetFilterLabel, type: string, isRequired: true }

@@ -20,6 +20,7 @@ properties:
     type: string
     enum:
     - blackbox-exporter
+    - signalfx
     description: The provider defines which monitoring implementation will be used for endpoints
   timeout:
     type: string
@@ -46,11 +47,32 @@ properties:
           description: the namespace where the prometheus Probe CR will be created
         exporterUrl:
           type: string
-          description: the blackbox-exporter URL to use, must be a full URL including potential URL paths
+          format: uri
+          description: the blackbox-exporter URL to use, must be a full scrape URL
       required:
       - module
       - namespace
       - exporterUrl
+  signalFx:
+    type: object
+    description: signalfx exporter specific configuration options
+    additionalProperties: false
+    properties:
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+        description: the namespace where the prometheus Probe CR will be created
+      exporterUrl:
+        type: string
+        format: uri
+        description: the signalfx-prometheus-exporter URL to use, must be a full scrape URL
+      targetFilterLabel:
+        type: string
+        description: the signalfx label that holds the target value to be filtered on
+    required:
+    - namespace
+    - exporterUrl
+    - targetFilterLabel
 oneOf:
 - properties:
     provider:
@@ -71,8 +93,31 @@ oneOf:
       required:
       - module
       - namespace
+      - exporterUrl
   required:
   - blackboxExporter
+- properties:
+    provider:
+      type: string
+      enum:
+      - signalfx
+    signalFx:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        exporterUrl:
+          type: string
+        targetFilterLabel:
+          type: string
+      required:
+      - namespace
+      - exporterUrl
+      - targetFilterLabel
+  required:
+  - signalFx
 required:
 - "$schema"
 - labels
