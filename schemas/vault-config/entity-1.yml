@@ -20,7 +20,14 @@ properties:
   policies:
     type: array
     items:
-      type: string
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+            - /vault-config/policy-1.yml
   metadata:
     type: object
   disabled:

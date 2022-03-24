@@ -1982,7 +1982,7 @@
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
-  - { name: policies, type: string, isList: true, isRequired: true }
+  - { name: policies, type: VaultPolicy_v1, isList: true, isRequired: true }
   - { name: metadata, type: json }
   - { name: disabled, type: boolean }
   - { name: aliases, type: VaultEntityAlias_v1, isList: true, isRequired: true }
