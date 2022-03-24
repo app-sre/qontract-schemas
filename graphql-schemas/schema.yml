@@ -665,7 +665,7 @@
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isUnique: true, isSearchable: true, isRequired: true }
   - { name: description, type: string }
   - { name: auth, type: ClusterAuth_v1, isInterface: true }
   - { name: observabilityNamespace, type: Namespace_v1 }
