@@ -1,0 +1,28 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/vault-permission-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  policies:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+            - /vault-config/policy-1.yml
