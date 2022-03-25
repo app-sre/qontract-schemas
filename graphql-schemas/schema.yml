@@ -1855,12 +1855,28 @@
   - { name: deployResources, type: DeployResources_v1 }
 
 - name: OidcPermission_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: service
+    fieldMap:
+      vault: OidcPermissionVault_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
+  - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
-  - { name: policies, type: VaultPolicy_v1, isList: true, isRequired: true }
+
+- name: OidcPermissionVault_v1
+  interface: OidcPermission_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: service, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: Permission_v1
   isInterface: true
@@ -2084,7 +2100,7 @@
   - { name: description, type: string }
   - { name: expirationDate, type: string }
   - { name: permissions, type: Permission_v1, isList: true, isInterface: true }
-  - { name: oidc_permissions, type: OidcPermission_v1, isList: true }
+  - { name: oidc_permissions, type: OidcPermission_v1, isList: true, isInterface: true }
   - { name: tag_on_cluster_updates, type: boolean }
   - { name: access, type: Access_v1, isList: true }
   - { name: aws_groups, type: AWSGroup_v1, isList: true }

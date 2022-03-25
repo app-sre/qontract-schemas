@@ -13,9 +13,11 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+  service:
+    type: string
   description:
     type: string
-  policies:
+  vault_policies:
     type: array
     items:
       "$ref": "/common-1.json#/definitions/crossref"
@@ -26,3 +28,26 @@ properties:
             type: string
             enum:
             - /vault-config/policy-1.yml
+oneOf:
+- properties:
+    service:
+      enum:
+      - vault
+    vault_policies:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef":
+          type: object
+          properties:
+            '$schema':
+              type: string
+              enum:
+              - /vault-config/policy-1.yml
+  required:
+  - vault_policies
+required:
+- $schema
+- name
+- description
+- service
