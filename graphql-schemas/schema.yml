@@ -378,7 +378,7 @@
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
-  - { name: mappings, type: SeverityPriorityMapping_v1, isRequired: true }
+  - { name: mappings, type: SeverityPriorityMapping_v1, isList: true, isRequired: true }
 
 - name: JiraBoard_v1
   fields:
