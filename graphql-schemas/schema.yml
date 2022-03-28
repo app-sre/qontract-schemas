@@ -1649,7 +1649,7 @@
   - { name: description, type: string, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }
   - { name: pipelinesProvider, type: PipelinesProvider_v1, isRequired: true, isInterface: true }
-  - { name: slack, type: SlackOutput_v1, isRequired: true }
+  - { name: slack, type: SlackOutput_v1 }
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
