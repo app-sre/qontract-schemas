@@ -366,6 +366,20 @@
   - { name: serverUrl, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
+- name: SeverityPriorityMapping_v1
+  fields:
+  - { name: severity, type: string, isRequired: true }
+  - { name: priority, type: string, isRequired: true }
+
+- name: JiraSeverityPriorityMappings_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: mappings, type: SeverityPriorityMapping_v1, isRequired: true }
+
 - name: JiraBoard_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -374,6 +388,7 @@
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string, isRequired: true }
   - { name: server, type: JiraServer_v1, isRequired: true }
+  - { name: severityPriorityMappings, type: JiraSeverityPriorityMappings_v1, isRequired: true }
   - { name: slack, type: SlackOutput_v1 }
 
 - name: SendGridAccount_v1
