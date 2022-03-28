@@ -1,0 +1,120 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/status-provider-1.yml
+  provider:
+    type: string
+  prometheusAlerts:
+    type: object
+    additionalProperties: false
+    properties:
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+      matchers:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            matchExpression:
+              type: object
+              additionalProperties: false
+              properties:
+                alert:
+                  type: string
+                labels:
+                  "$ref": "/common-1.json#/definitions/labels"
+            componentStatus:
+              type: string
+          required:
+          - matchExpression
+          - componentStatus
+    required:
+    - namespace
+    - matchers
+  manual:
+    type: object
+    additionalProperties: false
+    properties:
+      componentStatus:
+        type: string
+      from:
+        type: string
+        format: date-time
+      until:
+        type: string
+        format: date-time
+    required:
+    - componentStatus
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - prometheus-alerts
+    prometheusAlerts:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        matchers:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              matchExpression:
+                type: object
+                additionalProperties: false
+                properties:
+                  alert:
+                    type: string
+                  labels:
+                    "$ref": "/common-1.json#/definitions/labels"
+              componentStatus:
+                type: string
+            required:
+            - matchExpression
+            - componentStatus
+      required:
+      - namespace
+      - matchers
+  required:
+  - prometheusAlerts
+
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - manual
+    manual:
+      type: object
+      additionalProperties: false
+      properties:
+        componentStatus:
+          type: string
+        from:
+          type: string
+          format: date-time
+        until:
+          type: string
+          format: date-time
+      required:
+      - componentStatus
+  required:
+  - manual
+
+required:
+- provider
