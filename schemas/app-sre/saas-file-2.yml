@@ -200,7 +200,6 @@ required:
 - description
 - app
 - pipelinesProvider
-- slack
 - managedResourceTypes
 - resourceTemplates
 - imagePatterns
