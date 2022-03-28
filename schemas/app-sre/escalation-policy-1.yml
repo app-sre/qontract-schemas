@@ -48,6 +48,7 @@ properties:
     required:
     - slackUserGroup
     - email
+    - jiraBoard
 required:
 - name
 - description
