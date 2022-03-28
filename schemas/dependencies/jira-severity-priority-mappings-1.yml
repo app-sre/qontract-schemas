@@ -29,6 +29,9 @@ properties:
         priority:
           type: string
           description: ticket priority
+      required:
+      - severity
+      - priority
 required:
 - "$schema"
 - labels
