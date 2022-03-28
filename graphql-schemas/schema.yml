@@ -1996,21 +1996,6 @@
   - { name: settings, type: VaultAuthSettings_v1 }
   - { name: policy_mappings, type: VaultPolicyMapping_v1, isList: true }
 
-- name: VaultEntityAlias_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: auth_type, type: string, isRequired: true }
-  - { name: custom_metadata, type: json }
-
-- name: VaultEntity_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: type, type: string, isRequired: true }
-  - { name: policies, type: VaultPolicy_v1, isList: true, isRequired: true }
-  - { name: metadata, type: json }
-  - { name: disabled, type: boolean }
-  - { name: aliases, type: VaultEntityAlias_v1, isList: true, isRequired: true }
-
 - name: PermissionQuayOrgTeam_v1
   interface: Permission_v1
   fields:
@@ -2267,7 +2252,6 @@
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
   - { name: vault_roles_v1, type: VaultRole_v1, isList: true, datafileSchema: /vault-config/role-1.yml }
   - { name: vault_policies_v1, type: VaultPolicy_v1, isList: true, datafileSchema: /vault-config/policy-1.yml }
-  - { name: vault_entities_v1, type: VaultEntity_v1, isList: true, datafileSchema: /vault-config/entity-1.yml }
   - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
