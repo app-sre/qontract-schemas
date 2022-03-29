@@ -1,0 +1,40 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+description: mappings between alert severities and jira ticket priorities
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/jira-severity-priority-mappings-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  mappings:
+    type: array
+    items:
+      type: object
+      description: a mapping between an alert severity to a ticket priority
+      additionalProperties: false
+      properties:
+        severity:
+          type: string
+          description: alert severity
+        priority:
+          type: string
+          description: ticket priority
+      required:
+      - severity
+      - priority
+required:
+- "$schema"
+- labels
+- name
+- description
+- mappings
