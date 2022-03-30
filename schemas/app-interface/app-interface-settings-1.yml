@@ -100,9 +100,6 @@ properties:
       properties:
         name:
           type: string
-          enum:
-          - app-interface-production-dev-access
-          - app-interface-production-cicd-access
         secret:
           "$ref": "/common-1.json#/definitions/vaultSecret"
       required:
