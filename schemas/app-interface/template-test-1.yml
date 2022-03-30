@@ -1,0 +1,40 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+description: a specification for a template test
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/template-test-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  resource:
+    "$ref": "/openshift/openshift-resource-1.yml"
+    description: path to resource template to be tested
+  parent:
+    type: string
+    description: the object containing the resource (usually a namespace)
+  data:
+    type: string
+    description: graphql data to use for templating
+  fixture:
+    type: string
+    description: the exected output of the templating to compare to
+required:
+- "$schema"
+- labels
+- name
+- description
+- resource
+- parent
+- data
+- fixture
