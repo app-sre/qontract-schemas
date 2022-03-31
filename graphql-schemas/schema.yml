@@ -2263,7 +2263,7 @@
   - { name: resource, type: NamespaceOpenshiftResource_v1, isRequired: true, isInterface: true }
   - { name: parent, type: string, isRequired: true }
   - { name: data, type: string, isRequired: true }
-  - { name: fixture, type: string, isRequired: true }
+  - { name: expected, type: string, isRequired: true }
 
 - name: Query
   fields:

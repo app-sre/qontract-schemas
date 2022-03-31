@@ -26,7 +26,7 @@ properties:
   data:
     type: string
     description: graphql data to use for templating
-  fixture:
+  expected:
     type: string
     description: the exected output of the templating to compare to
 required:
@@ -37,4 +37,4 @@ required:
 - resource
 - parent
 - data
-- fixture
+- expected
