@@ -22,6 +22,11 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/permission-1.yml"
+  oidc_permissions:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/oidc-permission-1.yml"
   tag_on_cluster_updates:
     type: boolean
   access:

@@ -1,0 +1,53 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/oidc-permission-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  service:
+    type: string
+  description:
+    type: string
+  vault_policies:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+            - /vault-config/policy-1.yml
+oneOf:
+- properties:
+    service:
+      enum:
+      - vault
+    vault_policies:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef":
+          type: object
+          properties:
+            '$schema':
+              type: string
+              enum:
+              - /vault-config/policy-1.yml
+  required:
+  - vault_policies
+required:
+- $schema
+- name
+- description
+- service
