@@ -148,6 +148,17 @@
       "type": "string",
       "description": "Kubernetes resource (request, limit) quantity",
       "pattern": "^([+-]?[0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$"
+    },
+    "statusPageStatus": {
+      "type": "string",
+      "description": "a list of supported status page component status",
+      "enum": [
+        "operational",
+        "under_maintenance",
+        "degraded_performance",
+        "partial_outage",
+        "major_outage"
+      ]
     }
   }
 }

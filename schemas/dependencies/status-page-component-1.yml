@@ -28,6 +28,9 @@ properties:
     type: array
     items:
       "$ref": "/dependencies/status-provider-1.yml"
+    description: |
+      a list of providers that can influence the status of this
+      status page component
 
 required:
 - "$schema"

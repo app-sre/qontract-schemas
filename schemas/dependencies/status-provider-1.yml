@@ -33,7 +33,7 @@ properties:
                 labels:
                   "$ref": "/common-1.json#/definitions/labels"
             componentStatus:
-              type: string
+              "$ref": "/common-1.json#/definitions/statusPageStatus"
           required:
           - matchExpression
           - componentStatus
@@ -63,6 +63,7 @@ oneOf:
       - prometheus-alerts
     prometheusAlerts:
       type: object
+      description: config options for the 'prometheus-alerts' status provider
       additionalProperties: false
       properties:
         namespace:
@@ -70,6 +71,10 @@ oneOf:
           "$schemaRef": "/openshift/namespace-1.yml"
         matchers:
           type: array
+          description: |
+            a list of prometheus alert matchers (alertname and labels) and a
+            corresponding status that should be applied to a component if such
+            a metric was found
           items:
             type: object
             additionalProperties: false
@@ -80,10 +85,15 @@ oneOf:
                 properties:
                   alert:
                     type: string
+                    description: the alert name to match on
                   labels:
                     "$ref": "/common-1.json#/definitions/labels"
+                    description: the alert labels to match on
               componentStatus:
                 type: string
+                description: |
+                  the status to apply to the status page component if this a
+                  matching prometheus alert was found
             required:
             - matchExpression
             - componentStatus
@@ -101,16 +111,20 @@ oneOf:
       - manual
     manual:
       type: object
+      description: config options for the 'manual' status provider
       additionalProperties: false
       properties:
         componentStatus:
-          type: string
+          "$ref": "/common-1.json#/definitions/statusPageStatus"
+          description: the status to apply to the status page component
         from:
           type: string
           format: date-time
+          description: an optional start date to activate this provider
         until:
           type: string
           format: date-time
+          description: an optional start date to deactivate this provider
       required:
       - componentStatus
   required:
