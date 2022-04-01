@@ -26,9 +26,9 @@ properties:
   data:
     type: string
     description: graphql data to use for templating
-  expected:
+  expectedResult:
     type: string
-    description: the exected output of the templating to compare to
+    description: the exected result of the templating to compare to
 required:
 - "$schema"
 - labels
@@ -37,4 +37,4 @@ required:
 - resource
 - parent
 - data
-- expected
+- expectedResult
