@@ -1,0 +1,43 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/terraform-output-format-1.yml
+  provider:
+    type: string
+    enum:
+    - generic-secret
+  data:
+    type: object
+    additionalProperties: false
+    patternProperties: {
+      "^[a-zA-Z0-9_]{0,253}$": {
+        "type": "string"
+      }
+    }
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - generic-secret
+    data:
+      type: object
+      additionalProperties: false
+      patternProperties: {
+        "^[a-zA-Z0-9_]{0,253}$": {
+          "type": "string"
+        }
+      }
+      description: |
+        the data to use for the secret. the field values can use the
+        terraform output variables as jinja2 placeholders
+  required:
+  - provider
