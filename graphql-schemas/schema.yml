@@ -996,7 +996,24 @@
   - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+
+- name: NamespaceTerraformResourceOutputFormat_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      generic-secret: NamespaceTerraformResourceGenericSecretOutputFormat_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: NamespaceTerraformResourceGenericSecretOutputFormat_v1
+  interface: NamespaceTerraformResourceOutputFormat_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: data, type: json }
 
 - name: NamespaceTerraformResourceASG_v1
   interface: NamespaceTerraformResource_v1
@@ -1010,6 +1027,7 @@
   - { name: variables, type: json }
   - { name: image, type: ASGImage_v1, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: CloudinitConfig_v1
@@ -1034,6 +1052,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: secret, type: VaultSecret_v1 }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceS3CloudFrontPublicKey_v1
@@ -1045,6 +1064,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: secret, type: VaultSecret_v1 }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceACM_v1
@@ -1057,6 +1077,7 @@
   - { name: secret, type: VaultSecret_v1 }
   - { name: domain, type: ACMDomain_v1 }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceElasticSearch_v1
@@ -1068,6 +1089,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: publish_log_types, type: string, isList: true }
 
@@ -1082,6 +1104,7 @@
   - { name: parameter_group, type: string }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_db_name, type: string }
   - { name: reset_password, type: string }
   - { name: enhanced_monitoring, type: boolean }
@@ -1103,6 +1126,7 @@
   - { name: s3_events, type: string, isList: true }
   - { name: bucket_policy, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
 
@@ -1122,6 +1146,7 @@
   - { name: policies, type: string, isList: true }
   - { name: user_policy, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: aws_infrastructure_access, type: NamespaceTerraformResourceServiceAccountAWSInfrastructureAccess_v1 }
   - { name: annotations, type: json }
 
@@ -1140,6 +1165,7 @@
   - { name: assume_condition, type: json }
   - { name: inline_policy, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceElastiCache_v1
@@ -1153,6 +1179,7 @@
   - { name: region, type: string }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: SQSQueuesSpecs_v1
@@ -1168,6 +1195,7 @@
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: specs, type: SQSQueuesSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
 
@@ -1184,6 +1212,7 @@
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: specs, type: DynamoDBTableSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
 
@@ -1195,6 +1224,7 @@
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
   - { name: public, type: boolean }
   - { name: annotations, type: json }
@@ -1209,6 +1239,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
 
@@ -1222,6 +1253,7 @@
   - { name: kms_encryption, type: boolean }
   - { name: defaults, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
 
@@ -1236,6 +1268,7 @@
   - { name: es_identifier, type: string }
   - { name: filter_pattern, type: string }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceKMS_v1
@@ -1248,6 +1281,7 @@
   - { name: defaults, type: string, isRequired: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceKinesis_v1
@@ -1260,6 +1294,7 @@
   - { name: defaults, type: string, isRequired: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceALB_v1
@@ -1276,6 +1311,7 @@
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRoute53Zone_v1
@@ -1287,6 +1323,7 @@
   - { name: identifier, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceALBTargets_v1
