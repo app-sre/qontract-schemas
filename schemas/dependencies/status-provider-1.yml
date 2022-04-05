@@ -1,0 +1,134 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/status-provider-1.yml
+  provider:
+    type: string
+  prometheusAlerts:
+    type: object
+    additionalProperties: false
+    properties:
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+      matchers:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            matchExpression:
+              type: object
+              additionalProperties: false
+              properties:
+                alert:
+                  type: string
+                labels:
+                  "$ref": "/common-1.json#/definitions/labels"
+            componentStatus:
+              "$ref": "/common-1.json#/definitions/statusPageStatus"
+          required:
+          - matchExpression
+          - componentStatus
+    required:
+    - namespace
+    - matchers
+  manual:
+    type: object
+    additionalProperties: false
+    properties:
+      componentStatus:
+        type: string
+      from:
+        type: string
+        format: date-time
+      until:
+        type: string
+        format: date-time
+    required:
+    - componentStatus
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - prometheus-alerts
+    prometheusAlerts:
+      type: object
+      description: config options for the 'prometheus-alerts' status provider
+      additionalProperties: false
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        matchers:
+          type: array
+          description: |
+            a list of prometheus alert matchers (alertname and labels) and a
+            corresponding status that should be applied to a component if such
+            a metric was found
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              matchExpression:
+                type: object
+                additionalProperties: false
+                properties:
+                  alert:
+                    type: string
+                    description: the alert name to match on
+                  labels:
+                    "$ref": "/common-1.json#/definitions/labels"
+                    description: the alert labels to match on
+              componentStatus:
+                type: string
+                description: |
+                  the status to apply to the status page component if this a
+                  matching prometheus alert was found
+            required:
+            - matchExpression
+            - componentStatus
+      required:
+      - namespace
+      - matchers
+  required:
+  - prometheusAlerts
+
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - manual
+    manual:
+      type: object
+      description: config options for the 'manual' status provider
+      additionalProperties: false
+      properties:
+        componentStatus:
+          "$ref": "/common-1.json#/definitions/statusPageStatus"
+          description: the status to apply to the status page component
+        from:
+          type: string
+          format: date-time
+          description: an optional start date to activate this provider
+        until:
+          type: string
+          format: date-time
+          description: an optional start date to deactivate this provider
+      required:
+      - componentStatus
+  required:
+  - manual
+
+required:
+- provider

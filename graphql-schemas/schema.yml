@@ -2483,6 +2483,7 @@
   - { name: instructions, type: string, isRequired: true }
   - { name: page, type: StatusPage_v1, isRequired: true }
   - { name: groupName, type: string }
+  - { name: status, type: StatusProvider_v1, isList: true, isInterface: true }
   - name: apps
     type: App_v1
     isList: true
@@ -2548,3 +2549,47 @@
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: exporterUrl, type: string, isRequired: true }
   - { name: targetFilterLabel, type: string, isRequired: true }
+
+- name: StatusProvider_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      prometheus-alerts: PrometheusAlertsStatusProvider_v1
+      manual: ManualStatusProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: PrometheusAlertsStatusProvider_v1
+  interface: StatusProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: prometheusAlerts, type: PrometheusAlertsStatusProviderConfig_v1, isRequired: true }
+
+- name: PrometheusAlertsStatusProviderConfig_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isList: true }
+  - { name: matchers, type: PrometheusAlertMatcher_v1, isList: true }
+
+- name: PrometheusAlertMatcher_v1
+  fields:
+  - { name: matchExpression, type: PrometheusAlertMatcherExpression_v1, isRequired: true }
+  - { name: componentStatus, type: string, isRequired: true }
+
+- name: PrometheusAlertMatcherExpression_v1
+  fields:
+  - { name: alert, type: string }
+  - { name: labels, type: json }
+
+- name: ManualStatusProvider_v1
+  interface: StatusProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: manual, type: ManualStatusProviderConfig_v1, isRequired: true }
+
+- name: ManualStatusProviderConfig_v1
+  fields:
+  - { name: componentStatus, type: string, isRequired: true }
+  - { name: from, type: string }
+  - { name: until, type: string }
