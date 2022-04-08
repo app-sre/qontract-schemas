@@ -103,7 +103,7 @@ properties:
               ref:
                 type: string
                 # pattern: '^([0-9a-f]{40}|master|main|quayio|development-4\.0|internal|mk-release)$'
-                pattern: '^([0-9a-f]{40}|master|main|internal|quayio)$'
+                pattern: '^([0-9a-f]{40}|master|main|internal|quayio|release-.*)$'
               promotion:
                 type: object
                 additionalProperties: false
