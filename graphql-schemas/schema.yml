@@ -2261,8 +2261,6 @@
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: resource, type: NamespaceOpenshiftResource_v1, isRequired: true, isInterface: true }
-  - { name: resourceParent, type: string, isRequired: true }
-  - { name: testData, type: string, isRequired: true }
   - { name: expectedResult, type: string, isRequired: true }
 
 - name: Query
