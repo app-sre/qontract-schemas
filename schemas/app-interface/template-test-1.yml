@@ -17,7 +17,7 @@ properties:
     type: string
   description:
     type: string
-  resource_path:
+  resourcePath:
     type: string
     description: path to resource template to be tested
   expectedResult:
@@ -28,5 +28,5 @@ required:
 - labels
 - name
 - description
-- resource_path
+- resourcePath
 - expectedResult
