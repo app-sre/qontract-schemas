@@ -132,6 +132,8 @@ properties:
                         app_team:
                         - service
                         - env
+                        app:
+                        - jiralert
                       required:
                       - service
                     expr:
