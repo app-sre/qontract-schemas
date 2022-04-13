@@ -78,7 +78,6 @@ What if we want to define a crossref with multiple allowed types? (owned_saas_fi
           '$schema':
             type: string
             enum:
-              - "/app-sre/saas-file-1.yml"
               - "/app-sre/saas-file-2.yml"
 ```
 
