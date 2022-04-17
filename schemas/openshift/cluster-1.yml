@@ -501,6 +501,7 @@ properties:
           - openshift-namespace-labels
           - openshift-resources
           - openshift-rolebindings
+          - openshift-clusterrolebindings
           - openshift-users
           - openshift-vault-secrets
           - openshift-routes
