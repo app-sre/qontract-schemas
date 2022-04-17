@@ -90,6 +90,8 @@ properties:
                           - test
                         service:
                           type: string
+                        app:
+                          type: string
                         team:
                           type: string
                         component:
@@ -130,6 +132,8 @@ properties:
                         app_team:
                         - service
                         - env
+                        app:
+                        - jiralert
                       required:
                       - service
                     expr:
