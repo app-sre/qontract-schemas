@@ -807,7 +807,7 @@
   - { name: premiumSupport, type: boolean, isRequired: true }
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
-  - { name: terraformState, type: AWSTerraformState_v1, isList: true, isRequired: false }
+  - { name: terraformState, type: AWSTerraformState_v1, isList: true, isRequired: false, isInterface: true }
   - name: ecrs
     type: AWSECR_v1
     isList: true
@@ -914,6 +914,17 @@
   - { name: filter_suffix, type: string}
 
 - name: AWSTerraformState_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      aws-bucket: AWSBucketInfo_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: AWSBucketInfo_v1
+  interface: AWSTerraformState_v1
   fields:
   - { name: bucket, type: string, isRequired: true }
   - { name: key, type: string, isRequired: true }
