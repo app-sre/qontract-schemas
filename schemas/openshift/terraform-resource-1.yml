@@ -79,22 +79,6 @@ properties:
     type: array
     items:
       type: object
-      properties:
-        event_type:
-          type: array
-          items:
-            type: string
-        destination:
-          type: string
-        destination_type:
-          type: string
-          enum:
-          - sns
-          - sqs
-        filter_prefix:
-          type: string
-        filter_suffix:
-          type: string
   sqs_identifier:
     type: string
   bucket_policy:
