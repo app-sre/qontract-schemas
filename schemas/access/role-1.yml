@@ -116,7 +116,6 @@ properties:
           '$schema':
             type: string
             enum:
-            - "/app-sre/saas-file-1.yml"
             - "/app-sre/saas-file-2.yml"
 required:
 - $schema
