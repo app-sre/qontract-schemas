@@ -1657,35 +1657,6 @@
       schema: /app-sre/sre-checkpoint-1.yml
       subAttr: app
 
-- name: SaasFile_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
-  - { name: description, type: string, isRequired: true }
-  - { name: app, type: App_v1, isRequired: true }
-  - { name: instance, type: JenkinsInstance_v1, isRequired: true }
-  - { name: slack, type: SlackOutput_v1, isRequired: true }
-  - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
-  - { name: authentication, type: SaasFileAuthentication_v1 }
-  - { name: parameters, type: json }
-  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
-  - { name: resourceTemplates, type: SaasResourceTemplate_v1, isRequired: true, isList: true }
-  - { name: imagePatterns, type: string, isRequired: true, isList: true }
-  - { name: takeover, type: boolean }
-  - { name: compare, type: boolean }
-  - { name: timeout, type: int }
-  - { name: publishJobLogs, type: boolean }
-  - { name: clusterAdmin, type: boolean }
-  - { name: use_channel_in_image_tag, type: boolean }
-  - name: roles
-    type: Role_v1
-    isList: true
-    synthetic:
-      schema: /access/role-1.yml
-      subAttr: owned_saas_files
-
 - name: SaasFile_v2
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2124,7 +2095,7 @@
   - { name: sentry_teams, type: SentryTeam_v1, isList: true }
   - { name: sentry_roles, type: SentryRole_v1, isList: true }
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
-  - { name: owned_saas_files, type: SaasFile_v1, isList: true }
+  - { name: owned_saas_files, type: SaasFile_v2, isList: true }
   - name: users
     type: User_v1
     isList: true
