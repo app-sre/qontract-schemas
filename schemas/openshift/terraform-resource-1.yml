@@ -246,6 +246,8 @@ oneOf:
       - rds
     account:
       "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
     identifier:
       type: string
     availability_zone:
