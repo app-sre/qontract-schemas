@@ -25,6 +25,10 @@ properties:
   issue:
     type: string
     pattern: "^APPSRE-\\d+$"
+  contractVersion:
+    description: "Contract version"
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/contract-version-1.yml"
 required:
 - "$schema"
 - labels
