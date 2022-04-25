@@ -1644,6 +1644,12 @@
     synthetic:
       schema: /dependencies/jenkins-config-1.yml
       subAttr: app
+  - name: saasFiles
+    type: SaasFile_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/saas-file-1.yml
+      subAttr: app
   - name: saasFilesV2
     type: SaasFile_v2
     isList: true
@@ -1656,6 +1662,35 @@
     synthetic:
       schema: /app-sre/sre-checkpoint-1.yml
       subAttr: app
+
+- name: SaasFile_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: app, type: App_v1, isRequired: true }
+  - { name: instance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: slack, type: SlackOutput_v1, isRequired: true }
+  - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
+  - { name: authentication, type: SaasFileAuthentication_v1 }
+  - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
+  - { name: resourceTemplates, type: SaasResourceTemplate_v1, isRequired: true, isList: true }
+  - { name: imagePatterns, type: string, isRequired: true, isList: true }
+  - { name: takeover, type: boolean }
+  - { name: compare, type: boolean }
+  - { name: timeout, type: int }
+  - { name: publishJobLogs, type: boolean }
+  - { name: clusterAdmin, type: boolean }
+  - { name: use_channel_in_image_tag, type: boolean }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: owned_saas_files
 
 - name: SaasFile_v2
   fields:
@@ -2095,7 +2130,7 @@
   - { name: sentry_teams, type: SentryTeam_v1, isList: true }
   - { name: sentry_roles, type: SentryRole_v1, isList: true }
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
-  - { name: owned_saas_files, type: SaasFile_v2, isList: true }
+  - { name: owned_saas_files, type: SaasFile_v1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -2274,6 +2309,7 @@
   - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
   - { name: sentry_instances_v1, type: SentryInstance_v1, isList: true, datafileSchema: /dependencies/sentry-instance-1.yml }
   - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
+  - { name: saas_files_v1, type: SaasFile_v1, isList: true, datafileSchema: /app-sre/saas-file-1.yml }
   - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
   - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
   - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }
