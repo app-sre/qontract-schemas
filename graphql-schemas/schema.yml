@@ -1098,6 +1098,7 @@
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
+  - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
   - { name: availability_zone, type: string }
