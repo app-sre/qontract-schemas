@@ -36,3 +36,4 @@ required:
 - sre
 - date
 - issue
+- contractVersion
