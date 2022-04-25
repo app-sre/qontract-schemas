@@ -21,6 +21,11 @@ properties:
     description: "Long description of the current contract version"
     type: string
 
+  contract:
+    description: "Contract this version refers to"
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/contract-1.yml"
+
   source:
     description: "Location of the contract version"
     type: string
