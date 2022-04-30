@@ -2135,6 +2135,7 @@
 - name: IntegrationOperate_v1
   fields:
   - { name: environment, type: Environment_v1, isRequired: true }
+  - { name: resources, type: DeployResources_v1, isRequired: true }
 
 - name: Integration_v1
   datafile: /app-sre/integration-1.yml
