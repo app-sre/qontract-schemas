@@ -56,6 +56,18 @@ properties:
     required:
     - cmd
 
+  operate:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        environment:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/app-sre/environment-1.yml"
+      required:
+      - environment
+
 required:
 - "$schema"
 - labels

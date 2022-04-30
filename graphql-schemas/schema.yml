@@ -2132,6 +2132,10 @@
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
 
+- name: IntegrationOperate_v1
+  fields:
+  - { name: environment, type: Environment_v1, isRequired: true }
+
 - name: Integration_v1
   datafile: /app-sre/integration-1.yml
   fields:
@@ -2143,6 +2147,7 @@
   - { name: upstream, type: string }
   - { name: schemas, type: string, isRequired: true, isList: true }
   - { name: pr_check, type: IntegrationPrCheck_v1 }
+  - { name: operate, type: IntegrationOperate_v1, isList: true }
 
 - name: Document_v1
   datafile: /app-sre/document-1.yml
