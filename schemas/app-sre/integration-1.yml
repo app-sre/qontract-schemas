@@ -65,11 +65,17 @@ properties:
         environment:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/app-sre/environment-1.yml"
-        resources:
-          "$ref": "/openshift/deploy-resources-1.yml"
+        spec:
+          type: object
+          additionalProperties: false
+          properties:
+            resources:
+              "$ref": "/openshift/deploy-resources-1.yml"
+          required:
+          - resources
       required:
       - environment
-      - resources
+      - spec
 
 required:
 - "$schema"
