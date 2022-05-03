@@ -134,6 +134,8 @@ properties:
           instance:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+  secrets_prefix:
+    type: string
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -180,6 +182,28 @@ oneOf:
   required:
   - account
   - identifier
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - secrets-manager-service-account
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    secrets_prefix:
+      type: string
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - account
+  - identifier
+  - secrets_prefix
 - additionalProperties: false
   properties:
     provider:
