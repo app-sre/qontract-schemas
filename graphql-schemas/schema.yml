@@ -1874,7 +1874,7 @@
   - { name: address, type: string, isRequired: true }
 
 - name: VaultInstanceApprole_v1
-  interface: VaultInstance_V1
+  interface: VaultInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
@@ -1886,7 +1886,7 @@
   - { name: secretID, type: VaultSecret_v1, isRequired: true }
 
 - name: VaultInstanceToken_v1
-  interface: VaultInstance_V1
+  interface: VaultInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
@@ -2299,7 +2299,7 @@
   - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
   - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
   - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
-  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
+  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, isInterface: true, datafileSchema: /vault-config/instance-1.yml }
   - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
   - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
