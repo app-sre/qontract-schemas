@@ -2132,14 +2132,14 @@
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
 
-- name: IntegrationOperateSpec_v1
+- name: IntegrationManagedSpec_v1
   fields:
   - { name: resources, type: DeployResources_v1, isRequired: true }
 
-- name: IntegrationOperate_v1
+- name: managed
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: spec, type: IntegrationOperateSpec_v1, isRequired: true }
+  - { name: spec, type: IntegrationManagedSpec_v1, isRequired: true }
 
 - name: Integration_v1
   datafile: /app-sre/integration-1.yml
@@ -2152,7 +2152,7 @@
   - { name: upstream, type: string }
   - { name: schemas, type: string, isRequired: true, isList: true }
   - { name: pr_check, type: IntegrationPrCheck_v1 }
-  - { name: operate, type: IntegrationOperate_v1, isList: true }
+  - { name: managed, type: IntegrationManaged_v1, isList: true }
 
 - name: Document_v1
   datafile: /app-sre/document-1.yml
