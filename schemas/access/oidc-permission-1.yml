@@ -28,6 +28,15 @@ properties:
             type: string
             enum:
             - /vault-config/policy-1.yml
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef":
+      type: object
+      properties:
+        '$schema':
+          type: string
+          enum:
+          - /vault-config/instance-1.yml
 oneOf:
 - properties:
     service:
@@ -44,8 +53,18 @@ oneOf:
               type: string
               enum:
               - /vault-config/policy-1.yml
+    instance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+            - /vault-config/instance-1.yml
   required:
   - vault_policies
+  - instance
 required:
 - $schema
 - name
