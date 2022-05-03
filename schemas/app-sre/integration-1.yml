@@ -62,9 +62,9 @@ properties:
       type: object
       additionalProperties: false
       properties:
-        environment:
+        namespace:
           "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/app-sre/environment-1.yml"
+          "$schemaRef": "/openshift/namespace-1.yml"
         spec:
           type: object
           additionalProperties: false
@@ -74,7 +74,7 @@ properties:
           required:
           - resources
       required:
-      - environment
+      - namespace
       - spec
 
 required:
