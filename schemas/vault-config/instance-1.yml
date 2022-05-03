@@ -1,0 +1,54 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /vault-config/instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  authType:
+    type: string
+  address:
+    type: string
+  roleID:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  secretID:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+oneOf:
+- properties:
+    authType:
+      enum:
+      - approle
+    roleID:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+    secretID:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+  required:
+  - roleID
+  - secretID
+- properties:
+    authType:
+      enum:
+      - token
+    token:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+  required:
+  - token
+required:
+- "$schema"
+- labels
+- name
+- description
+- authType
+- address
