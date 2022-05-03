@@ -2135,6 +2135,7 @@
 - name: IntegrationManagedSpec_v1
   fields:
   - { name: resources, type: DeployResources_v1, isRequired: true }
+  - { name: shards, type: int }
 
 - name: managed
   fields:

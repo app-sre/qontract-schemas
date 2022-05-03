@@ -71,6 +71,8 @@ properties:
           properties:
             resources:
               "$ref": "/openshift/deploy-resources-1.yml"
+            shards:
+              type: integer
           required:
           - resources
       required:
