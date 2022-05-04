@@ -13,7 +13,7 @@ properties:
     type: boolean
     description: integration requires cache
   command:
-    type: str
+    type: string
     description: command to run
     enum:
     - qontract-reconcile
@@ -26,7 +26,7 @@ properties:
     type: boolean
     description: integration is aware of the environment it is running in
   extraArgs:
-    type: str
+    type: string
     description: additional arguments to pass to integration
   extraEnv:
     type: object
@@ -34,33 +34,33 @@ properties:
     additionalProperties: false
     properties:
       secretName:
-        type: str
+        type: string
         description: secret name to get environment variable from
       secretKey:
-        type: str
+        type: string
         description: secret key to get value from and to use as the environment variable name
       name:
-        type: str
+        type: string
         description: environment variable name
       value:
-        type: str
+        type: string
         description: environment variable value
     oneOf:
     - additionalProperties: false
       properties:
         secretName:
-          type: str
+          type: string
         secretKey:
-          type: str
+          type: string
       required:
       - secretName
       - secretKey
     - additionalProperties: false
       properties:
         name:
-          type: str
+          type: string
         value:
-          type: str
+          type: string
       required:
       - name
       - value
@@ -87,14 +87,14 @@ properties:
     type: boolean
     description: integration is stateful
   storage:
-    type: str
+    type: string
     description: size of cache storage
   trigger:
     type: boolean
     description: integration is an openshift-saas-deploy trigger
   # cronjobs
   cron:
-    type: str
+    type: string
     description: cron expression for integration execution
     pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
   dashdotdb:
@@ -108,7 +108,7 @@ properties:
     - Forbid
     - Replace
   restartPolicy:
-    type: str
+    type: string
     description: restarts of the integration
     enum:
     - Always
