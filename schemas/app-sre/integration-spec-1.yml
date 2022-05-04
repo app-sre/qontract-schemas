@@ -1,0 +1,17 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/integration-spec-1.yml
+  resources:
+    "$ref": "/openshift/deploy-resources-1.yml"
+  shards:
+    type: integer
+required:
+- resources
