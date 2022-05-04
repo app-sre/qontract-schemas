@@ -975,6 +975,7 @@
       s3: NamespaceTerraformResourceS3_v1
       elasticache: NamespaceTerraformResourceElastiCache_v1
       aws-iam-service-account: NamespaceTerraformResourceServiceAccount_v1
+      secrets-manager-service-account: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
       aws-iam-role: NamespaceTerraformResourceRole_v1
       sqs: NamespaceTerraformResourceSQS_v1
       dynamodb: NamespaceTerraformResourceDynamoDB_v1
@@ -1155,6 +1156,17 @@
   fields:
   - { name: AWS, type: string, isList: true }
   - { name: Service, type: string, isList: true }
+
+- name: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
+  interface: NamespaceTerraformResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: account, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: secrets_prefix, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRole_v1
   interface: NamespaceTerraformResource_v1
