@@ -9,9 +9,90 @@ properties:
     type: string
     enum:
     - /app-sre/integration-spec-1.yml
+  cache:
+    type: boolean
+  command:
+    type: str
+    enum:
+    - qontract-reconcile
+    - e2e-tests
+    - app-interface-reporter
+  disableUnleash:
+    type: boolean
+  environmentAware:
+    type: boolean
+  extraArgs:
+    type: str
+  extraEnv:
+    type: object
+    additionalProperties: false
+    properties:
+      secretName:
+        type: str
+      secretKey:
+        type: str
+      name:
+        type: str
+      value:
+        type: str
+    oneOf:
+    - additionalProperties: false
+      properties:
+        secretName:
+          type: str
+        secretKey:
+          type: str
+      required:
+      - secretName
+      - secretKey
+    - additionalProperties: false
+      properties:
+        name:
+          type: str
+        value:
+          type: str
+      required:
+      - name
+      - value
+  internalCertificates:
+    type: boolean
+  logs:
+    type: object
+    additionalProperties: false
+    properties:
+      slack:
+        type: boolean
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
   shards:
     type: integer
+  sleepDurationSecs:
+    type: integer
+  state:
+    type: boolean
+  storage:
+    type: str
+  trigger:
+    type: boolean
+  # cronjobs
+  cron:
+    type: str
+    pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+  dashdotdb:
+    type: boolean
+  concurrencyPolicy:
+    type: string
+    enum:
+    - Allow
+    - Forbid
+    - Replace
+  restartPolicy:
+    type: str
+    enum:
+    - OnFailure
+    - Never
+  successfulJobHistoryLimit:
+    type: integer
+  
 required:
 - resources

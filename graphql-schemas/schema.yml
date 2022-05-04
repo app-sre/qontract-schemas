@@ -2132,10 +2132,38 @@
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
 
+- name: IntegrationSpecExtraEnv_v1
+  fields:
+  - { name: secretName, type: string }
+  - { name: secretKey, type: string }
+  - { name: name, type: string }
+  - { name: value, type: string }
+
+- name: IntegrationSpecLogs_v1
+  fields:
+  - { name: slack, type: boolean }
+
 - name: IntegrationSpec_v1
   fields:
+  - { name: cache, type: boolean }
+  - { name: command, type: string }
+  - { name: disableUnleash, type: boolean }
+  - { name: environmentAware, type: boolean }
+  - { name: extraArgs, type: string }
+  - { name: extraEnv, type: IntegrationSpecExtraEnv_v1 }
+  - { name: internalCertificates, type: boolean }
+  - { name: logs, type: IntegrationSpecLogs_v1 }
   - { name: resources, type: DeployResources_v1, isRequired: true }
   - { name: shards, type: int }
+  - { name: sleepDurationSecs, type: int }
+  - { name: state, type: boolean }
+  - { name: storage, type: string }
+  - { name: trigger, type: boolean }
+  - { name: cron, type: string }
+  - { name: dashsotdb, type: boolean }
+  - { name: concurrencyPolicy, type: string }
+  - { name: restartPolicy, type: string }
+  - { name: successfulJobHistoryLimit, type: int }
 
 - name: IntegrationManaged_v1
   fields:
