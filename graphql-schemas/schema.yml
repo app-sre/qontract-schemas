@@ -2312,7 +2312,6 @@
   - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
   - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
   - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
-  - { name: vault_instance_auths_v1, type: VaultInstanceAuth_v1, isList: true, isInterface: true, datafileSchema: /vault-config/instance-1.yml }
   - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
   - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
