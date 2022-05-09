@@ -117,6 +117,9 @@ properties:
   successfulJobHistoryLimit:
     type: integer
     description: number of history records reserved for successful integration executions
+  failedJobHistoryLimit:
+    type: integer
+    description: number of history records reserved for failed integration executions
   
 required:
 - resources

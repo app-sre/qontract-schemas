@@ -2164,6 +2164,7 @@
   - { name: concurrencyPolicy, type: string }
   - { name: restartPolicy, type: string }
   - { name: successfulJobHistoryLimit, type: int }
+  - { name: failedJobHistoryLimit, type: int }
 
 - name: IntegrationManaged_v1
   fields:
