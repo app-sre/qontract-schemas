@@ -15,13 +15,7 @@ properties:
     type: string
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef":
-      type: object
-      properties:
-        '$schema':
-          type: string
-          enum:
-          - /vault-config/instance-1.yml
+    "$schemaRef": "/vault-config/instance-1.yml"
   rules:
     type: string
 required:

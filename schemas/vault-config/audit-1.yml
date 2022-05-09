@@ -22,13 +22,7 @@ properties:
     - socket
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef":
-      type: object
-      properties:
-        '$schema':
-          type: string
-          enum:
-          - /vault-config/instance-1.yml
+    "$schemaRef": "/vault-config/instance-1.yml"
   description:
     type: string
   options:
