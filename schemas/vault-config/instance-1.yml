@@ -15,40 +15,14 @@ properties:
     type: string
   description:
     type: string
-  authType:
-    type: string
   address:
     type: string
-  roleID:
-    "$ref": "/common-1.json#/definitions/vaultSecret"
-  secretID:
-    "$ref": "/common-1.json#/definitions/vaultSecret"
-  token:
-    "$ref": "/common-1.json#/definitions/vaultSecret"
-oneOf:
-- properties:
-    authType:
-      enum:
-      - approle
-    roleID:
-      "$ref": "/common-1.json#/definitions/vaultSecret"
-    secretID:
-      "$ref": "/common-1.json#/definitions/vaultSecret"
-  required:
-  - roleID
-  - secretID
-- properties:
-    authType:
-      enum:
-      - token
-    token:
-      "$ref": "/common-1.json#/definitions/vaultSecret"
-  required:
-  - token
+  auth:
+    "$ref": "/vault-config/instance-auth-1.yml"
 required:
 - "$schema"
 - labels
 - name
 - description
-- authType
 - address
+- auth
