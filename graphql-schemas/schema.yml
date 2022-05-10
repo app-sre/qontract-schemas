@@ -2160,7 +2160,7 @@
   - { name: storage, type: string }
   - { name: trigger, type: boolean }
   - { name: cron, type: string }
-  - { name: dashsotdb, type: boolean }
+  - { name: dashdotdb, type: boolean }
   - { name: concurrencyPolicy, type: string }
   - { name: restartPolicy, type: string }
   - { name: successfulJobHistoryLimit, type: int }
