@@ -20,6 +20,9 @@ properties:
     - file
     - syslog
     - socket
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
   description:
     type: string
   options:
@@ -66,5 +69,6 @@ required:
 - labels
 - _path
 - type
+- instance
 - description
 - options

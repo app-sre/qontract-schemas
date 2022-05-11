@@ -120,6 +120,7 @@
   fields:
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: options, type: VaultAuditOptions_v1, isInterface: true, isRequired: true }
 
@@ -177,6 +178,7 @@
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: options, type: VaultSecretEngineOptions_v1, isInterface: true }
 
 - name: VaultRoleOptions_v1
@@ -244,11 +246,13 @@
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: rules, type: string, isRequired: true }
 
 - name: Resource_v1
@@ -1869,6 +1873,39 @@
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1, isRequired: true }
   - { name: deployResources, type: DeployResources_v1 }
 
+- name: VaultInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: address, type: string, isRequired: true }
+  - { name: auth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+
+- name: VaultInstanceAuth_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      approle: VaultInstanceAuthApprole_v1
+      token: VaultInstanceAuthToken_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: VaultInstanceAuthApprole_v1
+  interface: VaultInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: roleID, type: VaultSecret_v1, isRequired: true }
+  - { name: secretID, type: VaultSecret_v1, isRequired: true }
+
+- name: VaultInstanceAuthToken_v1
+  interface: VaultInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
+
 - name: OidcPermission_v1
   isInterface: true
   interfaceResolve:
@@ -1891,6 +1928,7 @@
   - { name: name, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: Permission_v1
@@ -2008,6 +2046,7 @@
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: settings, type: VaultAuthSettings_v1 }
   - { name: policy_mappings, type: VaultPolicyMapping_v1, isList: true }
 
@@ -2312,6 +2351,7 @@
   - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
   - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
   - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
+  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
   - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
   - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }

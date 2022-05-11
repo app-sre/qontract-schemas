@@ -18,6 +18,9 @@ properties:
     pattern: '.+\/$'
   type:
     type: string
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
   options:
     type: object
     oneOf:
@@ -189,4 +192,5 @@ required:
 - name
 - mount
 - type
+- instance
 - options
