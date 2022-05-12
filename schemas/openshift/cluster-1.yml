@@ -94,6 +94,8 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      product:
+        type: string
       id:
         type: string
       external_id:
