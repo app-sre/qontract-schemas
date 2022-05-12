@@ -530,7 +530,15 @@
   - { name: multi_az, type: boolean, isRequired: true }
 
 - name: ClusterSpec_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: product
+    fieldMap:
+      osd: ClusterSpecOSD_v1
+      rosa: ClusterSpecROSA_v1
   fields:
+  - { name: product, type: string, isRequired: true, default: "osd"}
   - { name: id, type: string }
   - { name: external_id, type: string }
   - { name: provider, type: string, isRequired: true }
@@ -541,8 +549,46 @@
   - { name: multi_az, type: boolean, isRequired: true }
   - { name: nodes, type: int }
   - { name: instance_type, type: string, isRequired: true }
+  - { name: private, type: boolean, isRequired: true }
+  - { name: provision_shard_id, type: string }
+  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
+  - { name: disable_user_workload_monitoring, type: boolean }
+
+- name: ClusterSpecOSD_v1
+  interface: ClusterSpec_v1
+  fields:
+  - { name: product, type: string, isRequired: true}
+  - { name: id, type: string }
+  - { name: external_id, type: string }
+  - { name: provider, type: string, isRequired: true }
+  - { name: region, type: string, isRequired: true }
+  - { name: channel, type: string, isRequired: true }
+  - { name: version, type: string, isRequired: true }
+  - { name: initial_version, type: string, isRequired: true }
+  - { name: multi_az, type: boolean, isRequired: true }
+  - { name: nodes, type: int }
+  - { name: instance_type, type: string, isRequired: true }
+  - { name: private, type: boolean, isRequired: true }
+  - { name: provision_shard_id, type: string }
+  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
+  - { name: disable_user_workload_monitoring, type: boolean }
   - { name: storage, type: int, isRequired: true }
   - { name: load_balancers, type: int, isRequired: true }
+
+- name: ClusterSpecROSA_v1
+  interface: ClusterSpec_v1
+  fields:
+  - { name: product, type: string, isRequired: true}
+  - { name: id, type: string }
+  - { name: external_id, type: string }
+  - { name: provider, type: string, isRequired: true }
+  - { name: region, type: string, isRequired: true }
+  - { name: channel, type: string, isRequired: true }
+  - { name: version, type: string, isRequired: true }
+  - { name: initial_version, type: string, isRequired: true }
+  - { name: multi_az, type: boolean, isRequired: true }
+  - { name: nodes, type: int }
+  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
@@ -700,7 +746,7 @@
   - { name: managedGroups, type: string, isList: true }
   - { name: managedClusterRoles, type: boolean }
   - { name: ocm, type: OpenShiftClusterManager_v1 }
-  - { name: spec, type: ClusterSpec_v1 }
+  - { name: spec, type: ClusterSpec_v1, isInterface: true, isRequired: true }
   - { name: externalConfiguration, type: ClusterExternalConfiguration_v1 }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
   - { name: additionalRouters, type: ClusterAdditionalRouter_v1, isList: true }
