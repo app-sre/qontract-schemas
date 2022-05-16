@@ -1674,6 +1674,12 @@
     synthetic:
       schema: /app-sre/sre-checkpoint-1.yml
       subAttr: app
+  - name: sloDocuments
+    type: SLODocument_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/slo-document-1.yml
+      subAttr: app
 
 - name: SaasFile_v2
   fields:
