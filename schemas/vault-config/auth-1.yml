@@ -20,6 +20,9 @@ properties:
     - approle
     - github
     - oidc
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
   description:
     type: string
   settings:
@@ -105,4 +108,5 @@ required:
 - labels
 - _path
 - type
+- instance
 - description

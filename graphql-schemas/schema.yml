@@ -120,6 +120,7 @@
   fields:
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: options, type: VaultAuditOptions_v1, isInterface: true, isRequired: true }
 
@@ -177,6 +178,7 @@
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: options, type: VaultSecretEngineOptions_v1, isInterface: true }
 
 - name: VaultRoleOptions_v1
@@ -244,11 +246,13 @@
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: rules, type: string, isRequired: true }
 
 - name: Resource_v1
@@ -975,6 +979,7 @@
       s3: NamespaceTerraformResourceS3_v1
       elasticache: NamespaceTerraformResourceElastiCache_v1
       aws-iam-service-account: NamespaceTerraformResourceServiceAccount_v1
+      secrets-manager-service-account: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
       aws-iam-role: NamespaceTerraformResourceRole_v1
       sqs: NamespaceTerraformResourceSQS_v1
       dynamodb: NamespaceTerraformResourceDynamoDB_v1
@@ -1155,6 +1160,17 @@
   fields:
   - { name: AWS, type: string, isList: true }
   - { name: Service, type: string, isList: true }
+
+- name: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
+  interface: NamespaceTerraformResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: account, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: secrets_prefix, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRole_v1
   interface: NamespaceTerraformResource_v1
@@ -1857,6 +1873,39 @@
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1, isRequired: true }
   - { name: deployResources, type: DeployResources_v1 }
 
+- name: VaultInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: address, type: string, isRequired: true }
+  - { name: auth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+
+- name: VaultInstanceAuth_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      approle: VaultInstanceAuthApprole_v1
+      token: VaultInstanceAuthToken_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: VaultInstanceAuthApprole_v1
+  interface: VaultInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: roleID, type: VaultSecret_v1, isRequired: true }
+  - { name: secretID, type: VaultSecret_v1, isRequired: true }
+
+- name: VaultInstanceAuthToken_v1
+  interface: VaultInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
+
 - name: OidcPermission_v1
   isInterface: true
   interfaceResolve:
@@ -1879,6 +1928,7 @@
   - { name: name, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: Permission_v1
@@ -1996,6 +2046,7 @@
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: settings, type: VaultAuthSettings_v1 }
   - { name: policy_mappings, type: VaultPolicyMapping_v1, isList: true }
 
@@ -2120,6 +2171,45 @@
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
 
+- name: IntegrationSpecExtraEnv_v1
+  fields:
+  - { name: secretName, type: string }
+  - { name: secretKey, type: string }
+  - { name: name, type: string }
+  - { name: value, type: string }
+
+- name: IntegrationSpecLogs_v1
+  fields:
+  - { name: slack, type: boolean }
+
+- name: IntegrationSpec_v1
+  fields:
+  - { name: cache, type: boolean }
+  - { name: command, type: string }
+  - { name: disableUnleash, type: boolean }
+  - { name: environmentAware, type: boolean }
+  - { name: extraArgs, type: string }
+  - { name: extraEnv, type: IntegrationSpecExtraEnv_v1 }
+  - { name: internalCertificates, type: boolean }
+  - { name: logs, type: IntegrationSpecLogs_v1 }
+  - { name: resources, type: DeployResources_v1, isRequired: true }
+  - { name: shards, type: int }
+  - { name: sleepDurationSecs, type: int }
+  - { name: state, type: boolean }
+  - { name: storage, type: string }
+  - { name: trigger, type: boolean }
+  - { name: cron, type: string }
+  - { name: dashdotdb, type: boolean }
+  - { name: concurrencyPolicy, type: string }
+  - { name: restartPolicy, type: string }
+  - { name: successfulJobHistoryLimit, type: int }
+  - { name: failedJobHistoryLimit, type: int }
+
+- name: IntegrationManaged_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: spec, type: IntegrationSpec_v1, isRequired: true }
+
 - name: Integration_v1
   datafile: /app-sre/integration-1.yml
   fields:
@@ -2131,6 +2221,7 @@
   - { name: upstream, type: string }
   - { name: schemas, type: string, isRequired: true, isList: true }
   - { name: pr_check, type: IntegrationPrCheck_v1 }
+  - { name: managed, type: IntegrationManaged_v1, isList: true }
 
 - name: Document_v1
   datafile: /app-sre/document-1.yml
@@ -2260,6 +2351,7 @@
   - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
   - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
   - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
+  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
   - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
   - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
   - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
