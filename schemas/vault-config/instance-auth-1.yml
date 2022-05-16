@@ -11,6 +11,11 @@ properties:
     - /vault-config/instance-auth-1.yml
   provider:
     type: string
+  secretEngine:
+    type: string
+    enum:
+    - kv_v1
+    - kv_v2
   roleID:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   secretID:
@@ -41,3 +46,4 @@ oneOf:
   - token
 required:
 - provider
+- secretEngine

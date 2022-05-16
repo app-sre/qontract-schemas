@@ -1892,11 +1892,13 @@
       token: VaultInstanceAuthToken_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: secretEngine, type: string, isRequired: true }
 
 - name: VaultInstanceAuthApprole_v1
   interface: VaultInstanceAuth_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: secretEngine, type: string, isRequired: true }
   - { name: roleID, type: VaultSecret_v1, isRequired: true }
   - { name: secretID, type: VaultSecret_v1, isRequired: true }
 
@@ -1904,6 +1906,7 @@
   interface: VaultInstanceAuth_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: secretEngine, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: OidcPermission_v1
