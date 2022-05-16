@@ -23,6 +23,11 @@ oneOf:
       type: string
       enum:
       - approle
+    secretEngine:
+      type: string
+      enum:
+      - 'kv_v1'
+      - 'kv_v2'
     roleID:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     secretID:
@@ -35,9 +40,15 @@ oneOf:
       type: string
       enum:
       - token
+    secretEngine:
+      type: string
+      enum:
+      - 'kv_v1'
+      - 'kv_v2'
     token:
       "$ref": "/common-1.json#/definitions/vaultSecret"
   required:
   - token
 required:
 - provider
+- secretEngine
