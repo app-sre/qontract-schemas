@@ -1661,7 +1661,7 @@
     synthetic:
       schema: /dependencies/jenkins-config-1.yml
       subAttr: app
-  - name: saasFilesV2
+  - name: saasFiles
     type: SaasFile_v2
     isList: true
     synthetic:
