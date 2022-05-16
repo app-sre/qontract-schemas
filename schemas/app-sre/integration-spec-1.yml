@@ -29,41 +29,43 @@ properties:
     type: string
     description: additional arguments to pass to integration
   extraEnv:
-    type: object
-    description: additional environment variables to set for the integration
-    additionalProperties: false
-    properties:
-      secretName:
-        type: string
-        description: secret name to get environment variable from
-      secretKey:
-        type: string
-        description: secret key to get value from and to use as the environment variable name
-      name:
-        type: string
-        description: environment variable name
-      value:
-        type: string
-        description: environment variable value
-    oneOf:
-    - additionalProperties: false
+    type: array
+    items:
+      type: object
+      description: additional environment variables to set for the integration
+      additionalProperties: false
       properties:
         secretName:
           type: string
+          description: secret name to get environment variable from
         secretKey:
           type: string
-      required:
-      - secretName
-      - secretKey
-    - additionalProperties: false
-      properties:
+          description: secret key to get value from and to use as the environment variable name
         name:
           type: string
+          description: environment variable name
         value:
           type: string
-      required:
-      - name
-      - value
+          description: environment variable value
+      oneOf:
+      - additionalProperties: false
+        properties:
+          secretName:
+            type: string
+          secretKey:
+            type: string
+        required:
+        - secretName
+        - secretKey
+      - additionalProperties: false
+        properties:
+          name:
+            type: string
+          value:
+            type: string
+        required:
+        - name
+        - value
   internalCertificates:
     type: boolean
     description: integration requires internal certificates to execute
