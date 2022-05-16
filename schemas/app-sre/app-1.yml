@@ -356,6 +356,7 @@ properties:
                   type: string
               auto_resolve_age:
                 type: integer
+                # https://github.com/app-sre/qontract-reconcile/blob/96f3688c27fb164a9e398b32a26e478613d6db0a/reconcile/utils/sentry_client.py#L143-L190
                 enum:
                 - 1
                 - 2
