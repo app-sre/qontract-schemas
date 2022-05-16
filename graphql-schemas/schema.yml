@@ -2189,7 +2189,7 @@
   - { name: disableUnleash, type: boolean }
   - { name: environmentAware, type: boolean }
   - { name: extraArgs, type: string }
-  - { name: extraEnv, type: IntegrationSpecExtraEnv_v1 }
+  - { name: extraEnv, type: IntegrationSpecExtraEnv_v1, isList: true }
   - { name: internalCertificates, type: boolean }
   - { name: logs, type: IntegrationSpecLogs_v1 }
   - { name: resources, type: DeployResources_v1, isRequired: true }
