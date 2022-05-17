@@ -22,6 +22,10 @@ properties:
     type: array
     items:
       type: string
+  vpc_zone_identifier:
+    type: array
+    items:
+      type: string
   capacity_rebalance:
     type: boolean
   instances_distribution:
