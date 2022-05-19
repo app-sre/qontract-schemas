@@ -879,31 +879,61 @@ oneOf:
   - account
   - identifier
   - defaults
-  - image
 - additionalProperties: false
   properties:
     provider:
       type: string
       enum:
-      - route53-zone
+      - cognito
     account:
       "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
     identifier:
       type: string
-    name:
-      description: base fqdn of the zone
-      "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+    domain:
+      type: string
+    sms_role_ext_id:
+      type: string
+    defaults:
+      type: string
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
-    output_format:
-      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
   - account
   - identifier
-  - name
+  - domain
+  - sms_role_ext_id
+  - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - api-gateway
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      type: string
+    api_proxy_uri:
+      type: string
+    lb_subnet_id:
+      type: string
+    defaults:
+      type: string
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - account
+  - identifier
+  - api_proxy_uri
+  - lb_subnet_id
+  - defaults
 required:
 - provider
