@@ -33,7 +33,7 @@ properties:
     - job-templates
     - jobs
   config_path:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   config:
     type: array
     items:
