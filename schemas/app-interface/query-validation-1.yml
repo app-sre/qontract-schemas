@@ -32,6 +32,7 @@ properties:
           description: path to resource query to be tested
       required:
       - path
+    minItems: 1
 required:
 - "$schema"
 - labels
