@@ -15,8 +15,9 @@ properties:
     type: string
   description:
     type: string
-  instanceUrl:
+  repoUrl:
     type: string
+    description: url of the app-interface git repository
     format: uri
   vault:
     type: boolean
@@ -138,7 +139,7 @@ required:
 - labels
 - name
 - description
-- instanceUrl
+- repoUrl
 - vault
 - kubeBinary
 - saasDeployJobTemplate
