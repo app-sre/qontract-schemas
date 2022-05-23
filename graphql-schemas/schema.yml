@@ -596,7 +596,7 @@
       osd: ClusterSpecOSD_v1
       rosa: ClusterSpecROSA_v1
   fields:
-    - { name: product, type: string, isRequired: true, default: "osd" }
+    - { name: product, type: string, isRequired: true }
     - { name: id, type: string }
     - { name: external_id, type: string }
     - { name: provider, type: string, isRequired: true }
@@ -820,7 +820,7 @@
     - { name: managedGroups, type: string, isList: true }
     - { name: managedClusterRoles, type: boolean }
     - { name: ocm, type: OpenShiftClusterManager_v1 }
-    - { name: spec, type: ClusterSpec_v1, isInterface: true, isRequired: true }
+    - { name: spec, type: ClusterSpec_v1, isInterface: true }
     - { name: externalConfiguration, type: ClusterExternalConfiguration_v1 }
     - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
     - {
