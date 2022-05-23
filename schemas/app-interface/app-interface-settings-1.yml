@@ -15,6 +15,9 @@ properties:
     type: string
   description:
     type: string
+  instanceUrl:
+    type: string
+    format: uri
   vault:
     type: boolean
   kubeBinary:
@@ -135,6 +138,7 @@ required:
 - labels
 - name
 - description
+- instanceUrl
 - vault
 - kubeBinary
 - saasDeployJobTemplate

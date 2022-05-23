@@ -5,6 +5,7 @@
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
+  - { name: instanceUrl, type: string, isRequired: true }
   - { name: vault, type: boolean, isRequired: true }
   - { name: kubeBinary, type: string, isRequired: true }
   - { name: pullRequestGateway, type: string }
