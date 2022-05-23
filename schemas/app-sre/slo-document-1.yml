@@ -112,6 +112,5 @@ required:
 - "$schema"
 - labels
 - name
-- app
 - namespaces
 - slos
