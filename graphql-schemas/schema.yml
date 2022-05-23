@@ -2273,6 +2273,20 @@
   - { name: query, type: string }
   - { name: queries, type: string, isList: true }
 
+- name: QontractQuery_v1
+  fields:
+  - { name: path, type: string, isRequired: true }
+
+- name: QueryValidation_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
+  - { name: queries, type: QontractQuery_v1, isList: true, isRequired: true }
+
 - name: UnleashNotifications_v1
   fields:
   - { name: slack, type: SlackOutput_v1, isList: true }
@@ -2370,6 +2384,7 @@
   - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
   - { name: sentry_instances_v1, type: SentryInstance_v1, isList: true, datafileSchema: /dependencies/sentry-instance-1.yml }
   - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
+  - { name: query_validations_v1, type: QueryValidation_v1, isList: true, datafileSchema: /app-interface/query-validation-1.yml }
   - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
   - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
   - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }

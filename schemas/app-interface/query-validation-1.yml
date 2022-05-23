@@ -1,0 +1,42 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/query-validation-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+    description: unique name for query validation
+  description:
+    type: string
+    description: description of the queries included in the file
+  escalationPolicy:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/escalation-policy-1.yml"
+  queries:
+    type: array
+    description: queries to validate
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        path:
+          type: string
+          description: path to resource query to be tested
+      required:
+      - path
+    minItems: 1
+required:
+- "$schema"
+- labels
+- name
+- description
+- escalationPolicy
+- queries
