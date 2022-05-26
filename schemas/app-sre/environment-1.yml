@@ -25,6 +25,12 @@ properties:
   parameters:
     type: object
 
+  secretParameters:
+    type: array
+    description: environment level parameters from vault secrets
+    items:
+      "$ref": "/app-sre/vault-secret-parameter-1.yml"
+
   dependsOn:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/environment-1.yml"

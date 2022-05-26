@@ -90,6 +90,8 @@ properties:
                           - test
                         service:
                           type: string
+                        app:
+                          type: string
                         team:
                           type: string
                         component:
@@ -118,18 +120,20 @@ properties:
                           type: string
                         quantile:
                           type: string
+                        query:
+                          type: string
                         exported_namespace:
                           type: string
                         exported_service:
                           type: string
                         jiralert:
                           type: string
-                          enum:
-                          - ASIC
                       dependencies:
                         app_team:
                         - service
                         - env
+                        app:
+                        - jiralert
                       required:
                       - service
                     expr:

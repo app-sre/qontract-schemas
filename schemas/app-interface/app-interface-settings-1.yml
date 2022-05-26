@@ -15,6 +15,10 @@ properties:
     type: string
   description:
     type: string
+  repoUrl:
+    type: string
+    description: url of the app-interface git repository
+    format: uri
   vault:
     type: boolean
   kubeBinary:
@@ -40,6 +44,35 @@ properties:
     type: integer
     enum:
     - 7
+  smtp:
+    type: object
+    additionalProperties: false
+    properties:
+      mailAddress:
+        type: string
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+  githubRepoInvites:
+    type: object
+    additionalProperties: false
+    properties:
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Configuration for github-repo-invites integration.
+      Currently contains information for fetching the
+      token of the github app-sre bot for accepting
+      invitations to repositories.
+    required:
+    - credentials
+  ldap:
+    type: object
+    additionalProperties: false
+    properties:
+      serverUrl:
+        type: string
+      baseDn:
+        type: string
   dependencies:
     type: array
     items:
@@ -71,9 +104,6 @@ properties:
       properties:
         name:
           type: string
-          enum:
-          - app-interface-production-dev-access
-          - app-interface-production-cicd-access
         secret:
           "$ref": "/common-1.json#/definitions/vaultSecret"
       required:
@@ -97,11 +127,19 @@ properties:
     type: array
     items:
       type: string
+  endpointMonitoringBlackboxExporterModules:
+    type: array
+    description: |
+      the blackbox exporter modules that can be used for /dependencies/endpoint-monitoring-provider-1.yml#blackboxExporter.module
+      if none are listed, no restrictions apply
+    items:
+      type: string
 required:
 - "$schema"
 - labels
 - name
 - description
+- repoUrl
 - vault
 - kubeBinary
 - saasDeployJobTemplate

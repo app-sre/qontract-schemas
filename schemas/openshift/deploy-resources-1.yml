@@ -6,8 +6,7 @@ type: object
 additionalProperties: false
 
 description: |
-  CPU and memory resources used by the openshift-saas-deploy step of the
-  openshift-saas-deploy tasks created by the openshit-tekton-resources integration
+  CPU and memory resources used in openshift objects
 
 properties:
   "$schema":

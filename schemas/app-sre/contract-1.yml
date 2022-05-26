@@ -8,22 +8,27 @@ properties:
   "$schema":
     type: string
     enum:
-    - /app-interface/credentials-request-1.yml
+    - /app-sre/contract-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
+    description: "Name of the contract"
     type: string
+
   description:
+    description: "Long description of the current contract"
     type: string
-  user:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/access/user-1.yml"
-  credentials:
+
+  source:
+    description: "Location of the contract"
     type: string
+    format: uri
+
 required:
 - "$schema"
 - labels
 - name
 - description
-- user
-- credentials
+- source

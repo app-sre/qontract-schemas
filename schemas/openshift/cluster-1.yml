@@ -39,6 +39,7 @@ properties:
         enum:
         - github-org
         - github-org-team
+        - oidc
       org:
         type: string
       team:
@@ -67,6 +68,13 @@ properties:
       - service
       - org
       - team
+    - properties:
+        service:
+          type: string
+          enum:
+          - oidc
+      required:
+      - service
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
@@ -196,6 +204,14 @@ properties:
         properties:
           soakDays:
             type: integer
+          mutexes:
+            type: array
+            description: |
+              list of named upgrade mutex locks for this cluster. A cluster needs
+              to acquire all its mutex locks in order to be upgraded. A mutex lock
+              can be held by only one cluster at a time.
+            items:
+              type: string
         oneOf:
         - required:
           - soakDays
@@ -220,6 +236,11 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      type:
+        type: string
+        enum:
+        - OpenShiftSDN
+        - OVNKubernetes
       vpc:
         type: string
       service:
@@ -284,6 +305,8 @@ properties:
               - cluster-vpc-accepter
             name:
               type: string
+            description:
+              type: string
             vpc:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/aws/vpc-1.yml"
@@ -291,6 +314,9 @@ properties:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/openshift/cluster-1.yml"
             account:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/account-1.yml"
+            awsInfrastructureManagementAccount:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/aws/account-1.yml"
             tags:
@@ -313,6 +339,8 @@ properties:
                 - account-vpc
               name:
                 type: string
+              description:
+                type: string
               vpc:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/vpc-1.yml"
@@ -320,6 +348,8 @@ properties:
                 type: boolean
               delete:
                 type: boolean
+              assumeRole:
+                type: string
             required:
             - provider
             - name
@@ -330,6 +360,8 @@ properties:
                 enum:
                 - account-vpc-mesh
               name:
+                type: string
+              description:
                 type: string
               account:
                 "$ref": "/common-1.json#/definitions/crossref"
@@ -350,6 +382,8 @@ properties:
                 enum:
                 - account-tgw
               name:
+                type: string
+              description:
                 type: string
               account:
                 "$ref": "/common-1.json#/definitions/crossref"
@@ -377,6 +411,8 @@ properties:
                 - cluster-vpc-requester
               name:
                 type: string
+              description:
+                type: string
               cluster:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/openshift/cluster-1.yml"
@@ -384,6 +420,8 @@ properties:
                 type: boolean
               delete:
                 type: boolean
+              assumeRole:
+                type: string
             required:
             - provider
             - name
@@ -395,13 +433,20 @@ properties:
                 - cluster-vpc-accepter
               name:
                 type: string
+              description:
+                type: string
               cluster:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/openshift/cluster-1.yml"
+              awsInfrastructureManagementAccount:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/account-1.yml"
               manageRoutes:
                 type: boolean
               delete:
                 type: boolean
+              assumeRole:
+                type: string
             required:
             - provider
             - name
@@ -413,6 +458,8 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/cluster-addon-1.yml"
+  insecureSkipTLSVerify:
+    type: boolean
   jumpHost:
     type: object
     additionalProperties: false
@@ -454,6 +501,7 @@ properties:
           - openshift-namespace-labels
           - openshift-resources
           - openshift-rolebindings
+          - openshift-clusterrolebindings
           - openshift-users
           - openshift-vault-secrets
           - openshift-routes
@@ -461,6 +509,8 @@ properties:
           - openshift-resourcequotas
           - openshift-limitranges
           - openshift-serviceaccount-tokens
+          - terraform-resources
+          - terraform-resources-wrapper
       e2eTests:
         type: array
         items:
@@ -485,6 +535,25 @@ properties:
           - network-mgmt
       required:
       - awsGroup
+      - accessLevel
+  awsInfrastructureManagementAccounts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        accessLevel:
+          type: string
+          enum:
+          - read-only
+          - network-mgmt
+        default:
+          type: boolean
+      required:
+      - account
       - accessLevel
   prometheus:
     type: object

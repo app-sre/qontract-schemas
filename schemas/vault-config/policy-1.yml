@@ -13,10 +13,14 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
   rules:
     type: string
 required:
 - "$schema"
 - labels
 - name
+- instance
 - rules

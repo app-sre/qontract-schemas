@@ -5,12 +5,21 @@
   "definitions": {
     "query": {
       "type": "string",
-      "pattern": "(?i)^(select|explain) (?!analyze (?!select))[^;\\*]+;$"
+      "pattern": "(?i)^(?:select|explain(?!\\s+analyze(?!\\s+select)))(?:(?:\\/\\*.*\\*\\/)|(?:[\\\"\\'][^\\\"\\']*[\\\"\\'])|(?:--.*\\n)|[^;\\*])+;$"
     },
     "labels": {
       "type": "object",
       "additionalProperties": {
         "type": "string"
+      }
+    },
+    "prometheusLabels": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+          "type": "string"
+        }
       }
     },
     "annotations": {
@@ -139,6 +148,17 @@
       "type": "string",
       "description": "Kubernetes resource (request, limit) quantity",
       "pattern": "^([+-]?[0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$"
+    },
+    "statusPageStatus": {
+      "type": "string",
+      "description": "a list of supported status page component status",
+      "enum": [
+        "operational",
+        "under_maintenance",
+        "degraded_performance",
+        "partial_outage",
+        "major_outage"
+      ]
     }
   }
 }

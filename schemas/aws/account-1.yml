@@ -76,6 +76,8 @@ properties:
           enum:
           - terraform-resources
           - terraform-resources-wrapper
+          - terraform-users
+          - terraform-users-wrapper
   deleteKeys:
     type: array
     items:
@@ -102,6 +104,10 @@ properties:
     enum:
     - aws
     - aws-us-gov
+  sharing:
+    type: array
+    items:
+      "$ref": "/aws/sharing-option-1.yml"
 required:
 - "$schema"
 - labels

@@ -47,9 +47,9 @@ properties:
           enum:
           - sns
           - sqs
-        filters_prefix:
+        filter_prefix:
           type: string
-        filters_suffix:
+        filter_suffix:
           type: string
   sqs_identifier:
     type: string
@@ -100,6 +100,8 @@ properties:
     type: object
   output_resource_name:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+  output_format:
+    "$ref": "/openshift/terraform-output-format-1.yml"
   allow_object_tagging:
     type: boolean
   kms_encryption:

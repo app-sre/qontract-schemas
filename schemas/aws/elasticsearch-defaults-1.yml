@@ -102,5 +102,35 @@ properties:
         type: string
       indices.query.bool.max_clause_count:
         type: string
+  advanced_security_options:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
+      internal_user_database_enabled:
+        type: boolean
+      master_user_options:
+        type: object
+        additionalProperties: false
+        properties:
+          master_user_secret:
+            description: |
+              Secret containing the user/password authentication data. It must only
+              contain the "master_user_name" and "master_user_password" keys
+            type: object
+            additionalProperties: false
+            properties:
+              path:
+                type: string
+              version:
+                type: integer
+            required:
+            - path
+            - version
+        required:
+        - master_user_secret
+    required:
+    - enabled
 required:
 - "$schema"

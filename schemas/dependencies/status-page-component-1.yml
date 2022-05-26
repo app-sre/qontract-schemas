@@ -24,6 +24,13 @@ properties:
   page:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/status-page-1.yml"
+  status:
+    type: array
+    items:
+      "$ref": "/dependencies/status-provider-1.yml"
+    description: |
+      a list of providers that can influence the status of this
+      status page component
 
 required:
 - "$schema"

@@ -27,9 +27,24 @@ properties:
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
     - BestEffort       # The app is supported on a best effort basis
 
-  grafanaUrl:
-    type: string
-    format: uri
+  grafanaUrls:
+    type: array
+    description: |
+      List of links to Grafana Dashboard/Folders associated with the service. Please provide 
+      a title together with the link.
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - url
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+      minItems: 1
 
   sopsUrl:
     type: string
@@ -231,6 +246,18 @@ properties:
           type: string
         url:
           type: string
+        monitoring:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              provider:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/dependencies/endpoint-monitoring-provider-1.yml"
+                description: Reference to a monitoring provider to use for this endpoint
+            required:
+            - provider
       required:
       - name
       - description
@@ -331,6 +358,54 @@ properties:
                   type: string
               auto_resolve_age:
                 type: integer
+                # https://github.com/app-sre/qontract-reconcile/blob/96f3688c27fb164a9e398b32a26e478613d6db0a/reconcile/utils/sentry_client.py#L143-L190
+                enum:
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+                - 7
+                - 8
+                - 9
+                - 10
+                - 11
+                - 12
+                - 15
+                - 18
+                - 21
+                - 24
+                - 30
+                - 36
+                - 48
+                - 72
+                - 96
+                - 120
+                - 144
+                - 168
+                - 192
+                - 216
+                - 240
+                - 288
+                - 312
+                - 336
+                - 360
+                - 384
+                - 408
+                - 432
+                - 456
+                - 480
+                - 504
+                - 528
+                - 552
+                - 576
+                - 600
+                - 624
+                - 648
+                - 672
+                - 696
+                - 720
               allowed_domains:
                 type: array
                 items:
@@ -352,6 +427,6 @@ required:
 - escalationPolicy
 - onboardingStatus
 - serviceOwners
-- grafanaUrl
 - sopsUrl
 - architectureDocument
+- grafanaUrls
