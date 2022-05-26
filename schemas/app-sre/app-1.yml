@@ -290,6 +290,8 @@ properties:
         jira:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-server-1.yml"
+        mirror:
+          type: string
       required:
       - name
       - resource
