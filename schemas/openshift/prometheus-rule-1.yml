@@ -94,6 +94,8 @@ properties:
                           type: string
                         team:
                           type: string
+                        code:
+                          type: string
                         component:
                           type: string
                         channel:
