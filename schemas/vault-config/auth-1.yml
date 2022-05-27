@@ -19,6 +19,10 @@ properties:
     enum:
     - approle
     - github
+    - oidc
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
   description:
     type: string
   settings:
@@ -48,6 +52,24 @@ properties:
           - base_url
           - max_ttl
           - ttl
+        - properties:
+            _type:
+              type: string
+              enum: 
+              - oidc
+            oidc_discovery_url:
+              type: string
+            oidc_client_id:
+              type: string
+            oidc_client_secret:
+              type: string
+            default_role:
+              type: string
+          required:
+          - oidc_discovery_url
+          - oidc_client_id
+          - oidc_client_secret
+          - default_role
   policy_mappings:
     type: array
     items:
@@ -86,4 +108,5 @@ required:
 - labels
 - _path
 - type
+- instance
 - description

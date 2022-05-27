@@ -39,6 +39,7 @@ properties:
         enum:
         - github-org
         - github-org-team
+        - oidc
       org:
         type: string
       team:
@@ -67,6 +68,13 @@ properties:
       - service
       - org
       - team
+    - properties:
+        service:
+          type: string
+          enum:
+          - oidc
+      required:
+      - service
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
@@ -196,6 +204,14 @@ properties:
         properties:
           soakDays:
             type: integer
+          mutexes:
+            type: array
+            description: |
+              list of named upgrade mutex locks for this cluster. A cluster needs
+              to acquire all its mutex locks in order to be upgraded. A mutex lock
+              can be held by only one cluster at a time.
+            items:
+              type: string
         oneOf:
         - required:
           - soakDays
@@ -485,6 +501,7 @@ properties:
           - openshift-namespace-labels
           - openshift-resources
           - openshift-rolebindings
+          - openshift-clusterrolebindings
           - openshift-users
           - openshift-vault-secrets
           - openshift-routes

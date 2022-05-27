@@ -18,6 +18,9 @@ properties:
   server:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/jira-server-1.yml"
+  severityPriorityMappings:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/jira-severity-priority-mappings-1.yml"
   slack:
     type: object
     properties:
@@ -34,3 +37,4 @@ required:
 - name
 - description
 - server
+- severityPriorityMappings

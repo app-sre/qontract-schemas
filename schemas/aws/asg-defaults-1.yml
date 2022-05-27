@@ -18,7 +18,7 @@ properties:
     type: array
     items:
       type: string
-  availability_zones:
+  vpc_zone_identifier:
     type: array
     items:
       type: string

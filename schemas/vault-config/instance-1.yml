@@ -1,29 +1,28 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-type: object
 
+type: object
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
-    - /app-interface/credentials-request-1.yml
+    - /vault-config/instance-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
   description:
     type: string
-  user:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/access/user-1.yml"
-  credentials:
+  address:
     type: string
+  auth:
+    "$ref": "/vault-config/instance-auth-1.yml"
 required:
 - "$schema"
 - labels
 - name
 - description
-- user
-- credentials
+- address
+- auth

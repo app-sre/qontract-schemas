@@ -14,6 +14,9 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     "$ref": "/common-1.json#/definitions/identifier"
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
   namespaces:
     type: array
     items:
@@ -111,3 +114,4 @@ required:
 - name
 - namespaces
 - slos
+- app

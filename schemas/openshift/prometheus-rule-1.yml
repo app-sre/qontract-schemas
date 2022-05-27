@@ -90,7 +90,11 @@ properties:
                           - test
                         service:
                           type: string
+                        app:
+                          type: string
                         team:
+                          type: string
+                        code:
                           type: string
                         component:
                           type: string
@@ -126,12 +130,12 @@ properties:
                           type: string
                         jiralert:
                           type: string
-                          enum:
-                          - ASIC
                       dependencies:
                         app_team:
                         - service
                         - env
+                        app:
+                        - jiralert
                       required:
                       - service
                     expr:

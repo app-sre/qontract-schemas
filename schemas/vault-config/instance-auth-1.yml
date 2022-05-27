@@ -1,0 +1,49 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /vault-config/instance-auth-1.yml
+  provider:
+    type: string
+  secretEngine:
+    type: string
+    enum:
+    - kv_v1
+    - kv_v2
+  roleID:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  secretID:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  token:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+oneOf:
+- properties:
+    provider:
+      type: string
+      enum:
+      - approle
+    roleID:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+    secretID:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+  required:
+  - roleID
+  - secretID
+- properties:
+    provider:
+      type: string
+      enum:
+      - token
+    token:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+  required:
+  - token
+required:
+- provider
+- secretEngine
