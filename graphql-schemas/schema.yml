@@ -807,7 +807,7 @@
   - { name: premiumSupport, type: boolean, isRequired: true }
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
-  - { name: terraformState, type: AWSTerraformState_v1, isList: true, isRequired: false, isInterface: true }
+  - { name: terraformState, type: AWSTerraformState_v1, isRequired: false, isInterface: true }
   - name: ecrs
     type: AWSECR_v1
     isList: true
@@ -919,17 +919,22 @@
     strategy: fieldMap
     field: provider
     fieldMap:
-      aws-bucket: AWSBucketInfo_v1
+      s3: AWSS3TerraformState_v1
   fields:
-  - { name: provider, type: string, isRequired: true }
+  - { name: provider, type: string, isRequired: false }
 
-- name: AWSBucketInfo_v1
+- name: AWSS3TerraformState_v1
   interface: AWSTerraformState_v1
   fields:
+  - { name: provider, type: string, isRequired: true}
   - { name: bucket, type: string, isRequired: true }
-  - { name: key, type: string, isRequired: true }
   - { name: region, type: string, isRequired: true }
+  - { name: integrations, type: AWSTerraformStateIntegrations_v1, isList: true, isRequired: true }
+
+- name: AWSTerraformStateIntegrations_v1
+  fields:
   - { name: integration, type: string, isRequired: true }
+  - { name: key, type: string, isRequired: true }
 
 - name: ACMDomain_v1
   fields:
