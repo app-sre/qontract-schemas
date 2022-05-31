@@ -807,7 +807,7 @@
   - { name: premiumSupport, type: boolean, isRequired: true }
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
-  - { name: terraformState, type: TerraformState_v1, isRequired: false, isInterface: true }
+  - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - name: ecrs
     type: AWSECR_v1
     isList: true
