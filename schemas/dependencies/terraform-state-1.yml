@@ -23,9 +23,9 @@ properties:
     description: terraform state integration file
     items: 
       type: object
-    properties:
-      integration:
-        type: string
-      key:
-        type: string
-    additionalProperties: false
+      properties:
+        integration:
+          type: string
+        key:
+          type: string
+      additionalProperties: false
