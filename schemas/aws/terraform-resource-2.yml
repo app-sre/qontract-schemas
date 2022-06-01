@@ -260,7 +260,18 @@ oneOf:
           - db.m5.large
           - db.m5.xlarge
           - db.m5.2xlarge
+          - db.m5.4xlarge
+          - db.m5.8xlarge
+          - db.m5.12xlarge
+          - db.m5.16xlarge
+          - db.m5.24xlarge
           - db.m6g.large
+          - db.m6g.xlarge
+          - db.m6g.2xlarge
+          - db.m6g.4xlarge
+          - db.m6g.8xlarge
+          - db.m6g.12xlarge
+          - db.m6g.16xlarge
           - db.r4.large
           - db.r4.xlarge
           - db.r4.2xlarge
@@ -270,6 +281,11 @@ oneOf:
           - db.r5.large
           - db.r5.xlarge
           - db.r5.2xlarge
+          - db.r5.4xlarge
+          - db.r5.8xlarge
+          - db.r5.12xlarge
+          - db.r5.16xlarge
+          - db.r5.24xlarge
         allocated_storage:
           type: integer
         backup_retention_period:
