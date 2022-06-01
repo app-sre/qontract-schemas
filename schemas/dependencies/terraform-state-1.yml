@@ -20,7 +20,7 @@ properties:
     type: string
   integrations:
     type: array
-    description: terraform state integration file
+    description: holds information which bucket key stores the terraform state per integration
     items: 
       type: object
       properties:
