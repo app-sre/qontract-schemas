@@ -99,9 +99,11 @@ properties:
 
   managedExternalResources:
     type: boolean
+    description: are external resources managed for this namespace
 
   externalResources:
     type: array
+    description: external resources to provision for this namespace
     items:
       "$ref": "/openshift/external-resource-1.yml"
 
