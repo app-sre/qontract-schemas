@@ -1,0 +1,31 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+description: bucket properties for each integration
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/terraform-state-1.yml
+  provider:
+    type: string
+    enum:
+    - s3
+  bucket:
+    type: string
+  region:
+    type: string
+  integrations:
+    type: array
+    description: holds information which bucket key stores the terraform state per integration
+    items: 
+      type: object
+      properties:
+        integration:
+          type: string
+        key:
+          type: string
+      additionalProperties: false
