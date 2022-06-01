@@ -124,7 +124,7 @@ properties:
       properties:
         project:
           "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/dependencies/gcp-project-1.yml"
+          "$schemaRef": "/gcp/project-1.yml"
         items:
           type: array
           items:

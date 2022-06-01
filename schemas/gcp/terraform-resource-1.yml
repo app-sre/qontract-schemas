@@ -1,0 +1,42 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /gcp/terraform-resource-1.yml
+  provider:
+    type: string
+  annotations:
+    "$ref": "/common-1.json#/definitions/annotations"
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+  name:
+    type: string
+  output_resource_name:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - dns-zone
+    identifier:
+      type: string
+    name:
+      description: base fqdn of the zone
+      "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - identifier
+  - name
+required:
+- provider

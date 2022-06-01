@@ -97,6 +97,16 @@ properties:
     items:
       "$ref": "/openshift/openshift-resource-1.yml"
 
+  managedExternalResources:
+    type: boolean
+    description: are external resources managed for this namespace
+
+  externalResources:
+    type: array
+    description: external resources to provision for this namespace
+    items:
+      "$ref": "/openshift/external-resource-1.yml"
+
   managedTerraformResources:
     type: boolean
 
@@ -133,6 +143,13 @@ dependencies:
         - true
     required:
     - managedTerraformResources
+  externalResources:
+    properties:
+      managedExternalResources:
+        enum:
+        - true
+    required:
+    - managedExternalResources
 
 required:
 - "$schema"

@@ -1,0 +1,56 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/external-resource-1.yml
+  provider:
+    type: string
+    description: terraform provider type to use
+    enum:
+    - aws
+    - gcp-project
+  provisioner:
+    "$ref": "/common-1.json#/definitions/crossref"
+    description: the provisioning entity
+  resources:
+    type: array
+    description: resources to provision
+    items:
+      type: object
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - aws
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/aws/terraform-resource-2.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - gcp-project
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/gcp/project-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/gcp/terraform-resource-1.yml"
+required:
+- provider
+- provisioner
+- resources
