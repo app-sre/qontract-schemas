@@ -1247,7 +1247,7 @@
   - { name: Service, type: string, isList: true }
 
 - name: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
-  interface: NamespaceTerraformResource_v1
+  interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: string, isRequired: true }
