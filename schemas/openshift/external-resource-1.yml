@@ -23,6 +23,31 @@ properties:
     description: resources to provision
     items:
       type: object
+      properties:
+        '$schema':
+          type: string
+          enum:
+          - /aws/terraform-resource-2.yml
+          - /gcp/terraform-resource-1.yml
+      properties:
+        aws_infrastructure_access:
+          type: object
+          properties:
+            cluster:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/openshift/cluster-1.yml"
+        vpc:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/vpc-1.yml"
+        image:
+          type: object
+          properties:
+            upstream:
+              type: object
+              properties:
+                instance:
+                  "$ref": "/common-1.json#/definitions/crossref"
+                  "$schemaRef": "/dependencies/jenkins-instance-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
