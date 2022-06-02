@@ -24,12 +24,6 @@ properties:
     items:
       type: object
       properties:
-        '$schema':
-          type: string
-          enum:
-          - /aws/terraform-resource-2.yml
-          - /gcp/terraform-resource-1.yml
-      properties:
         aws_infrastructure_access:
           type: object
           properties:
