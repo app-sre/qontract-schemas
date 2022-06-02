@@ -36,6 +36,10 @@
       "type": "string",
       "pattern": "^[A-Za-z0-9][A-Za-z0-9-_\\.]{0,30}[A-Za-z0-9]$"
     },
+    "templateParameterName": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+    },
     "longIdentifier": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{3,63}[a-z0-9]$"
