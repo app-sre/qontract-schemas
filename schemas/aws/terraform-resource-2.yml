@@ -31,10 +31,14 @@ properties:
     type: object
   assume_role:
     type: object
+  assume_condition:
+    type: object
   inline_policy:
     type: object
   output_resource_name:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+  output_format:
+    "$ref": "/openshift/terraform-output-format-1.yml"
   defaults:
     type: string
   parameter_group:
@@ -73,22 +77,6 @@ properties:
     type: array
     items:
       type: object
-      properties:
-        event_type:
-          type: array
-          items:
-            type: string
-        destination:
-          type: string
-        destination_type:
-          type: string
-          enum:
-          - sns
-          - sqs
-        filter_prefix:
-          type: string
-        filter_suffix:
-          type: string
   sqs_identifier:
     type: string
   bucket_policy:
@@ -137,12 +125,15 @@ properties:
       type: string
   image:
     type: object
-    additionalProperties: false
     properties:
-      id:
-        type: string
-    required:
-    - id
+      upstream:
+        type: object
+        properties:
+          instance:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+  secrets_prefix:
+    type: string
 oneOf:
 - "$ref": "/aws/s3-1.yml"
 - additionalProperties: false
@@ -163,6 +154,8 @@ oneOf:
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     aws_infrastructure_access:
       type: object
       additionalProperties: false
@@ -189,6 +182,25 @@ oneOf:
     provider:
       type: string
       enum:
+      - secrets-manager-service-account
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    secrets_prefix:
+      type: string
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - identifier
+  - secrets_prefix
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
       - aws-iam-role
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
@@ -209,10 +221,15 @@ oneOf:
         - AWS
       - required:
         - Service
+    assume_condition:
+      description: condition context keys for IAM and AWS STS
+      type: object
     inline_policy:
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -224,6 +241,8 @@ oneOf:
       type: string
       enum:
       - rds
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
     identifier:
       type: string
     availability_zone:
@@ -308,6 +327,8 @@ oneOf:
               type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     output_resource_db_name:
       type: string
     reset_password:
@@ -360,6 +381,8 @@ oneOf:
           type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -377,6 +400,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     specs:
@@ -413,6 +438,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     specs:
@@ -449,6 +476,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     mirror:
       "$schemaRef": "/dependencies/container-image-mirror-1.yml"
     public:
@@ -471,6 +500,8 @@ oneOf:
       type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
       type: string
     annotations:
@@ -506,6 +537,8 @@ oneOf:
           type: boolean
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -523,6 +556,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
       type: string
     annotations:
@@ -563,6 +598,8 @@ oneOf:
         - domain_name
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -586,6 +623,8 @@ oneOf:
       type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -605,6 +644,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -620,6 +661,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     vpc:
@@ -723,6 +766,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -759,12 +804,39 @@ oneOf:
       type: object
       additionalProperties: false
       properties:
-        id:
+        tag_name:
+          description: name of tag to use to correlate AMI ID to commit
           type: string
+        url:
+          description: url of source code repository
+          type: string
+          format: uri
+        ref:
+          description: commit or branch name
+          type: string
+          pattern: '^([0-9a-f]{40}|master|main)$'
+        upstream:
+          description: jenkins instance and job to wait for
+          type: object
+          additionalProperties: false
+          properties:
+            instance:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+            name:
+              description: name of jenkins job to wait for
+              type: string
+          required:
+          - instance
+          - name
       required:
-      - id
+      - tag_name
+      - url
+      - ref
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -786,6 +858,8 @@ oneOf:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
