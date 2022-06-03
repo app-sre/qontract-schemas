@@ -56,6 +56,7 @@ properties:
           - sentry-helper
           - slack-sender
           - openshift-upgrade-watcher
+          - ocm-clusters
           - slack-cluster-usergroups
           - qontract-cli
       token:
