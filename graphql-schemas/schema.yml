@@ -1,3 +1,7 @@
+---
+$schema: /app-interface/graphql-schemas-1.yml
+
+confs:
 - name: AppInterfaceSettings_v1
   fields:
   - { name: schema, type: string, isRequired: true }
