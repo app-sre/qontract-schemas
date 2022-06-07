@@ -163,6 +163,140 @@
         "partial_outage",
         "major_outage"
       ]
+    },
+    "conf": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "isInterface": {
+                "type": "boolean"
+              },
+              "isUnique": {
+                "type": "boolean"
+              },
+              "isRequired": {
+                "type": "boolean"
+              },
+              "isSearchable": {
+                "type": "boolean"
+              },
+              "isList": {
+                "type": "boolean"
+              },
+              "datafileScheama": {
+                "type": "string"
+              },
+              "synthetic": {
+                "type": "object",
+                "properties": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "subAttr": {
+                    "type": "string"
+                  }
+                }
+              },
+              "isResource": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "datafile": {
+          "type": "string"
+        },
+        "interface": {
+          "type": "string"
+        },
+        "isInterface": {
+          "type": "boolean"
+        },
+        "interfaceResolve": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "enum": [
+                "fieldMap"
+              ]
+            },
+            "field": {
+              "type": "string"
+            },
+            "fieldMap": {
+              "type": "object",
+              "properties": {
+                "/": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isInterface": {
+          "type": "boolean"
+        },
+        "isUnique": {
+          "type": "boolean"
+        },
+        "isRequired": {
+          "type": "boolean"
+        },
+        "isSearchable": {
+          "type": "boolean"
+        },
+        "isList": {
+          "type": "boolean"
+        },
+        "datafileSchema": {
+          "type": "string"
+        },
+        "synthetic": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string"
+            },
+            "subAttr": {
+              "type": "string"
+            }
+          }
+        },
+        "isResource": {
+          "type": "boolean"
+        }
+      },
+      "required" : [
+        "name",
+        "type"
+      ]
     }
+    
   }
 }

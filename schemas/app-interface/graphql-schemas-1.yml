@@ -13,62 +13,35 @@ properties:
   confs:
     type: array
     items:
-      "$ref": "#/$defs/conf"
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/field"
+        datafile:
+          type: string
+        isInterface:
+          type: boolean
+        interface:
+          type: string
+        interfaceResolve:
+          type: object
+          additionalProperties: false
+          properties:
+            strategy:
+              type: string
+              enum:
+              - "fieldMap"
+            field:
+              type: string
+            fieldMap:
+              type: object
+              properties:
+                "/": {}
 
-"$defs":
-  conf:
-    type: object
-    properties:
-      name: 
-        type: string
-      fields:
-        type: array
-        items:
-          "$ref": "#/$defs/field"
-      interface:
-        type: string
-      isInterface:
-        type: boolean
-      interfaceResolve:
-        type: object
-        properties:
-          strategy:
-            type: string
-            enum:
-            - "fieldMap"
-          field:
-            type: string
-          fieldMap:
-            type: object
-            properties:
-              "/": {}
-  field:
-    type: object
-    properties:
-      name:
-        type: string
-      type:
-        type: string
-      isInterface:
-        type: boolean
-      isUnique:
-        type: boolean
-      isRequired:
-        type: boolean
-      isSearchable:
-        type: boolean
-      isList:
-        type: boolean
-      datafileScheama:
-        type: string
-      synthetic:
-        type: object
-        properties:
-          schema:
-            type: string
-          subAttr:
-            type: string
-      isResource:
-        type: boolean
       
 
