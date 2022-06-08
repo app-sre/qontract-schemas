@@ -94,6 +94,8 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      product:
+        type: string
       id:
         type: string
       external_id:
@@ -162,6 +164,7 @@ properties:
       disable_user_workload_monitoring:
         type: boolean
     required:
+    - product
     - provider
     - region
     - version
@@ -169,8 +172,6 @@ properties:
     - multi_az
     - instance_type
     - private
-    - storage
-    - load_balancers
     oneOf:
     - required:
       - nodes
