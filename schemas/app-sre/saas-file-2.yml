@@ -140,6 +140,8 @@ properties:
                   - subscribe
               parameters:
                 type: object
+                patternProperties:
+                  "^[A-Za-z][A-Za-z0-9_]*$": {}
               secretParameters:
                 type: array
                 description: target level parameters from vault secrets
