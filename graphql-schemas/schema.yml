@@ -2291,6 +2291,7 @@
   - { name: logs, type: IntegrationSpecLogs_v1 }
   - { name: resources, type: DeployResources_v1, isRequired: true }
   - { name: shards, type: int }
+  - { name: shardingStrategy, type: string }
   - { name: sleepDurationSecs, type: int }
   - { name: state, type: boolean }
   - { name: storage, type: string }

@@ -82,6 +82,12 @@ properties:
   shards:
     type: integer
     description: number of shards to run integration with
+  shardingStrategy:
+    type: string
+    description: the strategy to use for sharding
+    enum:
+    - per-aws-account
+    - static
   sleepDurationSecs:
     type: integer
     description: time to sleep in seconds between integration executions
