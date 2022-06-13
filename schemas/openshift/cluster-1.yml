@@ -511,7 +511,6 @@ properties:
           - openshift-limitranges
           - openshift-serviceaccount-tokens
           - terraform-resources
-          - terraform-resources-wrapper
       e2eTests:
         type: array
         items:
