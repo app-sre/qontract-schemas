@@ -1127,9 +1127,6 @@
       route53-zone: NamespaceTerraformResourceRoute53Zone_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  # keeping account as required for backwards compatibility.
-  # as long as we do not query for it, things will work.
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1155,7 +1152,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1183,7 +1179,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: secret, type: VaultSecret_v1 }
@@ -1195,7 +1190,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: secret, type: VaultSecret_v1 }
@@ -1207,7 +1201,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: secret, type: VaultSecret_v1 }
@@ -1220,7 +1213,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1233,7 +1225,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1253,7 +1244,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1277,7 +1267,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: variables, type: json }
   - { name: policies, type: string, isList: true }
@@ -1296,7 +1285,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: secrets_prefix, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
@@ -1307,7 +1295,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: assume_role, type: AssumeRole_v1, isRequired: true }
   - { name: assume_condition, type: json }
@@ -1320,7 +1307,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
   - { name: parameter_group, type: string }
@@ -1339,7 +1325,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
@@ -1356,7 +1341,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
@@ -1368,7 +1352,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
@@ -1382,7 +1365,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1395,7 +1377,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: kms_encryption, type: boolean }
@@ -1409,7 +1390,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1423,7 +1403,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1436,7 +1415,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true }
@@ -1449,7 +1427,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
@@ -1466,7 +1443,6 @@
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: account, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
@@ -1563,7 +1539,6 @@
   - { name: description, type: string, isRequired: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
-  - { name: terraformResources, type: NamespaceTerraformResourceAWS_v1, isList: true, isInterface: true }
 
 - name: Namespace_v1
   fields:
@@ -1589,8 +1564,6 @@
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedExternalResources, type: boolean }
   - { name: externalResources, type: NamespaceExternalResource_v1, isList: true, isInterface: true }
-  - { name: managedTerraformResources, type: boolean }
-  - { name: terraformResources, type: NamespaceTerraformResourceAWS_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
 
