@@ -107,14 +107,6 @@ properties:
     items:
       "$ref": "/openshift/external-resource-1.yml"
 
-  managedTerraformResources:
-    type: boolean
-
-  terraformResources:
-    type: array
-    items:
-      "$ref": "/openshift/terraform-resource-1.yml"
-
   openshiftServiceAccountTokens:
     type: array
     items:
@@ -136,13 +128,6 @@ properties:
     "$schemaRef": "/kafka/cluster-1.yml"
 
 dependencies:
-  terraformResources:
-    properties:
-      managedTerraformResources:
-        enum:
-        - true
-    required:
-    - managedTerraformResources
   externalResources:
     properties:
       managedExternalResources:
