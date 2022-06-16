@@ -2367,16 +2367,6 @@
   - { name: pr_check, type: IntegrationPrCheck_v1 }
   - { name: managed, type: IntegrationManaged_v1, isList: true }
 
-- name: Document_v1
-  datafile: /app-sre/document-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: app, type: App_v1, isRequired: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: content_path, type: string, isRequired: true }
-
 - name: Report_v1
   datafile: /app-sre/report-1.yml
   fields:
@@ -2519,7 +2509,6 @@
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
-  - { name: documents_v1, type: Document_v1, isList: true, datafileSchema: /app-sre/document-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
   - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
