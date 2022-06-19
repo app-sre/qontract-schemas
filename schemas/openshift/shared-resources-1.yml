@@ -40,11 +40,6 @@ properties:
       - namespace
       - serviceAccountName
 
-  terraformResources:
-    type: array
-    items:
-      "$ref": "/openshift/terraform-resource-1.yml"
-
 required:
 - "$schema"
 - labels

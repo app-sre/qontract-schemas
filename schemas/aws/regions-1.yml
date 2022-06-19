@@ -8,6 +8,6 @@ properties:
   "$schema":
     type: string
     enum:
-    - /aws/s3-1.yml
+    - /aws/regions-1.yml
   region:
     type: string
