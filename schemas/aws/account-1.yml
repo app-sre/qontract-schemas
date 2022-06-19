@@ -71,6 +71,7 @@ properties:
     properties:
       integrations:
         type: array
+        description: integrations to disable for the aws account
         items:
           type: string
           enum:
