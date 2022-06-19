@@ -76,6 +76,7 @@ properties:
           enum:
           - terraform-resources
           - terraform-users
+          - terraform-aws-route53
   deleteKeys:
     type: array
     items:
