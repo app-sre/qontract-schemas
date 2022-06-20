@@ -71,11 +71,13 @@ properties:
     properties:
       integrations:
         type: array
+        description: integrations to disable for the aws account
         items:
           type: string
           enum:
           - terraform-resources
           - terraform-users
+          - terraform-aws-route53
   deleteKeys:
     type: array
     items:
