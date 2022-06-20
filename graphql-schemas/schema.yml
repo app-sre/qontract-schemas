@@ -368,7 +368,7 @@
   - { name: instance, type: JenkinsInstance_v1, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: config, type: json }
-  - { name: config_path, type: string }
+  - { name: config_path, type: string, isResourceRef: true }
 
 - name: JiraServer_v1
   fields:
