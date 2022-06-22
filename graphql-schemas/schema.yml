@@ -2385,6 +2385,7 @@
   - { name: overrides, type: SqlEmailOverrides_v1 }
   - { name: output, type: string, isRequired: true }
   - { name: schedule, type: string }
+  - { name: delete, type: boolean }
   - { name: query, type: string }
   - { name: queries, type: string, isList: true }
 
