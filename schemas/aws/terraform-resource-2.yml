@@ -152,7 +152,7 @@ oneOf:
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     overrides:
       type: object
       properties:
@@ -351,7 +351,7 @@ oneOf:
     availability_zone:
       type: string
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
       type: string
     overrides:
@@ -456,7 +456,7 @@ oneOf:
     identifier:
       type: string
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
       type: string
     region:
@@ -513,7 +513,7 @@ oneOf:
         type: object
         properties:
           defaults:
-            type: string
+            "$ref": "/common-1.json#/definitions/resourceref"
           queues:
             type: array
             items:
@@ -551,7 +551,7 @@ oneOf:
         type: object
         properties:
           defaults:
-            type: string
+            "$ref": "/common-1.json#/definitions/resourceref"
           tables:
             type: array
             items:
@@ -606,7 +606,7 @@ oneOf:
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -623,7 +623,7 @@ oneOf:
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     overrides:
       type: object
       properties:
@@ -662,7 +662,7 @@ oneOf:
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     publish_log_types:
@@ -723,7 +723,7 @@ oneOf:
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
@@ -887,7 +887,7 @@ oneOf:
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     cloudinit_configs:
       type: array
       items:

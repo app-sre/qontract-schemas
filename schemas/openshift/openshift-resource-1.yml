@@ -44,7 +44,7 @@ oneOf:
       enum:
       - resource
     path:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     validate_json:
       type: boolean
     validate_alertmanager_config:
@@ -60,7 +60,7 @@ oneOf:
       enum:
       - resource-template
     path:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     type:
       type: string
       enum:
@@ -81,7 +81,7 @@ oneOf:
       enum:
       - route
     path:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     vault_tls_secret_path:
       type: string
     vault_tls_secret_version:
