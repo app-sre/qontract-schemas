@@ -102,7 +102,7 @@ properties:
         type: string
       indices.query.bool.max_clause_count:
         type: string
-# TODO: @kfischer remove this section after migration finished
+# TODO: @fishi0x01 remove this section after migration finished APPSRE-3409
 ##### START: TO REMOVE ####
   advanced_security_options:
     type: object
@@ -185,5 +185,5 @@ properties:
       - admin_user_credentials
 required:
 - "$schema"
-# TODO: @kfischer enforce auth required once migration finished
+# TODO: @fishi0x01 enforce auth required once migration finished APPSRE-3409
 #- auth
