@@ -52,6 +52,12 @@ properties:
         type: string
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+  imap:
+    type: object
+    additionalProperties: false
+    properties:
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
   githubRepoInvites:
     type: object
     additionalProperties: false
