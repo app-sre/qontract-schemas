@@ -968,5 +968,38 @@ oneOf:
   required:
   - identifier
   - name
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+        - rosa-authenticator
+    account:
+      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+    identifier:
+      type: string
+    api_proxy_uri:
+      type: string
+    sms_role_ext_id:
+      type: string
+    cognito_callback_bucket_name:
+      type: string
+    defaults:
+      type: string
+    pre_signup_lambda_github_release_url:
+      type: string
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+    - account
+    - identifier
+    - api_proxy_uri
+    - sms_role_ext_id
+    - cognito_callback_bucket_name
+    - defaults
 required:
 - provider
