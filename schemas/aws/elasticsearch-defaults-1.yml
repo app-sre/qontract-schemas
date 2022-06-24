@@ -102,6 +102,8 @@ properties:
         type: string
       indices.query.bool.max_clause_count:
         type: string
+# TODO: @fishi0x01 remove this section after migration finished APPSRE-3409
+##### START: TO REMOVE ####
   advanced_security_options:
     type: object
     additionalProperties: false
@@ -132,5 +134,56 @@ properties:
         - master_user_secret
     required:
     - enabled
+##### END: TO REMOVE ####
+  auth:
+    type: object
+    additionalProperties: false
+    properties:
+      admin_user_arn:
+        description: |
+          The ARN for the admin user.
+          This option is mutually exclusive with admin_user_credentials.
+        type: string
+      admin_user_credentials:
+        description: |
+          Secret containing the user/password authentication data. It must only
+          contain the "master_user_name" and "master_user_password" keys.
+          The admin user password must be at least 8 chars long, contain at least one
+          uppercase letter, one lowercase letter, one number, and one special character.
+          This option is mutually exclusive with admin_user_arn.
+        type: object
+        additionalProperties: false
+        properties:
+          path:
+            type: string
+          version:
+            type: integer
+        required:
+        - path
+        - version
+    oneOf:
+    - additionalProperties: false
+      properties:
+        admin_user_arn:
+          type: string
+      required:
+      - admin_user_arn
+    - additionalProperties: false
+      properties:
+        admin_user_credentials:
+          type: object
+          additionalProperties: false
+          properties:
+            path:
+              type: string
+            version:
+              type: integer
+          required:
+          - path
+          - version
+      required:
+      - admin_user_credentials
 required:
 - "$schema"
+# TODO: @fishi0x01 enforce auth required once migration finished APPSRE-3409
+#- auth
