@@ -1136,6 +1136,7 @@
       secrets-manager: NamespaceTerraformResourceSecretsManager_v1
       asg: NamespaceTerraformResourceASG_v1
       route53-zone: NamespaceTerraformResourceRoute53Zone_v1
+      rosa-authenticator: NamespaceTerraformResourceRosaAuthenticator_V1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
@@ -1457,6 +1458,21 @@
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
+
+- name: NamespaceTerraformResourceRosaAuthenticator_V1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: region, type: string }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: api_proxy_uri, type: string, isRequired: true }
+  - { name: sms_role_ext_id, type: string, isRequired: true }
+  - { name: cognito_callback_bucket_name, type: string, isRequired: true }
+  - { name: defaults, type: string, isRequired: true }
+  - { name: pre_signup_lambda_github_release_url, type: string }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
