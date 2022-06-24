@@ -134,6 +134,14 @@ properties:
             "$schemaRef": "/dependencies/jenkins-instance-1.yml"
   secrets_prefix:
     type: string
+  api_proxy_uri:
+    type: string
+  sms_role_ext_id:
+    type: string
+  cognito_callback_bucket_name:
+    type: string
+  pre_signup_lambda_github_release_url:
+    type: string
 oneOf:
 - additionalProperties: false
   properties:
@@ -974,8 +982,6 @@ oneOf:
       type: string
       enum:
         - rosa-authenticator
-    account:
-      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
     identifier:
       type: string
     api_proxy_uri:
@@ -985,7 +991,7 @@ oneOf:
     cognito_callback_bucket_name:
       type: string
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     pre_signup_lambda_github_release_url:
       type: string
     region:
@@ -995,7 +1001,6 @@ oneOf:
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
-    - account
     - identifier
     - api_proxy_uri
     - sms_role_ext_id
