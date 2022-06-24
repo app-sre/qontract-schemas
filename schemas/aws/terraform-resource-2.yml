@@ -991,7 +991,7 @@ oneOf:
     cognito_callback_bucket_name:
       type: string
     defaults:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     pre_signup_lambda_github_release_url:
       type: string
     region:
