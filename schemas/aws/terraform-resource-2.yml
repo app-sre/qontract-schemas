@@ -134,6 +134,14 @@ properties:
             "$schemaRef": "/dependencies/jenkins-instance-1.yml"
   secrets_prefix:
     type: string
+  api_proxy_uri:
+    type: string
+  sms_role_ext_id:
+    type: string
+  cognito_callback_bucket_name:
+    type: string
+  pre_signup_lambda_github_release_url:
+    type: string
 oneOf:
 - additionalProperties: false
   properties:
