@@ -974,8 +974,6 @@ oneOf:
       type: string
       enum:
         - rosa-authenticator
-    account:
-      "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
     identifier:
       type: string
     api_proxy_uri:
@@ -995,7 +993,6 @@ oneOf:
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
-    - account
     - identifier
     - api_proxy_uri
     - sms_role_ext_id
