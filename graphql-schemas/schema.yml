@@ -26,12 +26,12 @@
 - name: SmtpSettings_v1
   fields:
   - { name: mailAddress, type: string, isRequired: true }
-  - { name: timeout, type: int, isRequired: true }
+  - { name: timeout, type: int }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: ImapSettings_v1
   fields:
-  - { name: timeout, type: int, isRequired: true }
+  - { name: timeout, type: int }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: GithubRepoInvites_v1

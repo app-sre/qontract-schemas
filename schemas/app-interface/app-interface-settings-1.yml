@@ -56,7 +56,6 @@ properties:
         "$ref": "/common-1.json#/definitions/vaultSecret"
     required:
     - mailAddress
-    - timeout
     - credentials
   imap:
     type: object
@@ -67,7 +66,6 @@ properties:
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
     required:
-    - timeout
     - credentials
   githubRepoInvites:
     type: object
