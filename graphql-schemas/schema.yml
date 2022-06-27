@@ -1471,7 +1471,7 @@
   - { name: api_proxy_uri, type: string, isRequired: true }
   - { name: sms_role_ext_id, type: string, isRequired: true }
   - { name: cognito_callback_bucket_name, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true }
+  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
   - { name: pre_signup_lambda_github_release_url, type: string }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
