@@ -285,11 +285,17 @@
 
 - name: ClusterJumpHost_v1
   fields:
-  - { name: hostname, type: string, isRequired: true }
-  - { name: knownHosts, type: string, isRequired: true }
+  - { name: hostname, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: knownHosts, type: string, isRequired: true, isResourceRef: true }
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
+  - name: clusters
+    type: Cluster_v1
+    isList: true
+    synthetic:
+      schema: /openshift/cluster-1.yml
+      subAttr: jumpHost
 
 - name: DisableClusterAutomations_v1
   fields:
@@ -2485,6 +2491,7 @@
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
+  - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
   - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
   - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
