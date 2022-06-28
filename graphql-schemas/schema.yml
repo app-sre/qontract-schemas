@@ -289,6 +289,12 @@
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
+  - name: clusters
+    type: Cluster_v1
+    isList: true
+    synthetic:
+      schema: /openshift/cluster-1.yml
+      subAttr: jumpHost
 
 - name: DisableClusterAutomations_v1
   fields:
