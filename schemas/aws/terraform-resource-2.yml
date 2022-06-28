@@ -140,6 +140,8 @@ properties:
     type: string
   cognito_callback_bucket_name:
     type: string
+  vpc_arn:
+    type: string
   pre_signup_lambda_github_release_url:
     type: string
 oneOf:
@@ -990,6 +992,8 @@ oneOf:
       type: string
     cognito_callback_bucket_name:
       type: string
+    vpc_arn:
+      type: string
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     pre_signup_lambda_github_release_url:
@@ -1005,6 +1009,7 @@ oneOf:
     - api_proxy_uri
     - sms_role_ext_id
     - cognito_callback_bucket_name
+    - vpc_arn
     - defaults
 required:
 - provider
