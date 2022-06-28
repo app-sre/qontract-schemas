@@ -462,24 +462,8 @@ properties:
   insecureSkipTLSVerify:
     type: boolean
   jumpHost:
-    type: object
-    additionalProperties: false
-    properties:
-      hostname:
-        type: string
-        format: uri
-      knownHosts:
-        type: string
-      user:
-        type: string
-      port:
-        type: integer
-      identity:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
-    required:
-    - hostname
-    - user
-    - identity
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   clusterAdminAutomationToken:

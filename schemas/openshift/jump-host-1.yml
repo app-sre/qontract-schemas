@@ -1,0 +1,31 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/jump-host-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  hostname:
+    type: string
+    format: uri
+  knownHosts:
+    type: string
+  user:
+    type: string
+  port:
+    type: integer
+  identity:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+required:
+- "$schema"
+- labels
+- hostname
+- knownHosts
+- user
+- identity
