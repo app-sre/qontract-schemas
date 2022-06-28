@@ -13,6 +13,7 @@
   - { name: saasDeployJobTemplate, type: string, isRequired: true }
   - { name: hashLength, type: int, isRequired: true }
   - { name: smtp, type: SmtpSettings_v1 }
+  - { name: imap, type: ImapSettings_v1 }
   - { name: githubRepoInvites, type: GithubRepoInvites_v1 }
   - { name: dependencies, type: AppInterfaceDependencyMapping_v1, isList: true }
   - { name: credentials, type: CredentialsRequestMap_v1, isList: true }
@@ -25,6 +26,12 @@
 - name: SmtpSettings_v1
   fields:
   - { name: mailAddress, type: string, isRequired: true }
+  - { name: timeout, type: int }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
+
+- name: ImapSettings_v1
+  fields:
+  - { name: timeout, type: int }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: GithubRepoInvites_v1

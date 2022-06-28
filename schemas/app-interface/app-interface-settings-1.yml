@@ -50,8 +50,23 @@ properties:
     properties:
       mailAddress:
         type: string
+      timeout:
+        type: integer
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - mailAddress
+    - credentials
+  imap:
+    type: object
+    additionalProperties: false
+    properties:
+      timeout:
+        type: integer
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - credentials
   githubRepoInvites:
     type: object
     additionalProperties: false
