@@ -58,8 +58,12 @@ properties:
     type: string
     format: uri
     description: |
-      Link to the architectureDocument. This can be a git link or a link to a
-      Google Doc.
+      The Architecture Document should be written with SREs as the target audience. Anyone
+      reading the Architecture Document should understand how the service works, even
+      without any prior background. This document will be the primary reference during
+      incidents. To ensure the Architecture Document is always accessible to SREs and its
+      changes properly reviewed and tracked, it must be written in markdown and stored in
+      a place where SREs can control its changes.
 
   parentApp:
     "$ref": "/common-1.json#/definitions/crossref"
