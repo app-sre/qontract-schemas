@@ -481,6 +481,9 @@ properties:
         items:
           type: string
           enum:
+          - dashdotdb-slo
+          - gabi-authorized-users
+          - integrations-manager
           - openshift-groups
           - openshift-namespaces
           - openshift-namespace-labels
