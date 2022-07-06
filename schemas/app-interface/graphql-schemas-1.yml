@@ -1,0 +1,83 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/graphql-schemas-1.yml
+  
+  confs:
+    type: array
+    items:
+      "$ref": "#/definitions/conf"
+
+definitions:
+  conf:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+      fields:
+        type: array
+        items:
+          "$ref": "#/definitions/field"
+      datafile:
+        type: string
+      isInterface:
+        type: boolean
+      interface:
+        type: string
+      interfaceResolve:
+        type: object
+        additionalProperties: false
+        properties:
+          strategy:
+            type: string
+            enum:
+            - "fieldMap"
+          field:
+            type: string
+          fieldMap:
+            type: object
+            properties:
+              "/": {}
+  field:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      isInterface:
+        type: boolean
+      isUnique:
+        type: boolean
+      isRequired:
+        type: boolean
+      isSearchable:
+        type: boolean
+      isList:
+        type: boolean
+      isResource:
+        type: boolean
+      isResourceRef:
+        type: boolean
+      synthetic:
+        type: object
+        additionalProperties: false
+        properties:
+          schema:
+            type: string
+          subAttr:
+            type: string
+      datafileSchema:
+        type: string
+
+      
+
