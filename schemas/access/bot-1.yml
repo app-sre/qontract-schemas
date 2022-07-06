@@ -18,7 +18,7 @@ properties:
   org_username:
     "$ref": "/common-1.json#/definitions/identifier"
   github_username:
-    "$ref": "/common-1.json#/definitions/identifier"
+    "$ref": "/common-1.json#/definitions/botIdentifier"
   openshift_serviceaccount:
     type: string
     pattern: '^.+\/.+$'
