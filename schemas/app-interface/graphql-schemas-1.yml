@@ -68,6 +68,8 @@ definitions:
         type: boolean
       isResourceRef:
         type: boolean
+      resolveResource:
+        type: boolean
       synthetic:
         type: object
         additionalProperties: false
@@ -78,6 +80,3 @@ definitions:
             type: string
       datafileSchema:
         type: string
-
-      
-
