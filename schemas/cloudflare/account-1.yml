@@ -1,0 +1,44 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/account-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  providerVersion:
+    type: string
+  accountOwners:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - name
+      - email
+  apiCredentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  terraformStateAccount:
+    description: AWS Account to use for state in S3
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+required:
+- "$schema"
+- name
+- description
+- providerVersion
+- apiCredentials
+- accountOwners
+- terraformStateAccount

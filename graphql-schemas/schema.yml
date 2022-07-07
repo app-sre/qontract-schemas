@@ -924,6 +924,19 @@ confs:
       schema: /aws/policy-1.yml
       subAttr: account
 
+- name: CloudflareAccount_v1
+  interface: ExternalResourcesProvisioner_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: description, type: string }
+  - { name: providerVersion, type: string, isRequired: true }
+  - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
+  - { name: enableDeletion, type: boolean }
+  - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
+  - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
+ 
 - name: AWSGroup_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1113,6 +1126,7 @@ confs:
     field: provider
     fieldMap:
       aws: NamespaceTerraformProviderResourceAWS_v1
+      cloudflare: NamespaceTerraformProviderResourceCloudflare_v1
       gcp-project: NamespaceTerraformProviderResourceGCPProject_v1
   fields:
   - { name: provider, type: string, isRequired: true }
@@ -1124,6 +1138,55 @@ confs:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: provisioner, type: AWSAccount_v1, isRequired: true, isContextUnique: true }
   - { name: resources, type: NamespaceTerraformResourceAWS_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: NamespaceTerraformProviderResourceCloudflare_v1
+  interface: NamespaceExternalResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: provisioner, type: CloudflareAccount_v1, isRequired: true }
+  - { name: resources, type: NamespaceTerraformResourceCloudflare_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: NamespaceTerraformResourceCloudflare_v1
+  datafile: /cloudflare/terraform-resource-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      zone: NamespaceTerraformResourceCloudflareZone_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: NamespaceTerraformResourceCloudflareZone_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: zone, type: string, isRequired: true }
+  - { name: plan, type: string }
+  - { name: type, type: string }
+  - { name: settings, type: json }
+  - { name: records, type: CloudflareZoneRecord_v1, isList: true }
+  - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
+
+- name: CloudflareZoneRecord_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: ttl, type: int, isRequired: true }
+  - { name: value, type: string, isRequired: true }
+  - { name: proxied, type: boolean }
+
+- name: CloudflareZoneWorker_v1
+  fields:
+  - { name: identifier, type: string, isRequired: true }
+  - { name: pattern, type: string, isRequired: true }
+  - { name: script, type: CloudflareZoneWorkerScript_v1, isRequired: true }
+
+- name: CloudflareZoneWorkerScript_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: content_inline, type: string }
+  - { name: content_file, type: string, isResource: true, resolveResource: true }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
@@ -2618,6 +2681,7 @@ confs:
   - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
+  - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }

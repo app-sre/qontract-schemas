@@ -14,6 +14,7 @@ properties:
     description: terraform provider type to use
     enum:
     - aws
+    - cloudflare
     - gcp-project
   provisioner:
     "$ref": "/common-1.json#/definitions/crossref"
@@ -24,6 +25,7 @@ properties:
     items:
       oneOf:
       - "$ref": "/aws/terraform-resource-2.yml"
+      - "$ref": "/cloudflare/terraform-resource-1.yml"
       - "$ref": "/gcp/terraform-resource-1.yml"
 oneOf:
 - additionalProperties: false
@@ -39,6 +41,19 @@ oneOf:
       type: array
       items:
         "$ref": "/aws/terraform-resource-2.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - cloudflare
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cloudflare/account-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/cloudflare/terraform-resource-1.yml"
 - additionalProperties: false
   properties:
     provider:

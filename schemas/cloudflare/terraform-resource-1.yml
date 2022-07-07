@@ -1,0 +1,147 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/terraform-resource-1.yml
+  provider:
+    type: string
+  zone:
+    type: string
+  plan:
+    enum:
+    - enterprise
+    - free
+  type:
+    enum:
+    - full
+    - partial
+  settings:
+    type: object
+  records:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        ttl:
+          type: integer
+        value:
+          type: string
+        proxied:
+          type: boolean
+  workers:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        pattern:
+          type: string
+        script:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+            content_inline:
+              type: string
+            content_file:
+              "$ref": "/common-1.json#/definitions/resourceref"
+          required:
+          - name
+          oneOf:
+          - required:
+            - content_inline
+          - required:
+            - content_file
+      required:
+      - identifier
+      - pattern
+      - script
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - zone
+    zone:
+      type: string
+    plan:
+      enum:
+      - enterprise
+      - free
+    type:
+      enum:
+      - full
+      - partial
+    settings:
+      type: object
+    records:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          type:
+            type: string
+          ttl:
+            type: integer
+          value:
+            type: string
+          proxied:
+            type: boolean
+        required:
+        - name
+        - type
+        - ttl
+        - value
+    workers:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          identifier:
+            type: string
+          pattern:
+            type: string
+          script:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                type: string
+              content_inline:
+                type: string
+              content_file:
+                "$ref": "/common-1.json#/definitions/resourceref"
+            required:
+            - name
+            oneOf:
+            - required:
+              - content_inline
+            - required:
+              - content_file
+        required:
+        - identifier
+        - pattern
+        - script
+  required:
+  - zone
+required:
+- provider
