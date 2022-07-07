@@ -66,8 +66,6 @@ definitions:
         type: boolean
       isResource:
         type: boolean
-      isResourceRef:
-        type: boolean
       resolveResource:
         type: boolean
       synthetic:
