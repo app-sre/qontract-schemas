@@ -160,6 +160,17 @@ properties:
     type: string
   pre_signup_lambda_github_release_url:
     type: string
+  subscriptions:
+    type: array
+    items:
+      type: object
+      properties:
+        protocol:
+          type: string
+          enum:
+          - email
+        endpoint:
+          type: string 
 oneOf:
 - additionalProperties: false
   properties:
@@ -470,6 +481,26 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    event_notifications:
+      type: array
+      items:
+        type: object
+        properties:
+          destination:
+            type: string
+          source_type:
+            type: string
+            enum:
+            - db-instance
+            - db-security-group
+            - db-parameter-group
+            - db-snapshot
+            - db-cluster
+            - db-cluster-snapshot
+          event_categories:
+            type: array
+            items:
+              type: string
   required:
   - identifier
   - defaults
@@ -555,6 +586,42 @@ oneOf:
   required:
   - identifier
   - specs
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - sns
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    fifo_topic:
+       type: boolean
+    inline_policy:
+       type: object
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    subscriptions:
+      type: array
+      items:
+        type: object
+        properties:
+          protocol:
+            type: string
+            enum:
+            - email
+          endpoint:
+            type: string
+  required:
+  - identifier
+  - defaults
 - additionalProperties: false
   properties:
     provider:
