@@ -297,7 +297,7 @@ confs:
 - name: ClusterJumpHost_v1
   fields:
   - { name: hostname, type: string, isRequired: true, isUnique: true, isSearchable: true }
-  - { name: knownHosts, type: string, isRequired: true, isResourceRef: true }
+  - { name: knownHosts, type: string, isRequired: true, isResource: true }
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
@@ -385,7 +385,7 @@ confs:
   - { name: instance, type: JenkinsInstance_v1, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: config, type: json }
-  - { name: config_path, type: string, isResourceRef: true }
+  - { name: config_path, type: string, isResource: true }
 
 - name: JiraServer_v1
   fields:
@@ -1041,7 +1041,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResourceRef: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: validate_json, type: boolean }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
@@ -1050,7 +1050,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResourceRef: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: type, type: string }
   - { name: variables, type: json }
   - { name: validate_alertmanager_config, type: boolean }
@@ -1073,7 +1073,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResourceRef: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: vault_tls_secret_path, type: string }
   - { name: vault_tls_secret_version, type: int }
 
@@ -1184,7 +1184,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: cloudinit_configs, type: CloudinitConfig_v1, isList: true }
   - { name: variables, type: json }
   - { name: image, type: ASGImage_v1, isRequired: true }
@@ -1245,7 +1245,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
@@ -1257,7 +1257,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: availability_zone, type: string }
   - { name: parameter_group, type: string }
   - { name: overrides, type: json }
@@ -1276,7 +1276,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: overrides, type: json }
   - { name: event_notifications, type: AWSS3EventNotification_v1, isList: true }
   - { name: sqs_identifier, type: string }
@@ -1338,7 +1338,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: parameter_group, type: string }
   - { name: region, type: string }
   - { name: overrides, type: json }
@@ -1348,7 +1348,7 @@ confs:
 
 - name: SQSQueuesSpecs_v1
   fields:
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: queues, type: KeyValue_v1, isRequired: true, isList: true }
 
 - name: NamespaceTerraformResourceSQS_v1
@@ -1364,7 +1364,7 @@ confs:
 
 - name: DynamoDBTableSpecs_v1
   fields:
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: tables, type: KeyValue_v1, isRequired: true, isList: true }
 
 - name: NamespaceTerraformResourceDynamoDB_v1
@@ -1397,7 +1397,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
@@ -1410,7 +1410,7 @@ confs:
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: kms_encryption, type: boolean }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
@@ -1422,7 +1422,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: es_identifier, type: string }
   - { name: filter_pattern, type: string }
   - { name: output_resource_name, type: string }
@@ -1435,7 +1435,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1447,7 +1447,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1490,7 +1490,7 @@ confs:
   - { name: sms_role_ext_id, type: string, isRequired: true }
   - { name: cognito_callback_bucket_name, type: string, isRequired: true }
   - { name: vpc_arn, type: string, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResourceRef: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: pre_signup_lambda_github_release_url, type: string }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -2426,7 +2426,7 @@ confs:
 
 - name: QontractQuery_v1
   fields:
-  - { name: path, type: string, isRequired: true, isResourceRef: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
 
 - name: QueryValidation_v1
   fields:
