@@ -385,7 +385,7 @@ confs:
   - { name: instance, type: JenkinsInstance_v1, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: config, type: json }
-  - { name: config_path, type: string, isResource: true }
+  - { name: config_path, type: string, isResource: true, resolveResource: true }
 
 - name: JiraServer_v1
   fields:
