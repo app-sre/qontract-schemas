@@ -1,0 +1,92 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/maintenance-1.yml
+  name:
+    type: string
+    description: the name of the maintenance
+  title:
+    type: string
+    description: the display name of the maintenance, e.g. visible name on status page
+  stage:
+    type: string
+    description: the current stage the maintenance is in
+    enum:
+    - scheduled
+    - in_progress
+    - verifying
+    - completed
+  affectedServices:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/app-1.yml"
+  scheduledStart:
+    type: string
+    format: date-time
+  scheduledEnd:
+    type: string
+    format: date-time
+  anouncements:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - statuspage
+        announceAt:
+          type: string
+          format: date-time
+          description: the date and time when the maintenance will be announced
+        message:
+          type: string
+          description: a message describing the maintenance
+        remindSubscribers:
+          type: boolean
+        notifySubscribersOnStart:
+          type: boolean
+        notifySubscribersOnCompletion:
+          type: boolean
+      required:
+      - provider
+      - announceAt
+      - message
+    oneOf:
+    - properties:
+        provider:
+          type: string
+          enum:
+          - statuspage
+        announceAt:
+          type: string
+          format: date-time
+          description: the date and time when the maintenance will be announced
+        message:
+          type: string
+          description: a message describing the maintenance
+        remindSubscribers:
+          type: boolean
+        notifySubscribersOnStart:
+          type: boolean
+        notifySubscribersOnCompletion:
+          type: boolean
+      required:
+      - provider
+      - announceAt
+      - message
+required:
+- name
+- title
+- stage
+- affectedServices
+- scheduledStart
