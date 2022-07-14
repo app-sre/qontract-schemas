@@ -2162,6 +2162,13 @@ confs:
   - { name: service, type: string, isRequired: true }
   - { name: group, type: string, isRequired: true}
   - { name: access, type: string, isRequired: true}
+  - { name: pagerduty, type: PagerDutyTarget_v1, isList: true }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: permissions
 
 - name: PermissionSlackUsergroup_v1
   interface: Permission_v1
