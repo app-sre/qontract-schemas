@@ -111,6 +111,11 @@ oneOf:
       - "developer"
       - "reporter"
       - "guest"
+    pagerduty:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/pagerduty-target-1.yml"
   required:
   - group
   - access
