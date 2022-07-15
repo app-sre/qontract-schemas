@@ -142,8 +142,6 @@ properties:
     type: string
   vpc_arn:
     type: string
-  vpc_arn:
-    type: string
   domain_name:
     type: string
   pre_signup_lambda_github_release_url:
