@@ -142,6 +142,10 @@ properties:
     type: string
   vpc_arn:
     type: string
+  vpc_arn:
+    type: string
+  domain_name:
+    type: string
   pre_signup_lambda_github_release_url:
     type: string
 oneOf:
@@ -994,6 +998,10 @@ oneOf:
       type: string
     vpc_arn:
       type: string
+    certificate_arn:
+      type: string
+    domain_name:
+      type: string
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     pre_signup_lambda_github_release_url:
@@ -1010,6 +1018,9 @@ oneOf:
     - sms_role_ext_id
     - cognito_callback_bucket_name
     - vpc_arn
+# make these required after updating the stage and prod rosa-authenticator to use these properties
+#    - certificate_arn
+#    - domain_name
     - defaults
 required:
 - provider
