@@ -117,6 +117,31 @@ properties:
             type: string
             enum:
             - "/app-sre/saas-file-2.yml"
+  self_service:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+        resources:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/resourceref"
+        datafiles:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /app-sre/saas-file-2.yml
+                  - /openshift/namespace-1.yml
+                  - /access/role-1.yml
 required:
 - $schema
 - labels
