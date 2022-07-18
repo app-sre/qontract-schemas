@@ -1016,8 +1016,8 @@ oneOf:
     - sms_role_ext_id
     - cognito_callback_bucket_name
     - vpc_arn
-   - certificate_arn
-   - domain_name
+    - certificate_arn
+    - domain_name
     - defaults
 required:
 - provider
