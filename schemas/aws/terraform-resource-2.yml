@@ -1016,9 +1016,8 @@ oneOf:
     - sms_role_ext_id
     - cognito_callback_bucket_name
     - vpc_arn
-# make these required after updating the stage and prod rosa-authenticator to use these properties
-#    - certificate_arn
-#    - domain_name
+    - certificate_arn
+    - domain_name
     - defaults
 required:
 - provider
