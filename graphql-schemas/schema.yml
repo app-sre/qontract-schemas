@@ -1490,8 +1490,8 @@ confs:
   - { name: sms_role_ext_id, type: string, isRequired: true }
   - { name: cognito_callback_bucket_name, type: string, isRequired: true }
   - { name: vpc_arn, type: string, isRequired: true }
-  - { name: certificate_arn, type: string, isRequired: false } # make this required after updating rosa-auth in stage and prod
-  - { name: domain_name, type: string, isRequired: false }  # make this required after updating rosa-auth in stage and prod
+  - { name: certificate_arn, type: string, isRequired: true }
+  - { name: domain_name, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: pre_signup_lambda_github_release_url, type: string }
   - { name: output_resource_name, type: string }
