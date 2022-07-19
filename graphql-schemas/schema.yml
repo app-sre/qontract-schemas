@@ -282,6 +282,14 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: jsonpath, type: string, isRequired: true }
 
+- name: PathObject_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: schema
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+
 - name: VaultSecret_v1
   fields:
   - { name: path, type: string, isRequired: true }
