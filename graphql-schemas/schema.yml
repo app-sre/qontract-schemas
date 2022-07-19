@@ -1487,9 +1487,11 @@ confs:
   - { name: region, type: string }
   - { name: identifier, type: string, isRequired: true }
   - { name: api_proxy_uri, type: string, isRequired: true }
-  - { name: sms_role_ext_id, type: string, isRequired: true }
+  - { name: sms_role_ext_id, type: string, isRequired: false }
   - { name: cognito_callback_bucket_name, type: string, isRequired: true }
   - { name: vpc_arn, type: string, isRequired: true }
+  - { name: vpc_id, type: string, isRequired: false }
+  - { name: subnet_ids, type: string, isList: true, isRequired: false }
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: domain_name, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
