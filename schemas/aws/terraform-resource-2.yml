@@ -136,8 +136,6 @@ properties:
     type: string
   api_proxy_uri:
     type: string
-  sms_role_ext_id:
-    type: string
   cognito_callback_bucket_name:
     type: string
   vpc_arn:
@@ -996,8 +994,6 @@ oneOf:
       type: string
     api_proxy_uri:
       type: string
-    sms_role_ext_id:
-      type: string
     cognito_callback_bucket_name:
       type: string
     vpc_arn:
@@ -1030,5 +1026,7 @@ oneOf:
     - certificate_arn
     - domain_name
     - defaults
+    - vpc_id
+    - subnet_ids
 required:
 - provider
