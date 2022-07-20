@@ -1930,6 +1930,7 @@ confs:
 
 - name: SaasResourceTemplateTarget_v2
   fields:
+  - { name: path, type: string }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: ref, type: string, isRequired: true }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
