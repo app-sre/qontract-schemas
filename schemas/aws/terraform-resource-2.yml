@@ -1030,5 +1030,34 @@ oneOf:
     - certificate_arn
     - domain_name
     - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - rosa-authenticator-vpce
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    identifier:
+      type: string
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    region:
+      type: string
+    subnet_ids:
+      type: array
+      items:
+        type: string
+    vpc_id:
+      type: string
+  required:
+    - defaults
+    - identifier
+    - vpc_id
+    - subnet_ids
 required:
 - provider
