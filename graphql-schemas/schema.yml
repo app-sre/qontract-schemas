@@ -1511,8 +1511,8 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_name, type: string }
   - { name: region, type: string }
-  - { name: subnet_ids, type: string, isList: true, isRequired: false }
-  - { name: vpc_id, type: string, isRequired: false }
+  - { name: subnet_ids, type: string, isList: true, isRequired: true }
+  - { name: vpc_id, type: string, isRequired: true }
 
 - name: NamespaceTerraformResourceALBTargets_v1
   fields:
