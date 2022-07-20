@@ -156,6 +156,8 @@ properties:
       type: string
   openshift_ingress_load_balancer_arn:
     type: string
+  pre_signup_lambda_github_release_url:
+    type: string
 oneOf:
 - additionalProperties: false
   properties:
@@ -1003,6 +1005,8 @@ oneOf:
     sms_role_ext_id:
       type: string
     cognito_callback_bucket_name:
+      type: string
+    pre_signup_lambda_github_release_url:
       type: string
     vpc_arn:
       type: string
