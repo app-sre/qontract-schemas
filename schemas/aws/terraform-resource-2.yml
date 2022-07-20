@@ -1040,6 +1040,7 @@ oneOf:
     - cognito_callback_bucket_name
     - certificate_arn
     - domain_name
+    - vpc_id
     - defaults
 - additionalProperties: false
   properties:
