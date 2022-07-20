@@ -150,7 +150,11 @@ properties:
       type: string
   domain_name:
     type: string
-  pre_signup_lambda_github_release_url:
+  network_interface_ids:
+    type: array
+    items:
+      type: string
+  openshift_ingress_load_balancer_arn:
     type: string
 oneOf:
 - additionalProperties: false
@@ -1008,14 +1012,18 @@ oneOf:
       type: array
       items:
         type: string
+    network_interface_ids:
+      type: array
+      items:
+        type: string
+    openshift_ingress_load_balancer_arn:
+      type: string
     certificate_arn:
       type: string
     domain_name:
       type: string
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
-    pre_signup_lambda_github_release_url:
-      type: string
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
@@ -1026,7 +1034,6 @@ oneOf:
     - identifier
     - api_proxy_uri
     - cognito_callback_bucket_name
-    - vpc_arn
     - certificate_arn
     - domain_name
     - defaults
