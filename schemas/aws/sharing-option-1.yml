@@ -15,6 +15,7 @@ properties:
     description: type of sharing to implement
     enum:
     - ami
+    - cmk
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
@@ -42,6 +43,21 @@ oneOf:
   - provider
   - account
   - regex
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      description: share Customer Managed Keys
+      enum:
+      - cmk
+    account:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+  required:
+  - provider
+  - account
 required:
 - provider
 - account
