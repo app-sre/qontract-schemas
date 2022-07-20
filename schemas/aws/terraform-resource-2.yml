@@ -736,7 +736,7 @@ oneOf:
     - secret
   - required:
     - domain
-- additionalProperties: falsepre_signup_lambda_github_release_url
+- additionalProperties: false
   properties:
     provider:
       type: string
