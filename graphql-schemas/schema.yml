@@ -1493,7 +1493,7 @@ confs:
   - { name: pre_signup_lambda_github_release_url, type: string }
   - { name: vpc_arn, type: string, isRequired: false }
   - { name: vpc_id, type: string, isRequired: true }
-  - { name: subnet_ids, type: string, isList: true, isRequired: false }
+  - { name: subnet_ids, type: string, isList: true, isRequired: true }
   - { name: network_interface_ids, type: string, isList: true, isRequired: false }
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: domain_name, type: string, isRequired: true }
