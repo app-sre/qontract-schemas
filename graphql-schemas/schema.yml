@@ -937,6 +937,7 @@ confs:
     field: provider
     fieldMap:
       ami: AWSAccountSharingOptionAMI_v1
+      cmk: AWSAccountSharingOptionCMK_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
@@ -947,6 +948,13 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: regex, type: string, isRequired: true }
+  - { name: region, type: string }
+
+- name: AWSAccountSharingOptionCMK_v1
+  interface: AWSAccountSharingOption_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: region, type: string }
 
 - name: AWSUserPolicy_v1
