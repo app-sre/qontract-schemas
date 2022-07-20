@@ -1895,17 +1895,6 @@ confs:
   - { name: code, type: VaultSecret_v1 }
   - { name: image, type: VaultSecret_v1 }
 
-- name: SaasResourceTemplate_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: url, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: provider, type: string }
-  - { name: hash_length, type: int }
-  - { name: parameters, type: json }
-  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
-  - { name: targets, type: SaasResourceTemplateTarget_v1, isRequired: true, isList: true }
-
 - name: SaasResourceTemplate_v2
   fields:
   - { name: name, type: string, isRequired: true }
@@ -1916,17 +1905,6 @@ confs:
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: targets, type: SaasResourceTemplateTarget_v2, isRequired: true, isList: true }
-
-- name: SaasResourceTemplateTarget_v1
-  fields:
-  - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: ref, type: string, isRequired: true }
-  - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
-  - { name: parameters, type: json }
-  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
-  - { name: upstream, type: string }
-  - { name: disable, type: boolean }
-  - { name: delete, type: boolean }
 
 - name: SaasResourceTemplateTarget_v2
   fields:
