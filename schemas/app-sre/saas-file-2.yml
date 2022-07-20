@@ -94,7 +94,12 @@ properties:
         targets:
           type: array
           items:
-            "$ref": "/app-sre/saas-file-target-1.yml"
+            oneOf:
+            # inline
+            - "$ref": "/app-sre/saas-file-target-1.yml"
+            # referenced
+            - "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/app-sre/saas-file-target-1.yml"
       required:
       - name
       - url
