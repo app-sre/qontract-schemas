@@ -995,6 +995,12 @@ confs:
   - { name: filter_prefix, type: string}
   - { name: filter_suffix, type: string}
 
+- name: AWSRDSEventNotification_v1
+  fields:
+  - { name: destination, type: string, isRequired: true}
+  - { name: source_type, type: string}
+  - { name: event_categories, type: string, isList: true}
+
 - name: TerraformState_v1
   isInterface: true
   interfaceResolve:
@@ -1140,6 +1146,7 @@ confs:
       secrets-manager-service-account: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
       aws-iam-role: NamespaceTerraformResourceRole_v1
       sqs: NamespaceTerraformResourceSQS_v1
+      sns: NamespaceTerraformResourceSNSTopic_v1
       dynamodb: NamespaceTerraformResourceDynamoDB_v1
       ecr: NamespaceTerraformResourceECR_v1
       s3-cloudfront: NamespaceTerraformResourceS3CloudFront_v1
@@ -1270,6 +1277,7 @@ confs:
   - { name: replica_source, type: string }
   - { name: ca_cert, type: VaultSecret_v1 }
   - { name: annotations, type: json }
+  - { name: event_notifications, type: AWSRDSEventNotification_v1, isList: true}
 
 - name: NamespaceTerraformResourceS3_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -1362,6 +1370,25 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: specs, type: SQSQueuesSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
+
+- name: NamespaceTerraformResourceSNSSubscription_v1
+  fields:
+  - { name: protocol, type: string, isRequired: true }
+  - { name: endpoint, type: string, isRequired: true}
+
+- name: NamespaceTerraformResourceSNSTopic_v1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: defaults, type: string, isResource: true, isRequired: true }
+  - { name: region, type: string }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: fifo_topic, type: boolean }
+  - { name: inline_policy, type: json }
+  - { name: annotations, type: json }
+  - { name: subscriptions, type: NamespaceTerraformResourceSNSSubscription_v1, isList: true}
 
 - name: DynamoDBTableSpecs_v1
   fields:
