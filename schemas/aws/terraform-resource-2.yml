@@ -1041,6 +1041,7 @@ oneOf:
     - certificate_arn
     - domain_name
     - vpc_id
+    - subnet_ids
     - defaults
 - additionalProperties: false
   properties:
