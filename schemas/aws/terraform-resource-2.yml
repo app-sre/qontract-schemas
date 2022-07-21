@@ -144,6 +144,8 @@ properties:
     type: string
   vpc_id:
     type: string
+  vpce_id:
+    type: string
   subnet_ids:
     type: array
     items:
@@ -1011,6 +1013,8 @@ oneOf:
     vpc_arn:
       type: string
     vpc_id:
+      type: string
+    vpce_id:
       type: string
     subnet_ids:
       type: array
