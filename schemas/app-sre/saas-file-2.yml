@@ -58,6 +58,10 @@ properties:
         "$ref": "/common-1.json#/definitions/vaultSecret"
   parameters:
     type: object
+  allowedSecretParameterPaths:
+    type: array
+    items:
+      type: string
   secretParameters:
     type: array
     description: saas file level parameters from vault secrets
