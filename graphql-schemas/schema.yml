@@ -877,6 +877,7 @@ confs:
   - { name: resourcesDefaultRegion, type: string, isRequired: true }
   - { name: supportedDeploymentRegions, type: string, isList: true }
   - { name: providerVersion, type: string, isRequired: true }
+  - { name: qontractReconcileVersion, type: string }
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
@@ -1894,6 +1895,7 @@ confs:
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
+  - { name: allowedSecretParameterPaths, type: string, isList: true }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: resourceTemplates, type: SaasResourceTemplate_v2, isRequired: true, isList: true }
   - { name: imagePatterns, type: string, isRequired: true, isList: true }
