@@ -315,6 +315,17 @@ properties:
               type: boolean
             pipeline_timeout:
               type: integer
+            labels_allowed:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                properties:
+                  role:
+                    "$ref": "/common-1.json#/definitions/crossref"
+                    "$schemaRef": "/access/role-1.yml"
+                required:
+                - role
           required:
           - enabled
           - rebase
