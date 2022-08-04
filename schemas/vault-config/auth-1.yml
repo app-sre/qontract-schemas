@@ -57,19 +57,25 @@ properties:
               type: string
               enum: 
               - oidc
+            default_role:
+              type: string
             oidc_discovery_url:
               type: string
             oidc_client_id:
               type: string
             oidc_client_secret:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+            oidc_client_secret_kv_version:
               type: string
-            default_role:
-              type: string
+              enum:
+              - kv_v1
+              - kv_v2
           required:
+          - default_role
           - oidc_discovery_url
           - oidc_client_id
           - oidc_client_secret
-          - default_role
+          - oidc_client_secret_kv_version
   policy_mappings:
     type: array
     items:

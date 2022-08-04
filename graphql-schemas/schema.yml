@@ -162,7 +162,8 @@ confs:
   - { name: _type, type: string, isRequired: true }
   - { name: oidc_discovery_url, type: string, isRequired: true }
   - { name: oidc_client_id, type: string, isRequired: true }
-  - { name: oidc_client_secret, type: string, isRequired: true }
+  - { name: oidc_client_secret, type: VaultSecret_v1, isRequired: true }
+  - { name: oidc_client_secret_kv_version, type: string, isRequired: true }
   - { name: default_role, type: string, isRequired: true}
 
 - name: VaultAuthSettings_v1
