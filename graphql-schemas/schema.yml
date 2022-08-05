@@ -2265,6 +2265,12 @@ confs:
   - { name: service, type: string, isRequired: true }
   - { name: quayOrg, type: QuayOrg_v1, isRequired: true }
   - { name: team, type: string, isRequired: true }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: permissions
 
 - name: ExternalUser_v1
   fields:
