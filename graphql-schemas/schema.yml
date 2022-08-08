@@ -2380,6 +2380,7 @@ confs:
   - { name: always_run, type: boolean }
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
+  - { name: early_exit, type: boolean }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
