@@ -53,6 +53,8 @@ properties:
         type: boolean
       run_for_valid_saas_file_changes:
         type: boolean
+      early_exit:
+        type: boolean
     required:
     - cmd
 
