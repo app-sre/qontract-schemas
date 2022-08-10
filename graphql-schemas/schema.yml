@@ -1185,8 +1185,13 @@ confs:
 - name: CloudflareZoneWorkerScript_v1
   fields:
   - { name: name, type: string, isRequired: true }
-  - { name: content_inline, type: string }
-  - { name: content_file, type: string, isResource: true, resolveResource: true }
+  - { name: content_from_github, type: CloudflareZoneWorkerScriptContentFromGithub_v1 }
+
+- name: CloudflareZoneWorkerScriptContentFromGithub_v1
+  fields:
+  - { name: repo, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: ref, type: string, isRequired: true }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
