@@ -283,6 +283,14 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: jsonpath, type: string, isRequired: true }
 
+- name: DatafileObject_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: schema
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+
 - name: VaultSecret_v1
   fields:
   - { name: path, type: string, isRequired: true }
@@ -1829,6 +1837,7 @@ confs:
       subAttr: environment
 
 - name: App_v1
+  datafile: /app-sre/app-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -1889,6 +1898,7 @@ confs:
       subAttr: app
 
 - name: SaasFile_v2
+  datafile: /app-sre/saas-file-2.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2358,6 +2368,7 @@ confs:
   - { name: sentry_roles, type: SentryRole_v1, isList: true }
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: owned_saas_files, type: SaasFile_v2, isList: true }
+  - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -2370,6 +2381,12 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+
+- name: SelfServiceConfig_v1
+  fields:
+  - { name: datafiles, type: DatafileObject_v1, isList: true, isInterface: true }
+  - { name: resources, type: string, isList: true, isResource: true }
+  - { name: description, type: string }
 
 - name: IntegrationPrCheck_v1
   fields:
