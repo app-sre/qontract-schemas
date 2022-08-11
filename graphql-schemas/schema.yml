@@ -1165,8 +1165,14 @@ confs:
   - { name: plan, type: string }
   - { name: type, type: string }
   - { name: settings, type: json }
+  - { name: argo, type: CloudflareZoneArgo_v1 }
   - { name: records, type: CloudflareZoneRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
+
+- name: CloudflareZoneArgo_v1
+  fields:
+  - { name: tiered_caching, type: boolean }
+  - { name: smart_routing, type: boolean }
 
 - name: CloudflareZoneRecord_v1
   fields:

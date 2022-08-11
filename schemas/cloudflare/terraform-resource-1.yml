@@ -23,6 +23,14 @@ properties:
     - partial
   settings:
     type: object
+  argo:
+    type: object
+    additionalProperties: false
+    properties:
+      tiered_caching:
+        type: boolean
+      smart_routing:
+        type: boolean
   records:
     type: array
     items:
@@ -109,6 +117,14 @@ oneOf:
       - partial
     settings:
       type: object
+    argo:
+      type: object
+      additionalProperties: false
+      properties:
+        tiered_caching:
+          type: boolean
+        smart_routing:
+          type: boolean
     records:
       type: array
       items:
