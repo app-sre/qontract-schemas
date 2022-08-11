@@ -431,6 +431,7 @@ confs:
   - { name: severityPriorityMappings, type: JiraSeverityPriorityMappings_v1, isRequired: true }
   - { name: slack, type: SlackOutput_v1 }
   - { name: issueResolveState, type: string }
+  - { name: issueReopenState, type: string }
 
 - name: SendGridAccount_v1
   fields:
