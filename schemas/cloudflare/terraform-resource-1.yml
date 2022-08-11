@@ -70,6 +70,19 @@ properties:
               - repo
               - path
               - ref
+            vars:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                properties:
+                  name:
+                    type: string
+                  text:
+                    type: string
+                required:
+                - name
+                - text
           required:
           - name
           - content_from_github
@@ -148,6 +161,19 @@ oneOf:
                 - repo
                 - path
                 - ref
+              vars:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    name:
+                      type: string
+                    text:
+                      type: string
+                  required:
+                  - name
+                  - text
             required:
             - name
             - content_from_github
