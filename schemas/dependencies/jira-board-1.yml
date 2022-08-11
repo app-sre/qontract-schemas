@@ -33,6 +33,8 @@ properties:
     - workspace
   issueResolveState:
     type: string
+  issueReopenState:
+    type: string
 required:
 - "$schema"
 - labels
