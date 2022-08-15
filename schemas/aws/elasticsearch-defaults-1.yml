@@ -16,8 +16,17 @@ properties:
     properties:
       ebs_enabled:
         type: boolean
+      iops:
+        type: integer
+      throughput:
+        type: integer
       volume_size:
         type: integer
+      volume_type:
+        type: string
+        enum:
+        - gp2
+        - gp3
     required:
     - ebs_enabled
   encrypt_at_rest:
