@@ -25,6 +25,7 @@ properties:
     - InProgress       # The app is currently being on-boarded
     - TransitionPeriod # The app is proving SLI/SLOs for a determined period of time
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
+    - OffBoarding      # The app is being off-boarded
     - BestEffort       # The app is supported on a best effort basis
 
   grafanaUrls:
