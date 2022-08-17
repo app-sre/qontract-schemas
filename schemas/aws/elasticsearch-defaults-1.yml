@@ -18,15 +18,14 @@ properties:
         type: boolean
       iops:
         type: integer
-      throughput:
-        type: integer
       volume_size:
         type: integer
       volume_type:
         type: string
         enum:
+        - standard
         - gp2
-        - gp3
+        - io1
     required:
     - ebs_enabled
   encrypt_at_rest:
