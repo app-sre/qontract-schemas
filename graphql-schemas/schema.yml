@@ -306,7 +306,7 @@ confs:
 - name: ClusterJumpHost_v1
   fields:
   - { name: hostname, type: string, isRequired: true, isUnique: true, isSearchable: true }
-  - { name: knownHosts, type: string, isRequired: true, isResource: true }
+  - { name: knownHosts, type: string, isRequired: true, isResource: true, resolveResource: true }
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
