@@ -1073,6 +1073,7 @@ confs:
   - { name: variables, type: json }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
+  - { name: enable_query_support, type: boolean }
 
 - name: NamespaceOpenshiftResourceVaultSecret_v1
   interface: NamespaceOpenshiftResource_v1
