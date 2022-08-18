@@ -19,6 +19,9 @@ properties:
     type: boolean
   alertmanager_config_key:
     type: string
+  enable_query_support:
+    type: boolean
+    description: indicates that this resource is using graphql query results
   type:
     type: string
   variables:
@@ -51,6 +54,9 @@ oneOf:
       type: boolean
     alertmanager_config_key:
       type: string
+    enable_query_support:
+      type: boolean
+      description: indicates that this resource is using graphql query results
   required:
   - path
 - additionalProperties: false

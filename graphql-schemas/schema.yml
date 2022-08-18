@@ -1062,6 +1062,7 @@ confs:
   - { name: validate_json, type: boolean }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
+  - { name: enable_query_support, type: boolean }
 
 - name: NamespaceOpenshiftResourceResourceTemplate_v1
   interface: NamespaceOpenshiftResource_v1
