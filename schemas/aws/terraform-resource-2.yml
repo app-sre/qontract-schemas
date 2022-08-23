@@ -124,14 +124,16 @@ properties:
     items:
       type: string
   image:
-    type: object
-    properties:
-      upstream:
-        type: object
-        properties:
-          instance:
-            "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+    type: array
+    items:
+      type: object
+      properties:
+        upstream:
+          type: object
+          properties:
+            instance:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/dependencies/jenkins-instance-1.yml"
   secrets_prefix:
     type: string
   api_proxy_uri:
@@ -997,38 +999,66 @@ oneOf:
     variables:
       type: object
     image:
-      type: object
-      additionalProperties: false
-      properties:
-        tag_name:
-          description: name of tag to use to correlate AMI ID to commit
-          type: string
-        url:
-          description: url of source code repository
-          type: string
-          format: uri
-        ref:
-          description: commit or branch name
-          type: string
-          pattern: '^([0-9a-f]{40}|master|main)$'
-        upstream:
-          description: jenkins instance and job to wait for
-          type: object
-          additionalProperties: false
+      type: array
+      items:
+        type: object
+        properties:
+          provider:
+            type: string
+          tag_name:
+            type: string
+        oneOf:
+        - additionalProperties: false
           properties:
-            instance:
-              "$ref": "/common-1.json#/definitions/crossref"
-              "$schemaRef": "/dependencies/jenkins-instance-1.yml"
-            name:
-              description: name of jenkins job to wait for
+            provider:
               type: string
+              enum:
+              - git
+            tag_name:
+              description: name of tag to use to correlate AMI ID to commit
+              type: string
+            url:
+              description: url of source code repository
+              type: string
+              format: uri
+            ref:
+              description: commit or branch name
+              type: string
+              pattern: '^([0-9a-f]{40}|master|main)$'
+            upstream:
+              description: jenkins instance and job to wait for
+              type: object
+              additionalProperties: false
+              properties:
+                instance:
+                  "$ref": "/common-1.json#/definitions/crossref"
+                  "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+                name:
+                  description: name of jenkins job to wait for
+                  type: string
+              required:
+              - instance
+              - name
           required:
-          - instance
-          - name
-      required:
-      - tag_name
-      - url
-      - ref
+          - tag_name
+          - url
+          - ref
+        - additionalProperties: false
+          properties:
+            provider:
+              type: string
+              enum:
+              - static
+            tag_name:
+              description: name of tag to use
+              type: string
+            value:
+              description: value
+              type: string
+              format: uri
+          required:
+          - tag_name
+          - value
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
