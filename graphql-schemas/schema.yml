@@ -1058,7 +1058,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: validate_json, type: boolean }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
@@ -1068,7 +1068,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: type, type: string }
   - { name: variables, type: json }
   - { name: validate_alertmanager_config, type: boolean }
@@ -1092,7 +1092,7 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: path, type: string, isRequired: true, isResource: true }
   - { name: vault_tls_secret_path, type: string }
   - { name: vault_tls_secret_version, type: int }
 
