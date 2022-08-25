@@ -2441,6 +2441,12 @@ confs:
   fields:
   - { name: slack, type: boolean }
 
+- name: IntegrationSpecShardSpecOverride_v1
+  fields:
+  - { name: shardId, type: int }
+  - { name: awsAccount, type: AWSAccount_v1 }
+  - { name: imageRef, type: string }
+
 - name: IntegrationSpec_v1
   fields:
   - { name: cache, type: boolean }
@@ -2468,6 +2474,7 @@ confs:
 - name: IntegrationManaged_v1
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true }
   - { name: spec, type: IntegrationSpec_v1, isRequired: true }
 
 - name: Integration_v1

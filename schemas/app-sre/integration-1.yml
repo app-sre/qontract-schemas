@@ -67,6 +67,26 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+        shardSpecOverride:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              awsAccount:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/aws/account-1.yml"
+              shardId:
+                type: integer
+              imageRef:
+                type: string
+            oneOf:
+              - required:
+                - awsAccount
+                - imageRef
+              - required:
+                - shardId
+                - imageRef
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
       required:
