@@ -815,6 +815,8 @@ oneOf:
       - kinesis
     identifier:
       type: string
+    es_identifier:
+      type: string
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     defaults:

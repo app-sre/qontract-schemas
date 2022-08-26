@@ -24,6 +24,28 @@ properties:
     - KMS
   kms_key_id:
     type: string
+  release_url:
+    type: string
+    format: uri
+  runtime:
+    type: string
+  timeout:
+    type: integer
+  handler:
+    type: string
+  memory_size:
+    type: integer
+  index_prefix:
+    type: string
+  starting_position:
+    type: string
+    enum:
+    - LATEST
+    - TRIM_HORIZON
+    - AT_TIMESTAMP
+  starting_position_timestamp:
+    type: string
+    format: date-time
 
 required:
 - "$schema"
