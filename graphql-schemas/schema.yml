@@ -1208,7 +1208,7 @@ confs:
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: cloudinit_configs, type: CloudinitConfig_v1, isList: true }
   - { name: variables, type: json }
-  - { name: image, type: ASGImage_v1, isRequired: true }
+  - { name: image, type: ASGImage_v1, isRequired: true, isList: true, isInterface: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
@@ -1220,11 +1220,32 @@ confs:
   - { name: content, type: string, isRequired: true }
 
 - name: ASGImage_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      git: ASGImageGit_v1
+      static: ASGImageStatic_v1
   fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: tag_name, type: string, isRequired: true }
+
+- name: ASGImageGit_v1
+  interface: ASGImage_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
   - { name: tag_name, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: ref, type: string, isRequired: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+
+- name: ASGImageStatic_v1
+  interface: ASGImage_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: tag_name, type: string, isRequired: true }
+  - { name: value, type: string, isRequired: true }
 
 - name: NamespaceTerraformResourceSecretsManager_v1
   interface: NamespaceTerraformResourceAWS_v1
