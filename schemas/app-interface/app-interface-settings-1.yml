@@ -149,6 +149,17 @@ properties:
       if none are listed, no restrictions apply
     items:
       type: string
+  jiraWatcher:
+    type: object
+    additionalProperties: false
+    properties:
+      readTimeout:
+        type: integer
+      connectTimeout:
+        type: integer
+    required:
+    - readTimeout
+    - connectTimeout
 required:
 - "$schema"
 - labels
