@@ -13,6 +13,8 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+  domain_name:
+    type: string
   description:
     type: string
   account:
