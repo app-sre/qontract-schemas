@@ -2443,7 +2443,6 @@ confs:
 
 - name: IntegrationSpecShardSpecOverride_v1
   fields:
-  - { name: shardId, type: int }
   - { name: awsAccount, type: AWSAccount_v1 }
   - { name: imageRef, type: string }
 
@@ -2470,6 +2469,7 @@ confs:
   - { name: restartPolicy, type: string }
   - { name: successfulJobHistoryLimit, type: int }
   - { name: failedJobHistoryLimit, type: int }
+  - { name: imageRef, type: string }
 
 - name: IntegrationManaged_v1
   fields:

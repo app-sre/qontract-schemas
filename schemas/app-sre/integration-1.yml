@@ -76,17 +76,11 @@ properties:
               awsAccount:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/account-1.yml"
-              shardId:
-                type: integer
               imageRef:
                 type: string
-            oneOf:
-              - required:
-                - awsAccount
-                - imageRef
-              - required:
-                - shardId
-                - imageRef
+            required:
+            - awsAccount
+            - imageRef
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
       required:
