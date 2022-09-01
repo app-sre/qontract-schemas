@@ -2443,8 +2443,8 @@ confs:
 
 - name: IntegrationSpecShardSpecOverride_v1
   fields:
-  - { name: awsAccount, type: AWSAccount_v1 }
-  - { name: imageRef, type: string }
+  - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
+  - { name: imageRef, type: string, isRequired: true }
 
 - name: IntegrationSpec_v1
   fields:
