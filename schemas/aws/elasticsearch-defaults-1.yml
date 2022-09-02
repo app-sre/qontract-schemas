@@ -80,6 +80,12 @@ properties:
             enum:
             - 2
             - 3
+      warm_enabled:
+        type: boolean
+      warm_type:
+        type: string
+      warm_count:
+        type: integer
   snapshot_options:
     type: object
     additionalProperties: false
