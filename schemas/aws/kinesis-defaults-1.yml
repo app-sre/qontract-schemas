@@ -16,7 +16,7 @@ properties:
   retention_period:
     type: integer
     minimum: 24
-    maximum: 168
+    maximum: 8760
   encryption_type:
     type: string
     enum:
