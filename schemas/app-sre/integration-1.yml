@@ -73,6 +73,10 @@ properties:
             type: object
             additionalProperties: false
             properties:
+              accountType:
+                type: string
+                enum:
+                  - awsAccount
               awsAccount:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/account-1.yml"

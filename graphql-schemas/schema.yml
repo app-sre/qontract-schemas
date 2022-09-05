@@ -2441,10 +2441,23 @@ confs:
   fields:
   - { name: slack, type: boolean }
 
-- name: IntegrationSpecShardSpecOverride_v1
+- name: AWSShardSpecOverride_v1
+  interface: IntegrationSpecShardSpecOverride_v1
   fields:
-  - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
-  - { name: imageRef, type: string, isRequired: true }
+    - { name: accountType, type: string, isRequired: true }
+    - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
+    - { name: imageRef, type: string, isRequired: true }
+
+- name: IntegrationSpecShardSpecOverride_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: accountType
+    fieldMap:
+      awsAccount: AWSShardSpecOverride_v1
+  fields:
+    - { name: accountType, type: string, isRequired: true }
+    - { name: imageRef, type: string, isRequired: true }
 
 - name: IntegrationSpec_v1
   fields:
@@ -2474,7 +2487,7 @@ confs:
 - name: IntegrationManaged_v1
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true }
+  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
   - { name: spec, type: IntegrationSpec_v1, isRequired: true }
 
 - name: Integration_v1
