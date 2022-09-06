@@ -2444,7 +2444,7 @@ confs:
 - name: AWSShardSpecOverride_v1
   interface: IntegrationSpecShardSpecOverride_v1
   fields:
-    - { name: accountType, type: string, isRequired: true }
+    - { name: shardingStrategy, type: string, isRequired: true }
     - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
     - { name: imageRef, type: string, isRequired: true }
 
@@ -2452,11 +2452,11 @@ confs:
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
-    field: accountType
+    field: shardingStrategy
     fieldMap:
-      awsAccount: AWSShardSpecOverride_v1
+      per-aws-account: AWSShardSpecOverride_v1
   fields:
-    - { name: accountType, type: string, isRequired: true }
+    - { name: shardingStrategy, type: string, isRequired: true }
     - { name: imageRef, type: string, isRequired: true }
 
 - name: IntegrationSpec_v1

@@ -73,10 +73,10 @@ properties:
             type: object
             additionalProperties: false
             properties:
-              accountType:
+              shardingStrategy:
                 type: string
                 enum:
-                  - awsAccount
+                  - per-aws-account
               awsAccount:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/aws/account-1.yml"
