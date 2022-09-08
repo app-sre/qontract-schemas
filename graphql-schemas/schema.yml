@@ -1947,6 +1947,7 @@ confs:
   - { name: resourceTemplates, type: SaasResourceTemplate_v2, isRequired: true, isList: true }
   - { name: imagePatterns, type: string, isRequired: true, isList: true }
   - { name: takeover, type: boolean }
+  - { name: deprecated, type: boolean }
   - { name: compare, type: boolean }
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
