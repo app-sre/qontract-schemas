@@ -37,6 +37,8 @@ properties:
     type: integer
   index_prefix:
     type: string
+  parallelization_factor:
+    type: integer
   batch_size:
     type: integer
   starting_position:
