@@ -37,6 +37,8 @@ properties:
     type: integer
   index_prefix:
     type: string
+  batch_size:
+    type: integer
   starting_position:
     type: string
     enum:
