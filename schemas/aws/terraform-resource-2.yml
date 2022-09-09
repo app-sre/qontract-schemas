@@ -1026,7 +1026,7 @@ oneOf:
             ref:
               description: commit or branch name
               type: string
-              pattern: '^([0-9a-f]{40}|master|main)$'
+              pattern: '^([0-9a-f]{40}|master|main|release)$'
             upstream:
               description: jenkins instance and job to wait for
               type: object
