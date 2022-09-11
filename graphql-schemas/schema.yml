@@ -1209,7 +1209,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: cloudinit_configs, type: CloudinitConfig_v1, isList: true }
@@ -1257,7 +1257,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: secret, type: VaultSecret_v1 }
   - { name: output_resource_name, type: string }
@@ -1268,7 +1268,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: secret, type: VaultSecret_v1 }
   - { name: output_resource_name, type: string }
@@ -1279,7 +1279,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: secret, type: VaultSecret_v1 }
   - { name: domain, type: ACMDomain_v1 }
@@ -1291,7 +1291,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
@@ -1303,7 +1303,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: availability_zone, type: string }
@@ -1323,7 +1323,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: overrides, type: json }
@@ -1389,7 +1389,7 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: parameter_group, type: string }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1404,7 +1404,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1421,7 +1421,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isResource: true, isRequired: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1439,7 +1439,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1450,7 +1450,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1463,7 +1463,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
@@ -1475,7 +1475,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: kms_encryption, type: boolean }
   - { name: defaults, type: string, isRequired: true, isResource: true }
@@ -1488,7 +1488,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: es_identifier, type: string }
@@ -1501,7 +1501,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: overrides, type: json }
@@ -1513,7 +1513,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: es_identifier, type: string }
@@ -1527,7 +1527,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: idle_timeout, type: int }
@@ -1542,7 +1542,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: name, type: string, isRequired: true }
   - { name: output_resource_name, type: string }
@@ -1553,7 +1553,7 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: api_proxy_uri, type: string, isRequired: true }
   - { name: sms_role_ext_id, type: string, isRequired: false }
@@ -1581,7 +1581,7 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_name, type: string }
-  - { name: region, type: string }
+  - { name: region, type: string, isContextUnique: true }
   - { name: subnet_ids, type: string, isList: true, isRequired: true }
   - { name: vpc_id, type: string, isRequired: true }
 
