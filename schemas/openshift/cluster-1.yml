@@ -163,6 +163,9 @@ properties:
         - max_replicas
       disable_user_workload_monitoring:
         type: boolean
+      account:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/aws/account-1.yml"
     required:
     - product
     - provider

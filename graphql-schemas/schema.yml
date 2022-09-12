@@ -620,6 +620,7 @@ confs:
 - name: ClusterSpecROSA_v1
   interface: ClusterSpec_v1
   fields:
+  - { name: account, type: AWSAccount_v1}
   - { name: product, type: string, isRequired: true}
   - { name: id, type: string }
   - { name: external_id, type: string }
@@ -635,6 +636,7 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
+
 
 - name: ClusterSpecAutoScale_v1
   fields:
@@ -907,6 +909,8 @@ confs:
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
+  - { name: rosa, type: RosaAWSSpec_v1, isRequired: false}
+
   - name: ecrs
     type: AWSECR_v1
     isList: true
@@ -2970,3 +2974,11 @@ confs:
   fields:
   - { name: selector, type: string, isRequired: true }
   - { name: when, type: "string", isRequired: true}
+
+- name: RosaAWSSpec_v1
+  fields:
+  - { name: creator_role_arn, type: string, isRequired: true}
+  - { name: installer_role_arn, type: string, isRequired: false}
+  - { name: support_role_arn, type: string, isRequired: false}
+  - { name: controlplane_role_arn, type: string, isRequired: false}
+  - { name: worker_role_arn, type: string, isRequired: false}
