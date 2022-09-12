@@ -43,6 +43,8 @@ properties:
     type: string
   parameter_group:
     type: string
+  new_parameter_group:
+    type: string
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -392,6 +394,8 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
+      type: string
+    new_parameter_group:
       type: string
     overrides:
       type: object
