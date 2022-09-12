@@ -19,6 +19,9 @@ properties:
     type: string
   auth:
     "$ref": "/vault-config/instance-auth-1.yml"
+  replication:
+    "$ref": "/vault-config/replication-1.yml"
+
 required:
 - "$schema"
 - labels

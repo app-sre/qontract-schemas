@@ -1,0 +1,36 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /vault-config/replication-1.yml
+  provider:
+    type: string
+  instance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/instance-1.yml"
+  policy:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/policy-1.yml"
+
+oneOf:
+- properties:
+    provider:
+      type: string
+      enum:
+      - jenkins
+    instance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/vault-config/instance-1.yml"
+    policy:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/vault-config/policy-1.yml"
+  required:
+    - instance
+required:
+- provider

@@ -2398,6 +2398,24 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: address, type: string, isRequired: true }
   - { name: auth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+  - { name: replication, type: VaultReplication_v1, isList: true}
+
+- name: VaultReplication_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      jenkins: VaultReplicationJenkins_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: VaultReplicationJenkins_v1
+  interface: VaultReplication_v1
+  fields:
+  - { name: provider, type: string, isRequired: true}
+  - { name: instance, type: VaultInstance_v1, isRequired: true }
+  - { name: policy, type: VaultPolicy_v1 }
 
 - name: VaultInstanceAuth_v1
   isInterface: true
