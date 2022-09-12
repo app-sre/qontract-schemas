@@ -59,6 +59,8 @@ definitions:
         type: boolean
       isUnique:
         type: boolean
+      isContextUnique:
+        type: boolean
       isRequired:
         type: boolean
       isSearchable:
