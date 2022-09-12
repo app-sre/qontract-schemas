@@ -1957,7 +1957,6 @@ confs:
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }
-  - { name: configurableResources, type: boolean }
   - { name: deployResources, type: DeployResources_v1 }
   - name: roles
     type: Role_v1
