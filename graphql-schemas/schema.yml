@@ -1312,6 +1312,7 @@ confs:
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: availability_zone, type: string }
   - { name: parameter_group, type: string }
+  - { name: new_parameter_group, type: string }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
