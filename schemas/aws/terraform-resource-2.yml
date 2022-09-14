@@ -43,7 +43,7 @@ properties:
     type: string
   parameter_group:
     type: string
-  new_parameter_group:
+  old_parameter_group:
     type: string
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
@@ -395,7 +395,7 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
       type: string
-    new_parameter_group:
+    old_parameter_group:
       type: string
     overrides:
       type: object
@@ -511,7 +511,7 @@ oneOf:
   - identifier
   - defaults
   dependencies:
-    new_parameter_group:
+    old_parameter_group:
     - parameter_group
 - additionalProperties: false
   properties:
