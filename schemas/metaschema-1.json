@@ -54,6 +54,9 @@
       "required": [
         "$schema"
       ]
+    },
+    "dependencies": {
+      "type": "object"
     }
   },
   "required": [

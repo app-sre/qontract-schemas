@@ -510,6 +510,9 @@ oneOf:
   required:
   - identifier
   - defaults
+  dependencies:
+    new_parameter_group:
+    - parameter_group
 - additionalProperties: false
   properties:
     provider:
