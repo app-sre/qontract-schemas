@@ -2317,6 +2317,7 @@ confs:
   - name: roles
     type: Role_v1
     isList: true
+    isRequired: true
     synthetic:
       schema: /access/role-1.yml
       subAttr: permissions
@@ -2411,12 +2412,14 @@ confs:
   - name: users
     type: User_v1
     isList: true
+    isRequired: true
     synthetic:
       schema: /access/user-1.yml
       subAttr: roles
   - name: bots
     type: Bot_v1
     isList: true
+    isRequired: true
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
@@ -2606,7 +2609,7 @@ confs:
   - { name: external_users_v1, type: ExternalUser_v1, isList: true, datafileSchema: /access/external-user-1.yml }
   - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
   - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
-  - { name: permissions_v1, type: Permission_v1, isList: true, isInterface: true, datafileSchema: /access/permission-1.yml }
+  - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
