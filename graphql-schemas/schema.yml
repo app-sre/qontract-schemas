@@ -2426,6 +2426,7 @@ confs:
 
 - name: SelfServiceConfig_v1
   fields:
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: datafiles, type: DatafileObject_v1, isList: true, isInterface: true }
   - { name: resources, type: string, isList: true, isResource: true }
   - { name: change_type, type: ChangeType_v1, isRequired: true }

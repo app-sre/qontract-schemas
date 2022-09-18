@@ -11,6 +11,8 @@ properties:
     - /app-interface/self-service-config-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
   description:
     type: string
   change_type:
@@ -33,3 +35,5 @@ properties:
             - /app-sre/saas-file-2.yml
             - /openshift/namespace-1.yml
             - /access/role-1.yml
+required:
+- name
