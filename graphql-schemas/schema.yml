@@ -1966,6 +1966,12 @@ confs:
     synthetic:
       schema: /access/role-1.yml
       subAttr: owned_saas_files
+  - name: selfService
+    type: SelfServiceConfig_v1
+    isList: true
+    synthetic:
+      schema: /app-interface/self-service-config-1.yml
+      subAttr: datafiles
 
 - name: DeployResources_v1
   fields:
@@ -2431,6 +2437,12 @@ confs:
   - { name: resources, type: string, isList: true, isResource: true }
   - { name: change_type, type: ChangeType_v1, isRequired: true }
   - { name: description, type: string }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: self_service
 
 - name: IntegrationPrCheck_v1
   fields:
@@ -2663,6 +2675,7 @@ confs:
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
+  - { name: self_service_configs_v1, type: SelfServiceConfig_v1, isList: true, datafileSchema: /app-interface/self-service-config-1.yml }
 
 - name: SentryTeam_v1
   fields:
