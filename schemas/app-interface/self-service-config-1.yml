@@ -1,0 +1,35 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/self-service-config-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  description:
+    type: string
+  change_type:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-interface/change-type-1.yml"
+  resources:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/resourceref"
+  datafiles:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef":
+        type: object
+        properties:
+          '$schema':
+            type: string
+            enum:
+            - /app-sre/saas-file-2.yml
+            - /openshift/namespace-1.yml
+            - /access/role-1.yml

@@ -120,31 +120,8 @@ properties:
   self_service:
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        description:
-          type: string
-        change_type:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/app-interface/change-type-1.yml"
-        resources:
-          type: array
-          items:
-            "$ref": "/common-1.json#/definitions/resourceref"
-        datafiles:
-          type: array
-          items:
-            "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef":
-              type: object
-              properties:
-                '$schema':
-                  type: string
-                  enum:
-                  - /app-sre/saas-file-2.yml
-                  - /openshift/namespace-1.yml
-                  - /access/role-1.yml
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/self-service-config-1.yml"
 required:
 - $schema
 - labels
