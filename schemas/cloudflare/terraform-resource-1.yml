@@ -11,6 +11,38 @@ properties:
     - /cloudflare/terraform-resource-1.yml
   provider:
     type: string
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+  name:
+    type: string
+  content_from_github:
+    type: object
+    additionalProperties: false
+    properties:
+      repo:
+        type: string
+      path:
+        type: string
+      ref:
+        type: string
+        pattern: '^([0-9a-f]{40})$'
+    required:
+    - repo
+    - path
+    - ref
+  vars:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        text:
+          type: string
+      required:
+      - name
+      - text
   zone:
     type: string
   plan:
@@ -57,54 +89,62 @@ properties:
           type: string
         pattern:
           type: string
-        script:
-          type: object
-          additionalProperties: false
-          properties:
-            name:
-              type: string
-            content_from_github:
-              type: object
-              additionalProperties: false
-              properties:
-                repo:
-                  type: string
-                path:
-                  type: string
-                ref:
-                  type: string
-                  pattern: '^([0-9a-f]{40}|master|main|internal|quayio)$'
-              required:
-              - repo
-              - path
-              - ref
-            vars:
-              type: array
-              items:
-                type: object
-                additionalProperties: false
-                properties:
-                  name:
-                    type: string
-                  text:
-                    type: string
-                required:
-                - name
-                - text
-          required:
-          - name
-          - content_from_github
+        script_name:
+          type: string
       required:
       - identifier
       - pattern
-      - script
+      - script_name
 oneOf:
 - additionalProperties: false
   properties:
     provider:
       type: string
       enum:
+      - worker_script
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    name:
+      type: string
+    content_from_github:
+      type: object
+      additionalProperties: false
+      properties:
+        repo:
+          type: string
+        path:
+          type: string
+        ref:
+          type: string
+          pattern: '^([0-9a-f]{40})$'
+      required:
+      - repo
+      - path
+      - ref
+    vars:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          text:
+            type: string
+        required:
+        - name
+        - text
+  required:
+  - identifier
+  - name
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
       - zone
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
     zone:
       type: string
     plan:
@@ -156,48 +196,15 @@ oneOf:
             type: string
           pattern:
             type: string
-          script:
-            type: object
-            additionalProperties: false
-            properties:
-              name:
-                type: string
-              content_from_github:
-                type: object
-                additionalProperties: false
-                properties:
-                  repo:
-                    type: string
-                  path:
-                    type: string
-                  ref:
-                    type: string
-                    pattern: '^([0-9a-f]{40}|master|main|internal|quayio)$'
-                required:
-                - repo
-                - path
-                - ref
-              vars:
-                type: array
-                items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    name:
-                      type: string
-                    text:
-                      type: string
-                  required:
-                  - name
-                  - text
-            required:
-            - name
-            - content_from_github
+          script_name:
+            type: string
         required:
         - identifier
         - pattern
-        - script
+        - script_name
   required:
+  - identifier
   - zone
 required:
 - provider
+

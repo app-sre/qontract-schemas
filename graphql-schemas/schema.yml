@@ -1154,6 +1154,7 @@ confs:
     field: provider
     fieldMap:
       zone: NamespaceTerraformResourceCloudflareZone_v1
+      worker_script: NamespaceTerraformResourceCloudflareWorkerScript_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1161,6 +1162,7 @@ confs:
   interface: NamespaceTerraformResourceCloudflare_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
   - { name: zone, type: string, isRequired: true }
   - { name: plan, type: string }
   - { name: type, type: string }
@@ -1186,10 +1188,13 @@ confs:
   fields:
   - { name: identifier, type: string, isRequired: true }
   - { name: pattern, type: string, isRequired: true }
-  - { name: script, type: CloudflareZoneWorkerScript_v1, isRequired: true }
+  - { name: script_name, type: string, isRequired: true }
 
-- name: CloudflareZoneWorkerScript_v1
+- name: NamespaceTerraformResourceCloudflareWorkerScript_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
   fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: content_from_github, type: CloudflareZoneWorkerScriptContentFromGithub_v1 }
   - { name: vars, type: CloudflareZoneWorkerScriptVars_v1, isList: true }
