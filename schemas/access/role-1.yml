@@ -145,6 +145,7 @@ properties:
                   - /app-sre/saas-file-2.yml
                   - /openshift/namespace-1.yml
                   - /access/role-1.yml
+                  - /openshift/cluster-1.yml
 required:
 - $schema
 - labels
