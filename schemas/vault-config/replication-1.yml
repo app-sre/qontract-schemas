@@ -9,14 +9,18 @@ properties:
     type: string
     enum:
     - /vault-config/replication-1.yml
-  provider:
-    type: string
-  instance:
+  vaultInstance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
-  policy:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/vault-config/policy-1.yml"
+  paths:
+    provider:
+      type: string
+    jenkinsInstance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+    policy:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/vault-config/policy-1.yml"
 
 oneOf:
 - properties:
@@ -24,9 +28,9 @@ oneOf:
       type: string
       enum:
       - jenkins
-    instance:
+    jenkinsInstance:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/vault-config/instance-1.yml"
+      "$schemaRef": "/dependencies/jenkins-instance-1.yml"
     policy:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/vault-config/policy-1.yml"
@@ -34,3 +38,4 @@ oneOf:
     - instance
 required:
 - provider
+- vaultInstance
