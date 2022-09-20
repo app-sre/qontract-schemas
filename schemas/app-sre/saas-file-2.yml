@@ -111,6 +111,9 @@ properties:
       - targets
   takeover:
     type: boolean
+  deprecated:
+    type: boolean
+    description: prevent updates to a saas file
   compare:
     type: boolean
   publishJobLogs:

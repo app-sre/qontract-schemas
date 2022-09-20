@@ -78,6 +78,7 @@ properties:
           - terraform-resources
           - terraform-users
           - terraform-aws-route53
+          - terraform-vpc-peerings
   deleteKeys:
     type: array
     items:
@@ -112,6 +113,10 @@ properties:
     description: key information for a terraform's state location and integration
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/terraform-state-1.yml"
+  rosa:
+    description: "Rosa related attributes in the aws account."
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/rosa-aws-1.yml"
 required:
 - "$schema"
 - labels

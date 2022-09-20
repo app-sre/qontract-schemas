@@ -1,0 +1,28 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/rosa-aws-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  creator_role_arn:
+    type: string
+    description: OCM Role arn. This role is created with ROSA cli during the account prerequisites configuration and must have admin permissions.
+  installer_role_arn:
+    type: string
+    description: Rosa installer Role arn. If empty, the default value arn:...:ManagedOpenShift-Installer-Role will be used.
+  support_role_arn:
+    type: string
+    description: Rosa support Role arn. If empty, the default value arn:...:ManagedOpenShift-Support-Role will be used.
+  controlplane_role_arn:
+    type: string
+    description: Rosa control plan role arn. If empty, the default value arn:...:ManagedOpenShift-ControlPlane-Role will be used.
+  worker_role_arn:
+    type: string
+    description: Rosa workers role arn. If empty, the default value arn:...:ManagedOpenShift-Worker-Role will be used.

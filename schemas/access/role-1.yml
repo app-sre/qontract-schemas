@@ -125,6 +125,9 @@ properties:
       properties:
         description:
           type: string
+        change_type:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/app-interface/change-type-1.yml"
         resources:
           type: array
           items:
