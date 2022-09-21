@@ -2544,6 +2544,24 @@ confs:
   fields:
   - { name: slack, type: boolean }
 
+- name: AWSShardSpecOverride_v1
+  interface: IntegrationSpecShardSpecOverride_v1
+  fields:
+    - { name: shardingStrategy, type: string, isRequired: true }
+    - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
+    - { name: imageRef, type: string, isRequired: true }
+
+- name: IntegrationSpecShardSpecOverride_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: shardingStrategy
+    fieldMap:
+      per-aws-account: AWSShardSpecOverride_v1
+  fields:
+    - { name: shardingStrategy, type: string, isRequired: true }
+    - { name: imageRef, type: string, isRequired: true }
+
 - name: IntegrationSpec_v1
   fields:
   - { name: cache, type: boolean }
@@ -2567,10 +2585,12 @@ confs:
   - { name: restartPolicy, type: string }
   - { name: successfulJobHistoryLimit, type: int }
   - { name: failedJobHistoryLimit, type: int }
+  - { name: imageRef, type: string }
 
 - name: IntegrationManaged_v1
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
   - { name: spec, type: IntegrationSpec_v1, isRequired: true }
 
 - name: Integration_v1
@@ -3069,7 +3089,7 @@ confs:
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:
   - { name: selector, type: string, isRequired: true }
-  - { name: when, type: "string", isRequired: true}
+  - { name: when, type: "string" }
 
 - name: RosaAWSSpec_v1
   fields:
