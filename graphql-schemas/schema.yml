@@ -2983,7 +2983,7 @@ confs:
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:
   - { name: selector, type: string, isRequired: true }
-  - { name: when, type: "string", isRequired: true}
+  - { name: when, type: "string" }
 
 - name: RosaAWSSpec_v1
   fields:
