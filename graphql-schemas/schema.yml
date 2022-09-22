@@ -843,6 +843,7 @@ confs:
   - { name: offlineToken, type: VaultSecret_v1 }
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
+  - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
   - name: clusters
     type: Cluster_v1
     isList: true
