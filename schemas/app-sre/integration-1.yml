@@ -55,6 +55,24 @@ properties:
         type: boolean
       early_exit:
         type: boolean
+      shardSpecOverride:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            shardingStrategy:
+              type: string
+              enum:
+                - per-aws-account
+            awsAccount:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/account-1.yml"
+            imageRef:
+              type: string
+          required:
+          - awsAccount
+          - imageRef
     required:
     - cmd
 

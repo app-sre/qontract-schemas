@@ -2447,6 +2447,7 @@ confs:
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
+  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
