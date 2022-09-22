@@ -65,10 +65,10 @@ the data with a json validator (Draft-06).
 
 #### Multiple allowed schemas for a crossref
 
-What if we want to define a crossref with multiple allowed types? (owned_saas_files case in role-1)
+What if we want to define a crossref with multiple allowed types? (datafiles case in role-1#self_service)
 
 ```json
-  owned_saas_files:
+  datafiles:
     type: array
     items:
       "$ref": "/common-1.json#/definitions/crossref"
@@ -79,12 +79,13 @@ What if we want to define a crossref with multiple allowed types? (owned_saas_fi
             type: string
             enum:
               - "/app-sre/saas-file-2.yml"
+              - "/openshift/namespace-1.yml"
 ```
 
 ```yaml
-owned_saas_files:
+datafiles:
 - $ref: /services/test-saas-deployment-pipelines/cicd/deploy.yml
-- $ref: /services/test-saas-deployment-pipelines/cicd/post-deploy.yml
+- $ref: /services/test-saas-deployment-pipelines/namespaces/stage.yml
 ```
 
 With this definition, `qontract-validator` will validate that the `$schema` attribute of every entry in the list is defined within the enum.
