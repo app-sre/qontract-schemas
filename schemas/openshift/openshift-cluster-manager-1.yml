@@ -30,6 +30,11 @@ properties:
     type: array
     items:
       type: string
+  upgradePolicyAllowedWorkloads:
+    description: List of workloads that are allowed to be defined as cluster upgrade policy mutexes
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
 - labels
