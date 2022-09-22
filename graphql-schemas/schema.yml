@@ -938,7 +938,7 @@ confs:
   - { name: enableDeletion, type: boolean }
   - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
   - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
- 
+
 - name: AWSGroup_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1983,6 +1983,7 @@ confs:
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: sentryProjects, type: AppSentryProjects_v1, isList: true }
+  - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: statusPageComponents, type: StatusPageComponent_v1, isList: true }
   - name: namespaces
     type: Namespace_v1
@@ -2493,6 +2494,8 @@ confs:
   - { name: user_policies, type: AWSUserPolicy_v1, isList: true }
   - { name: sentry_teams, type: SentryTeam_v1, isList: true }
   - { name: sentry_roles, type: SentryRole_v1, isList: true }
+  - { name: glitchtip_teams, type: GlitchtipTeam_v1, isList: true }
+  - { name: glitchtip_roles, type: GlitchtipRole_v1, isList: true }
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - name: users
@@ -2751,6 +2754,9 @@ confs:
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
   - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
   - { name: sentry_instances_v1, type: SentryInstance_v1, isList: true, datafileSchema: /dependencies/sentry-instance-1.yml }
+  - { name: glitchtip_instances_v1, type: GlitchtipInstance_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-instance-1.yml }
+  - { name: glitchtip_organizations_v1, type: GlitchtipOrganization_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-organization-1.yml }
+  - { name: glitchtip_teams_v1, type: GlitchtipTeam_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-team-1.yml }
   - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
   - { name: query_validations_v1, type: QueryValidation_v1, isList: true, datafileSchema: /app-interface/query-validation-1.yml }
   - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
@@ -2770,6 +2776,66 @@ confs:
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
+
+- name: GlitchtipInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: consoleUrl, type: string, isRequired: true }
+  - { name: automationUserEmail, type: string, isRequired: true }
+  - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - name: organizations
+    type: GlitchtipOrganization_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /dependencies/glitchtip-organization-1.yml
+      subAttr: instance
+
+- name: GlitchtipOrganization_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: instance, type: GlitchtipInstance_v1, isRequired: true }
+  - name: roles
+    type: Role_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: glitchtip_roles.organization
+
+- name: GlitchtipTeam_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - name: roles
+    type: Role_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: glitchtip_teams
+
+- name: GlitchtipRole_v1
+  fields:
+  - { name: role, type: string, isRequired: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
+
+- name: GlitchtipProjects_v1
+  fields:
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: platform, type: string, isRequired: true }
+  - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
+
 
 - name: SentryTeam_v1
   fields:
@@ -2805,6 +2871,7 @@ confs:
   - { name: safe_fields, type: string, isRequired: false, isList: true }
   - { name: auto_resolve_age, type: int, isRequired: false }
   - { name: allowed_domains, type: string, isRequired: false, isList: true }
+
 
 - name: AppSentryProjects_v1
   fields:
