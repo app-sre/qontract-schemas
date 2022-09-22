@@ -35,6 +35,11 @@ properties:
     type: array
     items:
       type: string
+  upgradePolicyAllowedMutexes:
+    description: List of mutexes that are allowed to be defined as cluster upgrade policy mutex
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
 - labels
