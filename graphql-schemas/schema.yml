@@ -26,7 +26,7 @@ confs:
   - { name: alertingServices, type: string, isList: true }
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
-  - { name: jiraWatcher, type: jiraWatcherSettings_v1, isRequired: false}
+  - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
 
 - name: SmtpSettings_v1
   fields:
@@ -48,7 +48,7 @@ confs:
   - { name: serverUrl, type: string, isRequired: true }
   - { name: baseDn, type: string, isRequired: true }
 
-- name: jiraWatcherSettings_v1
+- name: JiraWatcherSettings_v1
   fields:
   - { name: readTimeout, type: int, isRequired: true }
   - { name: connectTimeout, type: int, isRequired: true }
