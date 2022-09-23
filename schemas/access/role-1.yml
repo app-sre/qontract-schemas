@@ -133,6 +133,27 @@ properties:
                   - /access/role-1.yml
                   - /openshift/cluster-1.yml
                   - /aws/account-1.yml
+        datafileProviders:
+          type: array
+          items:
+            additionalProperties: false
+            properties:
+              provider:
+                  type: string
+                  enum:
+                  - resource-template
+              path:
+                "$ref": "/common-1.json#/definitions/resourceref"
+              type:
+                type: string
+                enum:
+                - jinja2
+                - extracurlyjinja2
+              variables:
+                type: object
+              enable_query_support:
+                type: boolean
+                description: indicates that this resource is using graphql query results
 required:
 - $schema
 - labels

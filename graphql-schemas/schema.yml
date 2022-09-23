@@ -2512,9 +2512,29 @@ confs:
 - name: SelfServiceConfig_v1
   fields:
   - { name: datafiles, type: DatafileObject_v1, isList: true, isInterface: true }
+  - { name: datafileProviders, type: DatafileProvider_v1, isList: true, isInterface: true }
   - { name: resources, type: string, isList: true, isResource: true }
   - { name: change_type, type: ChangeType_v1, isRequired: true }
   - { name: description, type: string }
+
+- name: DatafileProvider_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      resource-template: ResourceTemplateDatafileProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: ResourceTemplateDatafileProvider_v1
+  interface: DatafileProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: type, type: string }
+  - { name: variables, type: json }
+  - { name: enable_query_support, type: boolean }
 
 - name: IntegrationPrCheck_v1
   fields:
