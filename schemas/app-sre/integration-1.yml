@@ -55,6 +55,10 @@ properties:
         type: boolean
       early_exit:
         type: boolean
+      shardSpecOverride:
+        type: array
+        items:
+          "$ref": "/app-sre/integration-shardspec-override-1.yml"
     required:
     - cmd
 
@@ -70,21 +74,7 @@ properties:
         shardSpecOverride:
           type: array
           items:
-            type: object
-            additionalProperties: false
-            properties:
-              shardingStrategy:
-                type: string
-                enum:
-                  - per-aws-account
-              awsAccount:
-                "$ref": "/common-1.json#/definitions/crossref"
-                "$schemaRef": "/aws/account-1.yml"
-              imageRef:
-                type: string
-            required:
-            - awsAccount
-            - imageRef
+            "$ref": "/app-sre/integration-shardspec-override-1.yml"
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
       required:
