@@ -33,6 +33,10 @@ properties:
       required:
       - path
     minItems: 1
+  resources:
+    type: array
+    items:
+      "$ref": "/openshift/openshift-resource-1.yml"
 required:
 - "$schema"
 - labels

@@ -103,20 +103,6 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/sendgrid-account-1.yml"
-  owned_saas_files:
-    type: array
-    description: |
-      Role owned saas files. All saas files must have an owner.
-      This list must accept all supported saas file versions by AppInterface.
-    items:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef":
-        type: object
-        properties:
-          '$schema':
-            type: string
-            enum:
-            - "/app-sre/saas-file-2.yml"
   self_service:
     type: array
     items:

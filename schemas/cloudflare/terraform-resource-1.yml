@@ -1,0 +1,210 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/terraform-resource-1.yml
+  provider:
+    type: string
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+  name:
+    type: string
+  content_from_github:
+    type: object
+    additionalProperties: false
+    properties:
+      repo:
+        type: string
+      path:
+        type: string
+      ref:
+        type: string
+        pattern: '^([0-9a-f]{40})$'
+    required:
+    - repo
+    - path
+    - ref
+  vars:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        text:
+          type: string
+      required:
+      - name
+      - text
+  zone:
+    type: string
+  plan:
+    enum:
+    - enterprise
+    - free
+  type:
+    enum:
+    - full
+    - partial
+  settings:
+    type: object
+  argo:
+    type: object
+    additionalProperties: false
+    properties:
+      tiered_caching:
+        type: boolean
+      smart_routing:
+        type: boolean
+  records:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        ttl:
+          type: integer
+        value:
+          type: string
+        proxied:
+          type: boolean
+  workers:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        pattern:
+          type: string
+        script_name:
+          type: string
+      required:
+      - identifier
+      - pattern
+      - script_name
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - worker_script
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    name:
+      type: string
+    content_from_github:
+      type: object
+      additionalProperties: false
+      properties:
+        repo:
+          type: string
+        path:
+          type: string
+        ref:
+          type: string
+          pattern: '^([0-9a-f]{40})$'
+      required:
+      - repo
+      - path
+      - ref
+    vars:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          text:
+            type: string
+        required:
+        - name
+        - text
+  required:
+  - identifier
+  - name
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - zone
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    zone:
+      type: string
+    plan:
+      enum:
+      - enterprise
+      - free
+    type:
+      enum:
+      - full
+      - partial
+    settings:
+      type: object
+    argo:
+      type: object
+      additionalProperties: false
+      properties:
+        tiered_caching:
+          type: boolean
+        smart_routing:
+          type: boolean
+    records:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          type:
+            type: string
+          ttl:
+            type: integer
+          value:
+            type: string
+          proxied:
+            type: boolean
+        required:
+        - name
+        - type
+        - ttl
+        - value
+    workers:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          identifier:
+            type: string
+          pattern:
+            type: string
+          script_name:
+            type: string
+        required:
+        - identifier
+        - pattern
+        - script_name
+  required:
+  - identifier
+  - zone
+required:
+- provider
+

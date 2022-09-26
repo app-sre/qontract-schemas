@@ -120,6 +120,8 @@ properties:
                           type: string
                         latency:
                           type: string
+                        method:
+                          type: string
                         quantile:
                           type: string
                         query:
