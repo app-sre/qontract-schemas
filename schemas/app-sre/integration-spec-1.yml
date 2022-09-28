@@ -66,6 +66,8 @@ properties:
         required:
         - name
         - value
+  imageRef:
+    type: string
   internalCertificates:
     type: boolean
     description: integration requires internal certificates to execute

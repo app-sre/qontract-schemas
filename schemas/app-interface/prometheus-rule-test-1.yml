@@ -16,6 +16,12 @@ properties:
     items:
       type: string
 
+  target_clusters:
+    description: List of clusters where the tests must run
+    type: array
+    items:
+      type: string
+
   evaluation_interval:
     type: string
 

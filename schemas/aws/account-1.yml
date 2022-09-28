@@ -78,6 +78,7 @@ properties:
           - terraform-resources
           - terraform-users
           - terraform-aws-route53
+          - terraform-vpc-peerings
   deleteKeys:
     type: array
     items:
