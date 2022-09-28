@@ -24,6 +24,8 @@ properties:
       type: string
   capacity_rebalance:
     type: boolean
+  max_instance_lifetime:
+    type: integer
   instances_distribution:
     type: object
     additionalProperties: false
