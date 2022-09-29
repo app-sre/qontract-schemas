@@ -73,6 +73,18 @@ properties:
     required:
     - instance
     - name
+  image:
+    type: object
+    additionalProperties: false
+    properties:
+      org:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/quay-org-1.yml"
+      name:
+        type: string
+    required:
+    - org
+    - name
   disable:
     type: boolean
   delete:
