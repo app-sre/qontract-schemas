@@ -59,30 +59,7 @@ oneOf:
       description: indicates that this resource is using graphql query results
   required:
   - path
-- additionalProperties: false
-  properties:
-    provider:
-      type: string
-      enum:
-      - resource-template
-    path:
-      "$ref": "/common-1.json#/definitions/resourceref"
-    type:
-      type: string
-      enum:
-      - jinja2
-      - extracurlyjinja2
-    variables:
-      type: object
-    validate_alertmanager_config:
-      type: boolean
-    alertmanager_config_key:
-      type: string
-    enable_query_support:
-      type: boolean
-      description: indicates that this resource is using graphql query results
-  required:
-  - path
+- "$ref": "/openshift/resource-template-1.yml"
 - additionalProperties: false
   properties:
     provider:
