@@ -2104,12 +2104,18 @@ confs:
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+  - { name: image, type: SaasResourceTemplateTargetImage_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
 
 - name: SaasResourceTemplateTargetUpstream_v1
   fields:
   - { name: instance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+
+- name: SaasResourceTemplateTargetImage_v1
+  fields:
+  - { name: org, type: QuayOrg_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
 
 - name: SaasResourceTemplateTargetPromotion_v1

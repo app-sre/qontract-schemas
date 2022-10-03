@@ -72,6 +72,20 @@ properties:
     required:
     - instance
     - name
+  image:
+    type: object
+    description: wait for image to exist before triggering a deployment
+    additionalProperties: false
+    properties:
+      org:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/quay-org-1.yml"
+      name:
+        type: string
+        description: image repository name
+    required:
+    - org
+    - name
   disable:
     type: boolean
   delete:
