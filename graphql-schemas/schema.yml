@@ -772,6 +772,7 @@ confs:
   - { name: auth, type: VaultSecret_v1, isRequired: true}
 
 - name: Cluster_v1
+  datafile: /openshift/cluster-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -885,6 +886,7 @@ confs:
   - { name: name, type: string, isRequired: true }
 
 - name: AWSAccount_v1
+  datafile: /aws/account-1.yml
   interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
