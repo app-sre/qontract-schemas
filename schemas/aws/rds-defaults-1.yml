@@ -31,6 +31,8 @@ properties:
     type: boolean
   auto_minor_version_upgrade:
     type: boolean
+    enum:
+    - false
   skip_final_snapshot:
     type: boolean
   backup_retention_period:
