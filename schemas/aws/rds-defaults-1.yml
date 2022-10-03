@@ -90,3 +90,4 @@ required:
 - engine
 - engine_version
 - instance_class
+- auto_minor_version_upgrade
