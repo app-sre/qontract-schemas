@@ -51,15 +51,12 @@ validate: ## Use qcontract-validator image to show any validation errors of sche
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
 
 gql_validate: ## Run qontract-server with the schema bundle and no data to reveal any GQL schema issues
-	@$(CONTAINER_ENGINE) run -d --rm --name $(SERVER_CONTAINER_NAME) \
+	@! timeout 5 $(CONTAINER_ENGINE) run --rm --name $(SERVER_CONTAINER_NAME) \
 		-v $(OUTPUT_DIR):/bundle:z \
 		-p 4000:4000 \
 		-e LOAD_METHOD=fs \
 		-e DATAFILES_FILE=/bundle/$(BUNDLE_FILENAME) \
 		$(SERVER_IMAGE):$(SERVER_IMAGE_TAG)
-	sleep 5
-	@$(CONTAINER_ENGINE) logs $(SERVER_CONTAINER_NAME)
-	@$(CONTAINER_ENGINE) stop $(SERVER_CONTAINER_NAME)
 
 build-test: clean
 	@docker build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .
