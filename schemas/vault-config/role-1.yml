@@ -29,6 +29,8 @@ properties:
           type: string
           enum:
           - approle
+        output_path:
+          type: string
         bind_secret_id:
           type: string
           enum:
