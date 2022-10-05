@@ -58,6 +58,7 @@ gql_validate: ## Run qontract-server with the schema bundle and no data to revea
 		-e DATAFILES_FILE=/bundle/$(BUNDLE_FILENAME) \
 		$(SERVER_IMAGE):$(SERVER_IMAGE_TAG)
 	sleep 5
+	@$(CONTAINER_ENGINE) logs $(SERVER_CONTAINER_NAME)
 	@$(CONTAINER_ENGINE) stop $(SERVER_CONTAINER_NAME)
 
 build-test: clean
