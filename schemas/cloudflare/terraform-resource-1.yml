@@ -125,10 +125,8 @@ properties:
             - lets_encrypt
         cloudflare_branding:
           type: boolean
-          default: false
         wait_for_active_status:
           type: boolean
-          default: false
     required:
       - identifier
       - type
@@ -243,6 +241,45 @@ oneOf:
         - identifier
         - pattern
         - script_name
+    certificates:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          identifier:
+            type: string
+          type:
+            type: string
+            enum:
+              - advanced
+          hosts:
+            type: array
+            items:
+              type: string
+          validation_method:
+            type: string
+            enum:
+              - txt
+          validity_days:
+            type: integer
+            enum:
+              - 90
+          certificate_authority:
+            type: string
+            enum:
+              - lets_encrypt
+          cloudflare_branding:
+            type: boolean
+          wait_for_active_status:
+            type: boolean
+      required:
+        - identifier
+        - type
+        - hosts
+        - validation_method
+        - validity_days
+        - certificate_authority
   required:
   - identifier
   - zone
