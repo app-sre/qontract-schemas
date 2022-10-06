@@ -215,7 +215,6 @@ confs:
   interface: VaultRoleOptions_v1
   fields:
   - { name: _type, type: string, isRequired: true }
-  - { name: output_path, type: string, isRequired: false }
   - { name: bind_secret_id, type: string, isRequired: true }
   - { name: local_secret_ids, type: string, isRequired: true }
   - { name: token_period, type: string, isRequired: true }
@@ -267,6 +266,7 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
+  - { name: output_path, type: string, isRequired: false }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
