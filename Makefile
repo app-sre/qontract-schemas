@@ -7,7 +7,6 @@ VALIDATOR_IMAGE := quay.io/app-sre/qontract-validator
 VALIDATOR_IMAGE_TAG := latest
 SERVER_IMAGE := quay.io/app-sre/qontract-server
 SERVER_IMAGE_TAG := latest
-SERVER_CONTAINER_NAME := qontract-server 
 CONTAINER_ENGINE ?= $(shell which podman >/dev/null 2>&1 && echo podman || echo docker)
 OUTPUT_DIR ?= $(shell pwd)
 OUTPUT_DIR := $(shell realpath $(OUTPUT_DIR))
@@ -52,7 +51,7 @@ validate: ## Use qcontract-validator image to show any validation errors of sche
 
 gql_validate: ## Run qontract-server with the schema bundle and no data to reveal any GQL schema issues
 	@$(CONTAINER_ENGINE) pull $(SERVER_IMAGE):$(SERVER_IMAGE_TAG) && \
-	 timeout 5 $(CONTAINER_ENGINE) run --rm --name $(SERVER_CONTAINER_NAME) \
+	 timeout 5 $(CONTAINER_ENGINE) run --rm \
 		-v $(OUTPUT_DIR):/bundle:z \
 		-p 4000:4000 \
 		-e LOAD_METHOD=fs \
