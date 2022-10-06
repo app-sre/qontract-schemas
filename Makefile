@@ -51,7 +51,7 @@ validate: ## Use qcontract-validator image to show any validation errors of sche
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
 
 gql_validate: ## Run qontract-server with the schema bundle and no data to reveal any GQL schema issues
-	@timeout --foreground 5 $(CONTAINER_ENGINE) run --rm --name $(SERVER_CONTAINER_NAME) \
+	@timeout 5 $(CONTAINER_ENGINE) run -it --rm --name $(SERVER_CONTAINER_NAME) \
 		-v $(OUTPUT_DIR):/bundle:z \
 		-p 4000:4000 \
 		-e LOAD_METHOD=fs \
