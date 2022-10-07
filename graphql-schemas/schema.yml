@@ -57,7 +57,7 @@ confs:
 - name: ReviewRepos_v1
   fields:
   - { name: name, type: string, isRequired: true }
-  - { name: repoUrl, type: string, isRequired: true}
+  - { name: url, type: string, isRequired: true}
 
 - name: AppInterfaceDependencyMapping_v1
   fields:

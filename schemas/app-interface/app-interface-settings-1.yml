@@ -170,11 +170,11 @@ properties:
       additionalProperties: false
       required:
       - name
-      - repoUrl
+      - url
       properties:
         name:
           type: string
-        repoUrl:
+        url:
           type: string
           format: uri
 required:
