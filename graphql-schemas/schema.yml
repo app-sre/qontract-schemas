@@ -27,7 +27,7 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: reviewRepos, type: ReviewRepos_v1, isRequired: false }
+  - { name: reviewRepos, type: ReviewRepos_v1, isList: true, isRequired: false }
 
 - name: SmtpSettings_v1
   fields:
