@@ -27,7 +27,6 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: reviewRepos, type: ReviewRepos_v1, isList: true, isRequired: false }
 
 - name: SmtpSettings_v1
   fields:
@@ -53,11 +52,6 @@ confs:
   fields:
   - { name: readTimeout, type: int, isRequired: true }
   - { name: connectTimeout, type: int, isRequired: true }
-
-- name: ReviewRepos_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: url, type: string, isRequired: true}
 
 - name: AppInterfaceDependencyMapping_v1
   fields:

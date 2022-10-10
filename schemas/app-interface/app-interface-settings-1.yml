@@ -160,23 +160,6 @@ properties:
     required:
     - readTimeout
     - connectTimeout
-  reviewRepos:
-    type: array
-    description: |
-      List of additional repos to watch for MRs in the A-I review
-      queue in addition to A-I MRs.
-    items:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - url
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
 required:
 - "$schema"
 - labels
