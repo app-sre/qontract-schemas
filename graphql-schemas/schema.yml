@@ -1925,6 +1925,7 @@ confs:
   fields:
   - { name: bucket_name, type: string, isRequired: true }
   - { name: destination_url, type: string, isRequired: true }
+  - { name: origin_branch, type: string, isRequired: true }
   - { name: bucket_account, type: AWSAccount_v1, isRequired: true }
   - { name: public_key, type: VaultSecret_v1, isRequired: true }
 

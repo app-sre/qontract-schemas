@@ -305,6 +305,14 @@ properties:
               type: string
             destination_url:
               type: string
+            origin_branch:
+              type: string
+          required:
+          - bucket_account
+          - public_key
+          - bucket_name
+          - destination_url
+          - origin_branch
         gitlabRepoOwners:
           type: object
           properties:
