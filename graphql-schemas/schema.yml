@@ -266,6 +266,7 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
+  - { name: output_path, type: string, isRequired: false }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1

@@ -21,6 +21,8 @@ properties:
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+  output_path:
+    type: string
   options:
     type: object
     oneOf:
