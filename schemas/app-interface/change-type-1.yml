@@ -19,6 +19,9 @@ properties:
     type: string
   contextSchema:
     type: string
+  disabled:
+    type: boolean
+    description: a disabled change-type does not have any effect but will still log into the PR check logs
   changes:
     type: array
     minItems: 1
