@@ -266,6 +266,7 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
+  - { name: output_path, type: string, isRequired: false }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
@@ -1936,6 +1937,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: resource, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
+  - { name: showInReviewQueue, type: boolean}
   - { name: gitlabRepoOwners, type: CodeComponentGitlabOwners_v1 }
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
   - { name: jira, type: JiraServer_v1 }
@@ -3080,6 +3082,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: contextType, type: string, isRequired: true } # datafile or resource
   - { name: contextSchema, type: string } # schema of a datafile or resource
+  - { name: disabled, type: boolean }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
 
 - name: ChangeTypeChangeDetector_v1
