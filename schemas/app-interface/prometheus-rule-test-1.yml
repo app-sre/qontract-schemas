@@ -101,7 +101,7 @@ properties:
                     labels:
                       type: string
                     value:
-                      type: integer
+                      type: number
                   required:
                   - labels
                   - value
