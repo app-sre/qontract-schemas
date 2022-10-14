@@ -20,7 +20,9 @@ properties:
   auth:
     "$ref": "/vault-config/instance-auth-1.yml"
   replication:
-    "$ref": "/vault-config/replication-1.yml"
+    type: array
+    items:
+      "$ref": "/vault-config/replication-1.yml"
 
 required:
 - "$schema"
