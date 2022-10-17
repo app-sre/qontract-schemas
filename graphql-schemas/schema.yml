@@ -956,6 +956,41 @@ confs:
       schema: /aws/policy-1.yml
       subAttr: account
 
+- name: CNAProvisioner_v1
+  interface: ExternalResourcesProvisioner_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: description, type: string }
+  - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
+
+- name: NamespaceCNAResource_v1
+  interface: NamespaceExternalResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: provisioner, type: CNAProvisioner_v1, isRequired: true }
+  - { name: resources, type: CNAResource_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: CNAResource_v1
+  datafile: /cna/resource-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      null-resource: CNANullResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: CNANullResource_v1
+  interface: CNAResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string }
+  - { name: addr_block, type: string }
+
 - name: CloudflareAccount_v1
   interface: ExternalResourcesProvisioner_v1
   fields:
@@ -1161,6 +1196,7 @@ confs:
       aws: NamespaceTerraformProviderResourceAWS_v1
       cloudflare: NamespaceTerraformProviderResourceCloudflare_v1
       gcp-project: NamespaceTerraformProviderResourceGCPProject_v1
+      cna: NamespaceCNAResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: ExternalResourcesProvisioner_v1, isRequired: true, isInterface: true }
@@ -2795,6 +2831,7 @@ confs:
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
+  - { name: cna_provisioners_v1, type: CNAProvisioner_v1, isList: true, datafileSchema: /cna/provisioner-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
