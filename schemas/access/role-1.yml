@@ -79,6 +79,30 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/policy-1.yml"
+  glitchtip_teams:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/glitchtip-team-1.yml"
+  glitchtip_roles:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/glitchtip-organization-1.yml"
+        role:
+          type: string
+          enum:
+          - member
+          - admin
+          - manager
+          - owner
+      required:
+      - organization
+      - role
   sentry_teams:
     type: array
     items:

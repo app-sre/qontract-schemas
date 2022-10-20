@@ -1,0 +1,33 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/glitchtip-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifierLowercase64"
+  description:
+    type: string
+  consoleUrl:
+    type: string
+    format: uri
+  automationUserEmail:
+    type: string
+    format: email
+  automationToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+required:
+- "$schema"
+- labels
+- name
+- description
+- consoleUrl
+- automationUserEmail
+- automationToken

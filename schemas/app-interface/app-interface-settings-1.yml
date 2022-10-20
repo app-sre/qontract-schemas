@@ -160,6 +160,16 @@ properties:
     required:
     - readTimeout
     - connectTimeout
+  glitchtip:
+    type: object
+    additionalProperties: false
+    properties:
+      readTimeout:
+        type: integer
+      maxRetries:
+        type: integer
+      mailDomain:
+        type: string
 required:
 - "$schema"
 - labels

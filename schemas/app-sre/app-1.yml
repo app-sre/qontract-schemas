@@ -31,7 +31,7 @@ properties:
   grafanaUrls:
     type: array
     description: |
-      List of links to Grafana Dashboard/Folders associated with the service. Please provide 
+      List of links to Grafana Dashboard/Folders associated with the service. Please provide
       a title together with the link.
     items:
       type: object
@@ -439,6 +439,85 @@ properties:
       required:
       - team
       - projects
+
+  glitchtipProjects:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          "$ref": "/common-1.json#/definitions/identifierLowercase64"
+        description:
+          type: string
+        platform:
+          type: string
+          enum:
+          - cocoa
+          - cocoa-objc
+          - cocoa-swift
+          - cordova
+          - csharp
+          - electron
+          - elixir
+          - go
+          - go-http
+          - java
+          - java-android
+          - java-appengine
+          - java-log4j
+          - java-log4j2
+          - java-logback
+          - java-logging
+          - javascript
+          - javascript-angular
+          - javascript-angularjs
+          - javascript-backbone
+          - javascript-ember
+          - javascript-nextjs
+          - javascript-react
+          - javascript-vue
+          - minidump
+          - native
+          - node
+          - node-connect
+          - node-express
+          - node-koa
+          - other
+          - php
+          - php-laravel
+          - php-monolog
+          - php-symfony
+          - python
+          - python-bottle
+          - python-celery
+          - python-django
+          - python-flask
+          - python-pylons
+          - python-pyramid
+          - python-pythonawslambda
+          - python-rq
+          - python-sanic
+          - python-tornado
+          - react-native
+          - ruby
+          - ruby-rack
+          - ruby-rails
+          - rust
+        teams:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/dependencies/glitchtip-team-1.yml"
+        organization:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/glitchtip-organization-1.yml"
+      required:
+      - name
+      - description
+      - platform
+      - teams
+      - organization
 
 required:
 - "$schema"
