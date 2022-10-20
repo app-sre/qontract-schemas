@@ -3212,6 +3212,7 @@ confs:
   - { name: contextType, type: string, isRequired: true } # datafile or resource
   - { name: contextSchema, type: string } # schema of a datafile or resource
   - { name: disabled, type: boolean }
+  - { name: inherrit, type: ChangeType_v1, isList: true }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
 
 - name: ChangeTypeChangeDetector_v1
