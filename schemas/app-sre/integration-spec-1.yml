@@ -79,6 +79,9 @@ properties:
       slack:
         type: boolean
         description: ship logs to slack
+      googleChat:
+        type: boolean
+        description: ship logs to google chat
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
   shards:

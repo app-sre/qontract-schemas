@@ -5,6 +5,8 @@ IMAGE_TEST := $(IMAGE_NAME)-test
 IMAGE_TAG := $(shell git rev-parse --short=7 HEAD)
 VALIDATOR_IMAGE := quay.io/app-sre/qontract-validator
 VALIDATOR_IMAGE_TAG := latest
+SERVER_IMAGE := quay.io/app-sre/qontract-server
+SERVER_IMAGE_TAG := latest
 CONTAINER_ENGINE ?= $(shell which podman >/dev/null 2>&1 && echo podman || echo docker)
 OUTPUT_DIR ?= $(shell pwd)
 OUTPUT_DIR := $(shell realpath $(OUTPUT_DIR))
@@ -46,6 +48,17 @@ validate: ## Use qcontract-validator image to show any validation errors of sche
 		-v $(OUTPUT_DIR):/bundle:z \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
+
+gql_validate: ## Run qontract-server with the schema bundle and no data to reveal any GQL schema issues
+	@$(CONTAINER_ENGINE) pull $(SERVER_IMAGE):$(SERVER_IMAGE_TAG) && \
+	 timeout 5 $(CONTAINER_ENGINE) run --rm \
+		-v $(OUTPUT_DIR):/bundle:z \
+		-p 4000:4000 \
+		-e LOAD_METHOD=fs \
+		-e DATAFILES_FILE=/bundle/$(BUNDLE_FILENAME) \
+		$(SERVER_IMAGE):$(SERVER_IMAGE_TAG) || \
+	 if [ $$? -eq 124 ]; then exit 0; else exit $$?; fi
+	
 
 build-test: clean
 	@docker build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .

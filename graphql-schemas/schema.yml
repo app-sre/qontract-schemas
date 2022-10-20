@@ -273,6 +273,7 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
+  - { name: output_path, type: string, isRequired: false }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
@@ -779,6 +780,7 @@ confs:
   - { name: auth, type: VaultSecret_v1, isRequired: true}
 
 - name: Cluster_v1
+  datafile: /openshift/cluster-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -892,6 +894,7 @@ confs:
   - { name: name, type: string, isRequired: true }
 
 - name: AWSAccount_v1
+  datafile: /aws/account-1.yml
   interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1179,6 +1182,7 @@ confs:
   - { name: argo, type: CloudflareZoneArgo_v1 }
   - { name: records, type: CloudflareZoneRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
+  - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
 
 - name: CloudflareZoneArgo_v1
   fields:
@@ -1198,6 +1202,17 @@ confs:
   - { name: identifier, type: string, isRequired: true }
   - { name: pattern, type: string, isRequired: true }
   - { name: script_name, type: string, isRequired: true }
+
+- name: CloudflareZoneCertificate_v1
+  fields:
+  - { name: identifier, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: hosts, type: string, isRequired: true, isList: true }
+  - { name: validation_method, type: string, isRequired: true }
+  - { name: validity_days, type: int, isRequired: true }
+  - { name: certificate_authority, type: string, isRequired: true }
+  - { name: cloudflare_branding, type: boolean }
+  - { name: wait_for_active_status, type: boolean }
 
 - name: NamespaceTerraformResourceCloudflareWorkerScript_v1
   interface: NamespaceTerraformResourceCloudflare_v1
@@ -1929,6 +1944,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: resource, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
+  - { name: showInReviewQueue, type: boolean}
   - { name: gitlabRepoOwners, type: CodeComponentGitlabOwners_v1 }
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
   - { name: jira, type: JiraServer_v1 }
@@ -2053,7 +2069,6 @@ confs:
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }
-  - { name: configurableResources, type: boolean }
   - { name: deployResources, type: DeployResources_v1 }
   - name: selfServiceRoles
     type: Role_v1
@@ -2111,12 +2126,18 @@ confs:
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+  - { name: image, type: SaasResourceTemplateTargetImage_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
 
 - name: SaasResourceTemplateTargetUpstream_v1
   fields:
   - { name: instance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+
+- name: SaasResourceTemplateTargetImage_v1
+  fields:
+  - { name: org, type: QuayOrg_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
 
 - name: SaasResourceTemplateTargetPromotion_v1
@@ -2537,6 +2558,7 @@ confs:
   - { name: no_validate_schemas, type: boolean }
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
+  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
@@ -2693,6 +2715,7 @@ confs:
   - { name: namespace, type: Namespace_v1, isRequired: true }
 
 - name: GabiInstance_v1
+  datafile: /app-sre/gabi-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3130,10 +3153,11 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string, isRequired: true }
   - { name: contextType, type: string, isRequired: true } # datafile or resource
   - { name: contextSchema, type: string } # schema of a datafile or resource
+  - { name: disabled, type: boolean }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
 
 - name: ChangeTypeChangeDetector_v1

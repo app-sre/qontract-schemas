@@ -288,6 +288,9 @@ properties:
           - saasrepo
           - bundle
           - other
+        showInReviewQueue:
+          type: boolean
+          description: Include MRs from this repo in the AppSRE Review Queue
         url:
           type: string
         gitlabRepoOwners:
