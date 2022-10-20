@@ -22,9 +22,9 @@ properties:
   disabled:
     type: boolean
     description: a disabled change-type does not have any effect but will still log into the PR check logs
-  inherrit:
+  inherit:
     type: array
-    description: inherrit the permissions of additional change types
+    description: inherit the permissions of additional change types
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/change-type-1.yml"
