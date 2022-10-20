@@ -168,12 +168,8 @@ properties:
         type: integer
       maxRetries:
         type: integer
-      mailAddress:
+      mailDomain:
         type: string
-    required:
-    - readTimeout
-    - maxRetries
-    - mailAddress
 required:
 - "$schema"
 - labels

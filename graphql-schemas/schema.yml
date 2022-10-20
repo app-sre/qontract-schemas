@@ -56,9 +56,9 @@ confs:
 
 - name: GlitchtipSettings_v1
   fields:
-  - { name: readTimeout, type: int, isRequired: true }
-  - { name: maxRetries, type: int, isRequired: true }
-  - { name: mailAddress, type: string, isRequired: true }
+  - { name: readTimeout, type: int }
+  - { name: maxRetries, type: int }
+  - { name: mailDomain, type: string }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
