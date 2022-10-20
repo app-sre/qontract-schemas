@@ -293,6 +293,16 @@ properties:
           description: Include MRs from this repo in the AppSRE Review Queue
         url:
           type: string
+        sync:
+          type: object
+          properties:
+            bucket_account:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/aws/account-1.yml"
+            bucket_name:
+              type: string
+            destination_url:
+              type: string
         gitlabRepoOwners:
           type: object
           properties:
