@@ -2705,6 +2705,7 @@ confs:
   - { name: namespace, type: Namespace_v1, isRequired: true }
 
 - name: GabiInstance_v1
+  datafile: /app-sre/gabi-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
