@@ -2955,8 +2955,10 @@ confs:
   - { name: _target_namespace_zone, type: DnsNamespaceZone_v1 }
 
 - name: DnsZone_v1
+  datafile: /dependencies/dns-zone-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: domain_name, type: string }
