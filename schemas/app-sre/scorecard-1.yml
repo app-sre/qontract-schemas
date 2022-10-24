@@ -1,0 +1,618 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/scorecard-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+  date:
+    type: string
+    pattern: "^2[0-9]{3}-[01][0-9]-[0123][0-9]$"
+    description: 'YYYY-mm-dd (year, month, day)'
+  CONTINUITY-0001:
+    type: object
+    additionalProperties: false
+    description: "[Field Trial] Data continuity"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  CONTINUITY-0002:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Disaster Recovery"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  CONTINUITY-0003:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Data Management"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0001:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Contact information"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0002:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Service Description"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0003:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Provide metadata for your service"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0004:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Service Escalation policies"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0005:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Documented internal and external dependencies"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0006:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Ability to map a container image tag to a code version"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0007:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Known failure scenarios have an SOP"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  INCIDENT-MGMT-0008:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] CEE and SRE are enabled to support the workload"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0001:
+    type: object
+    additionalProperties: false
+    description: "[Field Trial] Service implements SRE observability requirements"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0002:
+    type: object
+    additionalProperties: false
+    description: "[Field Trial] Service defines and tracks SLOs"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0003:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] SLO driven alerts with SOPs"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0004:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Grafana dashboard for SLIs and SLOs"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0005:
+    type: object
+    additionalProperties: false
+    description: "[Field Trial] Logging"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  OBSERVABILITY-0006:
+    type: object
+    additionalProperties: false
+    description: "[General Availability] Error Budget Policy"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELEASING-0001:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Release process"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELEASING-0002:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] No moving tags for images"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELEASING-0003:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Staging and Production environments"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELEASING-0004:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Automated and repeatable release process"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELEASING-0005:
+    type: object
+    additionalProperties: false
+    description: "[General Availability] Gating promotion to production against testing in staging"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0001:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Service runs on OpenShift Dedicated"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0002:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Define requests and limits"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0003:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Dependency-management plan"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0004:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Customer brought SSL Certificate policies"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0005:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Kube API considerations"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0006:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Horizontally scalable"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0007:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Kubernetes best practices for resiliency"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0008:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Service tolerant to OSD upgrades without disruption"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0009:
+    type: object
+    additionalProperties: false
+    description: "[General Availability] Load and stress testing"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0010:
+    type: object
+    additionalProperties: false
+    description: "[General Availability] Life-cycle tests"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  RELIABILITY-0011:
+    type: object
+    additionalProperties: false
+    description: "[General Availability] Capacity plan including scalability constraints"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  SECURITY-0001:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Delivery of secrets and rotation policies"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  SECURITY-0002:
+    type: object
+    additionalProperties: false
+    description: "[Service Preview] Supply chain approved pipeline"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  SECURITY-0003:
+    type: object
+    additionalProperties: false
+    description: "[Field Trial] CVE Response process"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+  SECURITY-0004:
+    type: object
+    additionalProperties: false
+    description: "[Limited Availability] Compliance requirements"
+    properties:
+      status:
+        type: string
+        enum:
+        - green
+        - yellow
+        - red
+      comment:
+        type: string
+    required:
+    - status
+required:
+- "$schema"
+- labels
+- app
+- date
+- CONTINUITY-0001
+- CONTINUITY-0002
+- CONTINUITY-0003
+- INCIDENT-MGMT-0001
+- INCIDENT-MGMT-0002
+- INCIDENT-MGMT-0003
+- INCIDENT-MGMT-0004
+- INCIDENT-MGMT-0005
+- INCIDENT-MGMT-0006
+- INCIDENT-MGMT-0007
+- INCIDENT-MGMT-0008
+- OBSERVABILITY-0001
+- OBSERVABILITY-0002
+- OBSERVABILITY-0003
+- OBSERVABILITY-0004
+- OBSERVABILITY-0005
+- OBSERVABILITY-0006
+- RELEASING-0001
+- RELEASING-0002
+- RELEASING-0003
+- RELEASING-0004
+- RELEASING-0005
+- RELIABILITY-0001
+- RELIABILITY-0002
+- RELIABILITY-0003
+- RELIABILITY-0004
+- RELIABILITY-0005
+- RELIABILITY-0006
+- RELIABILITY-0007
+- RELIABILITY-0008
+- RELIABILITY-0009
+- RELIABILITY-0010
+- RELIABILITY-0011
+- SECURITY-0001
+- SECURITY-0002
+- SECURITY-0003
+- SECURITY-0004

@@ -2737,6 +2737,56 @@ confs:
   - { name: resourcePath, type: string, isRequired: true }
   - { name: expectedResult, type: string, isRequired: true }
 
+- name: ScorecardAcceptanceCriteria_v1
+  fields:
+  - { name: status, type: string, isRequired: true }
+  - { name: comment, type: string }
+
+- name: Scorecard_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json, isRequired: true }
+  - { name: app, type: App_v1, isRequired: true }
+  - { name: date, type: string, isRequired: true }
+  - { name: CONTINUITY-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: CONTINUITY-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: CONTINUITY-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0007, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT-MGMT-0008, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY-0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING-0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING-0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0007, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0008, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0009, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0010, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY-0011, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY-0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY-0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY-0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY-0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+
 - name: Query
   fields:
   - { name: app_interface_settings_v1, type: AppInterfaceSettings_v1, isList: true, datafileSchema: /app-interface/app-interface-settings-1.yml }
