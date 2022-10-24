@@ -160,6 +160,7 @@ properties:
                   - /openshift/cluster-1.yml
                   - /aws/account-1.yml
                   - /app-sre/gabi-instance-1.yml
+                  - /app-sre/scorecard-1.yml
 required:
 - $schema
 - labels

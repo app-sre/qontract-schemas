@@ -2737,6 +2737,57 @@ confs:
   - { name: resourcePath, type: string, isRequired: true }
   - { name: expectedResult, type: string, isRequired: true }
 
+- name: ScorecardAcceptanceCriteria_v1
+  fields:
+  - { name: status, type: string, isRequired: true }
+  - { name: comment, type: string }
+
+- name: Scorecard_v1
+  datafile: /app-sre/scorecard-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json, isRequired: true }
+  - { name: app, type: App_v1, isRequired: true }
+  - { name: date, type: string, isRequired: true }
+  - { name: CONTINUITY_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: CONTINUITY_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: CONTINUITY_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0007, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: INCIDENT_MGMT_0008, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: OBSERVABILITY_0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING_0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELEASING_0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0005, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0006, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0007, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0008, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0009, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0010, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: RELIABILITY_0011, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY_0001, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY_0002, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY_0003, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+  - { name: SECURITY_0004, type: ScorecardAcceptanceCriteria_v1, isRequired: true }
+
 - name: Query
   fields:
   - { name: app_interface_settings_v1, type: AppInterfaceSettings_v1, isList: true, datafileSchema: /app-interface/app-interface-settings-1.yml }
@@ -2806,6 +2857,7 @@ confs:
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
+  - { name: scorecards_v1, type: Scorecard_v1, isList: true, datafileSchema: /app-sre/scorecard-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
