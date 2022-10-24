@@ -1780,6 +1780,7 @@ confs:
   - { name: serviceAccountName, type: string, isRequired: true }
 
 - name: SharedResources_v1
+  datafile: /openshift/shared-resources-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
