@@ -15,6 +15,15 @@ properties:
     type: string
   description:
     type: string
+  priority:
+    type: string
+    description: influence order in which merge requests are processed
+    enum:
+    - critical
+    - urgent
+    - high
+    - medium
+    - low
   contextType:
     type: string
   contextSchema:
@@ -65,4 +74,5 @@ required:
 - labels
 - name
 - description
+- priority
 - contextType
