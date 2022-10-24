@@ -19,7 +19,7 @@ properties:
     type: string
     pattern: "^2[0-9]{3}-[01][0-9]-[0123][0-9]$"
     description: 'YYYY-mm-dd (year, month, day)'
-  CONTINUITY-0001:
+  CONTINUITY_0001:
     type: object
     additionalProperties: false
     description: "[Field Trial] Data continuity"
@@ -34,7 +34,7 @@ properties:
         type: string
     required:
     - status
-  CONTINUITY-0002:
+  CONTINUITY_0002:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Disaster Recovery"
@@ -49,7 +49,7 @@ properties:
         type: string
     required:
     - status
-  CONTINUITY-0003:
+  CONTINUITY_0003:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Data Management"
@@ -64,7 +64,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0001:
+  INCIDENT_MGMT_0001:
     type: object
     additionalProperties: false
     description: "[Service Preview] Contact information"
@@ -79,7 +79,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0002:
+  INCIDENT_MGMT_0002:
     type: object
     additionalProperties: false
     description: "[Service Preview] Service Description"
@@ -94,7 +94,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0003:
+  INCIDENT_MGMT_0003:
     type: object
     additionalProperties: false
     description: "[Service Preview] Provide metadata for your service"
@@ -109,7 +109,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0004:
+  INCIDENT_MGMT_0004:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Service Escalation policies"
@@ -124,7 +124,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0005:
+  INCIDENT_MGMT_0005:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Documented internal and external dependencies"
@@ -139,7 +139,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0006:
+  INCIDENT_MGMT_0006:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Ability to map a container image tag to a code version"
@@ -154,7 +154,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0007:
+  INCIDENT_MGMT_0007:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Known failure scenarios have an SOP"
@@ -169,7 +169,7 @@ properties:
         type: string
     required:
     - status
-  INCIDENT-MGMT-0008:
+  INCIDENT_MGMT_0008:
     type: object
     additionalProperties: false
     description: "[Limited Availability] CEE and SRE are enabled to support the workload"
@@ -184,7 +184,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0001:
+  OBSERVABILITY_0001:
     type: object
     additionalProperties: false
     description: "[Field Trial] Service implements SRE observability requirements"
@@ -199,7 +199,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0002:
+  OBSERVABILITY_0002:
     type: object
     additionalProperties: false
     description: "[Field Trial] Service defines and tracks SLOs"
@@ -214,7 +214,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0003:
+  OBSERVABILITY_0003:
     type: object
     additionalProperties: false
     description: "[Limited Availability] SLO driven alerts with SOPs"
@@ -229,7 +229,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0004:
+  OBSERVABILITY_0004:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Grafana dashboard for SLIs and SLOs"
@@ -244,7 +244,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0005:
+  OBSERVABILITY_0005:
     type: object
     additionalProperties: false
     description: "[Field Trial] Logging"
@@ -259,7 +259,7 @@ properties:
         type: string
     required:
     - status
-  OBSERVABILITY-0006:
+  OBSERVABILITY_0006:
     type: object
     additionalProperties: false
     description: "[General Availability] Error Budget Policy"
@@ -274,7 +274,7 @@ properties:
         type: string
     required:
     - status
-  RELEASING-0001:
+  RELEASING_0001:
     type: object
     additionalProperties: false
     description: "[Service Preview] Release process"
@@ -289,7 +289,7 @@ properties:
         type: string
     required:
     - status
-  RELEASING-0002:
+  RELEASING_0002:
     type: object
     additionalProperties: false
     description: "[Service Preview] No moving tags for images"
@@ -304,7 +304,7 @@ properties:
         type: string
     required:
     - status
-  RELEASING-0003:
+  RELEASING_0003:
     type: object
     additionalProperties: false
     description: "[Service Preview] Staging and Production environments"
@@ -319,7 +319,7 @@ properties:
         type: string
     required:
     - status
-  RELEASING-0004:
+  RELEASING_0004:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Automated and repeatable release process"
@@ -334,7 +334,7 @@ properties:
         type: string
     required:
     - status
-  RELEASING-0005:
+  RELEASING_0005:
     type: object
     additionalProperties: false
     description: "[General Availability] Gating promotion to production against testing in staging"
@@ -349,7 +349,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0001:
+  RELIABILITY_0001:
     type: object
     additionalProperties: false
     description: "[Service Preview] Service runs on OpenShift Dedicated"
@@ -364,7 +364,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0002:
+  RELIABILITY_0002:
     type: object
     additionalProperties: false
     description: "[Service Preview] Define requests and limits"
@@ -379,7 +379,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0003:
+  RELIABILITY_0003:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Dependency-management plan"
@@ -394,7 +394,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0004:
+  RELIABILITY_0004:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Customer brought SSL Certificate policies"
@@ -409,7 +409,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0005:
+  RELIABILITY_0005:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Kube API considerations"
@@ -424,7 +424,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0006:
+  RELIABILITY_0006:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Horizontally scalable"
@@ -439,7 +439,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0007:
+  RELIABILITY_0007:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Kubernetes best practices for resiliency"
@@ -454,7 +454,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0008:
+  RELIABILITY_0008:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Service tolerant to OSD upgrades without disruption"
@@ -469,7 +469,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0009:
+  RELIABILITY_0009:
     type: object
     additionalProperties: false
     description: "[General Availability] Load and stress testing"
@@ -484,7 +484,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0010:
+  RELIABILITY_0010:
     type: object
     additionalProperties: false
     description: "[General Availability] Life-cycle tests"
@@ -499,7 +499,7 @@ properties:
         type: string
     required:
     - status
-  RELIABILITY-0011:
+  RELIABILITY_0011:
     type: object
     additionalProperties: false
     description: "[General Availability] Capacity plan including scalability constraints"
@@ -514,7 +514,7 @@ properties:
         type: string
     required:
     - status
-  SECURITY-0001:
+  SECURITY_0001:
     type: object
     additionalProperties: false
     description: "[Service Preview] Delivery of secrets and rotation policies"
@@ -529,7 +529,7 @@ properties:
         type: string
     required:
     - status
-  SECURITY-0002:
+  SECURITY_0002:
     type: object
     additionalProperties: false
     description: "[Service Preview] Supply chain approved pipeline"
@@ -544,7 +544,7 @@ properties:
         type: string
     required:
     - status
-  SECURITY-0003:
+  SECURITY_0003:
     type: object
     additionalProperties: false
     description: "[Field Trial] CVE Response process"
@@ -559,7 +559,7 @@ properties:
         type: string
     required:
     - status
-  SECURITY-0004:
+  SECURITY_0004:
     type: object
     additionalProperties: false
     description: "[Limited Availability] Compliance requirements"
@@ -579,40 +579,40 @@ required:
 - labels
 - app
 - date
-- CONTINUITY-0001
-- CONTINUITY-0002
-- CONTINUITY-0003
-- INCIDENT-MGMT-0001
-- INCIDENT-MGMT-0002
-- INCIDENT-MGMT-0003
-- INCIDENT-MGMT-0004
-- INCIDENT-MGMT-0005
-- INCIDENT-MGMT-0006
-- INCIDENT-MGMT-0007
-- INCIDENT-MGMT-0008
-- OBSERVABILITY-0001
-- OBSERVABILITY-0002
-- OBSERVABILITY-0003
-- OBSERVABILITY-0004
-- OBSERVABILITY-0005
-- OBSERVABILITY-0006
-- RELEASING-0001
-- RELEASING-0002
-- RELEASING-0003
-- RELEASING-0004
-- RELEASING-0005
-- RELIABILITY-0001
-- RELIABILITY-0002
-- RELIABILITY-0003
-- RELIABILITY-0004
-- RELIABILITY-0005
-- RELIABILITY-0006
-- RELIABILITY-0007
-- RELIABILITY-0008
-- RELIABILITY-0009
-- RELIABILITY-0010
-- RELIABILITY-0011
-- SECURITY-0001
-- SECURITY-0002
-- SECURITY-0003
-- SECURITY-0004
+- CONTINUITY_0001
+- CONTINUITY_0002
+- CONTINUITY_0003
+- INCIDENT_MGMT_0001
+- INCIDENT_MGMT_0002
+- INCIDENT_MGMT_0003
+- INCIDENT_MGMT_0004
+- INCIDENT_MGMT_0005
+- INCIDENT_MGMT_0006
+- INCIDENT_MGMT_0007
+- INCIDENT_MGMT_0008
+- OBSERVABILITY_0001
+- OBSERVABILITY_0002
+- OBSERVABILITY_0003
+- OBSERVABILITY_0004
+- OBSERVABILITY_0005
+- OBSERVABILITY_0006
+- RELEASING_0001
+- RELEASING_0002
+- RELEASING_0003
+- RELEASING_0004
+- RELEASING_0005
+- RELIABILITY_0001
+- RELIABILITY_0002
+- RELIABILITY_0003
+- RELIABILITY_0004
+- RELIABILITY_0005
+- RELIABILITY_0006
+- RELIABILITY_0007
+- RELIABILITY_0008
+- RELIABILITY_0009
+- RELIABILITY_0010
+- RELIABILITY_0011
+- SECURITY_0001
+- SECURITY_0002
+- SECURITY_0003
+- SECURITY_0004
