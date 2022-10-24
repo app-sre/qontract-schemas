@@ -19,6 +19,8 @@ properties:
     type: string
     description: influence order in which merge requests are processed
     enum:
+    - critical
+    - urgent
     - high
     - medium
     - low
