@@ -2857,6 +2857,7 @@ confs:
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
+  - { name: scorecards_v1, type: Scorecard_v1, isList: true, datafileSchema: /app-sre/scorecard-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
