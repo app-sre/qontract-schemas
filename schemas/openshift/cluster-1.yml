@@ -498,6 +498,15 @@ properties:
           - openshift-limitranges
           - openshift-serviceaccount-tokens
           - terraform-resources
+          - ocm-additional-routers
+          - ocm-addons
+          - ocm-aws-infrastructure-access
+          - ocm-external-configuration-labels
+          - ocm-clusters
+          - ocm-github-idp
+          - ocm-groups
+          - ocm-machine-pools
+          - ocm-upgrade-scheduler
       e2eTests:
         type: array
         items:
