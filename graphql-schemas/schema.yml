@@ -913,7 +913,7 @@ confs:
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
-  - { name: deletionApprovals, type: AWSAccountDeletionApproval_v1, isList: true }
+  - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
   - { name: disable, type: DisableClusterAutomations_v1 }
   - { name: deleteKeys, type: string, isList: true }
   - { name: resetPasswords, type: AWSAccountResetPassword_v1, isList: true }
@@ -948,6 +948,7 @@ confs:
   - { name: enableDeletion, type: boolean }
   - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
   - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
+  - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
 
 - name: AWSGroup_v1
   fields:
@@ -965,7 +966,7 @@ confs:
       schema: /access/role-1.yml
       subAttr: aws_groups
 
-- name: AWSAccountDeletionApproval_v1
+- name: DeletionApproval_v1
   fields:
   - { name: type, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }

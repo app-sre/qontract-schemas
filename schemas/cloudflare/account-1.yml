@@ -34,6 +34,22 @@ properties:
     description: AWS Account to use for state in S3
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+  deletionApprovals:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        expiration:
+          type: string
+      required:
+      - type
+      - name
+      - expiration
 required:
 - "$schema"
 - name
