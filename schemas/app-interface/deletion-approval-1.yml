@@ -1,0 +1,21 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/deletion-approval-1.yml
+  expiration:
+    type: string
+  type:
+    type: string
+  name:
+    type: string
+required:
+- expiration
+- name
+- type
