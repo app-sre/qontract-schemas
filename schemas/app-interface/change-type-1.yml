@@ -24,6 +24,9 @@ properties:
     - high
     - medium
     - low
+  allowedToAssume:
+    type: boolean
+    description: assuming this change type does not require approval
   contextType:
     type: string
   contextSchema:
