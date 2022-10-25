@@ -2797,6 +2797,7 @@ confs:
   - { name: comment, type: string }
 
 - name: Scorecard_v2
+  datafile: /app-sre/scorecard-2.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
