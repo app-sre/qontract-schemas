@@ -2449,6 +2449,7 @@ confs:
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
 
 - name: User_v1
+  datafile: /access/role-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
