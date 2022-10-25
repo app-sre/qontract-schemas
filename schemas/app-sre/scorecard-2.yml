@@ -78,6 +78,8 @@ properties:
       required:
       - name
       - status
+    minItems: 37
+    maxItems: 37
 required:
 - "$schema"
 - labels
