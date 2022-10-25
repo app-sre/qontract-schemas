@@ -1,0 +1,88 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/scorecard-2.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+  date:
+    type: string
+    pattern: "^2[0-9]{3}-[01][0-9]-[0123][0-9]$"
+    description: 'YYYY-mm-dd (year, month, day)'
+  acceptanceCriteria:
+    type: array
+    description: acceptance criteria items
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: name of acceptance criteria item
+          enum:
+          - CONTINUITY-0001
+          - CONTINUITY-0002
+          - CONTINUITY-0003
+          - INCIDENT-MGMT-0001
+          - INCIDENT-MGMT-0002
+          - INCIDENT-MGMT-0003
+          - INCIDENT-MGMT-0004
+          - INCIDENT-MGMT-0005
+          - INCIDENT-MGMT-0006
+          - INCIDENT-MGMT-0007
+          - INCIDENT-MGMT-0008
+          - OBSERVABILITY-0001
+          - OBSERVABILITY-0002
+          - OBSERVABILITY-0003
+          - OBSERVABILITY-0004
+          - OBSERVABILITY-0005
+          - OBSERVABILITY-0006
+          - RELEASING-0001
+          - RELEASING-0002
+          - RELEASING-0003
+          - RELEASING-0004
+          - RELEASING-0005
+          - RELIABILITY-0001
+          - RELIABILITY-0002
+          - RELIABILITY-0003
+          - RELIABILITY-0004
+          - RELIABILITY-0005
+          - RELIABILITY-0006
+          - RELIABILITY-0007
+          - RELIABILITY-0008
+          - RELIABILITY-0009
+          - RELIABILITY-0010
+          - RELIABILITY-0011
+          - SECURITY-0001
+          - SECURITY-0002
+          - SECURITY-0003
+          - SECURITY-0004
+        status:
+          type: string
+          enum:
+          - green
+          - yellow
+          - red
+        comment:
+          type: string
+      required:
+      - name
+      - status
+    minItems: 37
+    maxItems: 37
+required:
+- "$schema"
+- labels
+- app
+- date
+- acceptanceCriteria
