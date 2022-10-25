@@ -162,7 +162,7 @@ properties:
                   - /app-sre/gabi-instance-1.yml
                   - /app-sre/scorecard-1.yml
                   - /openshift/shared-resources-1.yml
-                  - /access/role-1.yml
+                  - /access/user-1.yml
 required:
 - $schema
 - labels
