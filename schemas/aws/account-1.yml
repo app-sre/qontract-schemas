@@ -52,19 +52,7 @@ properties:
   deletionApprovals:
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        name:
-          type: string
-        expiration:
-          type: string
-      required:
-      - type
-      - name
-      - expiration
+      "$ref": "/app-interface/deletion-approval-1.yml"
   disable:
     type: object
     additionalProperties: false
