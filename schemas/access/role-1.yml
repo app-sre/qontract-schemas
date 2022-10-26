@@ -163,6 +163,7 @@ properties:
                   - /app-sre/scorecard-2.yml
                   - /openshift/shared-resources-1.yml
                   - /access/user-1.yml
+                  - /app-sre/tekton-provider-defaults-1.yml
 required:
 - $schema
 - labels

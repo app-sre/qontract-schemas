@@ -2225,7 +2225,10 @@ confs:
   - { name: openshiftSaasDeploy, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true }
 
 - name: PipelinesProviderTektonProviderDefaults_v1
+  datafile: /app-sre/tekton-provider-defaults-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: labels, type: json, isRequired: true }
   - { name: description, type: string, isRequired: true }
