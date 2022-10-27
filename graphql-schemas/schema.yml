@@ -965,26 +965,26 @@ confs:
   - { name: description, type: string }
   - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
 
-- name: NamespaceCNAResource_v1
+- name: NamespaceCNAsset_v1
   interface: NamespaceExternalResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: CNAProvisioner_v1, isRequired: true }
-  - { name: resources, type: CNAResource_v1, isRequired: true, isList: true, isInterface: true }
+  - { name: resources, type: CNAsset_v1, isRequired: true, isList: true, isInterface: true }
 
-- name: CNAResource_v1
-  datafile: /cna/resource-1.yml
+- name: CNAsset_v1
+  datafile: /cna/asset-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
     field: provider
     fieldMap:
-      null-resource: CNANullResource_v1
+      null-asset: CNANullAsset_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
-- name: CNANullResource_v1
-  interface: CNAResource_v1
+- name: CNANullAsset_v1
+  interface: CNAsset_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
@@ -1196,7 +1196,7 @@ confs:
       aws: NamespaceTerraformProviderResourceAWS_v1
       cloudflare: NamespaceTerraformProviderResourceCloudflare_v1
       gcp-project: NamespaceTerraformProviderResourceGCPProject_v1
-      cna: NamespaceCNAResource_v1
+      cna: NamespaceCNAsset_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: ExternalResourcesProvisioner_v1, isRequired: true, isInterface: true }

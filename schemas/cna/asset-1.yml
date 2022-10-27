@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /cna/resource-1.yml
+    - /cna/asset-1.yml
   provider:
     type: string
   annotations:
@@ -23,7 +23,7 @@ oneOf:
     provider:
       type: string
       enum:
-      - null-resource
+      - null-asset
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     description:
