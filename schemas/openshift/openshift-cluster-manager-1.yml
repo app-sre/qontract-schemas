@@ -23,6 +23,8 @@ properties:
   accessTokenUrl:
     type: string
     format: uri
+  accessTokenClientSecret:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
   offlineToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   blockedVersions:
@@ -49,3 +51,4 @@ required:
 - accessTokenClientId
 - accessTokenUrl
 - offlineToken
+- accessTokenClientSecret
