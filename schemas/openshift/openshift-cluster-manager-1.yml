@@ -25,8 +25,6 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
-  offlineToken:
-    "$ref": "/common-1.json#/definitions/vaultSecret"
   blockedVersions:
     description: "List of versions that will be rejected for upgrades. They can be regular expressions"
     type: array
@@ -50,5 +48,4 @@ required:
 - description
 - accessTokenClientId
 - accessTokenUrl
-- offlineToken
 - accessTokenClientSecret
