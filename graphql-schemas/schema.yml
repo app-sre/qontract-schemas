@@ -849,7 +849,6 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
-  - { name: offlineToken, type: VaultSecret_v1 }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
