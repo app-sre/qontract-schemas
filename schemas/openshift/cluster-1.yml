@@ -189,40 +189,7 @@ properties:
     required:
     - labels
   upgradePolicy:
-    type: object
-    additionalProperties: false
-    properties:
-      schedule_type:
-        type: string
-        enum:
-        - automatic
-      schedule:
-        type: string
-        pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
-      workloads:
-        type: array
-        items:
-          type: string
-      conditions:
-        additionalProperties: false
-        properties:
-          soakDays:
-            type: integer
-          mutexes:
-            type: array
-            description: |
-              list of named upgrade mutex locks for this cluster. A cluster needs
-              to acquire all its mutex locks in order to be upgraded. A mutex lock
-              can be held by only one cluster at a time.
-            items:
-              type: string
-        oneOf:
-        - required:
-          - soakDays
-    required:
-    - workloads
-    - schedule
-    - conditions
+    "$ref": "/openshift/cluster-upgrade-policy-1.yml"
   additionalRouters:
     type: array
     maxItems: 1
