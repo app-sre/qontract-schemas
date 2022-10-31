@@ -853,6 +853,7 @@ confs:
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
 - name: OpenShiftClusterManager_v1
+  datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
