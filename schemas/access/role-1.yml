@@ -164,6 +164,7 @@ properties:
                   - /openshift/shared-resources-1.yml
                   - /access/user-1.yml
                   - /app-sre/tekton-provider-defaults-1.yml
+                  - /openshift/openshift-cluster-manager-1.yml
 required:
 - $schema
 - labels

@@ -839,7 +839,21 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: kafkaCluster
 
+- name: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1
+  fields:
+  - { name: id, type: string, isRequired: true }
+  - { name: product, type: string, isRequired: true }
+  - { name: version, type: string, isRequired: true }
+  - { name: channel, type: string, isRequired: true }
+
+- name: OpenShiftClusterManagerUpgradePolicyCluster_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: spec, type: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1, isRequired: true }
+  - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
+
 - name: OpenShiftClusterManager_v1
+  datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -853,6 +867,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
   - name: clusters
     type: Cluster_v1
     isList: true
