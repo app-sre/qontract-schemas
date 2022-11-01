@@ -3005,7 +3005,6 @@ confs:
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: vpc, type: AWSVPC_v1 }
   - { name: origin, type: string, isRequired: true }
-  - { name: unmanaged_record_names, type: string, isList: true }
   - { name: records, type: DnsRecord_v1, isList: true }
 
 - name: SLODocumentSLOSLOParameters_v1

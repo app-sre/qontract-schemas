@@ -23,10 +23,6 @@ properties:
   vpc:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/vpc-1.yml"
-  unmanaged_record_names:
-    type: array
-    items:
-      type: string
   records:
     type: array
     items:
