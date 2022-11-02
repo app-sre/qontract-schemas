@@ -1680,6 +1680,7 @@ confs:
   - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: name, type: string, isRequired: true }
+  - { name: records, type: DnsRecord_v1, isList: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
