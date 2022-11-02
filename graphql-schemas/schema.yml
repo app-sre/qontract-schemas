@@ -847,7 +847,6 @@ confs:
 - name: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1
   fields:
   - { name: id, type: string, isRequired: true }
-  - { name: product, type: string, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:

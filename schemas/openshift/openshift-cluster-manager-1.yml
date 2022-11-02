@@ -54,18 +54,11 @@ properties:
           type: object
           additionalProperties: false
           properties:
-            product:
-              description: cluster product type (OSD/ROSA)
-              type: string
-              enum:
-              - osd
-              - rosa
             id:
               description: cluster id
               type: string
           required:
           - id
-          - product
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
       required:
