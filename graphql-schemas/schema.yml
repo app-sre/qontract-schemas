@@ -603,6 +603,7 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
+  - { name: hypershift, type: boolean, isRequired: false}
 
 - name: ClusterSpecOSD_v1
   interface: ClusterSpec_v1
@@ -622,6 +623,7 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
+  - { name: hypershift, type: boolean, isRequired: false}
   - { name: storage, type: int, isRequired: true }
   - { name: load_balancers, type: int, isRequired: true }
 
@@ -644,6 +646,9 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
+  - { name: hypershift, type: boolean, isRequired: false}
+  - { name: subnet_ids, type: string, isList: True}
+  - { name: availability_zones, type: string, isList: True}
 
 
 - name: ClusterSpecAutoScale_v1

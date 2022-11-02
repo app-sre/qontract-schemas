@@ -166,6 +166,20 @@ properties:
       account:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/aws/account-1.yml"
+      subnet_ids:
+        type: array
+        items:
+          type: string
+        description: |
+          Hosted Clusters only: list of subnet_ids to use with the cluster creation.
+      availability_zones:
+        type: array
+        items:
+          type: string
+        description: |
+          Hosted Clusters only: list of availability_zones to use with the cluster creation.
+      hypershift:
+        type: boolean
     required:
     - product
     - provider
