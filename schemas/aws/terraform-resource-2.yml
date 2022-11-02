@@ -178,7 +178,7 @@ properties:
   records:
     type: array
     items:
-      "$ref": "/dependencies/dns-zone-record-1.yml"
+      "$ref": "/dependencies/dns-record-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -1098,7 +1098,7 @@ oneOf:
     records:
       type: array
       items:
-        "$ref": "/dependencies/dns-zone-record-1.yml"
+        "$ref": "/dependencies/dns-record-1.yml"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:

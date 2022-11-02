@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /dependencies/dns-zone-record-1.yml
+    - /dependencies/dns-record-1.yml
   name:
     type: string
   'type':
