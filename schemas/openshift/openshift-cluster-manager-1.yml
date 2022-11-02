@@ -66,8 +66,6 @@ properties:
           required:
           - id
           - product
-          - version
-          - channel
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
       required:
