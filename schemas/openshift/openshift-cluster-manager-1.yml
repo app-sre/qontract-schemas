@@ -50,20 +50,10 @@ properties:
         name:
           description: cluster name
           type: string
-        spec:
-          type: object
-          additionalProperties: false
-          properties:
-            id:
-              description: cluster id
-              type: string
-          required:
-          - id
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
       required:
       - name
-      - spec
       - upgradePolicy
 required:
 - "$schema"
