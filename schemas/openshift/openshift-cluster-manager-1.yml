@@ -63,16 +63,6 @@ properties:
             id:
               description: cluster id
               type: string
-            version:
-              description: cluster version
-              type: string
-            channel:
-              description: cluster upgrade channel
-              type: string
-              enum:
-              - stable
-              - fast
-              - candidate
           required:
           - id
           - product
