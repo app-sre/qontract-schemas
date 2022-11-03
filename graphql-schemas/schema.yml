@@ -435,6 +435,7 @@ confs:
   - { name: mappings, type: SeverityPriorityMapping_v1, isList: true, isRequired: true }
 
 - name: JiraBoard_v1
+  datafile: /dependencies/jira-board-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
