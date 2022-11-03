@@ -856,6 +856,7 @@ confs:
 
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
+  interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -953,20 +954,11 @@ confs:
       schema: /aws/policy-1.yml
       subAttr: account
 
-- name: CNAProvisioner_v1
-  interface: ExternalResourcesProvisioner_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
-  - { name: description, type: string }
-  - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
-
 - name: NamespaceCNAsset_v1
   interface: NamespaceExternalResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: provisioner, type: CNAProvisioner_v1, isRequired: true }
+  - { name: provisioner, type: OpenShiftClusterManager_v1, isRequired: true }
   - { name: resources, type: CNAsset_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: CNAsset_v1
@@ -2829,7 +2821,6 @@ confs:
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
-  - { name: cna_provisioners_v1, type: CNAProvisioner_v1, isList: true, datafileSchema: /cna/provisioner-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }

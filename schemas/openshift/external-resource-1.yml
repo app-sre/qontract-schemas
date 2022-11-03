@@ -77,7 +77,7 @@ oneOf:
       - cna
     provisioner:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/cna/provisioner-1.yml"
+      "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
     resources:
       type: array
       items:
