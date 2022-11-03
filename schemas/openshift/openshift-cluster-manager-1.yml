@@ -50,39 +50,10 @@ properties:
         name:
           description: cluster name
           type: string
-        spec:
-          type: object
-          additionalProperties: false
-          properties:
-            product:
-              description: cluster product type (OSD/ROSA)
-              type: string
-              enum:
-              - osd
-              - rosa
-            id:
-              description: cluster id
-              type: string
-            version:
-              description: cluster version
-              type: string
-            channel:
-              description: cluster upgrade channel
-              type: string
-              enum:
-              - stable
-              - fast
-              - candidate
-          required:
-          - id
-          - product
-          - version
-          - channel
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
       required:
       - name
-      - spec
       - upgradePolicy
 required:
 - "$schema"

@@ -848,14 +848,10 @@ confs:
 - name: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1
   fields:
   - { name: id, type: string, isRequired: true }
-  - { name: product, type: string, isRequired: true }
-  - { name: version, type: string, isRequired: true }
-  - { name: channel, type: string, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: spec, type: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1, isRequired: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
 - name: OpenShiftClusterManager_v1
