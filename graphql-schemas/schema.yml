@@ -849,6 +849,12 @@ confs:
   fields:
   - { name: id, type: string, isRequired: true }
 
+- name: OpenShiftClusterManagerUpgradePolicyDefault_v1
+  fields:
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: matchLabels, type: json, isRequired: true }
+  - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
+
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
@@ -869,6 +875,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
   - name: clusters
     type: Cluster_v1
