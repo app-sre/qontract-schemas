@@ -1,0 +1,23 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cna/provisioner-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  ocm:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+required:
+- "$schema"
+- name
+- description
+- ocm

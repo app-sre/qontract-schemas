@@ -174,7 +174,11 @@ properties:
           enum:
           - email
         endpoint:
-          type: string 
+          type: string
+  records:
+    type: array
+    items:
+      "$ref": "/dependencies/dns-record-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -1091,6 +1095,10 @@ oneOf:
       "$ref": "/common-1.json#/definitions/k8sValidContainerName"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
+    records:
+      type: array
+      items:
+        "$ref": "/dependencies/dns-record-1.yml"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:

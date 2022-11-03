@@ -16,6 +16,7 @@ properties:
     - aws
     - cloudflare
     - gcp-project
+    - cna
   provisioner:
     "$ref": "/common-1.json#/definitions/crossref"
     description: the provisioning entity
@@ -27,6 +28,7 @@ properties:
       - "$ref": "/aws/terraform-resource-2.yml"
       - "$ref": "/cloudflare/terraform-resource-1.yml"
       - "$ref": "/gcp/terraform-resource-1.yml"
+      - "$ref": "/cna/asset-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -67,6 +69,19 @@ oneOf:
       type: array
       items:
         "$ref": "/gcp/terraform-resource-1.yml"
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - cna
+    provisioner:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/provisioner-1.yml"
+    resources:
+      type: array
+      items:
+        "$ref": "/cna/asset-1.yml"
 required:
 - provider
 - provisioner

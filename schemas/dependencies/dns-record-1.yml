@@ -1,0 +1,109 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/dns-record-1.yml
+  name:
+    type: string
+  'type':
+    type: string
+    enum:
+    - A
+    - AAAA
+    - CNAME
+    - MX
+    - NS
+    - SPF
+    - SRV
+    - TXT
+  ttl:
+    type: integer
+  alias:
+    type: object
+    properties:
+      name:
+        type: string
+      zone_id:
+        type: string
+      evaluate_target_health:
+        type: boolean
+    required:
+    - name
+    - zone_id
+    - evaluate_target_health
+  weighted_routing_policy:
+    type: object
+    properties:
+      weight:
+        type: integer
+  set_identifier:
+    type: string
+  records:
+    type: array
+    items:
+      type: string
+  failover_routing_policy:
+    type: object
+    properties:
+      'type':
+        type: string
+        enum:
+        - PRIMARY
+        - SECONDARY
+  _healthcheck:
+    type: object
+    properties:
+      fqdn:
+        type: string
+      port:
+        type: integer
+      'type':
+        type: string
+        enum:
+        - HTTP
+        - HTTPS
+        - HTTP_STR_MATCH
+        - HTTPS_STR_MATCH
+        - TCP
+      resource_path:
+        type: string
+      failure_threshold:
+        type: integer
+      request_interval:
+        type: integer
+      search_string:
+        type: string
+  _target_cluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/cluster-1.yml"
+  _target_namespace_zone:
+    type: object
+    description: a namespace and a route53 zone name provisioned within that namespace
+    additionalProperties: false
+    properties:
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+      name:
+        "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+    required:
+    - namespace
+    - name
+oneOf:
+- required:
+  - records
+- required:
+  - _target_cluster
+- required:
+  - _target_namespace_zone
+- required:
+  - alias
+required:
+- name
+- type
