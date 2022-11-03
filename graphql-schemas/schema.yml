@@ -945,7 +945,8 @@ confs:
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
-  - { name: rosa, type: RosaAWSSpec_v1, isRequired: false}
+  - { name: rosa, type: RosaAWSSpec_v1, isRequired: false }
+  - { name: cna, type: CNAAWSSpec_v1, isRequired: false }
 
   - name: ecrs
     type: AWSECR_v1
@@ -959,6 +960,16 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+
+- name: CNAAWSSpec_v1
+  fields:
+  - { name: defaultRoleARN, type: string }
+  - { name: moduleRoleARNS, type: CNAModuleAWSARN_v1, isList: true }
+
+- name: CNAModuleAWSARN_v1
+  fields:
+  - { name: module, type: string, isRequired: true }
+  - { name: arn, type: string, isRequired: true }
 
 - name: CNAExperimentalProvisioner_v1
   interface: ExternalResourcesProvisioner_v1
@@ -983,9 +994,23 @@ confs:
     strategy: fieldMap
     field: provider
     fieldMap:
+      aws-assume-role: CNAAssumeRoleAsset_v1
       null-asset: CNANullAsset_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+
+- name: CNAAssumeRoleAsset_v1
+  interface: CNAsset_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: aws_assume_role, type: CNAAssumeRoleAssetConfig_v1, isRequired: true }
+
+- name: CNAAssumeRoleAssetConfig_v1
+  fields:
+  - { name: slug, type: string, isRequired: true }
+  - { name: account, type: AWSAccount_v1, isRequired: true }
 
 - name: CNANullAsset_v1
   interface: CNAsset_v1

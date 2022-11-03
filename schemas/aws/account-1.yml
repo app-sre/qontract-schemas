@@ -105,6 +105,26 @@ properties:
     description: "Rosa related attributes in the aws account."
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/rosa-aws-1.yml"
+  cna:
+    type: object
+    additionalProperties: false
+    properties:
+      defaultRoleARN:
+        type: string
+      moduleRoleARNS:
+        type: array
+        items:
+          additionalProperties: false
+          properties:
+            module:
+              type: string
+            arn:
+              type: string
+          required:
+          - module
+          - arn
+    required:
+    - defaultRoleARN
 required:
 - "$schema"
 - labels
