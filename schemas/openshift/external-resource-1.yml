@@ -16,7 +16,7 @@ properties:
     - aws
     - cloudflare
     - gcp-project
-    - cna
+    - cna-experimental
   provisioner:
     "$ref": "/common-1.json#/definitions/crossref"
     description: the provisioning entity
@@ -74,10 +74,10 @@ oneOf:
     provider:
       type: string
       enum:
-      - cna
+      - cna-experimental
     provisioner:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/cna/provisioner-1.yml"
+      "$schemaRef": "/cna/experimental-provisioner-1.yml"
     resources:
       type: array
       items:
