@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /cna/provisioner-1.yml
+    - /cna/experimental-provisioner-1.yml
   name:
     type: string
   description:
