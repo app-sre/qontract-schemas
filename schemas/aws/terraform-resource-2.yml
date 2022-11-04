@@ -885,10 +885,6 @@ oneOf:
       type: integer
     targets:
       type: array
-      # force a minimum of 2 items due to
-      # https://github.com/hashicorp/terraform-provider-aws/pull/15112#issuecomment-791047457
-      # this can be removed once all aws accounts are using a provider >= 3.31.0
-      minItems: 2
       items:
         type: object
         additionalProperties: false
