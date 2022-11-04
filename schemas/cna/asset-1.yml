@@ -26,6 +26,13 @@ properties:
         "$schemaRef": "/aws/account-1.yml"
       slug:
         type: string
+  vpc:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/vpc-1.yml"
+  defaults:
+    type: string
+  overrides:
+    type: object
 oneOf:
 - additionalProperties: false
   properties:
@@ -61,3 +68,81 @@ oneOf:
   required:
   - identifier
   - aws_assume_role
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - aws-rds
+    identifier:
+      type: string
+    vpc:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/vpc-1.yml"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    overrides:
+      type: object
+      properties:
+        name:
+          type: string
+        engine:
+          type: string
+          enum:
+          - postgres
+        engine_version:
+          type: string
+        username:
+          type: string
+        instance_class:
+          type: string
+          enum:
+          - db.t2.micro
+          - db.t2.small
+          - db.t3.small
+          - db.m3.medium
+          - db.t3.medium
+          - db.m4.large
+          - db.m4.xlarge
+          - db.m4.2xlarge
+          - db.m5.large
+          - db.m5.xlarge
+          - db.m5.2xlarge
+          - db.m5.4xlarge
+          - db.m5.8xlarge
+          - db.m5.12xlarge
+          - db.m5.16xlarge
+          - db.m5.24xlarge
+          - db.m6g.large
+          - db.m6g.xlarge
+          - db.m6g.2xlarge
+          - db.m6g.4xlarge
+          - db.m6g.8xlarge
+          - db.m6g.12xlarge
+          - db.m6g.16xlarge
+          - db.r4.large
+          - db.r4.xlarge
+          - db.r4.2xlarge
+          - db.r4.4xlarge
+          - db.r4.8xlarge
+          - db.r4.16xlarge
+          - db.r5.large
+          - db.r5.xlarge
+          - db.r5.2xlarge
+          - db.r5.4xlarge
+          - db.r5.8xlarge
+          - db.r5.12xlarge
+          - db.r5.16xlarge
+          - db.r5.24xlarge
+        allocated_storage:
+          type: integer
+        max_allocated_storage:
+          type: integer
+        backup_retention_period:
+          type: integer
+        db_subnet_group_name:
+          type: string
+  required:
+  - identifier
+  - vpc
+  - defaults

@@ -996,6 +996,7 @@ confs:
     fieldMap:
       aws-assume-role: CNAAssumeRoleAsset_v1
       null-asset: CNANullAsset_v1
+      aws-rds: CNARDSInstance_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
@@ -1019,6 +1020,27 @@ confs:
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string }
   - { name: addr_block, type: string }
+
+- name: CNARDSInstance_v1
+  interface: CNAsset_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: vpc, type: AWSVPC_v1, isRequired: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: overrides, type: CNARDSInstanceOverrides_v1 }
+
+- name: CNARDSInstanceOverrides_v1
+  fields:
+  - { name: name, type: string }
+  - { name: engine, type: string }
+  - { name: engine_version, type: string }
+  - { name: username, type: string }
+  - { name: instance_class, type: string }
+  - { name: allocated_storage, type: int }
+  - { name: max_allocated_storage, type: int }
+  - { name: backup_retention_period, type: int }
+  - { name: db_subnet_group_name, type: string }
 
 - name: CloudflareAccount_v1
   interface: ExternalResourcesProvisioner_v1
