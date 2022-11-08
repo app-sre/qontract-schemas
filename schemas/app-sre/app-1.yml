@@ -314,6 +314,9 @@ properties:
                   type: string
                 branch: 
                   type: string
+          required:
+          - sourceProject
+          - destinationProject
         gitlabRepoOwners:
           type: object
           properties:
