@@ -104,7 +104,7 @@ properties:
   rosa:
     description: "Rosa related attributes in the aws account."
     "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/dependencies/rosa-aws-1.yml"
+    "$schemaRef": "/dependencies/rosa-ocm-1.yml"
 required:
 - "$schema"
 - labels

@@ -1,0 +1,30 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/rosa-ocm-1.yml
+  ocm_environments:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        ocm:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+        creator_role_arn:
+          type: string
+        installer_role_arn:
+          type: string
+        support_role_arn:
+          type: string
+        controlplane_role_arn:
+          type: string
+        worker_role_arn:
+          type: string

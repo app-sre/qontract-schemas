@@ -945,7 +945,7 @@ confs:
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
-  - { name: rosa, type: RosaAWSSpec_v1, isRequired: false}
+  - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
 
   - name: ecrs
     type: AWSECR_v1
@@ -3273,10 +3273,15 @@ confs:
   - { name: selector, type: string, isRequired: true }
   - { name: when, type: "string" }
 
-- name: RosaAWSSpec_v1
+- name: RosaOcmSpec_v1
   fields:
+  - { name: ocm_environments, type: RosaOcmAwsSpec_v1, isList: true}
+
+- name: RosaOcmAwsSpec_v1
+  fields:
+  - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true}
   - { name: creator_role_arn, type: string, isRequired: true}
-  - { name: installer_role_arn, type: string, isRequired: false}
-  - { name: support_role_arn, type: string, isRequired: false}
-  - { name: controlplane_role_arn, type: string, isRequired: false}
-  - { name: worker_role_arn, type: string, isRequired: false}
+  - { name: installer_role_arn, type: string, isRequired: true}
+  - { name: support_role_arn, type: string, isRequired: true}
+  - { name: controlplane_role_arn, type: string, isRequired: true}
+  - { name: worker_role_arn, type: string, isRequired: true}
