@@ -2002,11 +2002,23 @@ confs:
   fields:
   - { name: role, type: Role_v1, isRequired: true }
 
+- name: CodeComponentGitlabSync_v1
+  fields:
+  - { name: sourceProject, type: CodeComponentGitlabSyncProject_v1, isRequired: true }
+  - { name: destinationProject, type: CodeComponentGitlabSyncProject_v1, isRequired: true }
+
+- name: CodeComponentGitlabSyncProject_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: group, type: string, isRequired: true }
+  - { name: branch, type: string, isRequired: true }
+
 - name: AppCodeComponents_v1
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: resource, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
+  - { name: gitlabSync, type: CodeComponentGitlabSync_v1 }
   - { name: showInReviewQueue, type: boolean}
   - { name: gitlabRepoOwners, type: CodeComponentGitlabOwners_v1 }
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
