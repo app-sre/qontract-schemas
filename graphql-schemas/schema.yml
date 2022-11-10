@@ -1388,6 +1388,8 @@ confs:
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: cloudinit_configs, type: CloudinitConfig_v1, isList: true }
   - { name: variables, type: json }
+  - { name: overrides, type: json }
+  - { name: extra_tags, type: json }
   - { name: image, type: ASGImage_v1, isRequired: true, isList: true, isInterface: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
