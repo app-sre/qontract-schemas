@@ -179,6 +179,8 @@ properties:
     type: array
     items:
       "$ref": "/dependencies/dns-record-1.yml"
+  extra_tags:
+    type: object
 oneOf:
 - additionalProperties: false
   properties:
@@ -992,6 +994,13 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
+    overrides:
+      type: object
+      properties:
+        max_size:
+          type: integer
+        min_size:
+          type: integer
     cloudinit_configs:
       type: array
       items:
@@ -1006,6 +1015,8 @@ oneOf:
         required:
         - content
     variables:
+      type: object
+    extra_tags:
       type: object
     image:
       type: array
