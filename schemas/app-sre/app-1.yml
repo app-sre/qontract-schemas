@@ -293,6 +293,30 @@ properties:
           description: Include MRs from this repo in the AppSRE Review Queue
         url:
           type: string
+        gitlabSync:
+          type: object
+          properties:
+            sourceProject:
+              type: object
+              properties:
+                name: 
+                  type: string
+                group: 
+                  type: string
+                branch: 
+                  type: string
+            destinationProject:
+              type: object
+              properties:
+                name: 
+                  type: string
+                group: 
+                  type: string
+                branch: 
+                  type: string
+          required:
+          - sourceProject
+          - destinationProject
         gitlabRepoOwners:
           type: object
           properties:
