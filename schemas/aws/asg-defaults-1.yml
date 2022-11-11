@@ -26,6 +26,12 @@ properties:
     type: boolean
   max_instance_lifetime:
     type: integer
+  protect_from_scale_in:
+    type: boolean
+  enabled_metrics:
+    type: array
+    items:
+      type: string
   instances_distribution:
     type: object
     additionalProperties: false
