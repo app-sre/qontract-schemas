@@ -1027,7 +1027,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true, resolveResource: true }
   - { name: overrides, type: CNARDSInstanceOverrides_v1 }
 
 - name: CNARDSInstanceOverrides_v1
