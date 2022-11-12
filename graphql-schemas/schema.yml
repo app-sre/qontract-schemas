@@ -1006,12 +1006,12 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: aws_assume_role, type: CNAAssumeRoleAssetConfig_v1, isRequired: true }
+  - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: overrides, type: CNAAssumeRoleAssetOverrides_v1 }
 
-- name: CNAAssumeRoleAssetConfig_v1
+- name: CNAAssumeRoleAssetOverrides_v1
   fields:
   - { name: slug, type: string, isRequired: true }
-  - { name: account, type: AWSAccount_v1, isRequired: true }
 
 - name: CNANullAsset_v1
   interface: CNAsset_v1
@@ -1019,6 +1019,10 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string }
+  - { name: overrides, type: CNANullAssetOverrides_v1 }
+
+- name: CNANullAssetOverrides_v1
+  fields:
   - { name: addr_block, type: string }
 
 - name: CNARDSInstance_v1
