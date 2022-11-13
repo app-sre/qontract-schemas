@@ -1008,10 +1008,11 @@ confs:
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: overrides, type: CNAAssumeRoleAssetOverrides_v1 }
+  - { name: defaults, type: string, isRequired: true, isResource: true, resolveResource: true }
 
 - name: CNAAssumeRoleAssetOverrides_v1
   fields:
-  - { name: slug, type: string, isRequired: true }
+  - { name: slug, type: string }
 
 - name: CNANullAsset_v1
   interface: CNAsset_v1

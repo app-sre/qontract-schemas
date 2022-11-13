@@ -65,6 +65,8 @@ oneOf:
           type: string
       required:
       - slug
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
   required:
   - identifier
   - account
