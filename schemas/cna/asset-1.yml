@@ -69,7 +69,7 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
   required:
   - identifier
-  - account
+  - aws_account
 - additionalProperties: false
   properties:
     provider:
