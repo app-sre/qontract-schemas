@@ -860,6 +860,11 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
+- name: OpenShiftClusterManagerRecommendedVersionsWeight_v1 
+  fields:
+  - { name: majority, type: int }
+  - { name: highest, type: int }
+
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
@@ -872,6 +877,8 @@ confs:
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: recommendedVersion, type: string }
+  - { name: recommendedVersionWeight, type: OpenShiftClusterManagerRecommendedVersionsWeight_v1 }
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
