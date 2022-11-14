@@ -2143,6 +2143,7 @@ confs:
   - { name: takeover, type: boolean }
   - { name: deprecated, type: boolean }
   - { name: compare, type: boolean }
+  - { name: timeout, type: int }
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }

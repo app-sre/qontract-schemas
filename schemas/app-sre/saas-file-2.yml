@@ -116,6 +116,13 @@ properties:
     description: prevent updates to a saas file
   compare:
     type: boolean
+  timeout:
+    type: integer
+    minimum: 60
+    description: |
+      Maximum time (in minutes) the deployment job is allowed to last. In Tekton it defaults to
+      60 minutes.  We don't allow smaller times as Tekton implementation currently deletes
+      PipelineRun pods, hence destroying logs.
   publishJobLogs:
     type: boolean
   clusterAdmin:
