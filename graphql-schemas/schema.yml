@@ -1030,7 +1030,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: aws_account, type: AWSAccount_v1, isRequired: true }
   - { name: overrides, type: CNAAssumeRoleAssetOverrides_v1 }
   - { name: defaults, type: string, isRequired: true, isResource: true, resolveResource: true }
 
