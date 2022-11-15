@@ -2659,6 +2659,7 @@ confs:
 - name: IntegrationSpecLogs_v1
   fields:
   - { name: slack, type: boolean }
+  - { name: googleChat, type: boolean }
 
 - name: AWSShardSpecOverride_v1
   interface: IntegrationSpecShardSpecOverride_v1
