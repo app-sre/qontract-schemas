@@ -25,6 +25,19 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  recommendedVersion:
+    description: Recommended version for provisioning new clusters
+    type: string
+  recommendedVersionWeight:
+    type: object
+    additionalProperties: false
+    properties:
+      majority: 
+        description: most used version currently running that workload
+        type: number
+      highest:
+        description: highest version currently running that workload
+        type: number
   blockedVersions:
     description: "List of versions that will be rejected for upgrades. They can be regular expressions"
     type: array
