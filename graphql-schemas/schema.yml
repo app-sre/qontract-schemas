@@ -2155,6 +2155,7 @@ confs:
   - { name: takeover, type: boolean }
   - { name: deprecated, type: boolean }
   - { name: compare, type: boolean }
+  - { name: timeout, type: string }
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }
@@ -2663,6 +2664,7 @@ confs:
 - name: IntegrationSpecLogs_v1
   fields:
   - { name: slack, type: boolean }
+  - { name: googleChat, type: boolean }
 
 - name: AWSShardSpecOverride_v1
   interface: IntegrationSpecShardSpecOverride_v1
