@@ -793,7 +793,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isUnique: true, isSearchable: true, isRequired: true }
   - { name: description, type: string }
-  - { name: auth, type: ClusterAuth_v1, isInterface: true }
+  - { name: auth, type: ClusterAuth_v1, isInterface: true, isList: true, isRequired: true }
   - { name: observabilityNamespace, type: Namespace_v1 }
   - { name: grafanaUrl, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
