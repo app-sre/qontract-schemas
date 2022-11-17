@@ -107,5 +107,4 @@ properties:
     type: boolean
     description: |
       Indicates whether to apply changes immediately, or wait until the next maintenance window
-required:
-- "$schema"
+

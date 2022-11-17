@@ -10,5 +10,3 @@ properties:
     - /cna/aws-assume-role-config-1.yml
   slug:
     type: string
-required:
-- "$schema"
