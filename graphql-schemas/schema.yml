@@ -1016,6 +1016,7 @@ confs:
   - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
   - { name: enforceTwofactor, type: boolean }
+  - { name: type, type: string }
 
 - name: AWSGroup_v1
   fields:

@@ -32,6 +32,11 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   enforceTwofactor:
     type: boolean
+  type:
+    type: string
+    enum:
+    - standard
+    - enterprise
   terraformStateAccount:
     description: AWS Account to use for state in S3
     "$ref": "/common-1.json#/definitions/crossref"
