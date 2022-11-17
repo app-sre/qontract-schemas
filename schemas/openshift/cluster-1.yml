@@ -32,51 +32,49 @@ properties:
     type: string
     format: uri
   auth:
-    type: array
-    items:
-      type: object
-      properties:
+    type: object
+    properties:
+      service:
+        type: string
+        enum:
+        - github-org
+        - github-org-team
+        - oidc
+      org:
+        type: string
+      team:
+        type: string
+    oneOf:
+    - properties:
         service:
           type: string
           enum:
           - github-org
+        org:
+          type: string
+      required:
+      - service
+      - org
+    - properties:
+        service:
+          type: string
+          enum:
           - github-org-team
-          - oidc
         org:
           type: string
         team:
           type: string
-      oneOf:
-      - properties:
-          service:
-            type: string
-            enum:
-            - github-org
-          org:
-            type: string
-        required:
-        - service
-        - org
-      - properties:
-          service:
-            type: string
-            enum:
-            - github-org-team
-          org:
-            type: string
-          team:
-            type: string
-        required:
-        - service
-        - org
-        - team
-      - properties:
-          service:
-            type: string
-            enum:
-            - oidc
-        required:
-        - service
+      required:
+      - service
+      - org
+      - team
+    - properties:
+        service:
+          type: string
+          enum:
+          - oidc
+      required:
+      - service
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
