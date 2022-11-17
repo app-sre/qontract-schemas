@@ -15,18 +15,18 @@ properties:
     "$ref": "/common-1.json#/definitions/annotations"
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
-  addr_block:
+  name:
     type: string
   aws_account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
-  vpc:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/aws/vpc-1.yml"
   defaults:
-    type: string
+    "$ref": "/common-1.json#/definitions/crossref"
   overrides:
-    type: object
+    oneOf:
+      - "$ref": "/cna/null-asset-config-1.yml"
+      - "$ref": "/cna/aws-assume-role-config-1.yml"
+      - "$ref": "/cna/aws-rds-config-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -38,12 +38,11 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     description:
       type: string
+    defaults:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/null-asset-config-1.yml"
     overrides:
-      type: object
-      additionalProperties: false
-      properties:
-        addr_block:
-          type: string
+      "$ref": "/cna/null-asset-config-1.yml"
   required:
   - identifier
 - additionalProperties: false
@@ -57,16 +56,11 @@ oneOf:
     aws_account:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/account-1.yml"
-    overrides:
-      type: object
-      additionalProperties: false
-      properties:
-        slug:
-          type: string
-      required:
-      - slug
     defaults:
-      "$ref": "/common-1.json#/definitions/resourceref"
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/aws-assume-role-config-1.yml"
+    overrides:
+      "$ref": "/cna/aws-assume-role-config-1.yml"
   required:
   - identifier
   - aws_account
@@ -78,73 +72,17 @@ oneOf:
       - aws-rds
     identifier:
       type: string
-    vpc:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/aws/vpc-1.yml"
+      description: The name for the CNA
+    name:
+      type: string
+      description: |
+        The identifier for the RDS instance.
+        Defaults to the `identifier` field
     defaults:
-      "$ref": "/common-1.json#/definitions/resourceref"
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/aws-rds-config-1.yml"
     overrides:
-      type: object
-      properties:
-        name:
-          type: string
-        engine:
-          type: string
-          enum:
-          - postgres
-        engine_version:
-          type: string
-        username:
-          type: string
-        instance_class:
-          type: string
-          enum:
-          - db.t2.micro
-          - db.t2.small
-          - db.t3.small
-          - db.m3.medium
-          - db.t3.medium
-          - db.m4.large
-          - db.m4.xlarge
-          - db.m4.2xlarge
-          - db.m5.large
-          - db.m5.xlarge
-          - db.m5.2xlarge
-          - db.m5.4xlarge
-          - db.m5.8xlarge
-          - db.m5.12xlarge
-          - db.m5.16xlarge
-          - db.m5.24xlarge
-          - db.m6g.large
-          - db.m6g.xlarge
-          - db.m6g.2xlarge
-          - db.m6g.4xlarge
-          - db.m6g.8xlarge
-          - db.m6g.12xlarge
-          - db.m6g.16xlarge
-          - db.r4.large
-          - db.r4.xlarge
-          - db.r4.2xlarge
-          - db.r4.4xlarge
-          - db.r4.8xlarge
-          - db.r4.16xlarge
-          - db.r5.large
-          - db.r5.xlarge
-          - db.r5.2xlarge
-          - db.r5.4xlarge
-          - db.r5.8xlarge
-          - db.r5.12xlarge
-          - db.r5.16xlarge
-          - db.r5.24xlarge
-        allocated_storage:
-          type: integer
-        max_allocated_storage:
-          type: integer
-        backup_retention_period:
-          type: integer
-        db_subnet_group_name:
-          type: string
+      "$ref": "/cna/aws-rds-config-1.yml"
   required:
   - identifier
-  - vpc
   - defaults

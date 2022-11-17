@@ -1031,10 +1031,10 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: aws_account, type: AWSAccount_v1, isRequired: true }
-  - { name: overrides, type: CNAAssumeRoleAssetOverrides_v1 }
-  - { name: defaults, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: defaults, type: CNAAssumeRoleAssetConfig_v1 }
+  - { name: overrides, type: CNAAssumeRoleAssetConfig_v1 }
 
-- name: CNAAssumeRoleAssetOverrides_v1
+- name: CNAAssumeRoleAssetConfig_v1
   fields:
   - { name: slug, type: string }
 
@@ -1044,9 +1044,10 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string }
-  - { name: overrides, type: CNANullAssetOverrides_v1 }
+  - { name: defaults, type: CNANullAssetConfig_v1 }
+  - { name: overrides, type: CNANullAssetConfig_v1 }
 
-- name: CNANullAssetOverrides_v1
+- name: CNANullAssetConfig_v1
   fields:
   - { name: addr_block, type: string }
 
@@ -1055,21 +1056,28 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: vpc, type: AWSVPC_v1, isRequired: true }
-  - { name: defaults, type: string, isRequired: true, isResource: true, resolveResource: true }
-  - { name: overrides, type: CNARDSInstanceOverrides_v1 }
-
-- name: CNARDSInstanceOverrides_v1
-  fields:
   - { name: name, type: string }
-  - { name: engine, type: string }
-  - { name: engine_version, type: string }
-  - { name: username, type: string }
+  - { name: defaults, type: CNARDSInstanceConfig_v1 }
+  - { name: overrides, type: CNARDSInstanceConfig_v1 }
+
+- name: CNARDSInstanceConfig_v1
+  fields:
+  - { name: vpc, type: AWSVPC_v1 }
+  - { name: db_subnet_group_name, type: string }
   - { name: instance_class, type: string }
   - { name: allocated_storage, type: int }
   - { name: max_allocated_storage, type: int }
+  - { name: engine, type: string }
+  - { name: engine_version, type: string }
+  - { name: major_engine_version, type: string}
+  - { name: username, type: string }
+  - { name: maintenance_window, type: string }
   - { name: backup_retention_period, type: int }
-  - { name: db_subnet_group_name, type: string }
+  - { name: backup_window, type: string }
+  - { name: multi_az, type: boolean }
+  - { name: deletion_protection, type: boolean }
+  - { name: apply_immediately, type: boolean }
+
 
 - name: CloudflareAccount_v1
   interface: ExternalResourcesProvisioner_v1
