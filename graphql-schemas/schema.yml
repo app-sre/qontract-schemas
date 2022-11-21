@@ -859,11 +859,18 @@ confs:
   - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: dependencies, type: OpenShiftClusterManagerSectorDependencies_v1, isList: true }
 
+- name: OpenShiftClusterManagerUpgradePolicyTemplate_v1
+  fields:
+  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: type, type: string }
+  - { name: variables, type: json }
+
 - name: OpenShiftClusterManagerUpgradePolicyDefault_v1
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: matchLabels, type: json, isRequired: true }
-  - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
+  - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
+  - { name: upgradePolicyTemplate, type: OpenShiftClusterManagerUpgradePolicyTemplate_v1 }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:

@@ -109,10 +109,29 @@ properties:
             type: string
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
-      required:
-      - name
-      - matchLabels
-      - upgradePolicy
+        upgradePolicyTemplate:
+          type: object
+          properties:
+            path:
+              "$ref": "/common-1.json#/definitions/resourceref"
+            type:
+              type: string
+              enum:
+              - jinja2
+              - extracurlyjinja2
+            variables:
+              type: object
+          required:
+          - path
+      oneOf:
+      - required:
+        - name
+        - matchLabels
+        - upgradePolicy
+      - required:
+        - name
+        - matchLabels
+        - upgradePolicyTemplate
   upgradePolicyClusters:
     description: List of clusters to define upgrade policies for (no cluster management in such OCM orgs)
     type: array
