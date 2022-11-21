@@ -33,6 +33,13 @@ properties:
           can be held by only one cluster at a time.
         items:
           type: string
+      sector:
+        type: string
+        description: |
+          The sector which the cluster is part of. Sector dependencies are
+          defined in openshift-cluster-manager-1.yml. A cluster will be
+          upgraded to a version only if clusters in previous sectors are
+          running that version or higher.
     oneOf:
     - required:
       - soakDays

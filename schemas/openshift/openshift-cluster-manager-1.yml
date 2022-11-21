@@ -65,6 +65,33 @@ properties:
     type: array
     items:
       type: string
+  sectors:
+    description: List of allowed deployment sectors and their dependencies
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: sector name
+          type: string
+        dependencies:
+          description: list of sectors this one is depending on
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                description: sector name
+                type: string
+              ocm:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+            required:
+            - name
+      required:
+      - name
   upgradePolicyDefaults:
     description: List of default upgrade policies to apply to clusters by external configuration labels
     type: array
