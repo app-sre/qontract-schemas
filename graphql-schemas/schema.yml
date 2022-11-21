@@ -2223,7 +2223,8 @@ confs:
 - name: SaasResourceTemplateTarget_v2
   datafile: /app-sre/saas-file-target-1.yml
   fields:
-  - { name: path, type: string }
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isContextUnique: true }
   - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
   - { name: ref, type: string, isRequired: true }
