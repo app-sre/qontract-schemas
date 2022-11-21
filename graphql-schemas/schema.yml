@@ -2218,13 +2218,50 @@ confs:
   - { name: hash_length, type: int }
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
-  - { name: targets, type: SaasResourceTemplateTarget_v2, isRequired: true, isList: true }
+  - { name: targets, type: SaasResourceTemplateTarget_v2, isRequired: true, isList: true, isInterface: true }
 
 - name: SaasResourceTemplateTarget_v2
   datafile: /app-sre/saas-file-target-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: schema
+    fieldMap:
+      '/app-sre/saas-file-target-1.yml': SaasResourceTemplateTargetReference_v2
+      null: SaasResourceTemplateTargetInline_v2
+  fields:
+  - { name: name, type: string, isContextUnique: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
+  - { name: ref, type: string, isRequired: true }
+  - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
+  - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
+  - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+  - { name: image, type: SaasResourceTemplateTargetImage_v1 }
+  - { name: disable, type: boolean }
+  - { name: delete, type: boolean }
+
+- name: SaasResourceTemplateTargetReference_v2
+  interface: SaasResourceTemplateTarget_v2
   fields:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isContextUnique: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
+  - { name: ref, type: string, isRequired: true }
+  - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
+  - { name: parameters, type: json }
+  - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
+  - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+  - { name: image, type: SaasResourceTemplateTargetImage_v1 }
+  - { name: disable, type: boolean }
+  - { name: delete, type: boolean }
+
+- name: SaasResourceTemplateTargetInline_v2
+  interface: SaasResourceTemplateTarget_v2
+  fields:
+  - { name: path, type: string }
+  - { name: schema, type: string }
   - { name: name, type: string, isContextUnique: true }
   - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
   - { name: ref, type: string, isRequired: true }
