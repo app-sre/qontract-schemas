@@ -15,13 +15,14 @@ properties:
     type: string
     enum:
       - per-aws-account
-  awsAccount:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/aws/account-1.yml"
+  awsAccounts:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
   imageRef:
     type: string
 
 required:
-- awsAccount
+- awsAccounts
 - imageRef
-
