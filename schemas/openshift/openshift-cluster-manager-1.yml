@@ -96,39 +96,44 @@ properties:
     description: List of default upgrade policies to apply to clusters by external configuration labels
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          description: upgrade policy name
-          type: string
-        matchLabels:
-          description: external configuration labels to select default upgrade policy by
-          type: object
-          additionalProperties:
-            type: string
-        upgradePolicy:
-          "$ref": "/openshift/cluster-upgrade-policy-1.yml"
-        upgradePolicyTemplate:
-          type: object
-          properties:
-            path:
-              "$ref": "/common-1.json#/definitions/resourceref"
-            type:
-              type: string
-              enum:
-              - jinja2
-              - extracurlyjinja2
-            variables:
-              type: object
-          required:
-          - path
       oneOf:
-      - required:
+      - additionalProperties: false
+        properties:
+          name:
+            type: string
+          matchLabels:
+            type: object
+            additionalProperties:
+              type: string
+          upgradePolicy:
+            "$ref": "/openshift/cluster-upgrade-policy-1.yml"
+        required:
         - name
         - matchLabels
         - upgradePolicy
-      - required:
+      - additionalProperties: false
+        properties:
+          name:
+            type: string
+          matchLabels:
+            type: object
+            additionalProperties:
+              type: string
+          upgradePolicyTemplate:
+            type: object
+            properties:
+              path:
+                "$ref": "/common-1.json#/definitions/resourceref"
+              type:
+                type: string
+                enum:
+                - jinja2
+                - extracurlyjinja2
+              variables:
+                type: object
+            required:
+            - path
+        required:
         - name
         - matchLabels
         - upgradePolicyTemplate
