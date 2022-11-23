@@ -12,7 +12,6 @@ confs:
   - { name: repoUrl, type: string, isRequired: true }
   - { name: vault, type: boolean, isRequired: true }
   - { name: kubeBinary, type: string, isRequired: true }
-  - { name: pullRequestGateway, type: string }
   - { name: mergeRequestGateway, type: string }
   - { name: saasDeployJobTemplate, type: string, isRequired: true }
   - { name: hashLength, type: int, isRequired: true }
