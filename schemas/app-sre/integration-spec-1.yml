@@ -84,6 +84,8 @@ properties:
         description: ship logs to google chat
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
+  fluentdResources:
+    "$ref": "/openshift/deploy-resources-1.yml"
   shards:
     type: integer
     description: number of shards to run integration with
