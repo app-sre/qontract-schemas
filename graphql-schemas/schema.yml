@@ -1031,7 +1031,7 @@ confs:
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: aws_account, type: AWSAccount_v1, isRequired: true }
   - { name: defaults, type: CNAAssumeRoleAssetConfig_v1 }
-  - { name: overrides, type: CNAAssumeRoleAssetConfig_v1 }
+  - { name: overrides, type: json }
 
 - name: CNAAssumeRoleAssetConfig_v1
   fields:
@@ -1044,7 +1044,7 @@ confs:
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string }
   - { name: defaults, type: CNANullAssetConfig_v1 }
-  - { name: overrides, type: CNANullAssetConfig_v1 }
+  - { name: overrides, type: json }
 
 - name: CNANullAssetConfig_v1
   fields:
@@ -1056,19 +1056,18 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: name, type: string }
-  - { name: defaults, type: CNARDSInstanceConfig_v1 }
-  - { name: overrides, type: CNARDSInstanceConfig_v1 }
+  - { name: defaults, type: CNARDSInstanceDefaults_v1 }
+  - { name: overrides, type: json }
 
-- name: CNARDSInstanceConfig_v1
+- name: CNARDSInstanceDefaults_v1
   fields:
-  - { name: vpc, type: AWSVPC_v1 }
-  - { name: db_subnet_group_name, type: string }
-  - { name: instance_class, type: string }
-  - { name: allocated_storage, type: int }
-  - { name: max_allocated_storage, type: int }
-  - { name: engine, type: string }
-  - { name: engine_version, type: string }
-  - { name: major_engine_version, type: string}
+  - { name: vpc, type: AWSVPC_v1, isRequired: true }
+  - { name: db_subnet_group_name, type: string, isRequired: true }
+  - { name: instance_class, type: string, isRequired: true }
+  - { name: allocated_storage, type: int, isRequired: true }
+  - { name: max_allocated_storage, type: int, isRequired: true }
+  - { name: engine, type: string, isRequired: true }
+  - { name: engine_version, type: string, isRequired: true }
   - { name: username, type: string }
   - { name: maintenance_window, type: string }
   - { name: backup_retention_period, type: int }
