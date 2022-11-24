@@ -96,23 +96,47 @@ properties:
     description: List of default upgrade policies to apply to clusters by external configuration labels
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          description: upgrade policy name
-          type: string
-        matchLabels:
-          description: external configuration labels to select default upgrade policy by
-          type: object
-          additionalProperties:
+      oneOf:
+      - additionalProperties: false
+        properties:
+          name:
             type: string
-        upgradePolicy:
-          "$ref": "/openshift/cluster-upgrade-policy-1.yml"
-      required:
-      - name
-      - matchLabels
-      - upgradePolicy
+          matchLabels:
+            type: object
+            additionalProperties:
+              type: string
+          upgradePolicy:
+            "$ref": "/openshift/cluster-upgrade-policy-1.yml"
+        required:
+        - name
+        - matchLabels
+        - upgradePolicy
+      - additionalProperties: false
+        properties:
+          name:
+            type: string
+          matchLabels:
+            type: object
+            additionalProperties:
+              type: string
+          upgradePolicyTemplate:
+            type: object
+            properties:
+              path:
+                "$ref": "/common-1.json#/definitions/resourceref"
+              type:
+                type: string
+                enum:
+                - jinja2
+                - extracurlyjinja2
+              variables:
+                type: object
+            required:
+            - path
+        required:
+        - name
+        - matchLabels
+        - upgradePolicyTemplate
   upgradePolicyClusters:
     description: List of clusters to define upgrade policies for (no cluster management in such OCM orgs)
     type: array
