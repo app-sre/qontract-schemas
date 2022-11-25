@@ -152,6 +152,18 @@ properties:
       required:
       - name
       - upgradePolicy
+  inheritVersionData:
+    description: list of OCM organizations from which we will retrieve cluster version informations (current versions stats, soak days, sectors, ..).
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": /openshift/openshift-cluster-manager-1.yml
+  publishVersionData:
+    description: list of OCM organizations to which we will publish cluster version informations (current versions stats, soak days, sectors, ..)
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": /openshift/openshift-cluster-manager-1.yml
 dependencies:
   upgradePolicyDefaults:
   - upgradePolicyClusters
