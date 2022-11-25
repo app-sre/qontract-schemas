@@ -3313,13 +3313,20 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: changeSchema, type: string }
-  - { name: jsonPathSelectors, type: string, isList: true, isRequired: true }
+  - { name: jsonPathSelectors, type: string, isList: true }
+  - { name: jsonPathSelectorTemplates, type: ChangeTypeChangeDetectorJsonPathSelectorTemplate_v1, isList: true }
   - { name: context, type: ChangeTypeChangeDetectorContextSelector_v1 }
+
+- name: ChangeTypeChangeDetectorJsonPathSelectorTemplate_v1
+  fields:
+  - { name: var, type: string, isRequired: true }
+  - { name: items, type: string, isRequired: true }
+  - { name: template, type: string, isRequired: true }
 
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:
   - { name: selector, type: string, isRequired: true }
-  - { name: when, type: "string" }
+  - { name: when, type: string }
 
 - name: RosaOcmSpec_v1
   fields:
