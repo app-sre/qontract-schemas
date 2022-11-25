@@ -15,8 +15,15 @@ properties:
     "$ref": "/common-1.json#/definitions/annotations"
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
-  addr_block:
+  name:
     type: string
+  aws_account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  defaults:
+    "$ref": "/common-1.json#/definitions/crossref"
+  overrides:
+    type: object
 oneOf:
 - additionalProperties: false
   properties:
@@ -28,7 +35,93 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     description:
       type: string
-    addr_block:
-      type: string
+    defaults:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/null-asset-config-1.yml"
+    overrides:
+      "$ref": "/cna/null-asset-config-1.yml"
   required:
   - identifier
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - aws-assume-role
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    aws_account:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+    defaults:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/aws-assume-role-config-1.yml"
+    overrides:
+      "$ref": "/cna/aws-assume-role-config-1.yml"
+  required:
+  - identifier
+  - aws_account
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - aws-rds
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+      description: The name for the CNA
+    name:
+      type: string
+      description: |
+        The identifier for the RDS instance.
+        Defaults to the `identifier` field
+    defaults:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cna/aws-rds-config-1.yml"
+    overrides:
+      type: object
+      additionalProperties: false
+      properties:
+        db_subnet_group_name:
+          type: string
+        instance_class:
+          "$ref": "/common-1.json#/definitions/rdsDbInstanceClass"
+        allocated_storage:
+          type: integer
+          description: allocated storage in Gi
+        max_allocated_storage:
+          type: integer
+          description: max allocated storage in Gi
+        engine_version:
+          type: string
+          description: The engine version to use
+        username:
+          type: string
+        maintenance_window:
+          type: string
+          description: |
+            The window to perform maintenance in.
+            Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'
+        backup_retention_period:
+          type: integer
+          description: The days to retain backups for
+        backup_window:
+          type: string
+          description: |
+            The daily time range (in UTC) during which automated backups are created if they are enabled.
+            Example: '09:46-10:16'
+            Must not overlap with maintenance_window
+        multi_az:
+          type: boolean
+          description: |
+            Whether to use a multi-az configuration that includes a standby instance to improve
+            availability when a failover is required (certain upgrades, instance hardware issues, etc.)
+        deletion_protection:
+          type: boolean
+          description:
+            Protect against deletion. Defaults to true.
+        apply_immediately:
+          type: boolean
+  required:
+  - identifier
+  - defaults
