@@ -63,6 +63,10 @@ properties:
     type: boolean
     description: |
       Indicates whether to apply changes immediately, or wait until the next maintenance window
+  is_production:
+    type: boolean
+    description: |
+      Set production defaults on optional values if true.
 required:
 - "$schema"
 - vpc
@@ -72,3 +76,4 @@ required:
 - max_allocated_storage
 - engine
 - engine_version
+- is_production
