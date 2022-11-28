@@ -3006,7 +3006,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
-  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
 
 - name: GlitchtipProjectsReference_v1
   datafile: /dependencies/glitchtip-project-1.yml
