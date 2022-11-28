@@ -1886,6 +1886,13 @@ confs:
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: sharedResources
 
 - name: Namespace_v1
   datafile: /openshift/namespace-1.yml
@@ -3014,6 +3021,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /openshift/namespace-1.yml
+      subAttr: glitchtipProjects
+  - name: sharedResources
+    type: SharedResources_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/shared-resources-1.yml
       subAttr: glitchtipProjects
 
 - name: GlitchtipProjectsReference_v1
