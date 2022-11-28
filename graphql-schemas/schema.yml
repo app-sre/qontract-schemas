@@ -1886,6 +1886,13 @@ confs:
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: sharedResources
 
 - name: Namespace_v1
   datafile: /openshift/namespace-1.yml
@@ -2928,6 +2935,7 @@ confs:
   - { name: glitchtip_instances_v1, type: GlitchtipInstance_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-instance-1.yml }
   - { name: glitchtip_organizations_v1, type: GlitchtipOrganization_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-organization-1.yml }
   - { name: glitchtip_teams_v1, type: GlitchtipTeam_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-team-1.yml }
+  - { name: glitchtip_projects_v1, type: GlitchtipProjects_v1, isList: true, datafileSchema: /dependencies/glitchtip-project-1.yml }
   - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
   - { name: query_validations_v1, type: QueryValidation_v1, isList: true, datafileSchema: /app-interface/query-validation-1.yml }
   - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
@@ -3001,18 +3009,29 @@ confs:
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
 
 - name: GlitchtipProjects_v1
-  fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: description, type: string, isRequired: true }
-  - { name: platform, type: string, isRequired: true }
-  - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
-  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
-
-- name: GlitchtipProjectsReference_v1
   datafile: /dependencies/glitchtip-project-1.yml
   fields:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: platform, type: string, isRequired: true }
+  - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: glitchtipProjects
+  - name: sharedResources
+    type: SharedResources_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/shared-resources-1.yml
+      subAttr: glitchtipProjects
 
 - name: SentryTeam_v1
   fields:
