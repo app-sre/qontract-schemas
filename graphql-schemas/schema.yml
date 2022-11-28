@@ -2124,7 +2124,6 @@ confs:
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: sentryProjects, type: AppSentryProjects_v1, isList: true }
-  - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: statusPageComponents, type: StatusPageComponent_v1, isList: true }
   - name: namespaces
     type: Namespace_v1
@@ -2161,6 +2160,12 @@ confs:
     isList: true
     synthetic:
       schema: /app-sre/slo-document-1.yml
+      subAttr: app
+  - name: glitchtipProjects
+    type: GlitchtipProjects_v1
+    isList: true
+    synthetic:
+      schema: /dependencies/glitchtip-project-1.yml
       subAttr: app
 
 - name: SaasFile_v2
@@ -3015,6 +3020,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
+  - { name: app, type: App_v1, isRequired: true }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
