@@ -3008,6 +3008,13 @@ confs:
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: glitchtipProjects
 
 - name: GlitchtipProjectsReference_v1
   datafile: /dependencies/glitchtip-project-1.yml
