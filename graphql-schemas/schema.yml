@@ -2877,78 +2877,6 @@ confs:
   - { name: date, type: string, isRequired: true }
   - { name: acceptanceCriteria, type: AcceptanceCriteriaItem_v1, isRequired: true, isList: true }
 
-- name: Query
-  fields:
-  - { name: app_interface_settings_v1, type: AppInterfaceSettings_v1, isList: true, datafileSchema: /app-interface/app-interface-settings-1.yml }
-  - { name: app_interface_emails_v1, type: AppInterfaceEmail_v1, isList: true, datafileSchema: /app-interface/app-interface-email-1.yml }
-  - { name: app_interface_slack_notifications_v1, type: AppInterfaceSlackNotification_v1,
-      isList: true,
-      datafileSchema: /app-interface/app-interface-slack-notification-1.yml }
-  - { name: credentials_requests_v1, type: CredentialsRequest_v1, isList: true, datafileSchema: /app-interface/credentials-request-1.yml }
-  - { name: users_v1, type: User_v1, isList: true, datafileSchema: /access/user-1.yml }
-  - { name: external_users_v1, type: ExternalUser_v1, isList: true, datafileSchema: /access/external-user-1.yml }
-  - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
-  - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
-  - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
-  - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
-  - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
-  - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
-  - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
-  - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
-  - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
-  - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
-  - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
-  - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
-  - { name: quay_orgs_v1, type: QuayOrg_v1, isList: true, datafileSchema: /dependencies/quay-org-1.yml }
-  - { name: quay_instances_v1, type: QuayInstance_v1, isList: true, datafileSchema: /dependencies/quay-instance-1.yml }
-  - { name: jenkins_instances_v1, type: JenkinsInstance_v1, isList: true, datafileSchema: /dependencies/jenkins-instance-1.yml }
-  - { name: jenkins_configs_v1, type: JenkinsConfig_v1, isList: true, datafileSchema: /dependencies/jenkins-config-1.yml }
-  - { name: jira_servers_v1, type: JiraServer_v1, isList: true, datafileSchema: /dependencies/jira-server-1.yml }
-  - { name: jira_boards_v1, type: JiraBoard_v1, isList: true, datafileSchema: /dependencies/jira-board-1.yml }
-  - { name: sendgrid_accounts_v1, type: SendGridAccount_v1, isList: true, datafileSchema: /dependencies/sendgrid-account-1.yml }
-  - { name: products_v1, type: Product_v1, isList: true, datafileSchema: /app-sre/product-1.yml }
-  - { name: environments_v1, type: Environment_v1, isList: true, datafileSchema: /app-sre/environment-1.yml }
-  - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
-  - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
-  - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
-  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
-  - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
-  - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
-  - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
-  - { name: vault_roles_v1, type: VaultRole_v1, isList: true, datafileSchema: /vault-config/role-1.yml }
-  - { name: vault_policies_v1, type: VaultPolicy_v1, isList: true, datafileSchema: /vault-config/policy-1.yml }
-  - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
-  - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
-  - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
-  - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
-  - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
-  - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
-  - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
-  - { name: sentry_instances_v1, type: SentryInstance_v1, isList: true, datafileSchema: /dependencies/sentry-instance-1.yml }
-  - { name: glitchtip_instances_v1, type: GlitchtipInstance_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-instance-1.yml }
-  - { name: glitchtip_organizations_v1, type: GlitchtipOrganization_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-organization-1.yml }
-  - { name: glitchtip_teams_v1, type: GlitchtipTeam_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-team-1.yml }
-  - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
-  - { name: query_validations_v1, type: QueryValidation_v1, isList: true, datafileSchema: /app-interface/query-validation-1.yml }
-  - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
-  - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
-  - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }
-  - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
-  - { name: template_tests_v1, type: TemplateTest_v1, isList: true, datafileSchema: /app-interface/template-test-1.yml }
-  - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
-  - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
-  - { name: ocp_release_mirror_v1, type: OcpReleaseMirror_v1, isList: true, datafileSchema: /dependencies/ocp-release-mirror-1.yml}
-  - { name: slo_document_v1, type: SLODocument_v1, isList: true, datafileSchema: /app-sre/slo-document-1.yml}
-  - { name: shared_resources_v1, type: SharedResources_v1, isList: true, datafileSchema: /openshift/shared-resources-1.yml }
-  - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
-  - { name: ocm_instances_v1, type: OpenShiftClusterManager_v1, isList: true, datafileSchema: /openshift/openshift-cluster-manager-1.yml }
-  - { name: dyn_traffic_directors_v1, type: DynTrafficDirector_v1, isList: true, datafileSchema: /dependencies/dyn-traffic-director-1.yml }
-  - { name: status_page_v1, type: StatusPage_v1, isList: true, datafileSchema: /dependencies/status-page-1.yml }
-  - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
-  - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
-  - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
-  - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
-
 - name: GlitchtipInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3347,3 +3275,78 @@ confs:
   - { name: support_role_arn, type: string, isRequired: true}
   - { name: controlplane_role_arn, type: string, isRequired: true}
   - { name: worker_role_arn, type: string, isRequired: true}
+
+# keep this section last
+- name: Query
+  fields:
+  - { name: app_interface_settings_v1, type: AppInterfaceSettings_v1, isList: true, datafileSchema: /app-interface/app-interface-settings-1.yml }
+  - { name: app_interface_emails_v1, type: AppInterfaceEmail_v1, isList: true, datafileSchema: /app-interface/app-interface-email-1.yml }
+  - { name: app_interface_slack_notifications_v1, type: AppInterfaceSlackNotification_v1,
+      isList: true,
+      datafileSchema: /app-interface/app-interface-slack-notification-1.yml }
+  - { name: credentials_requests_v1, type: CredentialsRequest_v1, isList: true, datafileSchema: /app-interface/credentials-request-1.yml }
+  - { name: users_v1, type: User_v1, isList: true, datafileSchema: /access/user-1.yml }
+  - { name: external_users_v1, type: ExternalUser_v1, isList: true, datafileSchema: /access/external-user-1.yml }
+  - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
+  - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
+  - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
+  - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
+  - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
+  - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
+  - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
+  - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
+  - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
+  - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
+  - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
+  - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
+  - { name: quay_orgs_v1, type: QuayOrg_v1, isList: true, datafileSchema: /dependencies/quay-org-1.yml }
+  - { name: quay_instances_v1, type: QuayInstance_v1, isList: true, datafileSchema: /dependencies/quay-instance-1.yml }
+  - { name: jenkins_instances_v1, type: JenkinsInstance_v1, isList: true, datafileSchema: /dependencies/jenkins-instance-1.yml }
+  - { name: jenkins_configs_v1, type: JenkinsConfig_v1, isList: true, datafileSchema: /dependencies/jenkins-config-1.yml }
+  - { name: jira_servers_v1, type: JiraServer_v1, isList: true, datafileSchema: /dependencies/jira-server-1.yml }
+  - { name: jira_boards_v1, type: JiraBoard_v1, isList: true, datafileSchema: /dependencies/jira-board-1.yml }
+  - { name: sendgrid_accounts_v1, type: SendGridAccount_v1, isList: true, datafileSchema: /dependencies/sendgrid-account-1.yml }
+  - { name: products_v1, type: Product_v1, isList: true, datafileSchema: /app-sre/product-1.yml }
+  - { name: environments_v1, type: Environment_v1, isList: true, datafileSchema: /app-sre/environment-1.yml }
+  - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
+  - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
+  - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
+  - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
+  - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
+  - { name: vault_auth_backends_v1, type: VaultAuth_v1, isList: true, datafileSchema: /vault-config/auth-1.yml }
+  - { name: vault_secret_engines_v1, type: VaultSecretEngine_v1, isList: true, datafileSchema: /vault-config/secret-engine-1.yml }
+  - { name: vault_roles_v1, type: VaultRole_v1, isList: true, datafileSchema: /vault-config/role-1.yml }
+  - { name: vault_policies_v1, type: VaultPolicy_v1, isList: true, datafileSchema: /vault-config/policy-1.yml }
+  - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
+  - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
+  - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
+  - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
+  - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
+  - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
+  - { name: sentry_teams_v1, type: SentryTeam_v1, isList: true, datafileSchema: /dependencies/sentry-team-1.yml }
+  - { name: sentry_instances_v1, type: SentryInstance_v1, isList: true, datafileSchema: /dependencies/sentry-instance-1.yml }
+  - { name: glitchtip_instances_v1, type: GlitchtipInstance_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-instance-1.yml }
+  - { name: glitchtip_organizations_v1, type: GlitchtipOrganization_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-organization-1.yml }
+  - { name: glitchtip_teams_v1, type: GlitchtipTeam_v1, isList: true, isRequired: true, datafileSchema: /dependencies/glitchtip-team-1.yml }
+  - { name: app_interface_sql_queries_v1, type: AppInterfaceSqlQuery_v1, isList: true, datafileSchema: /app-interface/app-interface-sql-query-1.yml }
+  - { name: query_validations_v1, type: QueryValidation_v1, isList: true, datafileSchema: /app-interface/query-validation-1.yml }
+  - { name: saas_files_v2, type: SaasFile_v2, isList: true, datafileSchema: /app-sre/saas-file-2.yml }
+  - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
+  - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }
+  - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
+  - { name: template_tests_v1, type: TemplateTest_v1, isList: true, datafileSchema: /app-interface/template-test-1.yml }
+  - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
+  - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
+  - { name: ocp_release_mirror_v1, type: OcpReleaseMirror_v1, isList: true, datafileSchema: /dependencies/ocp-release-mirror-1.yml}
+  - { name: slo_document_v1, type: SLODocument_v1, isList: true, datafileSchema: /app-sre/slo-document-1.yml}
+  - { name: shared_resources_v1, type: SharedResources_v1, isList: true, datafileSchema: /openshift/shared-resources-1.yml }
+  - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
+  - { name: ocm_instances_v1, type: OpenShiftClusterManager_v1, isList: true, datafileSchema: /openshift/openshift-cluster-manager-1.yml }
+  - { name: dyn_traffic_directors_v1, type: DynTrafficDirector_v1, isList: true, datafileSchema: /dependencies/dyn-traffic-director-1.yml }
+  - { name: status_page_v1, type: StatusPage_v1, isList: true, datafileSchema: /dependencies/status-page-1.yml }
+  - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
+  - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
+  - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
+  - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
+
+# nothing below this section
