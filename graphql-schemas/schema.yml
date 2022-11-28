@@ -1885,6 +1885,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
+  - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
 
 - name: Namespace_v1
   datafile: /openshift/namespace-1.yml
@@ -1912,6 +1913,7 @@ confs:
   - { name: managedExternalResources, type: boolean }
   - { name: externalResources, type: NamespaceExternalResource_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
+  - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
 
 - name: Owner_v1
