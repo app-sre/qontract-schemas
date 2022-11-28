@@ -3008,6 +3008,11 @@ confs:
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
 
+- name: GlitchtipProjectsReference_v1
+  datafile: /dependencies/glitchtip-project-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
 
 - name: SentryTeam_v1
   fields:
