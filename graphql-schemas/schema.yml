@@ -3009,7 +3009,10 @@ confs:
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
 
 - name: GlitchtipProjects_v1
+  datafile: /dependencies/glitchtip-project-1.yml
   fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: platform, type: string, isRequired: true }
@@ -3029,12 +3032,6 @@ confs:
     synthetic:
       schema: /openshift/shared-resources-1.yml
       subAttr: glitchtipProjects
-
-- name: GlitchtipProjectsReference_v1
-  datafile: /dependencies/glitchtip-project-1.yml
-  fields:
-  - { name: path, type: string, isRequired: true }
-  - { name: schema, type: string, isRequired: true }
 
 - name: SentryTeam_v1
   fields:

@@ -467,12 +467,8 @@ properties:
   glitchtipProjects:
     type: array
     items:
-      oneOf:
-      # inline
-      - "$ref": "/dependencies/glitchtip-project-1.yml"
-      # referenced
-      - "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/dependencies/glitchtip-project-1.yml"
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/glitchtip-project-1.yml"
 
 required:
 - "$schema"
