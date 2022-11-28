@@ -15,6 +15,9 @@ properties:
     "$ref": "/common-1.json#/definitions/identifierLowercase64"
   description:
     type: string
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
   platform:
     type: string
     enum:
@@ -80,6 +83,7 @@ properties:
 required:
 - name
 - description
+- app
 - platform
 - teams
 - organization
