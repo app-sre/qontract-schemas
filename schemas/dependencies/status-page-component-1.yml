@@ -13,6 +13,9 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
   displayName:
     type: string
   description:
@@ -36,6 +39,7 @@ required:
 - "$schema"
 - labels
 - name
+- app
 - displayName
 - instructions
 - page
