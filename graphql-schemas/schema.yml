@@ -2124,7 +2124,12 @@ confs:
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: sentryProjects, type: AppSentryProjects_v1, isList: true }
-  - { name: statusPageComponents, type: StatusPageComponent_v1, isList: true }
+  - name: statusPageComponents
+    type: StatusPageComponent_v1
+    isList: true
+    synthetic:
+      schema: /dependencies/status-page-component-1.yml
+      subAttr: app
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -3200,23 +3205,19 @@ confs:
       subAttr: page
 
 - name: StatusPageComponent_v1
+  datafile: /dependencies/status-page-component-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: app, type: App_v1, isRequired: true }
   - { name: displayName, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: instructions, type: string, isRequired: true }
   - { name: page, type: StatusPage_v1, isRequired: true }
   - { name: groupName, type: string }
   - { name: status, type: StatusProvider_v1, isList: true, isInterface: true }
-  - name: apps
-    type: App_v1
-    isList: true
-    synthetic:
-      schema: /app-sre/app-1.yml
-      subAttr: statusPageComponents
 
 - name: EndpointMonitoringProvider_v1
   isInterface: true
