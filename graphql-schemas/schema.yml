@@ -828,6 +828,13 @@ confs:
     synthetic:
       schema: /openshift/namespace-1.yml
       subAttr: cluster
+  - name: roles
+    type: Role_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: access.cluster
 
 - name: KafkaCluster_v1
   fields:
@@ -1922,6 +1929,13 @@ confs:
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
+  - name: roles
+    type: Role_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: access.namespace
 
 - name: Owner_v1
   fields:
