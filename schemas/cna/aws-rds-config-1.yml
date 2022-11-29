@@ -72,3 +72,4 @@ required:
 - max_allocated_storage
 - engine
 - engine_version
+- username
