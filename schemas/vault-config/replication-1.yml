@@ -12,10 +12,16 @@ properties:
   vaultInstance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+  destAuth:
+    "$ref": "/vault-config/instance-auth-1.yml"
+  sourceAuth:
+    "ref": "/vault-config/instance-auth-1.yml"
   paths:
     type: array
     items:
       "$ref": "/vault-config/replication-paths-1.yml"
 required:
 - vaultInstance
+- destAuth
+- sourceAuth
 - paths
