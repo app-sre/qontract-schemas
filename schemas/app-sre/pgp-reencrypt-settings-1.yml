@@ -1,0 +1,48 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/pgp-reencrypt-settings-1.yml
+
+  public_gpg_key:
+    description: |
+      This PGP Public key will be used to encrypt the users, instead of the users keys.
+      It is owned by APP-SRE. The field name is not a type as it is consistent with access/user-1.yml schema.
+    type: string
+
+  private_pgp_key_vault_path:
+    description: |
+      This is the vault path to the private key used for reencryption.
+    type: string
+
+  reencrypt_vault_path:
+    description: |
+      Base path to read/write pgp encrypted entries from/to.
+    type: string
+
+  aws_account_output_vault_path:
+    description: |
+      Path to write reencrypted AWS Account passwords to.
+    type: string
+
+  skip_aws_accounts:
+    description: |
+      This is kind of a feature flipper. Access requests for AWS accounts listed here will be sent
+      using the SMTP mail send implementation in terraform-users integration.
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/account-1.yml"
+
+required:
+- "$schema"
+- public_gpg_key
+- private_pgp_key_vault_path
+- reencrypt_vault_path
+- aws_account_output_vault_path

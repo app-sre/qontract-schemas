@@ -3373,3 +3373,12 @@ confs:
   - { name: support_role_arn, type: string, isRequired: true}
   - { name: controlplane_role_arn, type: string, isRequired: true}
   - { name: worker_role_arn, type: string, isRequired: true}
+
+
+- name: PgpReencryptSettings_v1
+  fields:
+  - { name: public_gpg_key, type: string, isRequired: true }
+  - { name: private_pgp_key_vault_path, type: string, isRequired: true }
+  - { name: reencrypt_vault_path, type: string, isRequired: true }
+  - { name: aws_account_output_vault_path, type: string, isRequired: true }
+  - { name: skip_aws_accounts, type: AWSAccount_v1, isList: true }
