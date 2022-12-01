@@ -2966,6 +2966,7 @@ confs:
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
   - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
+  - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3377,6 +3378,7 @@ confs:
 
 - name: PgpReencryptSettings_v1
   fields:
+  - { name: schema, type: string, isRequired: true }
   - { name: public_gpg_key, type: string, isRequired: true }
   - { name: private_pgp_key_vault_path, type: string, isRequired: true }
   - { name: reencrypt_vault_path, type: string, isRequired: true }
