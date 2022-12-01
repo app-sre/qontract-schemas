@@ -917,6 +917,8 @@ confs:
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
+  - { name: inheritVersionData, type: OpenShiftClusterManager_v1, isList: true }
+  - { name: publishVersionData, type: OpenShiftClusterManager_v1, isList: true }
   - name: clusters
     type: Cluster_v1
     isList: true
