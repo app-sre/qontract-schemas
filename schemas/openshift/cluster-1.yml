@@ -476,6 +476,9 @@ properties:
       "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  clusterAdmin:
+    type: boolean
+    description: should enable cluster admin for this cluster
   clusterAdminAutomationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   description:
@@ -594,4 +597,6 @@ dependencies:
   awsInfrastructureAccess:
   - ocm
   addons:
+  - ocm
+  clusterAdmin:
   - ocm
