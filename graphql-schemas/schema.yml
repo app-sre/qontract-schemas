@@ -353,6 +353,7 @@ confs:
   - { name: url, type: string, isRequired: true}
 
 - name: QuayOrg_v1
+  datafile: /dependencies/quay-org-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2083,6 +2084,7 @@ confs:
   - { name: mirror, type: string }
 
 - name: Product_v1
+  datafile: /app-sre/product-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2098,6 +2100,7 @@ confs:
       subAttr: product
 
 - name: Environment_v1
+  datafile: /app-sre/environment-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2446,6 +2449,7 @@ confs:
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: Permission_v1
+  datafile: /access/permission-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -2546,6 +2550,7 @@ confs:
       subAttr: permissions
 
 - name: Schedule_v1
+  datafile: /app-sre/schedule-1.yml
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
@@ -2852,6 +2857,7 @@ confs:
   - { name: reason, type: string }
 
 - name: UnleashInstance_v1
+  datafile: /app-sre/unleash-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3179,6 +3185,7 @@ confs:
   - { name: dashboard, type: string, isRequired: true }
 
 - name: SLODocument_v1
+  datafile: /app-sre/slo-document-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
