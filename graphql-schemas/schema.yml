@@ -396,7 +396,7 @@ confs:
   - { name: managedProjects, type: string, isList: true }
   - { name: buildsCleanupRules, type: JenkinsInstanceBuildsCleanupRules_v1, isList: true }
 
-- name: 
+- name: JenkinsConfig_v1
   datafile: /dependencies/jenkins-config-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
