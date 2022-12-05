@@ -827,6 +827,7 @@ confs:
   - { name: insecureSkipTLSVerify, type: boolean }
   - { name: jumpHost, type: ClusterJumpHost_v1 }
   - { name: automationToken, type: VaultSecret_v1 }
+  - { name: clusterAdmin, type: boolean }
   - { name: clusterAdminAutomationToken, type: VaultSecret_v1 }
   - { name: internal, type: boolean }
   - { name: disable, type: DisableClusterAutomations_v1 }
