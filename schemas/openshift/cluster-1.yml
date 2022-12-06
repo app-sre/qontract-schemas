@@ -334,6 +334,8 @@ properties:
               type: object
             manageRoutes:
               type: boolean
+            manageAccountRoutes:
+              type: boolean
             manageSecurityGroups:
               type: boolean
             cidrBlock:
@@ -357,6 +359,13 @@ properties:
                 "$schemaRef": "/aws/vpc-1.yml"
               manageRoutes:
                 type: boolean
+              manageAccountRoutes:
+                type: boolean
+                description: |
+                  historically, account-vpc did not have support for managing routes on the aws side.
+                  instead of re-using manageRoutes, this is a backwards compatible field for managing such routes.
+                  once all account-vpc connections that have manageRoutes also have manageAccountRoutes,
+                  we can consolidate to use managedRoutes only.
               delete:
                 type: boolean
               assumeRole:
