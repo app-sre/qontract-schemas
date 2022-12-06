@@ -2552,6 +2552,8 @@ confs:
 - name: Schedule_v1
   datafile: /app-sre/schedule-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: schedule, type: ScheduleEntry_v1, isRequired: true, isList: true }
@@ -3188,6 +3190,7 @@ confs:
   datafile: /app-sre/slo-document-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }
