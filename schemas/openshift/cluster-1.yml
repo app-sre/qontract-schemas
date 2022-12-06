@@ -104,6 +104,19 @@ properties:
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
+  slack:
+    type: object
+    additionalProperties: false
+    properties:
+      userGroup:
+        type: string
+      channels:
+        type: array
+        items:
+          type: string
+    required:
+      - userGroup
+      - channels
   grafanaUrl:
     type: string
     format: uri

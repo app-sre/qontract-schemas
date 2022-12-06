@@ -796,6 +796,11 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: auth, type: VaultSecret_v1, isRequired: true}
 
+- name: ClusterSlack_v1
+  fields:
+  - { name: userGroup, type: string, isRequired: true }
+  - { name: channels, type: string, isList: true, isRequired: true}
+
 - name: Cluster_v1
   datafile: /openshift/cluster-1.yml
   fields:
@@ -806,6 +811,7 @@ confs:
   - { name: description, type: string }
   - { name: auth, type: ClusterAuth_v1, isInterface: true, isList: true, isRequired: true }
   - { name: observabilityNamespace, type: Namespace_v1 }
+  - { name: slack, type: ClusterSlack_v1 }
   - { name: grafanaUrl, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
   - { name: kibanaUrl, type: string, isRequired: true }
