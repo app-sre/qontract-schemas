@@ -737,6 +737,7 @@ confs:
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
+  - { name: manageAccountRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
 
