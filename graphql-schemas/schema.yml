@@ -575,7 +575,7 @@ confs:
   fields:
   - { name: service, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
-  - { name: issuer, type: string }
+  - { name: issuer, type: string, isRequired: true }
   - { name: claims, type: ClusterAuthOIDCClaims_v1 }
 
 - name: ClusterAuthOIDCClaims_v1
