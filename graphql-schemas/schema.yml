@@ -353,6 +353,7 @@ confs:
   - { name: url, type: string, isRequired: true}
 
 - name: QuayOrg_v1
+  datafile: /dependencies/quay-org-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -397,6 +398,7 @@ confs:
   - { name: buildsCleanupRules, type: JenkinsInstanceBuildsCleanupRules_v1, isList: true }
 
 - name: JenkinsConfig_v1
+  datafile: /dependencies/jenkins-config-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -572,6 +574,16 @@ confs:
   interface: ClusterAuth_v1
   fields:
   - { name: service, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: issuer, type: string }
+  - { name: claims, type: ClusterAuthOIDCClaims_v1 }
+
+- name: ClusterAuthOIDCClaims_v1
+  fields:
+  - { name: email, type: string, isList: true }
+  - { name: username, type: string, isList: true }
+  - { name: name, type: string, isList: true }
+  - { name: groups, type: string, isList: true }
 
 - name: KafkaClusterSpec_v1
   fields:
@@ -725,6 +737,7 @@ confs:
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
+  - { name: manageAccountRoutes, type: boolean }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
 
@@ -816,6 +829,7 @@ confs:
   - { name: insecureSkipTLSVerify, type: boolean }
   - { name: jumpHost, type: ClusterJumpHost_v1 }
   - { name: automationToken, type: VaultSecret_v1 }
+  - { name: clusterAdmin, type: boolean }
   - { name: clusterAdminAutomationToken, type: VaultSecret_v1 }
   - { name: internal, type: boolean }
   - { name: disable, type: DisableClusterAutomations_v1 }
@@ -907,6 +921,8 @@ confs:
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
+  - { name: inheritVersionData, type: OpenShiftClusterManager_v1, isList: true }
+  - { name: publishVersionData, type: OpenShiftClusterManager_v1, isList: true }
   - name: clusters
     type: Cluster_v1
     isList: true
@@ -2069,6 +2085,7 @@ confs:
   - { name: mirror, type: string }
 
 - name: Product_v1
+  datafile: /app-sre/product-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2084,6 +2101,7 @@ confs:
       subAttr: product
 
 - name: Environment_v1
+  datafile: /app-sre/environment-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2432,6 +2450,7 @@ confs:
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: Permission_v1
+  datafile: /access/permission-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -2532,7 +2551,10 @@ confs:
       subAttr: permissions
 
 - name: Schedule_v1
+  datafile: /app-sre/schedule-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: schedule, type: ScheduleEntry_v1, isRequired: true, isList: true }
@@ -2838,6 +2860,7 @@ confs:
   - { name: reason, type: string }
 
 - name: UnleashInstance_v1
+  datafile: /app-sre/unleash-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3166,8 +3189,10 @@ confs:
   - { name: dashboard, type: string, isRequired: true }
 
 - name: SLODocument_v1
+  datafile: /app-sre/slo-document-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }

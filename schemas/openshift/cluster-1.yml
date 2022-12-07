@@ -75,8 +75,31 @@ properties:
             type: string
             enum:
             - oidc
+          name:
+            type: string
+          issuer:
+            type: string
+            format: uri
+          claims:
+            email:
+              type: array
+              items:
+                type: string
+            username:
+              type: array
+              items:
+                type: string
+            name:
+              type: array
+              items:
+                type: string
+            groups:
+              type: array
+              items:
+                type: string
         required:
         - service
+        - name
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
@@ -310,6 +333,8 @@ properties:
               type: object
             manageRoutes:
               type: boolean
+            manageAccountRoutes:
+              type: boolean
             manageSecurityGroups:
               type: boolean
             cidrBlock:
@@ -333,6 +358,13 @@ properties:
                 "$schemaRef": "/aws/vpc-1.yml"
               manageRoutes:
                 type: boolean
+              manageAccountRoutes:
+                type: boolean
+                description: |
+                  historically, account-vpc did not have support for managing routes on the aws side.
+                  instead of re-using manageRoutes, this is a backwards compatible field for managing such routes.
+                  once all account-vpc connections that have manageRoutes also have manageAccountRoutes,
+                  we can consolidate to use managedRoutes only.
               delete:
                 type: boolean
               assumeRole:
@@ -452,6 +484,9 @@ properties:
       "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  clusterAdmin:
+    type: boolean
+    description: should enable cluster admin for this cluster
   clusterAdminAutomationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   description:
@@ -487,6 +522,7 @@ properties:
           - ocm-external-configuration-labels
           - ocm-clusters
           - ocm-github-idp
+          - ocm-oidc-idp
           - ocm-groups
           - ocm-machine-pools
           - ocm-upgrade-scheduler
@@ -569,4 +605,6 @@ dependencies:
   awsInfrastructureAccess:
   - ocm
   addons:
+  - ocm
+  clusterAdmin:
   - ocm
