@@ -100,7 +100,6 @@ properties:
         required:
         - service
         - name
-        - issuer
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
