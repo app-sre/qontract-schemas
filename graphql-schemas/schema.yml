@@ -574,16 +574,6 @@ confs:
   interface: ClusterAuth_v1
   fields:
   - { name: service, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: issuer, type: string }
-  - { name: claims, type: ClusterAuthOIDCClaims_v1 }
-
-- name: ClusterAuthOIDCClaims_v1
-  fields:
-  - { name: email, type: string, isList: true }
-  - { name: username, type: string, isList: true }
-  - { name: name, type: string, isList: true }
-  - { name: groups, type: string, isList: true }
 
 - name: KafkaClusterSpec_v1
   fields:
