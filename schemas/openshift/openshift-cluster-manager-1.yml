@@ -34,18 +34,11 @@ properties:
         recommendedVersion:
           description: Recommended version for provisioning new clusters
           type: string
-        initialVersion:
-          description: Initial version string, as used by the OCM API
-          type: string
         workload:
           description: Workload the version is recommended for
           type: string
-        channel:
-          description: Channel version can be found, stable if not set
-          type: string
       required:
         - recommendedVersion
-        - initialVersion
         - workload
   recommendedVersionWeight:
     type: object
