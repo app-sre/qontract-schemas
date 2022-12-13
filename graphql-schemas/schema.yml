@@ -1093,7 +1093,7 @@ confs:
   - { name: max_allocated_storage, type: int, isRequired: true }
   - { name: engine, type: string, isRequired: true }
   - { name: engine_version, type: string, isRequired: true }
-  - { name: username, type: string }
+  - { name: username, type: string, isRequired: true }
   - { name: maintenance_window, type: string }
   - { name: backup_retention_period, type: int }
   - { name: backup_window, type: string }
