@@ -574,6 +574,16 @@ confs:
   interface: ClusterAuth_v1
   fields:
   - { name: service, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: issuer, type: string }
+  - { name: claims, type: ClusterAuthOIDCClaims_v1 }
+
+- name: ClusterAuthOIDCClaims_v1
+  fields:
+  - { name: email, type: string, isList: true }
+  - { name: username, type: string, isList: true }
+  - { name: name, type: string, isList: true }
+  - { name: groups, type: string, isList: true }
 
 - name: KafkaClusterSpec_v1
   fields:
@@ -2981,6 +2991,7 @@ confs:
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
   - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
+  - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3390,3 +3401,13 @@ confs:
   - { name: support_role_arn, type: string, isRequired: true}
   - { name: controlplane_role_arn, type: string, isRequired: true}
   - { name: worker_role_arn, type: string, isRequired: true}
+
+
+- name: PgpReencryptSettings_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: public_gpg_key, type: string, isRequired: true }
+  - { name: private_pgp_key_vault_path, type: string, isRequired: true }
+  - { name: reencrypt_vault_path, type: string, isRequired: true }
+  - { name: aws_account_output_vault_path, type: string, isRequired: true }
+  - { name: skip_aws_accounts, type: AWSAccount_v1, isList: true }
