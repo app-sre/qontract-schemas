@@ -96,7 +96,7 @@ properties:
     - per-aws-account
     - static
   sleepDurationSecs:
-    type: integer
+    type: string
     description: time to sleep in seconds between integration executions
   state:
     type: boolean

@@ -2767,7 +2767,7 @@ confs:
   - { name: fluentdResources, type: DeployResources_v1}
   - { name: shards, type: int }
   - { name: shardingStrategy, type: string }
-  - { name: sleepDurationSecs, type: int }
+  - { name: sleepDurationSecs, type: string }
   - { name: state, type: boolean }
   - { name: storage, type: string }
   - { name: trigger, type: boolean }
