@@ -899,7 +899,9 @@ confs:
 - name: OpenShiftClusterManagerRecommendedVersions_v1
   fields:
   - { name: recommendedVersion, type: string, isRequired: true }
+  - { name: initialVersion, type: string, isRequired: true }
   - { name: workload, type: string, isRequired: true }
+  - { name: channel, type: string }
 
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
