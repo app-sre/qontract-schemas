@@ -1,0 +1,111 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/skupper-network-1.yml
+  identifier:
+    "$ref": "/common-1.json#/definitions/identifier"
+  site_config_defaults:
+    type: object
+    additionalProperties: false
+    properties:
+      # Set up Skupper to only accept connections from within the local cluster. default=false
+      cluster-local:
+        type: boolean
+      # Enable Skupper console. default=true
+      console:
+        type: boolean
+      # Skupper console authentication method. default=openshift
+      console-authentication:
+        type: string
+        enum:
+        - openshift
+      # Determines if/how console is exposed outside cluster. default=route
+      console-ingress:
+        type: string
+        enum:
+        - route
+        - loadbalancer
+        - none
+      # CPU limit for service-controller pods. default=500m
+      controller-cpu-limit:
+        type: string
+      # CPU request for service-controller pods. default=500m
+      controller-cpu:
+        type: string
+      # Memory limit for controller pods. default=128Mi
+      controller-memory-limit:
+        type: string
+      # Memory request for controller pods. default=128Mi
+      controller-memory:
+        type: string
+      # Pod antiaffinity label matches to control placement of controller pods. default='skupper.io/component=controller'
+      controller-pod-antiaffinity:
+        type: string
+      # Annotations to add to Skupper controller service. default=unset
+      controller-service-annotations:
+        type: string
+      # Set up an edge Skupper site. default=true for internal clusters
+      edge:
+        type: boolean
+      #  Skupper ingress specific type. default=route
+      ingress:
+        type: string
+        enum:
+        - route
+        - loadbalancer
+        - ingress
+        - none
+      # Set up a Dispatch Router console (not recommended). default=false
+      router-console:
+        type: boolean
+      # CPU limit for router pods. default=500m
+      router-cpu-limit:
+        type: string
+      # CPU request for router pods. default=500m
+      router-cpu:
+        type: string
+      # Logging settings for router (e.g. trace,debug,info,notice,warning,error). default=error
+      router-logging:
+        type: string
+        enum:
+        - trace
+        - debug
+        - info
+        - notice
+        - warning
+        - error
+      # Memory limit for router pods. default=156Mi
+      router-memory-limit:
+        type: string
+      # Memory request for router pods. default=156Mi
+      router-memory:
+        type: string
+      # Pod antiaffinity label matches to control placement of router pods. defaukt='skupper.io/component=router'
+      router-pod-antiaffinity:
+        type: string
+      # Annotations to add to Skupper router service. default=unset
+      router-service-annotations:
+        type: string
+      # Number of router replicas to start. default=3
+      routers:
+        type: integer
+      # Run the service controller. default=true
+      service-controller:
+        type: boolean
+      # Determine if the service controller participates in service synchronization. default=true
+      service-sync:
+        type: boolean
+      # Skupper image and version
+      skupper-site-controller:
+        type: string
+
+required:
+- "$schema"
+- identifier
