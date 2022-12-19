@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make test bundle validate gql_validate
+make test bundle validate pull_server gql_validate
