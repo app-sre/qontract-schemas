@@ -2398,6 +2398,32 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: address, type: string, isRequired: true }
   - { name: auth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+  - { name: replication, type: VaultReplicationConfig_v1, isList: true}
+
+- name: VaultReplicationConfig_v1
+  fields:
+  - { name: vaultInstance, type: VaultInstance_v1, isRequired: true}
+  - { name: destAuth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+  - { name: sourceAuth, type: VaultInstanceAuth_v1, isInterface: true, isRequired: true }
+  - { name: paths, type: VaultReplicationPaths_v1, isInterface: true, isList: true}
+
+- name: VaultReplicationPaths_v1
+  datafile: /vault-config/replication-paths-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      jenkins: VaultReplicationJenkins_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: VaultReplicationJenkins_v1
+  interface: VaultReplicationPaths_v1
+  fields:
+  - { name: provider, type: string, isRequired: true}
+  - { name: jenkinsInstance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: policy, type: VaultPolicy_v1 }
 
 - name: VaultInstanceAuth_v1
   isInterface: true
