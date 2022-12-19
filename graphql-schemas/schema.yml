@@ -3363,6 +3363,23 @@ confs:
   - { name: disabled, type: boolean }
   - { name: inherit, type: ChangeType_v1, isList: true }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
+  - { name: implicitOwnership, type: ChangeTypeImplicitOwnership_v1, isInterface: true, isList: true }
+
+- name: ChangeTypeImplicitOwnership_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      jsonPath: ChangeTypeImplicitOwnershipJsonPathProvider_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: ChangeTypeImplicitOwnershipJsonPathProvider_v1
+  interface: ChangeTypeImplicitOwnership_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: jsonPathSelector, type: string, isRequired: true }
 
 - name: ChangeTypeChangeDetector_v1
   isInterface: true

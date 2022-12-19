@@ -69,6 +69,22 @@ properties:
         required:
         - provider
         - jsonPathSelectors
+  implicitOwnership:
+    type: array
+    items:
+      oneOf:
+      - type: object
+        additionalProperties: false
+        properties:
+          provider:
+            type: string
+            enum:
+            - jsonPath
+          jsonPathSelector:
+            type: string
+        required:
+        - provider
+        - jsonPathSelector
 required:
 - "$schema"
 - labels
