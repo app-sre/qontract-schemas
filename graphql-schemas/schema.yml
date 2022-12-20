@@ -3499,7 +3499,7 @@ confs:
   datafile: /dependencies/skupper-network-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: site_config_defaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - name: namespaces
