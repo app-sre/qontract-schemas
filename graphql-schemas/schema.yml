@@ -3500,7 +3500,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
-  - { name: site_config_defaults, type: SkupperSiteConfigDefaults_v1 }
+  - { name: site_config_defaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - name: namespaces
     type: Namespace_v1
@@ -3535,7 +3535,7 @@ confs:
   - { name: routers, type: int }
   - { name: service_controller, type: boolean }
   - { name: service_sync, type: boolean }
-  - { name: skupper_site_controller, type: string }
+  - { name: skupper_site_controller, type: string, isRequired: true }
 
 - name: SkupperSiteConfig_v1
   fields:

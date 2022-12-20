@@ -105,7 +105,10 @@ properties:
       # Skupper image and version
       skupper-site-controller:
         type: string
+    required:
+    - skupper-site-controller
 
 required:
 - "$schema"
 - identifier
+- site_config_defaults
