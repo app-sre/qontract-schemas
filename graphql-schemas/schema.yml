@@ -1956,7 +1956,7 @@ confs:
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
-  - { name: skupper_site, type: NamespaceSkupperSiteConfig_v1 }
+  - { name: skupperSite, type: NamespaceSkupperSiteConfig_v1 }
 
 - name: Owner_v1
   fields:
@@ -3500,7 +3500,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: site_config_defaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
+  - { name: siteConfigDefaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - name: namespaces
     type: Namespace_v1
@@ -3508,61 +3508,61 @@ confs:
     isList: true
     synthetic:
       schema: /openshift/namespace-1.yml
-      subAttr: skupper_site.network
+      subAttr: skupperSite.network
 
 - name: SkupperSiteConfigDefaults_v1
   fields:
-  - { name: cluster_local, type: boolean }
+  - { name: clusterLocal, type: boolean }
   - { name: console, type: boolean }
-  - { name: console_authentication, type: string }
-  - { name: console_ingress, type: string }
-  - { name: controller_cpu_limit, type: string }
-  - { name: controller_cpu, type: string }
-  - { name: controller_memory_limit, type: string }
-  - { name: controller_memory, type: string }
-  - { name: controller_pod_antiaffinity, type: string }
-  - { name: controller_service_annotations, type: string }
+  - { name: consoleAuthentication, type: string }
+  - { name: consoleIngress, type: string }
+  - { name: controllerCpuLimit, type: string }
+  - { name: controllerCpu, type: string }
+  - { name: controllerMemoryLimit, type: string }
+  - { name: controllerMemory, type: string }
+  - { name: controllerPodAntiaffinity, type: string }
+  - { name: controllerServiceAnnotations, type: string }
   - { name: edge, type: boolean }
   - { name: ingress, type: string }
-  - { name: router_console, type: boolean }
-  - { name: router_cpu_limit, type: string }
-  - { name: router_cpu, type: string }
-  - { name: router_memory_limit, type: string }
-  - { name: router_memory, type: string }
-  - { name: router_logging, type: string }
-  - { name: router_pod_antiaffinity, type: string }
-  - { name: router_service_annotations, type: string }
+  - { name: routerConsole, type: boolean }
+  - { name: routerCpuLimit, type: string }
+  - { name: routerCpu, type: string }
+  - { name: routerMemoryLimit, type: string }
+  - { name: routerMemory, type: string }
+  - { name: routerLogging, type: string }
+  - { name: routerPodAntiaffinity, type: string }
+  - { name: routerServiceAnnotations, type: string }
   - { name: routers, type: int }
-  - { name: service_controller, type: boolean }
-  - { name: service_sync, type: boolean }
-  - { name: skupper_site_controller, type: string, isRequired: true }
+  - { name: serviceController, type: boolean }
+  - { name: serviceSync, type: boolean }
+  - { name: skupperSiteController, type: string, isRequired: true }
 
 - name: SkupperSiteConfig_v1
   fields:
-  - { name: cluster_local, type: boolean }
+  - { name: clusterLocal, type: boolean }
   - { name: console, type: boolean }
-  - { name: console_authentication, type: string }
-  - { name: console_ingress, type: string }
-  - { name: controller_cpu_limit, type: string }
-  - { name: controller_cpu, type: string }
-  - { name: controller_memory_limit, type: string }
-  - { name: controller_memory, type: string }
-  - { name: controller_pod_antiaffinity, type: string }
-  - { name: controller_service_annotations, type: string }
+  - { name: consoleAuthentication, type: string }
+  - { name: consoleIngress, type: string }
+  - { name: controllerCpuLimit, type: string }
+  - { name: controllerCpu, type: string }
+  - { name: controllerMemoryLimit, type: string }
+  - { name: controllerMemory, type: string }
+  - { name: controllerPodAntiaffinity, type: string }
+  - { name: controllerServiceAnnotations, type: string }
   - { name: edge, type: boolean }
   - { name: ingress, type: string }
   - { name: name, type: string }
-  - { name: router_console, type: boolean }
-  - { name: router_cpu_limit, type: string }
-  - { name: router_cpu, type: string }
-  - { name: router_memory_limit, type: string }
-  - { name: router_memory, type: string }
-  - { name: router_logging, type: string }
-  - { name: router_pod_antiaffinity, type: string }
-  - { name: router_service_annotations, type: string }
+  - { name: routerConsole, type: boolean }
+  - { name: routerCpuLimit, type: string }
+  - { name: routerCpu, type: string }
+  - { name: routerMemoryLimit, type: string }
+  - { name: routerMemory, type: string }
+  - { name: routerLogging, type: string }
+  - { name: routerPodAntiaffinity, type: string }
+  - { name: routerServiceAnnotations, type: string }
   - { name: routers, type: int }
-  - { name: service_controller, type: boolean }
-  - { name: service_sync, type: boolean }
+  - { name: serviceController, type: boolean }
+  - { name: serviceSync, type: boolean }
 
 - name: NamespaceSkupperSiteConfig_v1
   fields:
