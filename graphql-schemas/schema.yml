@@ -3551,7 +3551,6 @@ confs:
   - { name: controllerServiceAnnotations, type: string }
   - { name: edge, type: boolean }
   - { name: ingress, type: string }
-  - { name: name, type: string }
   - { name: routerConsole, type: boolean }
   - { name: routerCpuLimit, type: string }
   - { name: routerCpu, type: string }

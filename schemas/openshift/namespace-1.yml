@@ -164,10 +164,6 @@ properties:
             - loadbalancer
             - ingress
             - none
-          name:
-            description: |
-              A name for the site. default={{ resource.namespace.cluster.name }}-{{ identifier }}
-            type: string
           routerConsole:
             description: |
               Set up a Dispatch Router console (not recommended). default=false
