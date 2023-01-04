@@ -2499,6 +2499,7 @@ confs:
   - { name: service, type: string, isRequired: true }
 
 - name: PermissionGithubOrg_v1
+  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2511,6 +2512,7 @@ confs:
   - { name: role, type: string }
 
 - name: PermissionGithubOrgTeam_v1
+  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2524,6 +2526,7 @@ confs:
   - { name: role, type: string }
 
 - name: PermissionJenkinsRole_v1
+  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2537,6 +2540,7 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: PermissionGitlabGroupMembership_v1
+  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2556,6 +2560,7 @@ confs:
       subAttr: permissions
 
 - name: PermissionSlackUsergroup_v1
+  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
