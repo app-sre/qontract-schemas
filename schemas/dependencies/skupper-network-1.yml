@@ -43,7 +43,7 @@ properties:
         type: string
       controllerCpu:
         description: |
-          CPU request for service-controller pods. default=500m
+          CPU request for service-controller pods. default=200m
         type: string
       controllerMemoryLimit:
         description: |
@@ -59,7 +59,7 @@ properties:
         type: string
       controllerServiceAnnotations:
         description: |
-          Annotations to add to Skupper controller service. default=unset
+          Annotations to add to Skupper controller service. default='managed-by=qontract-reconcile'
         type: string
       edge:
         description: |
@@ -84,7 +84,7 @@ properties:
         type: string
       routerCpu:
         description: |
-          CPU request for router pods. default=500m
+          CPU request for router pods. default=200m
         type: string
       routerLogging:
         description: |
