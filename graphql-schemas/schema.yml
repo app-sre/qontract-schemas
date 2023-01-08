@@ -915,6 +915,7 @@ confs:
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
   - { name: recommendedVersions, type: OpenShiftClusterManagerRecommendedVersions_v1, isList: true }
   - { name: recommendedVersionWeight, type: OpenShiftClusterManagerRecommendedVersionsWeight_v1 }
   - { name: blockedVersions, type: string, isList: true }
@@ -931,6 +932,12 @@ confs:
     synthetic:
       schema: /openshift/cluster-1.yml
       subAttr: cluster
+
+- name: AddonUpgradeTest_v1
+  fields:
+  - { name: addon, type: ClusterAddon_v1, isRequired: true }
+  - { name: instance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true }
 
 - name: ClusterAddon_v1
   fields:

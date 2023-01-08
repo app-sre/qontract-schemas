@@ -25,6 +25,25 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  addonUpgradeTests:
+    description: trigger a job in jenkins following an addon upgrade
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        addon:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/cluster-addon-1.yml"
+        instance:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+        name:
+          type: string
+      required:
+      - addon
+      - instance
+      - name
   recommendedVersions:
     type: array
     items:
