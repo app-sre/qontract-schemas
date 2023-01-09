@@ -56,7 +56,7 @@ properties:
           - sentry-helper
           - slack-sender
           - openshift-upgrade-watcher
-          - slack-cluster-usergroups
+          - slack-usergroups
           - qontract-cli
       token:
         "$ref": "/common-1.json#/definitions/vaultSecret"
