@@ -3433,6 +3433,7 @@ confs:
     field: provider
     fieldMap:
       jsonPath: ChangeTypeChangeDetectorJsonPathProvider_v1
+      change-type: ChangeTypeChangeDetectorChangeTypeProvider_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: changeSchema, type: string }
@@ -3445,6 +3446,14 @@ confs:
   - { name: changeSchema, type: string }
   - { name: jsonPathSelectors, type: string, isList: true, isRequired: true }
   - { name: context, type: ChangeTypeChangeDetectorContextSelector_v1 }
+
+- name: ChangeTypeChangeDetectorChangeTypeProvider_v1
+  interface: ChangeTypeChangeDetector_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: changeSchema, type: string }
+  - { name: changeTypes, type: ChangeType_v1, isList: true, isRequired: true }
+  - { name: context, type: ChangeTypeChangeDetectorContextSelector_v1, isRequired: true }
 
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:

@@ -41,6 +41,36 @@ properties:
     type: array
     minItems: 1
     items:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - jsonPath
+          - change-type
+        changeSchema:
+          type: string
+        jsonPathSelectors:
+          type: array
+          items:
+            type: string
+        changeTypes:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/app-interface/change-type-1.yml"
+        context:
+          type: object
+          additionalProperties: false
+          properties:
+            selector:
+              type: string
+            when:
+              type: string
+              enum:
+              - added
+              - removed
       oneOf:
       - type: object
         additionalProperties: false
@@ -69,6 +99,35 @@ properties:
         required:
         - provider
         - jsonPathSelectors
+      - type: object
+        additionalProperties: false
+        properties:
+          provider:
+            type: string
+            enum:
+            - change-type
+          changeSchema:
+            type: string
+          changeTypes:
+            type: array
+            items:
+              "$ref": "/common-1.json#/definitions/crossref"
+              "$schemaRef": "/app-interface/change-type-1.yml"
+          context:
+            type: object
+            additionalProperties: false
+            properties:
+              selector:
+                type: string
+              when:
+                type: string
+                enum:
+                - added
+                - removed
+        required:
+        - provider
+        - changeTypes
+        - context
   implicitOwnership:
     type: array
     items:
