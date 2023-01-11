@@ -33,5 +33,17 @@ oneOf:
   required:
     - provider
     - jenkinsInstance
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - policy
+    policy:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/vault-config/policy-1.yml"
+  required:
+    - provider
+    - policy
 required:
 - provider

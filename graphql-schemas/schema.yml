@@ -2422,6 +2422,7 @@ confs:
     field: provider
     fieldMap:
       jenkins: VaultReplicationJenkins_v1
+      policy: VaultReplicationPolicy_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -2430,6 +2431,12 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true}
   - { name: jenkinsInstance, type: JenkinsInstance_v1, isRequired: true }
+  - { name: policy, type: VaultPolicy_v1 }
+
+- name: VaultReplicationPolicy_v1
+  interface: VaultReplicationPaths_v1
+  fields:
+  - { name: provider, type: string, isRequired: true}
   - { name: policy, type: VaultPolicy_v1 }
 
 - name: VaultInstanceAuth_v1
