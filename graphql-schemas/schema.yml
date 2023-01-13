@@ -915,6 +915,7 @@ confs:
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: addonManagedUpgrades, type: boolean }
   - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
   - { name: recommendedVersions, type: OpenShiftClusterManagerRecommendedVersions_v1, isList: true }
   - { name: recommendedVersionWeight, type: OpenShiftClusterManagerRecommendedVersionsWeight_v1 }
