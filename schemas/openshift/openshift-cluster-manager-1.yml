@@ -25,6 +25,8 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  addonManagedUpgrades:
+    type: boolean
   addonUpgradeTests:
     description: trigger a job in jenkins following an addon upgrade
     type: array
