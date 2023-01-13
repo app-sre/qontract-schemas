@@ -632,6 +632,7 @@ oneOf:
             type: string
             enum:
             - email
+            - sms
           endpoint:
             type: string
   required:
