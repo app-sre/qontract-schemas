@@ -526,7 +526,7 @@ properties:
           - ocm-groups
           - ocm-machine-pools
           - ocm-upgrade-scheduler
-          - slack-usergroup
+          - slack-usergroups
       e2eTests:
         type: array
         items:
