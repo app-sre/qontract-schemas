@@ -55,6 +55,8 @@ properties:
         type: boolean
       early_exit:
         type: boolean
+      check_only_affected_shards:
+        type: boolean
       shardSpecOverride:
         type: array
         items:
