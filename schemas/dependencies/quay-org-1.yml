@@ -19,6 +19,36 @@ properties:
   mirror:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/quay-org-1.yml"
+  mirrorFilters:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: Name of the repository to filter.
+          type: string
+        tags:
+          description: |
+            This limits which tags to mirror to the ones in the list.
+            They will take preference over the ones excluded.
+            Regular expressions are supported.
+          type: array
+          items:
+            type: string
+        tagsExclude:
+          description: |
+            Tags to exclude. Regular expression are supported.
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      oneOf:
+      - required:
+        - tags
+      - required:
+        - tagsExclude
   managedTeams:
     type: array
     items:
