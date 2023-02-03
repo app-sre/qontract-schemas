@@ -389,6 +389,19 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: keep_hours, type: int, isRequired: true }
 
+- name: JenkinsWorkerFleets_v1
+  fields:
+  - { name: account, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: credentialsId, type: string, isRequired: true }
+  - { name: fsRoot, type: string }
+  - { name: labelString, type: string, isRequired: true }
+  - { name: numExecutors, type: int }
+  - { name: idleMinutes, type: int }
+  - { name: minSpareSize, type: int }
+  - { name: noDelayProvision, type: boolean }
+
 - name: JenkinsInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -403,6 +416,7 @@ confs:
   - { name: deleteMethod, type: string }
   - { name: managedProjects, type: string, isList: true }
   - { name: buildsCleanupRules, type: JenkinsInstanceBuildsCleanupRules_v1, isList: true }
+  - { name: workerFleets, type: JenkinsWorkerFleets_v1, isList: true }
 
 - name: JenkinsConfig_v1
   datafile: /dependencies/jenkins-config-1.yml

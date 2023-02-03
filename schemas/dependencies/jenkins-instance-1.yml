@@ -50,6 +50,42 @@ properties:
       required:
       - name
       - keep_hours
+  workerFleets:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+        identifier:
+          "$ref": "/common-1.json#/definitions/longIdentifier"
+          description: ASG used for this Jenkins cloud, need to match an ASG identifier.
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        credentialsId:
+          type: string
+          description: Jenkins credential name of ssh private key to be used for logging in to the remote host.
+        # following options comes form https://github.com/jenkinsci/ec2-fleet-plugin/blob/master/docs/
+        fsRoot:
+          type: string
+        labelString:
+          type: string
+        numExecutors:
+          type: integer
+        idleMinutes:
+          type: integer
+        minSpareSize:
+          type: integer
+        noDelayProvision:
+          type: boolean
+      required:
+      - account
+      - identifier
+      - namespace
+      - credentialsId
+      - labelString
 required:
 - "$schema"
 - labels
