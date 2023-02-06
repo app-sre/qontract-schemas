@@ -1556,6 +1556,7 @@ confs:
   - { name: output_resource_db_name, type: string }
   - { name: reset_password, type: string }
   - { name: enhanced_monitoring, type: boolean }
+  - { name: grafana_datasource, type: boolean }
   - { name: replica_source, type: string }
   - { name: ca_cert, type: VaultSecret_v1 }
   - { name: annotations, type: json }
