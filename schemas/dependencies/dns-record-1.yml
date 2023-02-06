@@ -120,6 +120,22 @@ properties:
     required:
     - namespace
     - name
+  _records_from_vault:
+    type: array
+    items:
+      type: object
+      properties:
+        path:
+          type: string
+        field:
+          type: string
+        key:
+          type: string
+        version:
+          type: integer
+      required:
+      - path
+      - field
 oneOf:
 - required:
   - records
@@ -129,6 +145,8 @@ oneOf:
   - _target_namespace_zone
 - required:
   - alias
+- required:
+  - _records_from_vault
 required:
 - name
 - type

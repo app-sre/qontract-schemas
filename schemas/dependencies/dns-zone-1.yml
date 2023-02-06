@@ -23,6 +23,11 @@ properties:
   vpc:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/vpc-1.yml"
+  allowed_vault_secret_paths:
+    description: List of paths used to limit the secrets that can be accessed for creating DNS records, the primary use case being domain control validation (DCV)
+    type: array
+    items:
+      type: string
   records:
     type: array
     items:
