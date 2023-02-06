@@ -55,6 +55,9 @@ properties:
     type: string
   enhanced_monitoring:
     type: boolean
+  grafana_datasource:
+    type: boolean
+    description: is rds instance used as a grafana datasource
   replica_source:
     type: string
   output_resource_db_name:
@@ -488,6 +491,9 @@ oneOf:
       type: string
     enhanced_monitoring:
       type: boolean
+    grafana_datasource:
+      type: boolean
+      description: is rds instance used as a grafana datasource
     replica_source:
       type: string
     ca_cert:
