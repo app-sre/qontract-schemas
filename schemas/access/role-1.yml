@@ -127,6 +127,11 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/sendgrid-account-1.yml"
+  cloudflare_access:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/cloudflare/account-role-1.yml"
   self_service:
     type: array
     items:
