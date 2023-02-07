@@ -1956,6 +1956,7 @@ confs:
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProjects_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
+  - { name: skupperSite, type: NamespaceSkupperSiteConfig_v1 }
 
 - name: Owner_v1
   fields:
@@ -3047,6 +3048,7 @@ confs:
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
   - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
   - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
+  - { name: skupper_network_v1, type: SkupperNetwork_v1, isList: true, datafileSchema: /dependencies/skupper-network-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3492,3 +3494,77 @@ confs:
   - { name: reencrypt_vault_path, type: string, isRequired: true }
   - { name: aws_account_output_vault_path, type: string, isRequired: true }
   - { name: skip_aws_accounts, type: AWSAccount_v1, isList: true }
+
+- name: SkupperNetwork_v1
+  datafile: /dependencies/skupper-network-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: siteConfigDefaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - name: namespaces
+    type: Namespace_v1
+    isRequired: true
+    isList: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: skupperSite.network
+
+- name: SkupperSiteConfigDefaults_v1
+  fields:
+  - { name: clusterLocal, type: boolean }
+  - { name: console, type: boolean }
+  - { name: consoleAuthentication, type: string }
+  - { name: consoleIngress, type: string }
+  - { name: controllerCpuLimit, type: string }
+  - { name: controllerCpu, type: string }
+  - { name: controllerMemoryLimit, type: string }
+  - { name: controllerMemory, type: string }
+  - { name: controllerPodAntiaffinity, type: string }
+  - { name: controllerServiceAnnotations, type: string }
+  - { name: edge, type: boolean }
+  - { name: ingress, type: string }
+  - { name: routerConsole, type: boolean }
+  - { name: routerCpuLimit, type: string }
+  - { name: routerCpu, type: string }
+  - { name: routerMemoryLimit, type: string }
+  - { name: routerMemory, type: string }
+  - { name: routerLogging, type: string }
+  - { name: routerPodAntiaffinity, type: string }
+  - { name: routerServiceAnnotations, type: string }
+  - { name: routers, type: int }
+  - { name: serviceController, type: boolean }
+  - { name: serviceSync, type: boolean }
+  - { name: skupperSiteController, type: string, isRequired: true }
+
+- name: SkupperSiteConfig_v1
+  fields:
+  - { name: clusterLocal, type: boolean }
+  - { name: console, type: boolean }
+  - { name: consoleAuthentication, type: string }
+  - { name: consoleIngress, type: string }
+  - { name: controllerCpuLimit, type: string }
+  - { name: controllerCpu, type: string }
+  - { name: controllerMemoryLimit, type: string }
+  - { name: controllerMemory, type: string }
+  - { name: controllerPodAntiaffinity, type: string }
+  - { name: controllerServiceAnnotations, type: string }
+  - { name: edge, type: boolean }
+  - { name: ingress, type: string }
+  - { name: routerConsole, type: boolean }
+  - { name: routerCpuLimit, type: string }
+  - { name: routerCpu, type: string }
+  - { name: routerMemoryLimit, type: string }
+  - { name: routerMemory, type: string }
+  - { name: routerLogging, type: string }
+  - { name: routerPodAntiaffinity, type: string }
+  - { name: routerServiceAnnotations, type: string }
+  - { name: routers, type: int }
+  - { name: serviceController, type: boolean }
+  - { name: serviceSync, type: boolean }
+
+- name: NamespaceSkupperSiteConfig_v1
+  fields:
+  - { name: network, type: SkupperNetwork_v1, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: config, type: SkupperSiteConfig_v1 }
