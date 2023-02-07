@@ -26,6 +26,9 @@ properties:
   aws_username:
     type: string
     pattern: '^[a-zA-Z_]+$'
+  cloudflare_user:
+    type: string
+    format: email
   roles:
     type: array
     items:

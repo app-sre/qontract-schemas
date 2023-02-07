@@ -27,6 +27,7 @@ confs:
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
   - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
+  - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
 
 - name: SmtpSettings_v1
   fields:
@@ -1074,6 +1075,20 @@ confs:
   - { name: enforceTwofactor, type: boolean }
   - { name: type, type: string }
 
+- name: CloudflareAccountRole_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: account, type: CloudflareAccount_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: roles, type: string, isRequired: true, isList: true }
+  - name: access_roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: cloudflare_access
 - name: AWSGroup_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2677,6 +2692,7 @@ confs:
   - { name: slack_username, type: string }
   - { name: pagerduty_username, type: string }
   - { name: aws_username, type: string }
+  - { name: cloudflare_user, type: string }
   - { name: public_gpg_key, type: string }
   - { name: tag_on_merge_requests, type: boolean }
   - { name: tag_on_cluster_updates, type: boolean }
@@ -2744,6 +2760,7 @@ confs:
   - { name: glitchtip_roles, type: GlitchtipRole_v1, isList: true }
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
+  - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -3049,6 +3066,7 @@ confs:
   - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
   - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
   - { name: skupper_network_v1, type: SkupperNetwork_v1, isList: true, datafileSchema: /dependencies/skupper-network-1.yml }
+  - { name: cloudflare_account_role_v1, type: CloudflareAccountRole_v1, isList: true, datafileSchema: /cloudflare/account-role-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
