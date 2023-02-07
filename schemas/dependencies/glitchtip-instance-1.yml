@@ -19,8 +19,7 @@ properties:
     type: string
     format: uri
   automationUserEmail:
-    type: string
-    format: email
+    "$ref": "/common-1.json#/definitions/vaultSecret"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
 required:

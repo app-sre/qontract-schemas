@@ -3057,7 +3057,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: consoleUrl, type: string, isRequired: true }
-  - { name: automationUserEmail, type: string, isRequired: true }
+  - { name: automationUserEmail, type: VaultSecret_v1, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - name: organizations
     type: GlitchtipOrganization_v1
