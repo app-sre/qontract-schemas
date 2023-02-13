@@ -322,6 +322,7 @@ confs:
   - { name: knownHosts, type: string, isRequired: true, isResource: true }
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
+  - { name: remotePort, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
   - name: clusters
     type: Cluster_v1
