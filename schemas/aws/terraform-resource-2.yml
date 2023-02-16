@@ -977,6 +977,7 @@ oneOf:
   - identifier
   - vpc
   - certificate_arn
+  - ingress_cidr_blocks
   - targets
   - rules
 - additionalProperties: false
