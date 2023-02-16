@@ -920,7 +920,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
-- name: OpenShiftClusterManagerRecommendedVersionsWeight_v1 
+- name: OpenShiftClusterManagerRecommendedVersionsWeight_v1
   fields:
   - { name: majority, type: int }
   - { name: highest, type: int }
@@ -1923,7 +1923,7 @@ confs:
   - { name: resource, type: string, isRequired: true }
   - { name: override, type: string, isRequired: true }
 
-- name: NamespaceManagedResourceNames_v1
+- name: ManagedResourceNames_v1
   fields:
   - { name: resource, type: string, isRequired: true }
   - { name: resourceNames, type: string, isRequired: true, isList: true }
@@ -1973,7 +1973,7 @@ confs:
   - { name: managedRoles, type: boolean }
   - { name: managedResourceTypes, type: string, isList: true }
   - { name: managedResourceTypeOverrides, type: NamespaceManagedResourceTypeOverrides_v1, isList: true }
-  - { name: managedResourceNames, type: NamespaceManagedResourceNames_v1, isList: true }
+  - { name: managedResourceNames, type: ManagedResourceNames_v1, isList: true }
   - { name: sharedResources, type: SharedResources_v1, isList: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedExternalResources, type: boolean }
@@ -2247,6 +2247,7 @@ confs:
   - { name: pipelinesProvider, type: PipelinesProvider_v1, isRequired: true, isInterface: true }
   - { name: slack, type: SlackOutput_v1 }
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
+  - { name: managedResourceNames, type: ManagedResourceNames_v1, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
   - { name: allowedSecretParameterPaths, type: string, isList: true }
