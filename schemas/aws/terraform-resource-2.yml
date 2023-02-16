@@ -112,6 +112,11 @@ properties:
     type: string
   idle_timeout:
     type: integer
+  ingress_cidr_blocks:
+    description: ingress cidr blocks to allow for an alb
+    type: array
+    items:
+      type: string
   targets:
     type: array
     items:
@@ -893,6 +898,11 @@ oneOf:
       type: string
     idle_timeout:
       type: integer
+    ingress_cidr_blocks:
+      description: ingress cidr blocks to allow for an alb
+      type: array
+      items:
+        type: string
     targets:
       type: array
       items:
@@ -967,6 +977,7 @@ oneOf:
   - identifier
   - vpc
   - certificate_arn
+  - ingress_cidr_blocks
   - targets
   - rules
 - additionalProperties: false
