@@ -112,6 +112,9 @@ properties:
     type: string
   idle_timeout:
     type: integer
+  enable_http2:
+    description: indicates whether HTTP/2 is enabled
+    type: boolean
   ingress_cidr_blocks:
     description: ingress cidr blocks to allow for an alb
     type: array
@@ -903,6 +906,9 @@ oneOf:
       type: string
     idle_timeout:
       type: integer
+    enable_http2:
+      description: indicates whether HTTP/2 is enabled
+      type: boolean
     ingress_cidr_blocks:
       description: ingress cidr blocks to allow for an alb
       type: array

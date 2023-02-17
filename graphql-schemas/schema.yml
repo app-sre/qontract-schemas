@@ -1789,6 +1789,7 @@ confs:
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: idle_timeout, type: int }
+  - { name: enable_http2, type: boolean }
   - { name: ingress_cidr_blocks, type: string, isRequired: true, isList: true }
   - { name: ip_address_type, type: string }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
