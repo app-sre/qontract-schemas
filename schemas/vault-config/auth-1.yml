@@ -20,6 +20,7 @@ properties:
     - approle
     - github
     - oidc
+    - kubernetes
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
