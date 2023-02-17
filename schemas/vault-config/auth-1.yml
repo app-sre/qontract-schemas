@@ -36,6 +36,15 @@ properties:
             _type:
               type: string
               enum:
+              - kubernetes
+            kubernetes_host:
+              type: string
+          required:
+          - kubernetes_host
+        - properties:
+            _type:
+              type: string
+              enum:
               - github
             organization:
               type: string
