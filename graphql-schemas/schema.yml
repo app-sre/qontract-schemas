@@ -3271,7 +3271,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true, isUnique: true}
+  - { name: identifier, type: string, isRequired: true}
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true}
   - { name: ttl, type: int, isRequired: true}
