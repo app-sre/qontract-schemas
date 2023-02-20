@@ -66,19 +66,7 @@ properties:
   records:
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        ttl:
-          type: integer
-        value:
-          type: string
-        proxied:
-          type: boolean
+      "$ref": "/cloudflare/dns-record-1.yml"
   workers:
     type: array
     items:
@@ -207,24 +195,7 @@ oneOf:
     records:
       type: array
       items:
-        type: object
-        additionalProperties: false
-        properties:
-          name:
-            type: string
-          type:
-            type: string
-          ttl:
-            type: integer
-          value:
-            type: string
-          proxied:
-            type: boolean
-        required:
-        - name
-        - type
-        - ttl
-        - value
+        "$ref": "/cloudflare/dns-record-1.yml"
     workers:
       type: array
       items:
@@ -285,4 +256,3 @@ oneOf:
   - zone
 required:
 - provider
-
