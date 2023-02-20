@@ -156,6 +156,7 @@ confs:
     fieldMap:
       github: VaultAuthConfigGithub_v1
       oidc: VaultAuthConfigOidc_v1
+      kubernetes: VaultAuthConfigKubernetes_v1
   fields:
   - { name: _type, type: string, isRequired: true }
 
@@ -177,6 +178,12 @@ confs:
   - { name: oidc_client_secret, type: VaultSecret_v1, isRequired: true }
   - { name: oidc_client_secret_kv_version, type: string, isRequired: true }
   - { name: default_role, type: string, isRequired: true}
+
+- name: VaultAuthConfigKubernetes_v1
+  interface: VaultAuthConfig_v1
+  fields:
+  - { name: _type, type: string, isRequired: true }
+  - { name: kubernetes_host, type: string, isRequired: true }
 
 - name: VaultAuthSettings_v1
   fields:
