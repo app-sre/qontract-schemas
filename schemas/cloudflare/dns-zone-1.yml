@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/dns-zone-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+  zone:
+    type: string
+  plan:
+    type: string
+    enum:
+    - free
+    - enterprise
+  type:
+    enum:
+    - full
+    - partial
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/cloudflare/account-1.yml"
+  records:
+    type: array
+    maxItems: 1000
+    items:
+      "$ref": "/cloudflare/dns-record-1.yml"
+  delete:
+    type: boolean
+required:
+- "$schema"
+- zone 
