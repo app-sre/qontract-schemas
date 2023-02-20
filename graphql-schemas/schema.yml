@@ -221,6 +221,7 @@ confs:
     fieldMap:
       approle: VaultApproleOptions_v1
       oidc: VaultRoleOidcOptions_v1
+      kubernetes: VaultRoleKubernetesOptions_v1
   fields:
   - { name: _type, type: string, isRequired: true }
 
@@ -272,6 +273,24 @@ confs:
   - { name: token_num_uses, type: string, isRequired: true }
   - { name: user_claim, type: string, isRequired: true }
   - { name: verbose_oidc_logging, type: boolean }
+
+- name: VaultRoleKubernetesOptions_v1
+  interface: VaultRoleOptions_v1
+  fields:
+  - { name: _type, type: string, isRequired: true }
+  - { name: alias_name_source, type: string, isRequired: true }
+  - { name: audience, type: string }
+  - { name: bound_service_account_names, type: string, isList: true, isRequired: true }
+  - { name: bound_service_account_namespaces, type: string, isList: true, isRequired: true }
+  - { name: token_ttl, type: string, isRequired: true }
+  - { name: token_max_ttl, type: string, isRequired: true }
+  - { name: token_explicit_max_ttl, type: string, isRequired: true }
+  - { name: token_type, type: string, isRequired: true }
+  - { name: token_period, type: string, isRequired: true }
+  - { name: token_policies, type: string, isList: true, isRequired: true }
+  - { name: token_bound_cidrs, type: string, isList: true, isRequired: true }
+  - { name: token_no_default_policy, type: boolean, isRequired: true }
+  - { name: token_num_uses, type: string, isRequired: true }
 
 - name: VaultRole_v1
   fields:
