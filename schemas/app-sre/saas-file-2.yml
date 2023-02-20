@@ -49,6 +49,17 @@ properties:
     type: array
     items:
       type: string
+  managedResourceNames:
+    type: array
+    items:
+      type: object
+      properties:
+        resource:
+          type: string
+        resourceNames:
+          type: array
+          items:
+            type: string
   authentication:
     type: object
     properties:
