@@ -186,6 +186,63 @@ properties:
       - token_no_default_policy
       - token_num_uses
       - user_claim
+    - properties:
+        _type:
+          type: string
+          enum:
+          - kubernetes
+        alias_name_source:
+          type: string
+        audience:
+          type: string
+        bound_service_account_names:
+          type: array
+          items:
+            type: string
+        bound_service_account_namespaces:
+          type: array
+          items:
+            type: string
+        token_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_max_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_explicit_max_ttl:
+          type: string
+          pattern: '^\d+$'
+        token_type:
+          type: string
+        token_period:
+          type: string
+          pattern: '^\d+$'
+        token_policies:
+          type: array
+          items:
+            type: string
+        token_bound_cidrs:
+          type: array
+          items:
+            type: string
+        token_no_default_policy:
+          type: boolean
+        token_num_uses:
+          type: string
+          pattern: '^\d+$'
+      required:
+      - alias_name_source
+      - bound_service_account_names
+      - bound_service_account_namespaces
+      - token_ttl
+      - token_max_ttl
+      - token_explicit_max_ttl
+      - token_type
+      - token_period
+      - token_policies
+      - token_bound_cidrs
+      - token_no_default_policy
+      - token_num_uses
     required:
     - _type
 required:
