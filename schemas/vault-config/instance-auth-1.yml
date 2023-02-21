@@ -22,6 +22,8 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  sa_token_path:
+    type: string
 oneOf:
 - properties:
     provider:
@@ -44,6 +46,14 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
   required:
   - token
+- properties:
+    provider:
+      type: string
+      enum:
+      - kubernetes
+    sa_token_path:
+      type: string
+  required:
+  - sa_token_path
 required:
 - provider
-- secretEngine

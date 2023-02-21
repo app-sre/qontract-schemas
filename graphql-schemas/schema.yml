@@ -2494,9 +2494,10 @@ confs:
     fieldMap:
       approle: VaultInstanceAuthApprole_v1
       token: VaultInstanceAuthToken_v1
+      kubernetes: VaultInstanceAuthKubernetes_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: secretEngine, type: string, isRequired: true }
+  - { name: secretEngine, type: string }
 
 - name: VaultInstanceAuthApprole_v1
   interface: VaultInstanceAuth_v1
@@ -2512,6 +2513,13 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: secretEngine, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
+
+- name: VaultInstanceAuthKubernetes_v1
+  interface: VaultInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: sa_token_path, type: string, isRequired: true }
+  - { name: secretEngine, type: string }
 
 - name: OidcPermission_v1
   isInterface: true
