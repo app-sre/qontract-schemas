@@ -2497,7 +2497,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: secretEngine, type: string, isRequired: true }
-  - { name: saTokenPath, type: string }
+  - { name: kubeAuthEnabled, type: boolean }
 
 - name: VaultInstanceAuthApprole_v1
   interface: VaultInstanceAuth_v1
@@ -2506,7 +2506,7 @@ confs:
   - { name: secretEngine, type: string, isRequired: true }
   - { name: roleID, type: VaultSecret_v1, isRequired: true }
   - { name: secretID, type: VaultSecret_v1, isRequired: true }
-  - { name: saTokenPath, type: string }
+  - { name: kubeAuthEnabled, type: boolean }
 
 - name: VaultInstanceAuthToken_v1
   interface: VaultInstanceAuth_v1
@@ -2514,7 +2514,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: secretEngine, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
-  - { name: saTokenPath, type: string }
+  - { name: kubeAuthEnabled, type: boolean }
 
 - name: OidcPermission_v1
   isInterface: true
