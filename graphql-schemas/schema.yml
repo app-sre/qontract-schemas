@@ -1847,6 +1847,7 @@ confs:
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: domain_name, type: string, isRequired: true }
   - { name: openshift_ingress_load_balancer_arn, type: string, isRequired: false }
+  - { name: insights_callback_urls, type: string, isList: true, isRequired: false }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
