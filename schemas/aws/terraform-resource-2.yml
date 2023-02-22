@@ -178,6 +178,10 @@ properties:
       type: string
   openshift_ingress_load_balancer_arn:
     type: string
+  insights_callback_urls:
+    type: array
+    items:
+      type: string
   pre_signup_lambda_github_release_url:
     type: string
   subscriptions:
@@ -1182,6 +1186,10 @@ oneOf:
         type: string
     openshift_ingress_load_balancer_arn:
       type: string
+    insights_callback_urls:
+      type: array
+      items:
+        type: string
     certificate_arn:
       type: string
     domain_name:
