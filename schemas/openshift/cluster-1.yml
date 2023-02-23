@@ -516,7 +516,6 @@ properties:
           - openshift-limitranges
           - openshift-serviceaccount-tokens
           - terraform-resources
-          - terraform-aws-route53
           - ocm-additional-routers
           - ocm-addons
           - ocm-aws-infrastructure-access
