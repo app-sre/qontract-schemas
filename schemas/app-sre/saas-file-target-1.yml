@@ -11,6 +11,11 @@ properties:
     - /app-sre/saas-file-target-1.yml
   name:
     type: string
+  provider:
+    type: string
+    enum:
+    - static
+    - dynamic
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"

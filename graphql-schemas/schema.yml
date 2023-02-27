@@ -2361,6 +2361,7 @@ confs:
   fields:
   - { name: path, type: string }
   - { name: name, type: string, isContextUnique: true }
+  - { name: provider, type: string }
   - { name: namespace, type: Namespace_v1, isContextUnique: true }
   - { name: namespaceSelector, type: SaasResourceTemplateTargetNamespaceSelector_v1, isContextUnique: true }
   - { name: ref, type: string, isRequired: true }
