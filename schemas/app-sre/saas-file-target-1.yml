@@ -109,3 +109,8 @@ properties:
     type: boolean
 required:
 - ref
+oneOf:
+- required:
+  - namespace
+- required:
+  - namespaceSelector
