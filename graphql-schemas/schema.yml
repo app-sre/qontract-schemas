@@ -94,7 +94,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: user, type: User_v1, isRequired: true }
   - { name: credentials, type: string, isRequired: true }
