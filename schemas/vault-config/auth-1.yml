@@ -20,6 +20,7 @@ properties:
     - approle
     - github
     - oidc
+    - kubernetes
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
@@ -32,6 +33,15 @@ properties:
       config:
         type: object
         oneOf:
+        - properties:
+            _type:
+              type: string
+              enum:
+              - kubernetes
+            kubernetes_host:
+              type: string
+          required:
+          - kubernetes_host
         - properties:
             _type:
               type: string

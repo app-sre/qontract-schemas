@@ -157,6 +157,7 @@ confs:
     fieldMap:
       github: VaultAuthConfigGithub_v1
       oidc: VaultAuthConfigOidc_v1
+      kubernetes: VaultAuthConfigKubernetes_v1
   fields:
   - { name: _type, type: string, isRequired: true }
 
@@ -178,6 +179,12 @@ confs:
   - { name: oidc_client_secret, type: VaultSecret_v1, isRequired: true }
   - { name: oidc_client_secret_kv_version, type: string, isRequired: true }
   - { name: default_role, type: string, isRequired: true}
+
+- name: VaultAuthConfigKubernetes_v1
+  interface: VaultAuthConfig_v1
+  fields:
+  - { name: _type, type: string, isRequired: true }
+  - { name: kubernetes_host, type: string, isRequired: true }
 
 - name: VaultAuthSettings_v1
   fields:
@@ -215,6 +222,7 @@ confs:
     fieldMap:
       approle: VaultApproleOptions_v1
       oidc: VaultRoleOidcOptions_v1
+      kubernetes: VaultRoleKubernetesOptions_v1
   fields:
   - { name: _type, type: string, isRequired: true }
 
@@ -266,6 +274,24 @@ confs:
   - { name: token_num_uses, type: string, isRequired: true }
   - { name: user_claim, type: string, isRequired: true }
   - { name: verbose_oidc_logging, type: boolean }
+
+- name: VaultRoleKubernetesOptions_v1
+  interface: VaultRoleOptions_v1
+  fields:
+  - { name: _type, type: string, isRequired: true }
+  - { name: alias_name_source, type: string, isRequired: true }
+  - { name: audience, type: string }
+  - { name: bound_service_account_names, type: string, isList: true, isRequired: true }
+  - { name: bound_service_account_namespaces, type: string, isList: true, isRequired: true }
+  - { name: token_ttl, type: string, isRequired: true }
+  - { name: token_max_ttl, type: string, isRequired: true }
+  - { name: token_explicit_max_ttl, type: string, isRequired: true }
+  - { name: token_type, type: string, isRequired: true }
+  - { name: token_period, type: string, isRequired: true }
+  - { name: token_policies, type: string, isList: true, isRequired: true }
+  - { name: token_bound_cidrs, type: string, isList: true, isRequired: true }
+  - { name: token_no_default_policy, type: boolean, isRequired: true }
+  - { name: token_num_uses, type: string, isRequired: true }
 
 - name: VaultRole_v1
   fields:
@@ -323,6 +349,7 @@ confs:
   - { name: knownHosts, type: string, isRequired: true, isResource: true }
   - { name: user, type: string, isRequired: true }
   - { name: port, type: int }
+  - { name: remotePort, type: int }
   - { name: identity, type: VaultSecret_v1, isRequired: true }
   - name: clusters
     type: Cluster_v1
@@ -390,6 +417,19 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: keep_hours, type: int, isRequired: true }
 
+- name: JenkinsWorkerFleets_v1
+  fields:
+  - { name: account, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: credentialsId, type: string, isRequired: true }
+  - { name: fsRoot, type: string }
+  - { name: labelString, type: string, isRequired: true }
+  - { name: numExecutors, type: int }
+  - { name: idleMinutes, type: int }
+  - { name: minSpareSize, type: int }
+  - { name: noDelayProvision, type: boolean }
+
 - name: JenkinsInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -404,6 +444,7 @@ confs:
   - { name: deleteMethod, type: string }
   - { name: managedProjects, type: string, isList: true }
   - { name: buildsCleanupRules, type: JenkinsInstanceBuildsCleanupRules_v1, isList: true }
+  - { name: workerFleets, type: JenkinsWorkerFleets_v1, isList: true }
 
 - name: JenkinsConfig_v1
   datafile: /dependencies/jenkins-config-1.yml
@@ -899,7 +940,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
-- name: OpenShiftClusterManagerRecommendedVersionsWeight_v1 
+- name: OpenShiftClusterManagerRecommendedVersionsWeight_v1
   fields:
   - { name: majority, type: int }
   - { name: highest, type: int }
@@ -1321,7 +1362,7 @@ confs:
   - { name: type, type: string }
   - { name: settings, type: json }
   - { name: argo, type: CloudflareZoneArgo_v1 }
-  - { name: records, type: CloudflareZoneRecord_v1, isList: true }
+  - { name: records, type: CloudflareDnsRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
 
@@ -1329,14 +1370,6 @@ confs:
   fields:
   - { name: tiered_caching, type: boolean }
   - { name: smart_routing, type: boolean }
-
-- name: CloudflareZoneRecord_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: type, type: string, isRequired: true }
-  - { name: ttl, type: int, isRequired: true }
-  - { name: value, type: string, isRequired: true }
-  - { name: proxied, type: boolean }
 
 - name: CloudflareZoneWorker_v1
   fields:
@@ -1789,6 +1822,9 @@ confs:
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: idle_timeout, type: int }
+  - { name: enable_http2, type: boolean }
+  - { name: ingress_cidr_blocks, type: string, isRequired: true, isList: true }
+  - { name: ip_address_type, type: string }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
@@ -1826,6 +1862,7 @@ confs:
   - { name: certificate_arn, type: string, isRequired: true }
   - { name: domain_name, type: string, isRequired: true }
   - { name: openshift_ingress_load_balancer_arn, type: string, isRequired: false }
+  - { name: insights_callback_urls, type: string, isList: true, isRequired: false }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1913,7 +1950,7 @@ confs:
   - { name: resource, type: string, isRequired: true }
   - { name: override, type: string, isRequired: true }
 
-- name: NamespaceManagedResourceNames_v1
+- name: ManagedResourceNames_v1
   fields:
   - { name: resource, type: string, isRequired: true }
   - { name: resourceNames, type: string, isRequired: true, isList: true }
@@ -1963,7 +2000,7 @@ confs:
   - { name: managedRoles, type: boolean }
   - { name: managedResourceTypes, type: string, isList: true }
   - { name: managedResourceTypeOverrides, type: NamespaceManagedResourceTypeOverrides_v1, isList: true }
-  - { name: managedResourceNames, type: NamespaceManagedResourceNames_v1, isList: true }
+  - { name: managedResourceNames, type: ManagedResourceNames_v1, isList: true }
   - { name: sharedResources, type: SharedResources_v1, isList: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true }
   - { name: managedExternalResources, type: boolean }
@@ -2115,7 +2152,6 @@ confs:
   - { name: showInReviewQueue, type: boolean}
   - { name: gitlabRepoOwners, type: CodeComponentGitlabOwners_v1 }
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
-  - { name: jira, type: JiraServer_v1 }
   - { name: mirror, type: string }
 
 - name: Product_v1
@@ -2237,6 +2273,7 @@ confs:
   - { name: pipelinesProvider, type: PipelinesProvider_v1, isRequired: true, isInterface: true }
   - { name: slack, type: SlackOutput_v1 }
   - { name: managedResourceTypes, type: string, isRequired: true, isList: true }
+  - { name: managedResourceNames, type: ManagedResourceNames_v1, isList: true }
   - { name: authentication, type: SaasFileAuthentication_v1 }
   - { name: parameters, type: json }
   - { name: allowedSecretParameterPaths, type: string, isList: true }
@@ -2475,6 +2512,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: secretEngine, type: string, isRequired: true }
+  - { name: kubeRoleName, type: string }
 
 - name: VaultInstanceAuthApprole_v1
   interface: VaultInstanceAuth_v1
@@ -2483,6 +2521,7 @@ confs:
   - { name: secretEngine, type: string, isRequired: true }
   - { name: roleID, type: VaultSecret_v1, isRequired: true }
   - { name: secretID, type: VaultSecret_v1, isRequired: true }
+  - { name: kubeRoleName, type: string }
 
 - name: VaultInstanceAuthToken_v1
   interface: VaultInstanceAuth_v1
@@ -2490,6 +2529,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: secretEngine, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
+  - { name: kubeRoleName, type: string }
 
 - name: OidcPermission_v1
   isInterface: true
@@ -3052,6 +3092,7 @@ confs:
   - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
   - { name: template_tests_v1, type: TemplateTest_v1, isList: true, datafileSchema: /app-interface/template-test-1.yml }
   - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
+  - { name: cloudflare_dns_zone_v1, type: CloudflareDnsZone_v1, isList: true, datafileSchema: /cloudflare/dns-zone-1.yml }
   - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
   - { name: ocp_release_mirror_v1, type: OcpReleaseMirror_v1, isList: true, datafileSchema: /dependencies/ocp-release-mirror-1.yml}
   - { name: slo_document_v1, type: SLODocument_v1, isList: true, datafileSchema: /app-sre/slo-document-1.yml}
@@ -3246,6 +3287,41 @@ confs:
   - { name: vpc, type: AWSVPC_v1 }
   - { name: origin, type: string, isRequired: true }
   - { name: records, type: DnsRecord_v1, isList: true }
+
+- name: CloudflareDnsRecordDataSettings_v1
+  fields:
+  - { name: algorithm, type: int }
+  - { name: key_tag, type: int }
+  - { name: flags, type: int }
+  - { name: protocol, type: int }
+  - { name: public_key, type: string }
+  - { name: digest_type, type: int }
+  - { name: digest, type: string }
+
+- name: CloudflareDnsRecord_v1
+  fields:
+  - { name: identifier, type: string, isRequired: true}
+  - { name: name, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true}
+  - { name: ttl, type: int, isRequired: true}
+  - { name: value, type: string }
+  - { name: data, type: CloudflareDnsRecordDataSettings_v1 }
+  - { name: proxied, type: boolean }
+  - { name: priority, type: int }
+
+
+- name: CloudflareDnsZone_v1
+  datafile: /cloudflare/dns-zone-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true}
+  - { name: account, type: CloudflareAccount_v1, isRequired: true }
+  - { name: zone, type: string, isRequired: true }
+  - { name: type, type: string }
+  - { name: plan, type: string }
+  - { name: records, type: CloudflareDnsRecord_v1, isList: true }
+  - { name: delete, type: boolean }
 
 - name: SLODocumentSLOSLOParameters_v1
   fields:

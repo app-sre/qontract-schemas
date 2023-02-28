@@ -111,6 +111,26 @@
       "minimum": 90,
       "exclusiveMaximum": 100
     },
+    "dsDNSRecordAlgro": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 255
+    },
+    "dsDNSRecordKeyTag": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "dsDNSKEYRecordFlags": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "DNSRecordPriority": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 65535
+    },
     "crossref": {
       "type": "object",
       "properties": {

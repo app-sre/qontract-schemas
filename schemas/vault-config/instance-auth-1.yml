@@ -11,6 +11,8 @@ properties:
     - /vault-config/instance-auth-1.yml
   provider:
     type: string
+  kubeRoleName:
+    type: string
   secretEngine:
     type: string
     enum:

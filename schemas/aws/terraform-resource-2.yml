@@ -112,6 +112,19 @@ properties:
     type: string
   idle_timeout:
     type: integer
+  enable_http2:
+    description: indicates whether HTTP/2 is enabled
+    type: boolean
+  ingress_cidr_blocks:
+    description: ingress cidr blocks to allow for an alb
+    type: array
+    items:
+      type: string
+  ip_address_type:
+    type: string
+    enum:
+    - ipv4
+    - dualstack
   targets:
     type: array
     items:
@@ -165,6 +178,10 @@ properties:
       type: string
   openshift_ingress_load_balancer_arn:
     type: string
+  insights_callback_urls:
+    type: array
+    items:
+      type: string
   pre_signup_lambda_github_release_url:
     type: string
   subscriptions:
@@ -893,6 +910,19 @@ oneOf:
       type: string
     idle_timeout:
       type: integer
+    enable_http2:
+      description: indicates whether HTTP/2 is enabled
+      type: boolean
+    ingress_cidr_blocks:
+      description: ingress cidr blocks to allow for an alb
+      type: array
+      items:
+        type: string
+    ip_address_type:
+      type: string
+      enum:
+      - ipv4
+      - dualstack
     targets:
       type: array
       items:
@@ -967,6 +997,7 @@ oneOf:
   - identifier
   - vpc
   - certificate_arn
+  - ingress_cidr_blocks
   - targets
   - rules
 - additionalProperties: false
@@ -1155,6 +1186,10 @@ oneOf:
         type: string
     openshift_ingress_load_balancer_arn:
       type: string
+    insights_callback_urls:
+      type: array
+      items:
+        type: string
     certificate_arn:
       type: string
     domain_name:

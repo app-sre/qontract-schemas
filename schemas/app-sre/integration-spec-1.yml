@@ -94,6 +94,7 @@ properties:
     description: the strategy to use for sharding
     enum:
     - per-aws-account
+    - per-cloudflare-zone
     - static
   sleepDurationSecs:
     type: string
