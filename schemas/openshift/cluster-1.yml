@@ -528,6 +528,7 @@ properties:
           - ocm-upgrade-scheduler
           - slack-usergroups
           - skupper-network
+          - glitchtip-project-dsn
       e2eTests:
         type: array
         items:
