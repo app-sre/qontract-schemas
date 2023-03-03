@@ -42,6 +42,31 @@ properties:
     properties:
       weight:
         type: integer
+  geolocation_routing_policy:
+    type: object
+    oneOf:
+    - properties:
+        continent:
+          type: string
+          enum:
+          - AF  # Africa
+          - AN  # Antarctica
+          - AS  # Asia
+          - EU  # Europe
+          - OC  # Oceania
+          - NA  # North America
+          - SA  # South America
+        subdivision:
+          type: string
+      required:
+      - continent
+    - properties:
+        country:
+          type: string
+        subdivision:
+          type: string
+      required:
+      - country
   set_identifier:
     type: string
   records:

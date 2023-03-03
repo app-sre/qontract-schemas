@@ -3257,6 +3257,12 @@ confs:
   fields:
   - { name: weight, type: int }
 
+- name: DnsRecordGeolocationRoutingPolicy_v1
+  fields:
+  - { name: continent, type: string }
+  - { name: country, type: string }
+  - { name: subdivision, type: string }
+
 - name: DnsRecordAlias_v1
   fields:
   - { name: name, type: string, isRequired: true }
@@ -3270,6 +3276,7 @@ confs:
   - { name: ttl, type: int }
   - { name: alias, type: DnsRecordAlias_v1 }
   - { name: weighted_routing_policy, type: DnsRecordWeightedRoutingPolicy_v1 }
+  - { name: geolocation_routing_policy, type: DnsRecordGeolocationRoutingPolicy_v1 }
   - { name: set_identifier, type: string }
   - { name: records, type: string, isList: true }
   - { name: _healthcheck, type: DnsRecordHealthcheck_v1 }
