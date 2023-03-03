@@ -40,6 +40,10 @@ properties:
               - kubernetes
             kubernetes_host:
               type: string
+            kubernetes_ca_cert:
+              type: string
+            disable_local_ca_jwt:
+              type: boolean
           required:
           - kubernetes_host
         - properties:
