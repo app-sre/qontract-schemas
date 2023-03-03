@@ -40,11 +40,14 @@ properties:
         type: string
         enum:
         - lowest-price
+        - price-capacity-optimized
         - capacity-optimized
         - capacity-optimized-prioritized
       on_demand_base_capacity:
         type: integer
       on_demand_percentage_above_base_capacity:
+        type: integer
+      spot_instance_pools:
         type: integer
   instance_refresh_preferences:
     type: object
