@@ -170,6 +170,27 @@ properties:
     description: Email domain allow list restricts user with specific email domain to get access to Cloudflare systems
     items:
       type: string
+  state:
+    type: object
+    description: app-interface state settings
+    oneOf:
+    - additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - s3
+        bucket:
+          type: string
+        region:
+          type: string
+        credentials:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - provider
+      - bucket
+      - region
+      - credentials
 required:
 - "$schema"
 - labels
