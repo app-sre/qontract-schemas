@@ -41,7 +41,12 @@ properties:
             kubernetes_host:
               type: string
             kubernetes_ca_cert:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+            kubernetes_ca_cert_kv_version:
               type: string
+              enum:
+              - kv_v1
+              - kv_v2
             disable_local_ca_jwt:
               type: boolean
           required:
