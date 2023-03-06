@@ -185,7 +185,7 @@ confs:
   fields:
   - { name: _type, type: string, isRequired: true }
   - { name: kubernetes_host, type: string, isRequired: true }
-  - { name: kubernetes_ca_cert, type: string }
+  - { name: kubernetes_ca_cert, type: VaultSecret_v1 }
   - { name: disable_local_ca_jwt, type: boolean }
 
 - name: VaultAuthSettings_v1
