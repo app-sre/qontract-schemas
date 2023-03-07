@@ -28,6 +28,25 @@ confs:
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
   - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
+  - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
+
+- name: AppInterfaceStateConfiguration_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      s3: AppInterfaceStateConfigurationS3_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: AppInterfaceStateConfigurationS3_v1
+  interface: AppInterfaceStateConfiguration_v1
+  fields:
+  - { name: provider, type: string, isRequired: true  }
+  - { name: bucket, type: string, isRequired: true  }
+  - { name: region, type: string, isRequired: true  }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true  }
 
 - name: SmtpSettings_v1
   fields:
