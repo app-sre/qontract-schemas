@@ -982,6 +982,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
+  - { name: orgId, type: string, isRequired: true, isUnique: true }
   - { name: url, type: string, isRequired: true }
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
