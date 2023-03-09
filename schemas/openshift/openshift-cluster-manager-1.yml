@@ -18,7 +18,7 @@ properties:
   orgId:
     type: string
     description: |
-      The internal OCM organization ID that that can be found via
+      The internal OCM organization ID that can be found via
       ocm whoami | jq .organization.id
   url:
     type: string
