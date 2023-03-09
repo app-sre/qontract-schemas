@@ -78,7 +78,11 @@ properties:
           type: integer
         minSpareSize:
           type: integer
+        maxTotalUses:
+          type: integer
         noDelayProvision:
+          type: boolean
+        alwaysReconnect:
           type: boolean
       required:
       - account

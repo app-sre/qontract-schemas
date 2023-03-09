@@ -450,7 +450,9 @@ confs:
   - { name: numExecutors, type: int }
   - { name: idleMinutes, type: int }
   - { name: minSpareSize, type: int }
+  - { name: maxTotalUses, type: int }
   - { name: noDelayProvision, type: boolean }
+  - { name: alwaysReconnect, type: boolean }
 
 - name: JenkinsInstance_v1
   fields:
