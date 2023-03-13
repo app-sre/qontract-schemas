@@ -15,6 +15,11 @@ properties:
     type: string
   description:
     type: string
+  orgId:
+    type: string
+    description: |
+      The internal OCM organization ID that can be found via
+      ocm whoami | jq .organization.id
   url:
     type: string
     format: uri
@@ -200,6 +205,7 @@ required:
 - labels
 - name
 - url
+- orgId
 - description
 - accessTokenClientId
 - accessTokenUrl

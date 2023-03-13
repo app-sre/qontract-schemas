@@ -450,7 +450,9 @@ confs:
   - { name: numExecutors, type: int }
   - { name: idleMinutes, type: int }
   - { name: minSpareSize, type: int }
+  - { name: maxTotalUses, type: int }
   - { name: noDelayProvision, type: boolean }
+  - { name: alwaysReconnect, type: boolean }
 
 - name: JenkinsInstance_v1
   fields:
@@ -833,6 +835,7 @@ confs:
   - { name: tags, type: json }
   - { name: manageRoutes, type: boolean }
   - { name: manageSecurityGroups, type: boolean }
+  - { name: manageRoute53Associations, type: boolean }
   - { name: cidrBlock, type: string }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
@@ -982,6 +985,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
+  - { name: orgId, type: string, isRequired: true, isUnique: true }
   - { name: url, type: string, isRequired: true }
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
@@ -2361,7 +2365,9 @@ confs:
   fields:
   - { name: path, type: string }
   - { name: name, type: string, isContextUnique: true }
-  - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
+  - { name: provider, type: string }
+  - { name: namespace, type: Namespace_v1, isContextUnique: true }
+  - { name: namespaceSelector, type: SaasResourceTemplateTargetNamespaceSelector_v1, isContextUnique: true }
   - { name: ref, type: string, isRequired: true }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
@@ -2376,6 +2382,15 @@ confs:
   fields:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+
+- name: SaasResourceTemplateTargetNamespaceSelector_v1
+  fields:
+  - { name: jsonPathSelectors, type: JsonPathSelectors_v1, isRequired: true }
+
+- name: JsonPathSelectors_v1
+  fields:
+  - { name: include, type: string, isList: true, isRequired: true }
+  - { name: exclude, type: string, isList: true, isRequired: true }
 
 - name: SaasResourceTemplateTargetUpstream_v1
   fields:
