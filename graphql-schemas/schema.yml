@@ -1073,7 +1073,6 @@ confs:
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
-  - { name: org_username, type: string, isSearchable: true, isRequired: true, isUnique: true }
 
   - name: ecrs
     type: AWSECR_v1
