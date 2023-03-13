@@ -1073,6 +1073,7 @@ confs:
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
+  - { name: org_username, type: string, isSearchable: true, isRequired: true, isUnique: true }
 
   - name: ecrs
     type: AWSECR_v1
@@ -2778,6 +2779,12 @@ confs:
     synthetic:
       schema: /app-sre/gabi-instance-1.yml
       subAttr: users
+  - name: aws_accounts
+    type: AWSAccount_v1
+    isList: true
+    synthetic:
+      schema: /aws/account-1.yml
+      subAttr: resetPasswords.user
 
 - name: Bot_v1
   fields:
