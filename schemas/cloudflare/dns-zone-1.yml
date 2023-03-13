@@ -29,7 +29,7 @@ properties:
     "$schemaRef": "/cloudflare/account-1.yml"
   records:
     type: array
-    maxItems: 1000
+    maxItems: 1500
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
   delete:
