@@ -337,6 +337,8 @@ properties:
               type: boolean
             manageSecurityGroups:
               type: boolean
+            manageRoute53Associations:
+              type: boolean
             cidrBlock:
               type: string
             delete:
@@ -412,6 +414,8 @@ properties:
               manageRoutes:
                 type: boolean
               manageSecurityGroups:
+                type: boolean
+              manageRoute53Associations:
                 type: boolean
               cidrBlock:
                 type: string
