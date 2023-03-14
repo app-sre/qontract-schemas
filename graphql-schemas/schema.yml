@@ -1389,8 +1389,41 @@ confs:
     fieldMap:
       zone: NamespaceTerraformResourceCloudflareZone_v1
       worker_script: NamespaceTerraformResourceCloudflareWorkerScript_v1
+      logpush_ownership_challenge: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
+      logpush_job: NamespaceTerraformResourceLogpushJob_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+
+
+- name: NamespaceTerraformResourceLogpushJob_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: zone, type: string }
+  - { name: enabled, type: boolean }
+  - { name: identifier, type: string, isRequired: true}
+  - { name: destination_conf, type: string, isRequired: true }
+  - { name: logpull_options, type: string }
+  - { name: ownership_challenge, type: string }
+  - { name: dataset, type: string }
+  - { name: frequency, type: string }
+
+- name: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: zone, type: boolean }
+  - { name: identifier, type: string, isRequired: true}
+  - { name: destination_conf, type: string, isRequired: true }
+
+- name: NamespaceTerraformResourceLogpullRetention_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: zone, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true}
+  - { name: enabled, type: boolean, isRequired: true }
+
 
 - name: NamespaceTerraformResourceCloudflareZone_v1
   interface: NamespaceTerraformResourceCloudflare_v1

@@ -128,6 +128,21 @@ properties:
       - validation_method
       - validity_days
       - certificate_authority
+  destination_conf:
+    type: string
+  enabled:
+    type: boolean
+  logpull_options:
+    type: string
+  ownership_challenge:
+    type: string
+  dataset:
+    type: string
+  frequency: # make this enum with low, high
+    type: string
+  
+          
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -266,5 +281,66 @@ oneOf:
   required:
   - identifier
   - zone
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - logpush_ownership_challenge
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    zone:
+      type: string
+    destination_conf:
+      type: string
+  required:
+  - destination_conf
+  - identifier
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - logpush_job
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    zone:
+      type: string
+    destination_conf:
+      type: string
+    enabled:
+      type: boolean
+    logpull_options:
+      type: string
+    ownership_challenge:
+      type: string
+    dataset:
+      type: string
+    frequency: # make this enum with low, high
+      type: string
+  required:
+  - destination_conf
+  - identifier
+  - enabled
+  - logpull_options
+  - ownership_challenge
+  - dataset
+  - frequency
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - logpull_retention
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    zone:
+      type: string
+    enabled:
+      type: boolean
+  required:
+  - zone
+  - identifier
+  - enabled
 required:
 - provider
