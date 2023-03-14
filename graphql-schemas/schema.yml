@@ -1391,9 +1391,9 @@ confs:
       worker_script: NamespaceTerraformResourceCloudflareWorkerScript_v1
       logpush_ownership_challenge: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
       logpush_job: NamespaceTerraformResourceLogpushJob_v1
+      logpull_retention: NamespaceTerraformResourceLogpullRetention_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-
 
 - name: NamespaceTerraformResourceLogpushJob_v1
   interface: NamespaceTerraformResourceCloudflare_v1
@@ -1412,7 +1412,7 @@ confs:
   interface: NamespaceTerraformResourceCloudflare_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-  - { name: zone, type: boolean }
+  - { name: zone, type: string }
   - { name: identifier, type: string, isRequired: true}
   - { name: destination_conf, type: string, isRequired: true }
 

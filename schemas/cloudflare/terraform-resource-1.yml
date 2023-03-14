@@ -130,6 +130,7 @@ properties:
       - certificate_authority
   destination_conf:
     type: string
+    pattern: '^s3'
   enabled:
     type: boolean
   logpull_options:
@@ -138,11 +139,9 @@ properties:
     type: string
   dataset:
     type: string
-  frequency: # make this enum with low, high
+  frequency:
     type: string
   
-          
-
 oneOf:
 - additionalProperties: false
   properties:
@@ -293,6 +292,7 @@ oneOf:
       type: string
     destination_conf:
       type: string
+      pattern: '^s3'
   required:
   - destination_conf
   - identifier
@@ -308,6 +308,7 @@ oneOf:
       type: string
     destination_conf:
       type: string
+      pattern: '^s3'
     enabled:
       type: boolean
     logpull_options:
@@ -316,7 +317,7 @@ oneOf:
       type: string
     dataset:
       type: string
-    frequency: # make this enum with low, high
+    frequency: 
       type: string
   required:
   - destination_conf
