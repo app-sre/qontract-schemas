@@ -36,8 +36,6 @@ properties:
       "$schemaRef": "/access/role-1.yml"
   public_gpg_key:
     type: string
-  reset_password:
-    type: string
   tag_on_merge_requests:
     type: boolean
   tag_on_cluster_updates:
