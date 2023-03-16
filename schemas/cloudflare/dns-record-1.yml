@@ -17,6 +17,7 @@ properties:
     type: string
     enum:
     - A
+    - AAAA
     - CNAME
     - TXT
     - NS
