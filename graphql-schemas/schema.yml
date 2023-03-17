@@ -987,7 +987,7 @@ confs:
   - { name: description, type: string }
   - { name: orgId, type: string, isRequired: true, isUnique: true }
   - { name: environment, type: OpenShiftClusterManagerEnvironment_v1, isRequired: true }
-  - { name: accessTokenClientId, type: "string" }
+  - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
   - { name: addonManagedUpgrades, type: boolean }
