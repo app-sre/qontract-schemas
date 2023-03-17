@@ -11,31 +11,9 @@ properties:
     - /app-sre/saas-file-target-1.yml
   name:
     type: string
-  provider:
-    type: string
-    enum:
-    - static
-    - dynamic
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
-  namespaceSelector:
-    jsonPathSelectors:
-      type: object
-      additionalProperties: false
-      properties:
-        include:
-          type: array
-          items:
-            type: string
-          minItems: 1
-        exclude:
-          type: array
-          items:
-            type: string
-          minItems: 1
-      required:
-      - include
   ref:
     type: string
     pattern: '^([0-9a-f]{40}|master|main|internal)$'
@@ -113,9 +91,5 @@ properties:
   delete:
     type: boolean
 required:
+- namespace
 - ref
-oneOf:
-- required:
-  - namespace
-- required:
-  - namespaceSelector
