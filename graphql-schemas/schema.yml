@@ -986,9 +986,9 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: orgId, type: string, isRequired: true, isUnique: true }
-  - { name: url, type: string, isRequired: true }
-  - { name: accessTokenClientId, type: string, isRequired: true }
-  - { name: accessTokenUrl, type: string, isRequired: true }
+  - { name: environment, type: OpenShiftClusterManagerEnvironment_v1, isRequired: true }
+  - { name: accessTokenClientId, type: "string" }
+  - { name: accessTokenUrl, type: string }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
   - { name: addonManagedUpgrades, type: boolean }
   - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
@@ -1008,6 +1008,19 @@ confs:
     synthetic:
       schema: /openshift/cluster-1.yml
       subAttr: cluster
+
+- name: OpenShiftClusterManagerEnvironment_v1
+  datafile: /openshift/openshift-cluster-manager-environment-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: accessTokenClientId, type: string, isRequired: true }
+  - { name: accessTokenUrl, type: string, isRequired: true }
+  - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
 
 - name: AddonUpgradeTest_v1
   fields:
@@ -3132,6 +3145,7 @@ confs:
   - { name: shared_resources_v1, type: SharedResources_v1, isList: true, datafileSchema: /openshift/shared-resources-1.yml }
   - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
   - { name: ocm_instances_v1, type: OpenShiftClusterManager_v1, isList: true, datafileSchema: /openshift/openshift-cluster-manager-1.yml }
+  - { name: ocm_environments_v1, type: OpenShiftClusterManagerEnvironment_v1, isList: true, isRequired: true, datafileSchema: /openshift/openshift-cluster-manager-environment-1.yml }
   - { name: dyn_traffic_directors_v1, type: DynTrafficDirector_v1, isList: true, datafileSchema: /dependencies/dyn-traffic-director-1.yml }
   - { name: status_page_v1, type: StatusPage_v1, isList: true, datafileSchema: /dependencies/status-page-1.yml }
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }

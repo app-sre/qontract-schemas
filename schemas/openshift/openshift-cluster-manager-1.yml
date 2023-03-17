@@ -20,9 +20,9 @@ properties:
     description: |
       The internal OCM organization ID that can be found via
       ocm whoami | jq .organization.id
-  url:
-    type: string
-    format: uri
+  environment:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/openshift-cluster-manager-environment-1.yml"
   accessTokenClientId:
     type: string
   accessTokenUrl:
@@ -77,7 +77,7 @@ properties:
     type: object
     additionalProperties: false
     properties:
-      majority: 
+      majority:
         description: most used version currently running that workload
         type: number
       highest:
@@ -204,9 +204,6 @@ required:
 - "$schema"
 - labels
 - name
-- url
+- environment
 - orgId
 - description
-- accessTokenClientId
-- accessTokenUrl
-- accessTokenClientSecret
