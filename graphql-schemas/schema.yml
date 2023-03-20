@@ -3146,7 +3146,6 @@ confs:
   - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
   - { name: ocm_instances_v1, type: OpenShiftClusterManager_v1, isList: true, datafileSchema: /openshift/openshift-cluster-manager-1.yml }
   - { name: ocm_environments_v1, type: OpenShiftClusterManagerEnvironment_v1, isList: true, isRequired: true, datafileSchema: /openshift/openshift-cluster-manager-environment-1.yml }
-  - { name: dyn_traffic_directors_v1, type: DynTrafficDirector_v1, isList: true, datafileSchema: /dependencies/dyn-traffic-director-1.yml }
   - { name: status_page_v1, type: StatusPage_v1, isList: true, datafileSchema: /dependencies/status-page-1.yml }
   - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
@@ -3405,18 +3404,6 @@ confs:
   - { name: app, type: App_v1, isRequired: true }
   - { name: namespaces, type: Namespace_v1, isList: true, isRequired: true }
   - { name: slos, type: SLODocumentSLO_v1, isList: true }
-
-- name: DynTrafficDirectorRecord_v1
-  fields:
-  - { name: hostname, type: string }
-  - { name: cluster, type: Cluster_v1 }
-  - { name: weight, type: int, isRequired: true }
-
-- name: DynTrafficDirector_v1
-  fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: ttl, type: int }
-  - { name: records, type: DynTrafficDirectorRecord_v1, isRequired: true, isList: true }
 
 - name: StatusPage_v1
   fields:
