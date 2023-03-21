@@ -2898,7 +2898,7 @@ confs:
   interface: IntegrationSpecShardSpecOverride_v1
   fields:
     - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
+    - { name: awsAccounts, type: AWSAccount_v1, isRequired: true, isList: true }
     - { name: imageRef, type: string, isRequired: true }
 
 - name: IntegrationSpecShardSpecOverride_v1
