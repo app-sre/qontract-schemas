@@ -183,6 +183,8 @@ properties:
                   - /app-sre/unleash-instance-1.yml
                   - /dependencies/dns-zone-1.yml
                   - /dependencies/quay-org-1.yml
+                  - /cloudflare/account-1.yml
+                  - /cloudflare/dns-zone-1.yml
 required:
 - $schema
 - labels
