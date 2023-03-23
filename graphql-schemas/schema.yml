@@ -1140,6 +1140,7 @@ confs:
   - { name: addr_block, type: string }
 
 - name: CloudflareAccount_v1
+  datafile: /cloudflare/account-1.yml
   interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
