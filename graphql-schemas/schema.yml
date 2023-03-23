@@ -1402,6 +1402,7 @@ confs:
   - { name: type, type: string }
   - { name: settings, type: json }
   - { name: argo, type: CloudflareZoneArgo_v1 }
+  - { name: cache_reserve, type: CloudflareZoneCacheReserve_v1 }
   - { name: records, type: CloudflareDnsRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
@@ -1410,6 +1411,10 @@ confs:
   fields:
   - { name: tiered_caching, type: boolean }
   - { name: smart_routing, type: boolean }
+
+- name: CloudflareZoneCacheReserve_v1
+  fields:
+  - { name: enabled, type: boolean }
 
 - name: CloudflareZoneWorker_v1
   fields:

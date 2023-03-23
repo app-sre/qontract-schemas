@@ -63,6 +63,12 @@ properties:
         type: boolean
       smart_routing:
         type: boolean
+  cache_reserve:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
   records:
     type: array
     items:
@@ -191,6 +197,12 @@ oneOf:
         tiered_caching:
           type: boolean
         smart_routing:
+          type: boolean
+    cache_reserve:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
           type: boolean
     records:
       type: array
