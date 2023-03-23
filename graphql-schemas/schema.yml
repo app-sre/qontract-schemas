@@ -1140,6 +1140,7 @@ confs:
   - { name: addr_block, type: string }
 
 - name: CloudflareAccount_v1
+  datafile: /cloudflare/account-1.yml
   interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -2903,7 +2904,7 @@ confs:
   interface: IntegrationSpecShardSpecOverride_v1
   fields:
     - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: awsAccount, type: AWSAccount_v1, isRequired: true }
+    - { name: awsAccounts, type: AWSAccount_v1, isRequired: true, isList: true }
     - { name: imageRef, type: string, isRequired: true }
 
 - name: IntegrationSpecShardSpecOverride_v1
