@@ -63,6 +63,17 @@ properties:
         type: boolean
       smart_routing:
         type: boolean
+  tiered_cache:
+    type: object
+    additionalProperties: false
+    properties:
+      cache_type:
+        type: string
+        enum:
+          - generic
+          - smart
+    required:
+      - cache_type
   cache_reserve:
     type: object
     additionalProperties: false
@@ -212,6 +223,17 @@ oneOf:
           type: boolean
         smart_routing:
           type: boolean
+    tiered_cache:
+      type: object
+      additionalProperties: false
+      properties:
+        cache_type:
+          type: string
+          enum:
+            - generic
+            - smart
+      required:
+        - cache_type
     cache_reserve:
       type: object
       additionalProperties: false
