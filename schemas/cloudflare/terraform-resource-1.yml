@@ -130,7 +130,7 @@ properties:
       - certificate_authority
   destination_conf:
     type: string
-    pattern: '^s3'
+    pattern: 's3:\/\/.+$'
   enabled:
     type: boolean
   logpull_options:
@@ -292,7 +292,7 @@ oneOf:
       type: string
     destination_conf:
       type: string
-      pattern: '^s3'
+      pattern: 's3:\/\/.+$'
   required:
   - destination_conf
   - identifier
@@ -308,7 +308,7 @@ oneOf:
       type: string
     destination_conf:
       type: string
-      pattern: '^s3'
+      pattern: 's3:\/\/.+$'
     enabled:
       type: boolean
     logpull_options:
