@@ -3292,6 +3292,13 @@ confs:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
 
+- name: DnsRecordFromVault_v1
+  fields:
+    - { name: path, type: string, isRequired: true }
+    - { name: field, type: string, isRequired: true }
+    - { name: key, type: string }
+    - { name: version, type: int }
+
 - name: DnsRecordHealthcheck_v1
   fields:
   - { name: fqdn, type: string }
@@ -3331,6 +3338,7 @@ confs:
   - { name: _healthcheck, type: DnsRecordHealthcheck_v1 }
   - { name: _target_cluster, type: Cluster_v1 }
   - { name: _target_namespace_zone, type: DnsNamespaceZone_v1 }
+  - { name: _records_from_vault, type: DnsRecordFromVault_v1, isList: true }
 
 - name: DnsZone_v1
   datafile: /dependencies/dns-zone-1.yml
@@ -3344,6 +3352,7 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: vpc, type: AWSVPC_v1 }
+  - { name: allowed_vault_secret_paths, type: string, isList: true }
   - { name: origin, type: string, isRequired: true }
   - { name: records, type: DnsRecord_v1, isList: true }
 
