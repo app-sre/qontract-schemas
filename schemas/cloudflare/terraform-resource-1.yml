@@ -152,6 +152,12 @@ properties:
     type: string
   frequency:
     type: string
+  filter:
+    type: string
+  kind:
+    type: string
+  name:
+    type: string
   
 oneOf:
 - additionalProperties: false
@@ -341,14 +347,16 @@ oneOf:
       type: string
     frequency: 
       type: string
+    filter:
+      type: string
+    kind:
+      type: string
+    name:
+      type: string
   required:
   - destination_conf
   - identifier
-  - enabled
-  - logpull_options
-  - ownership_challenge
   - dataset
-  - frequency
 - additionalProperties: false
   properties:
     provider:
