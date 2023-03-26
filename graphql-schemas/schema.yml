@@ -1407,6 +1407,9 @@ confs:
   - { name: ownership_challenge, type: string }
   - { name: dataset, type: string }
   - { name: frequency, type: string }
+  - { name: name, type: string }
+  - { name: filter, type: string }
+  - { name: kind, type: string }
 
 - name: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
   interface: NamespaceTerraformResourceCloudflare_v1
