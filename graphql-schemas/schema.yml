@@ -28,6 +28,7 @@ confs:
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
   - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
+  - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
 
 - name: AppInterfaceStateConfiguration_v1
@@ -3430,6 +3431,7 @@ confs:
   - { name: type, type: string }
   - { name: plan, type: string }
   - { name: records, type: CloudflareDnsRecord_v1, isList: true }
+  - { name: max_records, type: int }
   - { name: delete, type: boolean }
 
 - name: SLODocumentSLOSLOParameters_v1
