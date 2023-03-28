@@ -56,6 +56,10 @@
       "type": "string",
       "minLength": 1
     },
+    "vaultSecretPath": {
+      "type": "string",
+      "pattern": "^[^\\/][A-Za-z0-9-_\\/\\.]+[^\\/]$"
+    },
     "k8sValidContainerName": {
       "type": "string",
       "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*",
