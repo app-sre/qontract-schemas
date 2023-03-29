@@ -1,0 +1,35 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/terraform-repo-1.yml
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  name:
+    type: string
+  repository:
+    description: GitLab repository URL
+    type: string
+    pattern: "^.+\/.+$"
+  ref:
+    description: commit or branch name
+    type: string
+    pattern: '^([0-9a-f]{40}|master|main)$'
+  path:
+    description: path of terraform module
+    type: string
+required:
+- "$schema"
+- account
+- name
+- repositoryURL
+- ref
+- path
+
