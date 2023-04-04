@@ -19,6 +19,8 @@ properties:
     - qontract-reconcile
     - e2e-tests
     - app-interface-reporter
+    - glitchtip-access-reporter
+    - glitchtip-access-revalidation
   disableUnleash:
     type: boolean
     description: disable integration interaction with unleash instance
@@ -136,6 +138,6 @@ properties:
   failedJobHistoryLimit:
     type: integer
     description: number of history records reserved for failed integration executions
-  
+
 required:
 - resources
