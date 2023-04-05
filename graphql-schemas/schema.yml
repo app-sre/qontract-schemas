@@ -3836,7 +3836,7 @@ confs:
 
 - name: SkupperSiteControllerTemplate_v1
   fields:
-  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: path, type: string, isRequired: true }
   - { name: variables, type: json }
 
 - name: SkupperNetwork_v1
