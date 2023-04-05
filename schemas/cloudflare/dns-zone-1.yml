@@ -32,6 +32,8 @@ properties:
     maxItems: 1500
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
+  max_records:
+    type: integer
   delete:
     type: boolean
 required:

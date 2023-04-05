@@ -170,6 +170,8 @@ properties:
     description: Email domain allow list restricts user with specific email domain to get access to Cloudflare systems
     items:
       type: string
+  cloudflareDNSZoneMaxRecords:
+    type: integer
   state:
     type: object
     description: app-interface state settings
