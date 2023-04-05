@@ -2426,7 +2426,9 @@ confs:
   fields:
   - { name: path, type: string }
   - { name: name, type: string, isContextUnique: true }
-  - { name: namespace, type: Namespace_v1, isRequired: true, isContextUnique: true }
+  - { name: provider, type: string }
+  - { name: namespace, type: Namespace_v1, isContextUnique: true }
+  - { name: namespaceSelector, type: SaasResourceTemplateTargetNamespaceSelector_v1, isContextUnique: true }
   - { name: ref, type: string, isRequired: true }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
@@ -2441,6 +2443,15 @@ confs:
   fields:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+
+- name: SaasResourceTemplateTargetNamespaceSelector_v1
+  fields:
+  - { name: jsonPathSelectors, type: JsonPathSelectors_v1, isRequired: true }
+
+- name: JsonPathSelectors_v1
+  fields:
+  - { name: include, type: string, isList: true, isRequired: true }
+  - { name: exclude, type: string, isList: true }
 
 - name: SaasResourceTemplateTargetUpstream_v1
   fields:
