@@ -1978,7 +1978,7 @@ confs:
 - name: NamespaceTerraformResourceALBRules_v1
   fields:
   - { name: condition, type: NamespaceTerraformResourceALBConditon_v1, isRequired: true}
-  - { name: action, type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isList: true}
+  - { name: action, type: NamespaceTerraformResourceALBAction_v1, isRequired: true, isInterface: true}
 
 - name: NamespaceTerraformResourceALBConditon_v1
   fields:
@@ -1986,9 +1986,29 @@ confs:
   - { name: methods, type: string, isList: true, isRequired: false}
 
 - name: NamespaceTerraformResourceALBAction_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: type
+    fieldMap:
+      forward: NamespaceTerraformResourceALBActionForward_v1
   fields:
-  - { name: target, type: string, isRequired: true}
-  - { name: weight, type: int, isRequired: true}
+  - { name: type, type: string, isRequired: true }
+
+- name: NamespaceTerraformResourceALBActionForward_v1
+  interface: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: forward, type: NamespaceTerraformResourceALBActionForwardSettings_v1, isRequired: true }
+
+- name: NamespaceTerraformResourceALBActionForwardSettings_v1
+  fields:
+  - { name: target_group, type: NamespaceTerraformResourceALBTargetGroup_v1, isList: true, isRequired: true }
+
+- name: NamespaceTerraformResourceALBTargetGroup_v1
+  fields:
+  - { name: target, type: string, isRequired: true }
+  - { name: weight, type: int, isRequired: true }
 
 - name: ResourceValues_v1
   fields:

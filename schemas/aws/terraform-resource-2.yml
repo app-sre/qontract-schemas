@@ -974,20 +974,43 @@ oneOf:
             required:
             - path
           action:
-            type: array
-            # https://github.com/hashicorp/terraform-provider-aws/pull/12574#issuecomment-639642524
-            minItems: 2
-            items:
-              type: object
-              additionalProperties: false
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - forward
+            oneOf:
+            - additionalProperties: false
               properties:
-                target:
+                type:
                   type: string
-                weight:
-                  type: integer
+                  enum:
+                  - forward
+                forward:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    target_group:
+                      type: array
+                      # https://github.com/hashicorp/terraform-provider-aws/pull/12574#issuecomment-639642524
+                      minItems: 2
+                      items:
+                        type: object
+                        additionalProperties: false
+                        properties:
+                          target:
+                            type: string
+                          weight:
+                            type: integer
+                        required:
+                        - target
+                        - weight
+                  required:
+                  - target_group
               required:
-              - target
-              - weight
+              - type
+              - forward
         required:
         - condition
         - action
