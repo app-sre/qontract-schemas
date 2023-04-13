@@ -1992,6 +1992,7 @@ confs:
     field: type
     fieldMap:
       forward: NamespaceTerraformResourceALBActionForward_v1
+      fixed-response: NamespaceTerraformResourceALBActionFixedResponse_v1
   fields:
   - { name: type, type: string, isRequired: true }
 
@@ -2001,6 +2002,12 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: forward, type: NamespaceTerraformResourceALBActionForwardSettings_v1, isRequired: true }
 
+- name: NamespaceTerraformResourceALBActionFixedResponse_v1
+  interface: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: fixed_response, type: NamespaceTerraformResourceALBActionFixedResponseSettings_v1, isRequired: true }
+
 - name: NamespaceTerraformResourceALBActionForwardSettings_v1
   fields:
   - { name: target_group, type: NamespaceTerraformResourceALBTargetGroup_v1, isList: true, isRequired: true }
@@ -2009,6 +2016,13 @@ confs:
   fields:
   - { name: target, type: string, isRequired: true }
   - { name: weight, type: int, isRequired: true }
+
+- name: NamespaceTerraformResourceALBActionFixedResponseSettings_v1
+  fields:
+  - { name: content_type, type: string, isRequired: true }
+  - { name: message_body, type: string, isRequired: true }
+  - { name: status_code, type: string, isRequired: true }
+
 
 - name: ResourceValues_v1
   fields:

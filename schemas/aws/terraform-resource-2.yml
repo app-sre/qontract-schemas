@@ -979,8 +979,32 @@ oneOf:
               type:
                 type: string
                 enum:
+                - fixed-response
                 - forward
             oneOf:
+            - additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - fixed-response
+                fixed_response:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    content_type:
+                      type: string
+                    message_body:
+                      type: string
+                    status_code:
+                      type: integer
+                  required:
+                  - content_type
+                  - message_body
+                  - status_code
+              required:
+              - type
+              - fixed_response
             - additionalProperties: false
               properties:
                 type:
