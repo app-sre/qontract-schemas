@@ -3354,6 +3354,7 @@ confs:
   - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
   - { name: skupper_network_v1, type: SkupperNetwork_v1, isList: true, datafileSchema: /dependencies/skupper-network-1.yml }
   - { name: cloudflare_account_role_v1, type: CloudflareAccountRole_v1, isList: true, datafileSchema: /cloudflare/account-role-1.yml }
+  - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
