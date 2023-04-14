@@ -22,14 +22,14 @@ properties:
     description: commit or branch name
     type: string
     pattern: '^([0-9a-f]{40}|master|main)$'
-  path:
-    description: path of terraform module
+  projectPath:
+    description: path in the repo where the terraform files are located
     type: string
 required:
 - "$schema"
 - account
 - name
-- repositoryURL
+- repository
 - ref
-- path
+- projectPath
 

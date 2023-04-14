@@ -1507,11 +1507,11 @@ confs:
 
 - name: TerraformRepo_v1
   fields:
-  - { name: account, type: string, isRequired: true }
+  - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: repository, type: string, isRequired: true }
   - { name: ref, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
+  - { name: projectPath, type: string, isRequired: true }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
