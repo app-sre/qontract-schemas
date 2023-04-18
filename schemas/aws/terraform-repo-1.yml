@@ -19,12 +19,15 @@ properties:
     type: string
     pattern: "^.+\/.+$"
   ref:
-    description: commit or branch name
+    description: commit SHA, not a branch like main or master
     type: string
-    pattern: '^([0-9a-f]{40}|master|main)$'
+    pattern: '^([0-9a-f]{40})$'
   projectPath:
     description: path in the repo where the terraform files are located
     type: string
+  delete:
+    description: set to true to delete the repo
+    type: boolean
 required:
 - "$schema"
 - account
