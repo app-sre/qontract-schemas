@@ -38,6 +38,8 @@ properties:
     type: string
   vault_tls_secret_version:
     type: integer
+  tests:
+    type: array
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -102,5 +104,30 @@ oneOf:
     - vault_tls_secret_version
     vault_tls_secret_version:
     - vault_tls_secret_path
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - prometheus-rule
+    path:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    type:
+      type: string
+      enum:
+      - resource
+      - resource-template-extracurlyjinja2
+    variables:
+      type: object
+    enable_query_support:
+      type: boolean
+      description: indicates that this resource is using graphql query results
+    tests:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/resourceref"
+  required:
+  - path
+  - type
 required:
 - provider
