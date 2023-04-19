@@ -58,10 +58,6 @@ properties:
       check_only_affected_shards:
         type: boolean
         description: "defaults to false"
-      shardSpecOverride:
-        type: array
-        items:
-          "$ref": "/app-sre/integration-shardspec-override-1.yml"
     required:
     - cmd
 
@@ -74,16 +70,14 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
-        shardSpecOverride:
-          type: array
-          items:
-            "$ref": "/app-sre/integration-shardspec-override-1.yml"
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
+        sharding:
+          "$ref": "/app-sre/integration-sharding-1.yml"
+
       required:
       - namespace
       - spec
-
 required:
 - "$schema"
 - labels
