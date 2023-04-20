@@ -1,0 +1,61 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/integration-sharding-1.yml
+
+  strategy:
+    type: string
+    enum:
+      - per-aws-account
+      - per-cloudflare-dns-zone
+      - per-openshift-cluster
+      - static
+  # Static Sharding
+  shards:   # Static sharding
+    type: integer
+  # Key Based Sharding
+  shardSpecOverrides:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        shard:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef":
+            type: object
+            properties:
+              '$schema':
+                type: string
+                enum:
+                - /openshift/cluster-1.yml
+                - /aws/account-1.yml
+                - /cloudflare/dns-zone-1.yml
+        imageRef:
+          type: string
+          description: Image ref used by the shard.
+        resources:
+          "$ref": "/openshift/deploy-resources-1.yml"
+        disabled:
+          type: boolean
+        subSharding:
+          type: object
+          description: Sub-sharding strategy used by a shard.
+          additionalProperties: false
+          properties:
+            strategy:
+              type: string
+              enum:
+              - static
+            shards:
+              type: integer
+
+required:
+  - strategy
