@@ -2984,7 +2984,6 @@ confs:
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
   - { name: check_only_affected_shards, type: boolean }
-  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
@@ -2998,24 +2997,6 @@ confs:
   - { name: slack, type: boolean }
   - { name: googleChat, type: boolean }
 
-- name: AWSShardSpecOverride_v1
-  interface: IntegrationSpecShardSpecOverride_v1
-  fields:
-    - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: awsAccounts, type: AWSAccount_v1, isRequired: true, isList: true }
-    - { name: imageRef, type: string, isRequired: true }
-
-- name: IntegrationSpecShardSpecOverride_v1
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: shardingStrategy
-    fieldMap:
-      per-aws-account: AWSShardSpecOverride_v1
-  fields:
-    - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: imageRef, type: string, isRequired: true }
-
 - name: IntegrationSpec_v1
   fields:
   - { name: cache, type: boolean }
@@ -3026,10 +3007,8 @@ confs:
   - { name: extraEnv, type: IntegrationSpecExtraEnv_v1, isList: true }
   - { name: internalCertificates, type: boolean }
   - { name: logs, type: IntegrationSpecLogs_v1 }
-  - { name: resources, type: DeployResources_v1, isRequired: true }
+  - { name: resources, type: DeployResources_v1}
   - { name: fluentdResources, type: DeployResources_v1}
-  - { name: shards, type: int }
-  - { name: shardingStrategy, type: string }
   - { name: sleepDurationSecs, type: string }
   - { name: state, type: boolean }
   - { name: storage, type: string }
@@ -3045,8 +3024,8 @@ confs:
 - name: IntegrationManaged_v1
   fields:
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: shardSpecOverride, type: IntegrationSpecShardSpecOverride_v1, isList: true, isInterface: true }
   - { name: spec, type: IntegrationSpec_v1, isRequired: true }
+  - { name: sharding, type: IntegrationSharding_v1, isInterface: true}
 
 - name: Integration_v1
   datafile: /app-sre/integration-1.yml
@@ -3060,6 +3039,87 @@ confs:
   - { name: schemas, type: string, isRequired: true, isList: true }
   - { name: pr_check, type: IntegrationPrCheck_v1 }
   - { name: managed, type: IntegrationManaged_v1, isList: true }
+
+- name: IntegrationSharding_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: strategy
+    fieldMap:
+      static: StaticSharding_v1
+      per-aws-account: AWSAccountSharding_v1
+      per-openshift-cluster: OpenshiftClusterSharding_v1
+      per-cloudflare-dns-zone: CloudflareDNSZoneSharding_v1
+  fields:
+  - { name: strategy, type: string, isRequired: true}
+
+- name: StaticSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shards, type: int, isRequired: true }
+
+- name: StaticShardingSecOverride_v1
+  fields:
+    - { name: name, type: string, isRequired: true }
+    - { name: imageRef, type: string, isRequired: false }
+
+- name: CloudflareDNSZoneSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: CloudflareDNSZoneShardSpecOverride_v1, isList: true }
+
+- name: CloudflareDNSZoneShardSpecOverride_v1
+  fields:
+    - { name: shard, type: CloudflareDnsZone_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
+
+- name: OpenshiftClusterSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: OpenshiftClusterShardSpecOverride_v1, isList: true}
+
+- name: OpenshiftClusterShardSpecOverride_v1
+  fields:
+    - { name: shard, type: Cluster_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
+    - { name: subSharding, type: SubSharding_v1, isRequired: false, isInterface: true}
+
+- name: AWSAccountSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: AWSAccountShardSpecOverride_v1, isList: true}
+
+- name: AWSAccountShardSpecOverride_v1
+  fields:
+    - { name: shard, type: AWSAccount_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
+
+
+- name: SubSharding_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: strategy
+    fieldMap:
+      static: StaticSubSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true}
+
+- name: StaticSubSharding_v1
+  interface: SubSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shards, type: int, isRequired: true}
 
 - name: Report_v1
   datafile: /app-sre/report-1.yml
@@ -3370,7 +3430,6 @@ confs:
   - { name: safe_fields, type: string, isRequired: false, isList: true }
   - { name: auto_resolve_age, type: int, isRequired: false }
   - { name: allowed_domains, type: string, isRequired: false, isList: true }
-
 
 - name: AppSentryProjects_v1
   fields:

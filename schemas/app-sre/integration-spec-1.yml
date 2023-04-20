@@ -88,16 +88,6 @@ properties:
     "$ref": "/openshift/deploy-resources-1.yml"
   fluentdResources:
     "$ref": "/openshift/deploy-resources-1.yml"
-  shards:
-    type: integer
-    description: number of shards to run integration with
-  shardingStrategy:
-    type: string
-    description: the strategy to use for sharding
-    enum:
-    - per-aws-account
-    - per-cloudflare-zone
-    - static
   sleepDurationSecs:
     type: string
     description: time to sleep in seconds between integration executions
