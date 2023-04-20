@@ -2998,24 +2998,6 @@ confs:
   - { name: slack, type: boolean }
   - { name: googleChat, type: boolean }
 
-- name: AWSShardSpecOverride_v1
-  interface: IntegrationSpecShardSpecOverride_v1
-  fields:
-    - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: awsAccounts, type: AWSAccount_v1, isRequired: true, isList: true }
-    - { name: imageRef, type: string, isRequired: true }
-
-- name: IntegrationSpecShardSpecOverride_v1
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: shardingStrategy
-    fieldMap:
-      per-aws-account: AWSShardSpecOverride_v1
-  fields:
-    - { name: shardingStrategy, type: string, isRequired: true }
-    - { name: imageRef, type: string, isRequired: true }
-
 - name: IntegrationSpec_v1
   fields:
   - { name: cache, type: boolean }
