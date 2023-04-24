@@ -28,10 +28,12 @@ properties:
             type: string
             enum:
             - app-sre
+            - quay-aggregation
           role:
             type: string
             enum:
             - alert-rules
+            - aggregation-rules
         required:
         - prometheus
         - role
