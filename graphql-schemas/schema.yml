@@ -3825,7 +3825,6 @@ confs:
   - { name: controlplane_role_arn, type: string, isRequired: true}
   - { name: worker_role_arn, type: string, isRequired: true}
 
-
 - name: PgpReencryptSettings_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3835,13 +3834,18 @@ confs:
   - { name: aws_account_output_vault_path, type: string, isRequired: true }
   - { name: skip_aws_accounts, type: AWSAccount_v1, isList: true }
 
+- name: SkupperSiteControllerTemplate_v1
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: variables, type: json }
+
 - name: SkupperNetwork_v1
   datafile: /dependencies/skupper-network-1.yml
   fields:
+  - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: siteConfigDefaults, type: SkupperSiteConfigDefaults_v1, isRequired: true }
-  - { name: path, type: string, isRequired: true }
+  - { name: siteControllerTemplates, type: SkupperSiteControllerTemplate_v1, isList: true, isRequired: true }
   - name: namespaces
     type: Namespace_v1
     isRequired: true
@@ -3850,61 +3854,8 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: skupperSite.network
 
-- name: SkupperSiteConfigDefaults_v1
-  fields:
-  - { name: clusterLocal, type: boolean }
-  - { name: console, type: boolean }
-  - { name: consoleAuthentication, type: string }
-  - { name: consoleIngress, type: string }
-  - { name: controllerCpuLimit, type: string }
-  - { name: controllerCpu, type: string }
-  - { name: controllerMemoryLimit, type: string }
-  - { name: controllerMemory, type: string }
-  - { name: controllerPodAntiaffinity, type: string }
-  - { name: controllerServiceAnnotations, type: string }
-  - { name: edge, type: boolean }
-  - { name: ingress, type: string }
-  - { name: routerConsole, type: boolean }
-  - { name: routerCpuLimit, type: string }
-  - { name: routerCpu, type: string }
-  - { name: routerMemoryLimit, type: string }
-  - { name: routerMemory, type: string }
-  - { name: routerLogging, type: string }
-  - { name: routerPodAntiaffinity, type: string }
-  - { name: routerServiceAnnotations, type: string }
-  - { name: routers, type: int }
-  - { name: serviceController, type: boolean }
-  - { name: serviceSync, type: boolean }
-  - { name: skupperSiteController, type: string, isRequired: true }
-
-- name: SkupperSiteConfig_v1
-  fields:
-  - { name: clusterLocal, type: boolean }
-  - { name: console, type: boolean }
-  - { name: consoleAuthentication, type: string }
-  - { name: consoleIngress, type: string }
-  - { name: controllerCpuLimit, type: string }
-  - { name: controllerCpu, type: string }
-  - { name: controllerMemoryLimit, type: string }
-  - { name: controllerMemory, type: string }
-  - { name: controllerPodAntiaffinity, type: string }
-  - { name: controllerServiceAnnotations, type: string }
-  - { name: edge, type: boolean }
-  - { name: ingress, type: string }
-  - { name: routerConsole, type: boolean }
-  - { name: routerCpuLimit, type: string }
-  - { name: routerCpu, type: string }
-  - { name: routerMemoryLimit, type: string }
-  - { name: routerMemory, type: string }
-  - { name: routerLogging, type: string }
-  - { name: routerPodAntiaffinity, type: string }
-  - { name: routerServiceAnnotations, type: string }
-  - { name: routers, type: int }
-  - { name: serviceController, type: boolean }
-  - { name: serviceSync, type: boolean }
-
 - name: NamespaceSkupperSiteConfig_v1
   fields:
   - { name: network, type: SkupperNetwork_v1, isRequired: true }
   - { name: delete, type: boolean }
-  - { name: config, type: SkupperSiteConfig_v1 }
+  - { name: siteControllerTemplates, type: SkupperSiteControllerTemplate_v1, isList: true }
