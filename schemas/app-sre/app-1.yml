@@ -112,8 +112,34 @@ properties:
   dependencies:
     type: array
     items:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/dependencies/dependency-1.yml"
+      type: object
+      additionalProperties: false
+      required:
+        - dependency
+        - dependencyType
+        - dependencyFailureImpact
+        - description
+      properties:
+        dependency:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/dependency-1.yml"
+        dependencyType:
+          type: string
+          enum:
+            - build
+            - deploy
+            - runtime-upstream
+            - runtime-downstream
+            - unspecified
+        dependencyFailureImpact:
+          type: string
+          enum:
+            - no-impact
+            - partial-outage
+            - major-outage
+            - complete-outage
+        description:
+          type: string
 
   gcrRepos:
     type: array

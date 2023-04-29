@@ -2191,6 +2191,7 @@ confs:
   - { name: statusPage, type: string }
   - { name: SLA, type: float, isRequired: true }
   - { name: dependencyFailureImpact, type: string, isRequired: true }
+  - { name: app, type: App_v1 }
 
 - name: AppGcrReposItems_v1
   fields:
@@ -2354,6 +2355,13 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: environment
 
+- name: AppDependency_v1
+  fields:
+  - { name: dependency, type: Dependency_v1, isRequired: true }
+  - { name: dependencyType, type: string, isRequired: true }
+  - { name: dependencyFailureImpact, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+
 - name: App_v1
   datafile: /app-sre/app-1.yml
   fields:
@@ -2370,7 +2378,7 @@ confs:
   - { name: serviceDocs, type: string, isList: true }
   - { name: serviceOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: serviceNotifications, type: Owner_v1, isList: true }
-  - { name: dependencies, type: Dependency_v1, isList: true }
+  - { name: dependencies, type: AppDependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
   - { name: quayRepos, type: AppQuayRepos_v1, isList: true }
   - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
