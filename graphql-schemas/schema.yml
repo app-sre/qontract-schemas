@@ -1089,6 +1089,7 @@ confs:
   - { name: premiumSupport, type: boolean, isRequired: true }
   - { name: partition, type: string }
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
+  - { name: cleanup, type: AWSAccountCleanupOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
 
@@ -1215,6 +1216,24 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: regex, type: string, isRequired: true }
+  - { name: region, type: string }
+
+- name: AWSAccountCleanupOption_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      ami: AWSAccountCleanupOptionAMI_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: AWSAccountCleanupOptionAMI_v1
+  interface: AWSAccountCleanupOption_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: regex, type: string, isRequired: true }
+  - { name: age, type: string, isRequired: true }
   - { name: region, type: string }
 
 - name: AWSUserPolicy_v1
