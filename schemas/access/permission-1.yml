@@ -178,14 +178,6 @@ oneOf:
   - handle
   - description
   - workspace
-- properties:
-    service:
-      enum:
-      - sentry-team-membership
-    team:
-      "$ref": "/dependencies/sentry-team-1.yml"
-  required:
-  - team
 required:
 - $schema
 - labels
