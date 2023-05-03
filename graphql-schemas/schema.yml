@@ -2443,6 +2443,7 @@ confs:
   - { name: parameters, type: json }
   - { name: allowedSecretParameterPaths, type: string, isList: true }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
+  - { name: validateTargetsInApp, type: boolean }
   - { name: resourceTemplates, type: SaasResourceTemplate_v2, isRequired: true, isList: true }
   - { name: imagePatterns, type: string, isRequired: true, isList: true }
   - { name: takeover, type: boolean }
