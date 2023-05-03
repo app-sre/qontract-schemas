@@ -11,128 +11,17 @@ properties:
     - /dependencies/skupper-network-1.yml
   identifier:
     "$ref": "/common-1.json#/definitions/identifier"
-  siteConfigDefaults:
-    type: object
-    additionalProperties: false
-    properties:
-      clusterLocal:
-        description: |
-          Set up Skupper to only accept connections from within the local cluster. default=false
-        type: boolean
-      console:
-        description: |
-          Enable Skupper console. default=true
-        type: boolean
-      consoleAuthentication:
-        description: |
-          Skupper console authentication method. default=openshift
-        type: string
-        enum:
-        - openshift
-      consoleIngress:
-        description: |
-          Determines if/how console is exposed outside cluster. default=route
-        type: string
-        enum:
-        - route
-        - loadbalancer
-        - none
-      controllerCpuLimit:
-        description: |
-          CPU limit for service-controller pods. default=500m
-        type: string
-      controllerCpu:
-        description: |
-          CPU request for service-controller pods. default=200m
-        type: string
-      controllerMemoryLimit:
-        description: |
-          Memory limit for controller pods. default=128Mi
-        type: string
-      controllerMemory:
-        description: |
-          Memory request for controller pods. default=128Mi
-        type: string
-      controllerPodAntiaffinity:
-        description: |
-          Pod antiaffinity label matches to control placement of controller pods. default='skupper.io/component=controller'
-        type: string
-      controllerServiceAnnotations:
-        description: |
-          Annotations to add to Skupper controller service. default='managed-by=qontract-reconcile'
-        type: string
-      edge:
-        description: |
-          Set up an edge Skupper site. default=true for internal clusters
-        type: boolean
-      ingress:
-        description: |
-           Skupper ingress specific type. default=route
-        type: string
-        enum:
-        - route
-        - loadbalancer
-        - ingress
-        - none
-      routerConsole:
-        description: |
-          Set up a Dispatch Router console (not recommended). default=false
-        type: boolean
-      routerCpuLimit:
-        description: |
-          CPU limit for router pods. default=500m
-        type: string
-      routerCpu:
-        description: |
-          CPU request for router pods. default=200m
-        type: string
-      routerLogging:
-        description: |
-          Logging settings for router (e.g. trace,debug,info,notice,warning,error). default=error
-        type: string
-        enum:
-        - trace
-        - debug
-        - info
-        - notice
-        - warning
-        - error
-      routerMemoryLimit:
-        description: |
-          Memory limit for router pods. default=156Mi
-        type: string
-      routerMemory:
-        description: |
-          Memory request for router pods. default=156Mi
-        type: string
-      routerPodAntiaffinity:
-        description: |
-          Pod antiaffinity label matches to control placement of router pods. defaukt='skupper.io/component=router'
-        type: string
-      routerServiceAnnotations:
-        description: |
-          Annotations to add to Skupper router service. default=unset
-        type: string
-      routers:
-        description: |
-          Number of router replicas to start. default=3
-        type: integer
-      serviceController:
-        description: |
-          Run the service controller. default=true
-        type: boolean
-      serviceSync:
-        description: |
-          Determine if the service controller participates in service synchronization. default=true
-        type: boolean
-      skupperSiteController:
-        description: |
-          Skupper image and version
-        type: string
-    required:
-    - skupperSiteController
+  siteControllerTemplates:
+    type: array
+    items:
+      oneOf:
+      # inline
+      - "$ref": "/dependencies/skupper-site-controller-template-1.yml"
+      # referenced
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/skupper-site-controller-template-1.yml"
 
 required:
 - "$schema"
 - identifier
-- siteConfigDefaults
+- siteControllerTemplates
