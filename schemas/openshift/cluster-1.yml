@@ -533,15 +533,6 @@ properties:
           - slack-usergroups
           - skupper-network
           - glitchtip-project-dsn
-      e2eTests:
-        type: array
-        items:
-          type: string
-          enum:
-          - create-namespace
-          - dedicated-admin-rolebindings
-          - default-network-policies
-          - default-project-labels
   awsInfrastructureAccess:
     type: array
     items:

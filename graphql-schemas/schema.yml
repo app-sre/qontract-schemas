@@ -384,7 +384,6 @@ confs:
 - name: DisableClusterAutomations_v1
   fields:
   - { name: integrations, type: string, isList: true }
-  - { name: e2eTests, type: string, isList: true }
 
 - name: GcpProject_v1
   interface: ExternalResourcesProvisioner_v1
