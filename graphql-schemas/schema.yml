@@ -1091,6 +1091,7 @@ confs:
   - { name: sharing, type: AWSAccountSharingOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
+  - { name: cna, type: CNAAWSSpec_v1, isRequired: false }
 
   - name: ecrs
     type: AWSECR_v1
@@ -1104,6 +1105,16 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+
+- name: CNAAWSSpec_v1
+  fields:
+  - { name: defaultRoleARN, type: string }
+  - { name: moduleRoleARNS, type: CNAModuleAWSARN_v1, isList: true }
+
+- name: CNAModuleAWSARN_v1
+  fields:
+  - { name: module, type: string, isRequired: true }
+  - { name: arn, type: string, isRequired: true }
 
 - name: CNAExperimentalProvisioner_v1
   interface: ExternalResourcesProvisioner_v1
@@ -1128,9 +1139,25 @@ confs:
     strategy: fieldMap
     field: provider
     fieldMap:
+      aws-assume-role: CNAAssumeRoleAsset_v1
       null-asset: CNANullAsset_v1
+      aws-rds: CNARDSInstance_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+
+- name: CNAAssumeRoleAsset_v1
+  interface: CNAsset_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: aws_account, type: AWSAccount_v1, isRequired: true }
+  - { name: defaults, type: CNAAssumeRoleAssetConfig_v1 }
+  - { name: overrides, type: json }
+
+- name: CNAAssumeRoleAssetConfig_v1
+  fields:
+  - { name: slug, type: string }
 
 - name: CNANullAsset_v1
   interface: CNAsset_v1
@@ -1138,7 +1165,39 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string }
+  - { name: defaults, type: CNANullAssetConfig_v1 }
+  - { name: overrides, type: json }
+
+- name: CNANullAssetConfig_v1
+  fields:
   - { name: addr_block, type: string }
+
+- name: CNARDSInstance_v1
+  interface: CNAsset_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string }
+  - { name: defaults, type: CNARDSInstanceDefaults_v1 }
+  - { name: overrides, type: json }
+
+- name: CNARDSInstanceDefaults_v1
+  fields:
+  - { name: vpc, type: AWSVPC_v1, isRequired: true }
+  - { name: db_subnet_group_name, type: string, isRequired: true }
+  - { name: instance_class, type: string, isRequired: true }
+  - { name: allocated_storage, type: int, isRequired: true }
+  - { name: max_allocated_storage, type: int, isRequired: true }
+  - { name: engine, type: string, isRequired: true }
+  - { name: engine_version, type: string, isRequired: true }
+  - { name: username, type: string, isRequired: true }
+  - { name: maintenance_window, type: string }
+  - { name: backup_retention_period, type: int }
+  - { name: backup_window, type: string }
+  - { name: multi_az, type: boolean }
+  - { name: deletion_protection, type: boolean }
+  - { name: apply_immediately, type: boolean }
+
 
 - name: CloudflareAccount_v1
   datafile: /cloudflare/account-1.yml
