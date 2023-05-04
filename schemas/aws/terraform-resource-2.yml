@@ -84,6 +84,16 @@ properties:
     type: array
     items:
       type: object
+  data_classification:
+    type: object
+    properties:
+      loss_impact:
+        type: string
+        enum:
+        - high
+        - medium
+        - low
+        - none
   sqs_identifier:
     type: string
   bucket_policy:
@@ -558,6 +568,16 @@ oneOf:
             type: array
             items:
               type: string
+    data_classification:
+      type: object
+      properties:
+        loss_impact:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+          - none
   required:
   - identifier
   - defaults
