@@ -1288,6 +1288,10 @@ confs:
   - { name: source_type, type: string}
   - { name: event_categories, type: string, isList: true}
 
+- name: AWSRDSDataClassification_v1
+  fields:
+  - { name: loss_impact, type: string }
+
 - name: TerraformState_v1
   isInterface: true
   interfaceResolve:
@@ -1748,6 +1752,7 @@ confs:
   - { name: ca_cert, type: VaultSecret_v1 }
   - { name: annotations, type: json }
   - { name: event_notifications, type: AWSRDSEventNotification_v1, isList: true}
+  - { name: data_classification, type: AWSRDSDataClassification_v1 }
 
 - name: NamespaceTerraformResourceS3_v1
   interface: NamespaceTerraformResourceAWS_v1
