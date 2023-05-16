@@ -2280,6 +2280,7 @@ confs:
 - name: CodeComponentGitlabOwners_v1
   fields:
     - { name: enabled, type: boolean, isRequired: true }
+    - { name: persistentLgtm, type: boolean }
 
 - name: CodeComponentGitlabHousekeeping_v1
   fields:

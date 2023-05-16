@@ -316,6 +316,8 @@ properties:
           properties:
             enabled:
               type: boolean
+            persistentLgtm:
+              type: boolean
         gitlabHousekeeping:
           type: object
           properties:
