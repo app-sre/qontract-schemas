@@ -1,0 +1,38 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/terraform-repo-1.yml
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  name:
+    type: string
+  repository:
+    description: GitLab repository URL
+    type: string
+    pattern: "^.+\/.+$"
+  ref:
+    description: commit SHA, not a branch like main or master
+    type: string
+    pattern: '^([0-9a-f]{40})$'
+  projectPath:
+    description: path in the repo where the terraform files are located
+    type: string
+  delete:
+    description: set to true to delete the repo
+    type: boolean
+required:
+- "$schema"
+- account
+- name
+- repository
+- ref
+- projectPath
+

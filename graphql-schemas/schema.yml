@@ -1505,6 +1505,15 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: text, type: string, isRequired: true }
 
+- name: TerraformRepo_v1
+  fields:
+  - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: repository, type: string, isRequired: true }
+  - { name: ref, type: string, isRequired: true }
+  - { name: projectPath, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
   fields:
@@ -3346,6 +3355,7 @@ confs:
   - { name: pgp_reencrypt_settings_v1, type: PgpReencryptSettings_v1, isList: true, datafileSchema: /app-sre/pgp-reencrypt-settings-1.yml }
   - { name: skupper_network_v1, type: SkupperNetwork_v1, isList: true, datafileSchema: /dependencies/skupper-network-1.yml }
   - { name: cloudflare_account_role_v1, type: CloudflareAccountRole_v1, isList: true, datafileSchema: /cloudflare/account-role-1.yml }
+  - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
