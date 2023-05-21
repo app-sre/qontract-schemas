@@ -824,6 +824,7 @@ confs:
   - { name: tags, type: json }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
+  - { name: assumeRole, type: string }
 
 - name: ClusterPeeringConnectionAccountTGW_v1
   interface: ClusterPeeringConnection_v1
