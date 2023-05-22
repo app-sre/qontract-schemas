@@ -801,6 +801,7 @@ confs:
   - { name: description, type: string }
   - { name: manageRoutes, type: boolean }
   - { name: delete, type: boolean }
+  - { name: assumeRole, type: string }
 
 - name: ClusterPeeringConnectionAccount_v1
   interface: ClusterPeeringConnection_v1
