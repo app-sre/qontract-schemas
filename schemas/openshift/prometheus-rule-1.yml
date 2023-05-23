@@ -128,6 +128,12 @@ properties:
                           type: string
                         query:
                           type: string
+                        slo:
+                          type: string
+                        long_burnrate_window:
+                          type: string
+                        short_burnrate_window:
+                          type: string
                         exported_namespace:
                           type: string
                         exported_service:
