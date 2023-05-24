@@ -446,6 +446,9 @@ oneOf:
           - db.t3.small
           - db.m3.medium
           - db.t3.medium
+          - db.t3.large
+          - db.t3.xlarge
+          - db.t3.2xlarge
           - db.m4.large
           - db.m4.xlarge
           - db.m4.2xlarge
