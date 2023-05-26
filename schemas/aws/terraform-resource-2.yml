@@ -125,6 +125,8 @@ properties:
     enum:
     - ipv4
     - dualstack
+  access_logs:
+    type: boolean
   targets:
     type: array
     items:
@@ -933,6 +935,8 @@ oneOf:
       enum:
       - ipv4
       - dualstack
+    access_logs:
+      type: boolean
     targets:
       type: array
       items:
