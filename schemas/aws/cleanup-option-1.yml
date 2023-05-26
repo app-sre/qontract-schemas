@@ -1,0 +1,43 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+description: Define cleanup options of AWS objects.
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/cleanup-options-1.yml
+  provider:
+    type: string
+    description: Type of cleanup to implement.
+    enum:
+    - ami
+  regex:
+    type: string
+    description: Regex expression to filter items by.
+  age:
+    "$ref": "/common-1.json#/definitions/dhmsDuration"
+    description: AMI age from which we can consider deletion.
+oneOf:
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      description: cleanup AMIs
+      enum:
+      - ami
+    regex:
+      type: string
+    region:
+      type: string
+    age:
+      "$ref": "/common-1.json#/definitions/dhmsDuration"
+  required:
+  - provider
+  - regex
+  - age
+required:
+- provider
