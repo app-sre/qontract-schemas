@@ -1595,6 +1595,7 @@ confs:
       route53-zone: NamespaceTerraformResourceRoute53Zone_v1
       rosa-authenticator: NamespaceTerraformResourceRosaAuthenticator_V1
       rosa-authenticator-vpce: NamespaceTerraformResourceRosaAuthenticatorVPCE_V1
+      msk: NamespaceTerraformResourceMsk_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
@@ -1713,6 +1714,17 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: publish_log_types, type: string, isList: true }
+
+- name: NamespaceTerraformResourceMsk_v1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: region, type: string, isContextUnique: true }
+  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceRDS_v1
   interface: NamespaceTerraformResourceAWS_v1

@@ -1,0 +1,105 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/msk-defaults-1.yml
+  kafka_version:
+    type: string
+  number_of_broker_nodes:
+    type: integer
+  broker_node_group_info:
+    type: object
+    additionalProperties: false
+    properties:
+      client_subnets:
+        type: array
+        items:
+          type: string
+      instance_type:
+        type: string
+      ebs_volume_size:
+        type: integer
+      security_groups:
+        type: array
+        items:
+          type: string
+      az_distribution:
+        type: string
+        enum:
+        - DEFAULT
+    required:
+    - client_subnets
+    - instance_type
+    - ebs_volume_size
+    - security_groups
+  server_properties:
+    type: string
+  open_monitoring:
+    type: object
+    additionalProperties: false
+    properties:
+      prometheus:
+        type: object
+        additionalProperties: false
+        properties:
+          jmx_exporter:
+            type: object
+            additionalProperties: false
+            properties:
+              enabled_in_broker:
+                type: boolean
+            required:
+            - enabled_in_broker
+          node_exporter:
+            type: object
+            additionalProperties: false
+            properties:
+              enabled_in_broker:
+                type: boolean
+            required:
+            - enabled_in_broker
+    required:
+    - prometheus
+  logging_info:
+    type: object
+    additionalProperties: false
+    properties:
+      broker_logs:
+        type: object
+        additionalProperties: false
+        properties:
+          cloudwatch_logs:
+            type: object
+            additionalProperties: false
+            properties:
+              enabled:
+                type: boolean
+              retention_in_days:
+                type: integer
+            required:
+            - enabled
+            - retention_in_days
+    required:
+    - broker_logs
+  client_authentication:
+    type: object
+    additionalProperties: false
+    properties:
+      sasl:
+        type: object
+        additionalProperties: false
+        properties:
+          iam:
+            type: boolean
+          scram:
+            type: boolean
+required:
+- "$schema"
+- kafka_version
+- number_of_broker_nodes
+- broker_node_group_info
