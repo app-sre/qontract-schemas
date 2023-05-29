@@ -953,6 +953,21 @@ oneOf:
               type: string
           openshift_service:
             type: string
+          protocol:
+            type: string
+            enum:
+              - HTTP
+              - HTTPS
+              - TCP
+              - TLS
+              - UDP
+              - TCP_UDP
+          protocol_version:
+            type: string
+            enum:
+              - HTTP1
+              - HTTP2
+              - GRPC
         required:
         - name
         - default
@@ -961,6 +976,8 @@ oneOf:
           - ips
         - required:
           - openshift_service
+          - protocol
+          - protocol_version
     rules:
       type: array
       items:
