@@ -64,7 +64,9 @@ properties:
                     record:
                       type: string
                     expr:
-                      type: string
+                      oneOf:
+                      - type: string
+                      - type: integer     
                     labels:
                       type: object
                   required:
@@ -151,7 +153,9 @@ properties:
                       required:
                       - service
                     expr:
-                      type: string
+                      oneOf:
+                      - type: string
+                      - type: integer
                     interval:
                       type: string
                     for:

@@ -131,13 +131,11 @@ properties:
   compare:
     type: boolean
   timeout:
-    type: string
-    pattern: '(\d+[dhms])+'
+    "$ref": "/common-1.json#/definitions/dhmsDuration"
     description: |
       Maximum time the deployment job is allowed to last. In Tekton it defaults to
       60 minutes. We don't allow smaller times as Tekton implementation currently deletes
-      PipelineRun pods, hence destroying logs. The format is a subset of Go's ParseDuration
-      format, only allowing from days to seconds in resolution, e.g. "1h", "1d1h1m2s", ...
+      PipelineRun pods, hence destroying logs.
   publishJobLogs:
     type: boolean
   clusterAdmin:
