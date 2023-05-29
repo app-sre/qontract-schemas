@@ -77,7 +77,9 @@ properties:
           required:
           - window
         expr:
-          type: string
+          oneOf:
+          - type: string
+          - type: integer
           description: |
             Prometheus expression to calculate the SLO. It should be expressed
             in the units of the 'SLOTargetUnit'. It will be processed with jinja,
