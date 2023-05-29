@@ -89,7 +89,9 @@ properties:
             additionalProperties: false
             properties:
               expr:
-                type: string
+                oneOf:
+                - type: string
+                - type: integer
               eval_time:
                 type: string
               exp_samples:
