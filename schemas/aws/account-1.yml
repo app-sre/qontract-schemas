@@ -43,6 +43,9 @@ properties:
       required:
       - name
       - email
+  escalationPolicy:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/escalation-policy-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   garbageCollection:

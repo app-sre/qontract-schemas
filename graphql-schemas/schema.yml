@@ -881,6 +881,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isUnique: true, isSearchable: true, isRequired: true }
   - { name: description, type: string }
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1 }
   - { name: auth, type: ClusterAuth_v1, isInterface: true, isList: true, isRequired: true }
   - { name: observabilityNamespace, type: Namespace_v1 }
   - { name: grafanaUrl, type: string }
@@ -1079,6 +1080,7 @@ confs:
   - { name: qontractReconcileVersion, type: string }
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1 }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }

@@ -497,6 +497,9 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   description:
     type: string
+  escalationPolicy:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/escalation-policy-1.yml"
   internal:
     type: boolean
   disable:
