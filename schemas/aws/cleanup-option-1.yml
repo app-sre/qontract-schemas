@@ -22,8 +22,7 @@ properties:
     "$ref": "/common-1.json#/definitions/dhmsDuration"
     description: AMI age from which we can consider deletion.
 oneOf:
-- additionalProperties: false
-  properties:
+- properties:
     provider:
       type: string
       description: cleanup AMIs
@@ -39,5 +38,21 @@ oneOf:
   - provider
   - regex
   - age
+- properties:
+    provider:
+      type: string
+      description: Set CloudWatch log retention
+      enum:
+      - cloudwatch
+    regex:
+      type: string
+    region:
+      type: string
+    retention_in_days:
+      type: string
+  required:
+  - provider
+  - regex
+  - retention_in_days
 required:
 - provider
