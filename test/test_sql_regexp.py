@@ -22,6 +22,7 @@ valid_sql_queries = [
     "analyze sometable;",
     "reindex index table;",
     "vacuum table;",
+    "optimize table sometable;",
 ]
 
 not_valid_sql_queries = [
@@ -38,6 +39,7 @@ not_valid_sql_queries = [
     "reindex; insert table set a='b';",
     "analyze missingsemicolon",
     "analyze (select * from table);",
+    "optimize table sometable; insert table set a='b'",
 ]
 
 
