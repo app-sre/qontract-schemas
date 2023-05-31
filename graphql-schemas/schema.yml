@@ -3110,6 +3110,7 @@ confs:
     fieldMap:
       static: StaticSharding_v1
       per-aws-account: AWSAccountSharding_v1
+      per-aws-tgw-account: AWSTGWAccountSharding_v1
       per-openshift-cluster: OpenshiftClusterSharding_v1
       per-cloudflare-dns-zone: CloudflareDNSZoneSharding_v1
   fields:
@@ -3166,6 +3167,18 @@ confs:
     - { name: resources, type: DeployResources_v1, isRequired: false }
     - { name: disabled, type: boolean, isRequired: false}
 
+- name: AWSTGWAccountSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: AWSTGWAccountShardSpecOverride_v1, isList: true}
+
+- name: AWSTGWAccountShardSpecOverride_v1
+  fields:
+    - { name: shard, type: AWSAccount_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
 
 - name: SubSharding_v1
   isInterface: true

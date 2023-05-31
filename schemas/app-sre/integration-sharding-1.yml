@@ -14,6 +14,7 @@ properties:
     type: string
     enum:
       - per-aws-account
+      - per-aws-tgw-account
       - per-cloudflare-dns-zone
       - per-openshift-cluster
       - static
