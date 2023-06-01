@@ -535,6 +535,7 @@ properties:
           - slack-usergroups
           - skupper-network
           - glitchtip-project-dsn
+          - aws-ami-cleanup
   awsInfrastructureAccess:
     type: array
     items:
