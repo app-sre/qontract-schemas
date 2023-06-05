@@ -3084,6 +3084,7 @@ confs:
   - { name: successfulJobHistoryLimit, type: int }
   - { name: failedJobHistoryLimit, type: int }
   - { name: imageRef, type: string }
+  - { name: enablePushgateway, type: boolean }
 
 - name: IntegrationManaged_v1
   fields:
