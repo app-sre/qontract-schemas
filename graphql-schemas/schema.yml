@@ -1533,13 +1533,6 @@ confs:
   - { name: ref, type: string, isRequired: true }
   - { name: projectPath, type: string, isRequired: true }
   - { name: delete, type: boolean }
-  - { name: modules, type: TerraformRepoModule_v1, isList: true }
-
-- name: TerraformRepoModule_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: url, type: string, isRequired: true }
-  - { name: ref, type: string, isRequired: true }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
