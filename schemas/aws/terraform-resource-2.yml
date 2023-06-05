@@ -33,6 +33,8 @@ properties:
     type: object
   assume_condition:
     type: object
+  assume_action:
+    type: string
   inline_policy:
     type: object
   output_resource_name:
@@ -389,14 +391,21 @@ oneOf:
           type: array
           items:
             type: string
+        Federated:
+          type: string
       anyOf:
       - required:
         - AWS
       - required:
         - Service
+      - required:
+        - Federated
     assume_condition:
       description: condition context keys for IAM and AWS STS
       type: object
+    assume_action:
+      description: alternate sts call instead of AssumeRole
+      type: string
     inline_policy:
       type: object
     output_resource_name:

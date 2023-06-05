@@ -1776,6 +1776,7 @@ confs:
   fields:
   - { name: AWS, type: string, isList: true }
   - { name: Service, type: string, isList: true }
+  - { name: Federated, type: string }
 
 - name: NamespaceTerraformResourceSecretsManagerServiceAccount_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -1794,6 +1795,7 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: assume_role, type: AssumeRole_v1, isRequired: true }
   - { name: assume_condition, type: json }
+  - { name: assume_action, type: string }
   - { name: inline_policy, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
