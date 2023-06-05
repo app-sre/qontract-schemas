@@ -28,25 +28,6 @@ properties:
   delete:
     description: set to true to delete the repo
     type: boolean
-  modules:
-    type: array
-    items:
-      type: object
-      properties:
-        name:
-          type: string
-        url:
-          description: GitLab repository URL
-          type: string
-          pattern: "^.+\/.+$"
-        ref: 
-          description: commit SHA, not a branch like main or master
-          type: string
-          pattern: '^([0-9a-f]{40})$'
-      required:
-      - name
-      - url
-      - ref
 required:
 - "$schema"
 - account
@@ -54,3 +35,4 @@ required:
 - repository
 - ref
 - projectPath
+
