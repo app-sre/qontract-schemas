@@ -1251,7 +1251,6 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: regex, type: string, isRequired: true }
-  - { name: region, type: string }
   - { name: retention_in_days, type: string }
 
 - name: AWSUserPolicy_v1

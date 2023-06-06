@@ -15,12 +15,16 @@ properties:
     description: Type of cleanup to implement.
     enum:
     - ami
+    - cloudwatch
   regex:
     type: string
     description: Regex expression to filter items by.
   age:
     "$ref": "/common-1.json#/definitions/dhmsDuration"
     description: AMI age from which we can consider deletion.
+  retention_in_days:
+    type: string
+    description: Cloudwatch log retention
 oneOf:
 - properties:
     provider:
@@ -45,8 +49,6 @@ oneOf:
       enum:
       - cloudwatch
     regex:
-      type: string
-    region:
       type: string
     retention_in_days:
       type: string
