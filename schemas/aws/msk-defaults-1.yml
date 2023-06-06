@@ -65,6 +65,7 @@ properties:
             - enabled_in_broker
     required:
     - prometheus
+  # we support logging to cloudwatch only
   logging_info:
     type: object
     additionalProperties: false
@@ -90,6 +91,7 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      # tls authentication is not supported yet. Our tentants are using SASL at the moment.
       sasl:
         type: object
         additionalProperties: false
