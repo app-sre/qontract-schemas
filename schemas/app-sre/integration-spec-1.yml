@@ -127,6 +127,9 @@ properties:
   failedJobHistoryLimit:
     type: integer
     description: number of history records reserved for failed integration executions
+  enablePushgateway:
+    type: boolean
+    description: push metrics at the end of the run to the configured Pushgateway
 
 required:
 - resources
