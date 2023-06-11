@@ -866,6 +866,7 @@ confs:
 
 - name: ClusterPeering_v1
   fields:
+  - { name: assumeRole, type: string }
   - { name: connections, type: ClusterPeeringConnection_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: ClusterPrometheus_v1

@@ -300,6 +300,9 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      assumeRole:
+        type: string
+        description: role to assume for all peering connections
       connections:
         type: array
         items:
