@@ -1173,6 +1173,7 @@ confs:
       schema: /access/role-1.yml
       subAttr: cloudflare_access
 - name: AWSGroup_v1
+  datafile: /aws/group-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -1237,6 +1238,7 @@ confs:
   - { name: region, type: string }
 
 - name: AWSUserPolicy_v1
+  datafile: /aws/policy-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
