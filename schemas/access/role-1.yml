@@ -145,6 +145,8 @@ properties:
                   - /access/role-1.yml
                   - /openshift/cluster-1.yml
                   - /aws/account-1.yml
+                  - /aws/group-1.yml
+                  - /aws/policy-1.yml
                   - /app-sre/app-1.yml
                   - /app-sre/gabi-instance-1.yml
                   - /app-sre/scorecard-2.yml
