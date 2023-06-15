@@ -3833,6 +3833,7 @@ confs:
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:
   - { name: selector, type: string, isRequired: true }
+  - { name: where, type: "string" }
   - { name: when, type: "string" }
 
 - name: RosaOcmSpec_v1

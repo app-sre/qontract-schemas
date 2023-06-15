@@ -66,6 +66,10 @@ properties:
           properties:
             selector:
               type: string
+            where:
+              type: string
+              enum:
+              - backrefs
             when:
               type: string
               enum:
@@ -91,6 +95,10 @@ properties:
             properties:
               selector:
                 type: string
+              where:
+                type: string
+                enum:
+                - backrefs
               when:
                 type: string
                 enum:
@@ -119,6 +127,10 @@ properties:
             properties:
               selector:
                 type: string
+              where:
+                type: string
+                enum:
+                - backrefs
               when:
                 type: string
                 enum:
