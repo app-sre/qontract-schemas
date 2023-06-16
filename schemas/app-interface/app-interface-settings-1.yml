@@ -35,6 +35,7 @@ properties:
     type: string
     enum:
     - openshift-saas-deploy
+    - saas-deploy
   hashLength:
     type: integer
     enum:
