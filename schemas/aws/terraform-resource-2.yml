@@ -216,6 +216,10 @@ properties:
       "$ref": "/dependencies/dns-record-1.yml"
   extra_tags:
     type: object
+  users:
+    type: array
+    items:
+      "$ref": "/app-sre/vault-secret-parameter-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -1414,8 +1418,10 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
-    secret:
-      "$ref": "/common-1.json#/definitions/vaultSecret"
+    users:
+      type: array
+      items:
+        "$ref": "/app-sre/vault-secret-parameter-1.yml"
   required:
   - identifier
   - defaults
