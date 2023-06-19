@@ -219,7 +219,15 @@ properties:
   users:
     type: array
     items:
-      "$ref": "/app-sre/vault-secret-parameter-1.yml"
+      type: object
+      properties:
+        name:
+          "$ref": "/common-1.json#/definitions/identifierLowercase64"
+        secret:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - name
+      - secret
 oneOf:
 - additionalProperties: false
   properties:
@@ -1421,7 +1429,15 @@ oneOf:
     users:
       type: array
       items:
-        "$ref": "/app-sre/vault-secret-parameter-1.yml"
+        type: object
+        properties:
+          name:
+            "$ref": "/common-1.json#/definitions/identifierLowercase64"
+          secret:
+            "$ref": "/common-1.json#/definitions/vaultSecret"
+        required:
+        - name
+        - secret
   required:
   - identifier
   - defaults
