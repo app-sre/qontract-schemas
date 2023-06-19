@@ -28,12 +28,12 @@ properties:
   taskTemplates:
     type: array
     items:
-      "$ref": "/app-sre/tekton-object-template-1.yml"
+      "$ref": "/app-sre/tekton-task-template-1.yml"
   pipelineTemplates:
     additionalProperties: false
     properties:
       openshiftSaasDeploy:
-        "$ref": "/app-sre/tekton-object-template-1.yml"
+        "$ref": "/app-sre/tekton-pipeline-template-1.yml"
     required:
     - openshiftSaasDeploy
   deployResources:
