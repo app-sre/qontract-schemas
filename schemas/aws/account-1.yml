@@ -67,6 +67,7 @@ properties:
           - terraform-users
           - terraform-aws-route53
           - terraform-vpc-peerings
+          - terraform-tgw-attachments
           - aws-ami-cleanup
   deleteKeys:
     type: array
