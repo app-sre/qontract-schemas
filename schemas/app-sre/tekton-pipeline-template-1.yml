@@ -1,0 +1,59 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+description: |
+  Properties of tekton pipeline templates deployed in tekton pipelines providers
+  namespaces
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/tekton-pipeline-template-1.yml
+  name:
+    type: string
+  type:
+    type: string
+    enum:
+    - onePerSaasFile
+    - onePerNamespace
+  path:
+    type: string
+  variables:
+    type: object
+oneOf:
+- properties:
+    name:
+      type: string
+      maxLength: 61
+      description: |
+        One per namespace file Template name. It is limited in size as the tekton
+        object name is limited to 63 characters
+    type:
+      type: string
+      enum:
+      - onePerNamespace
+- properties:
+    name:
+      type: string
+      maxLength: 15
+      description: |
+        One per saas file Template name. It is very limited in size as the tekton
+        pipeline final name will also contain the saas file and the max size of
+        a pipeline is limited to 63 characters.
+
+        But we impose another restriction, because pipeline retries generate a
+        pipeline run that appends 7 characters to the pipeline name. Since pipeline
+        runs also have a 63 character limit, this limits pipeline names to 56
+        characters, which finally limits the pipeline names to 15. See all the
+        details in the openshift-tekton-resources integration.
+    type:
+      type: string
+      enum:
+      - onePerSaasFile
+required:
+- name
+- type
+- path

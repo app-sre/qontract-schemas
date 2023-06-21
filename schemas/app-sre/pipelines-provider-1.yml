@@ -41,12 +41,12 @@ properties:
   taskTemplates:
     type: array
     items:
-      "$ref": "/app-sre/tekton-object-template-1.yml"
+      "$ref": "/app-sre/tekton-task-template-1.yml"
   pipelineTemplates:
     additionalProperties: false
     properties:
       openshiftSaasDeploy:
-        "$ref": "/app-sre/tekton-object-template-1.yml"
+        "$ref": "/app-sre/tekton-pipeline-template-1.yml"
     required:
     - openshiftSaasDeploy
   deployResources:
@@ -78,7 +78,7 @@ oneOf:
         objects in the provider namespace
       type: array
       items:
-        "$ref": "/app-sre/tekton-object-template-1.yml"
+        "$ref": "/app-sre/tekton-task-template-1.yml"
     pipelineTemplates:
       description: |
         Tekton Pipeline jinja2 templates that will be used to create the corresponding
@@ -90,7 +90,7 @@ oneOf:
       additionalProperties: false
       properties:
         openshiftSaasDeploy:
-          "$ref": "/app-sre/tekton-object-template-1.yml"
+          "$ref": "/app-sre/tekton-pipeline-template-1.yml"
       required:
       - openshiftSaasDeploy
     deployResources:
