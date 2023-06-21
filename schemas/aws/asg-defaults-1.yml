@@ -89,6 +89,27 @@ properties:
               - st1
             encrypted:
               type: boolean
+  instance_requirements:
+    type: object
+    additionalProperties: false
+    properties:
+      vcpu_count:
+        type: object
+        additionalProperties: false
+        properties:
+          min:
+            type: integer
+          max:
+            type: integer
+      memory_mib:
+        min:
+          type: integer
+        max:
+          type: integer
+      excluded_instance_types:
+        type: array
+        items:
+          type: string
 required:
 - "$schema"
 - max_size
