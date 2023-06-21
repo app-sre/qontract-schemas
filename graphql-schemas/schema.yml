@@ -672,6 +672,7 @@ confs:
     fieldMap:
       osd: ClusterSpecOSD_v1
       rosa: ClusterSpecROSA_v1
+      hypershift: ClusterSpecHypershift_v1
   fields:
   - { name: product, type: string, isRequired: true}
   - { name: id, type: string }
@@ -688,7 +689,6 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
-  - { name: hypershift, type: boolean, isRequired: false}
 
 - name: ClusterSpecOSD_v1
   interface: ClusterSpec_v1
@@ -708,7 +708,6 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
-  - { name: hypershift, type: boolean, isRequired: false}
   - { name: storage, type: int, isRequired: true }
   - { name: load_balancers, type: int, isRequired: true }
 
@@ -731,10 +730,30 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
-  - { name: hypershift, type: boolean, isRequired: false}
   - { name: subnet_ids, type: string, isList: True}
   - { name: availability_zones, type: string, isList: True}
 
+- name: ClusterSpecHypershift_v1
+  interface: ClusterSpec_v1
+  fields:
+  - { name: account, type: AWSAccount_v1}
+  - { name: product, type: string, isRequired: true}
+  - { name: id, type: string }
+  - { name: external_id, type: string }
+  - { name: provider, type: string, isRequired: true }
+  - { name: region, type: string, isRequired: true }
+  - { name: channel, type: string, isRequired: true }
+  - { name: version, type: string, isRequired: true }
+  - { name: initial_version, type: string, isRequired: true }
+  - { name: multi_az, type: boolean, isRequired: true }
+  - { name: nodes, type: int }
+  - { name: instance_type, type: string, isRequired: true }
+  - { name: private, type: boolean, isRequired: true }
+  - { name: provision_shard_id, type: string }
+  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
+  - { name: disable_user_workload_monitoring, type: boolean }
+  - { name: subnet_ids, type: string, isList: True}
+  - { name: availability_zones, type: string, isList: True}
 
 - name: ClusterSpecAutoScale_v1
   fields:
@@ -775,6 +794,7 @@ confs:
   - { name: id, type: string, isRequired: true }
   - { name: instance_type, type: string, isRequired: true }
   - { name: replicas, type: int, isRequired: true }
+  - { name: subnet, type: string }
   - { name: labels, type: json }
   - { name: taints, type: Taint_v1, isList: true }
 

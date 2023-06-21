@@ -203,22 +203,13 @@ properties:
           type: string
         description: |
           Hosted Clusters only: list of availability_zones to use with the cluster creation.
-      hypershift:
-        type: boolean
     required:
     - product
     - provider
     - region
     - version
     - initial_version
-    - multi_az
-    - instance_type
     - private
-    oneOf:
-    - required:
-      - nodes
-    - required:
-      - autoscale
   externalConfiguration:
     type: object
     additionalProperties: false
@@ -272,6 +263,8 @@ properties:
           type: integer
         labels:
           "$ref": "/common-1.json#/definitions/labels"
+        subnet:
+          type: string
         taints:
           type: array
           items:
