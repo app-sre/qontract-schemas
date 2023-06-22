@@ -775,6 +775,7 @@ confs:
   - { name: id, type: string, isRequired: true }
   - { name: instance_type, type: string, isRequired: true }
   - { name: replicas, type: int, isRequired: true }
+  - { name: subnet, type: string }
   - { name: labels, type: json }
   - { name: taints, type: Taint_v1, isList: true }
 

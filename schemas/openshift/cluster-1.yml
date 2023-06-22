@@ -214,11 +214,6 @@ properties:
     - multi_az
     - instance_type
     - private
-    oneOf:
-    - required:
-      - nodes
-    - required:
-      - autoscale
   externalConfiguration:
     type: object
     additionalProperties: false
@@ -272,6 +267,8 @@ properties:
           type: integer
         labels:
           "$ref": "/common-1.json#/definitions/labels"
+        subnet:
+          type: string
         taints:
           type: array
           items:
