@@ -1251,7 +1251,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: regex, type: string, isRequired: true }
-  - { name: retention_in_days, type: string }
+  - { name: retention_in_days, type: int }
 
 - name: AWSUserPolicy_v1
   datafile: /aws/policy-1.yml
