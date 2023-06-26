@@ -57,6 +57,7 @@ properties:
           - openshift-upgrade-watcher
           - slack-usergroups
           - qontract-cli
+          - sd-app-sre-alert-report
       token:
         "$ref": "/common-1.json#/definitions/vaultSecret"
       channel:
