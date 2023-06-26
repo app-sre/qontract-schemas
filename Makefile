@@ -56,7 +56,7 @@ gql_validate: ## Run qontract-server with the schema bundle and no data to revea
 		-e LOAD_METHOD=fs \
 		-e DATAFILES_FILE=/bundle/$(BUNDLE_FILENAME) \
 		$(SERVER_IMAGE):$(SERVER_IMAGE_TAG) \
-		timeout 10 yarn server || \
+		timeout 10 node ./dist/server.js || \
 	if [ $$? -eq 124 ]; then exit 0; else exit $$?; fi;
 	
 
