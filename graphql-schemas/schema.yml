@@ -521,6 +521,12 @@ confs:
   - { name: slack, type: SlackOutput_v1 }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
+  - name: escalationPolicies
+    type: AppEscalationPolicy_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/escalation-policy-1.yml
+      subAttr: channels.jiraBoard
 
 - name: SendGridAccount_v1
   fields:
