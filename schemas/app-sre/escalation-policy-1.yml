@@ -42,6 +42,9 @@ properties:
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-board-1.yml"
+      jiraComponent:
+        type: string
+        description: component to set on jira tickets
       nextEscalationPolicy:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/escalation-policy-1.yml"
