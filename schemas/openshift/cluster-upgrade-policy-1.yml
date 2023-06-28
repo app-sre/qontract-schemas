@@ -40,6 +40,13 @@ properties:
           defined in openshift-cluster-manager-1.yml. A cluster will be
           upgraded to a version only if clusters in previous sectors are
           running that version or higher.
+      blockedVersions:
+        description: |
+          List of versions that will be rejected for upgrades.
+          They can be regular expressions"
+        type: array
+        items:
+          type: string
     oneOf:
     - required:
       - soakDays
