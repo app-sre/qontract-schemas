@@ -3421,6 +3421,7 @@ confs:
   - { name: skupper_network_v1, type: SkupperNetwork_v1, isList: true, datafileSchema: /dependencies/skupper-network-1.yml }
   - { name: cloudflare_account_role_v1, type: CloudflareAccountRole_v1, isList: true, datafileSchema: /cloudflare/account-role-1.yml }
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
+  - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3674,6 +3675,26 @@ confs:
   - { name: page, type: StatusPage_v1, isRequired: true }
   - { name: groupName, type: string }
   - { name: status, type: StatusProvider_v1, isList: true, isInterface: true }
+
+- name: StatusBoard_v1
+  datafile: /dependencies/status-board-component-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: ocm, type: OpenShiftClusterManagerEnvironment_v1, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: globalAppSelectors, type: StatusBoardAppSelector_v1 }
+  - { name: products, type: StatusBoardProduct_v1, isList: true, isRequired: true }
+
+- name: StatusBoardProduct_v1
+  fields:
+  - { name: appSelectors, type: StatusBoardAppSelector_v1 }
+  - { name: productEnvironment, type: Environment_v1, isRequired: true }
+
+- name: StatusBoardAppSelector_v1
+  fields:
+  - { name: exclude, type: string, isList: true }
 
 - name: EndpointMonitoringProvider_v1
   isInterface: true

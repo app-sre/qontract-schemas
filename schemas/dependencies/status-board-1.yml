@@ -1,0 +1,48 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/status-board-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  ocm:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/openshift-cluster-manager-environment-1.yml"
+  globalAppSelectors:
+    type: object
+    properties:
+      exclude:
+        type: array
+        items:
+          type: string
+  products:
+    type: array
+    items:
+      type: object
+      properties:
+        productEnvironment:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/app-sre/environment-1.yml"
+        appSelectors:
+          type: object
+          properties:
+            exclude:
+              type: array
+              items:
+                type: string
+      required:
+      - productEnvironment
+required:
+- "$schema"
+- labels
+- name
+- ocm
+- products
