@@ -168,6 +168,7 @@ properties:
                   - /dependencies/quay-org-1.yml
                   - /cloudflare/account-1.yml
                   - /cloudflare/dns-zone-1.yml
+                  - /app-sre/escalation-policy-1.yml
 required:
 - $schema
 - labels
