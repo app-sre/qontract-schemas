@@ -58,10 +58,6 @@ properties:
       check_only_affected_shards:
         type: boolean
         description: "defaults to false"
-      shardSpecOverrides:
-        type: array
-        items:
-          "$ref": "/app-sre/integration-shard-spec-override-1.yml"
     required:
     - cmd
 

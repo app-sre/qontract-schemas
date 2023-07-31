@@ -24,6 +24,38 @@ properties:
   shardSpecOverrides:
     type: array
     items:
-      "$ref": "/app-sre/integration-shard-spec-override-1.yml"
+      type: object
+      additionalProperties: false
+      properties:
+        shard:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef":
+            type: object
+            properties:
+              '$schema':
+                type: string
+                enum:
+                - /openshift/cluster-1.yml
+                - /aws/account-1.yml
+                - /cloudflare/dns-zone-1.yml
+        imageRef:
+          type: string
+          description: Image ref used by the shard.
+        resources:
+          "$ref": "/openshift/deploy-resources-1.yml"
+        disabled:
+          type: boolean
+        subSharding:
+          type: object
+          description: Sub-sharding strategy used by a shard.
+          additionalProperties: false
+          properties:
+            strategy:
+              type: string
+              enum:
+              - static
+            shards:
+              type: integer
+
 required:
   - strategy
