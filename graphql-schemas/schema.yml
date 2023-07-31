@@ -3079,13 +3079,6 @@ confs:
   - { name: description, type: string }
 
 - name: IntegrationPrCheck_v1
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: cmd
-    fieldMap:
-      openshift-resources: IntegrationPrCheckOpenshift_v1
-      terraform-resources: IntegrationPrCheckAWSAccount_v1
   fields:
   - { name: cmd, type: string, isRequired: true }
   - { name: state, type: boolean }
@@ -3096,35 +3089,6 @@ confs:
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
   - { name: check_only_affected_shards, type: boolean }
-
-- name: IntegrationPrCheckOpenshift_v1
-  interface: IntegrationPrCheck_v1
-  fields:
-  - { name: cmd, type: string, isRequired: true }
-  - { name: state, type: boolean }
-  - { name: sqs, type: boolean }
-  - { name: disabled, type: boolean }
-  - { name: always_run, type: boolean }
-  - { name: no_validate_schemas, type: boolean }
-  - { name: run_for_valid_saas_file_changes, type: boolean }
-  - { name: early_exit, type: boolean }
-  - { name: check_only_affected_shards, type: boolean }
-  - { name: shardSpecOverrides, type: OpenshiftClusterShardSpecOverride_v1, isList: true, isRequired: false}
-
-- name: IntegrationPrCheckAWSAccount_v1
-  interface: IntegrationPrCheck_v1
-  fields:
-  - { name: cmd, type: string, isRequired: true }
-  - { name: state, type: boolean }
-  - { name: sqs, type: boolean }
-  - { name: disabled, type: boolean }
-  - { name: always_run, type: boolean }
-  - { name: no_validate_schemas, type: boolean }
-  - { name: run_for_valid_saas_file_changes, type: boolean }
-  - { name: early_exit, type: boolean }
-  - { name: check_only_affected_shards, type: boolean }
-  - { name: shardSpecOverrides, type: AWSAccountShardSpecOverride_v1, isList: true, isRequired: false}
-
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
@@ -3179,7 +3143,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: upstream, type: string }
   - { name: schemas, type: string, isRequired: true, isList: true }
-  - { name: pr_check, type: IntegrationPrCheck_v1, isInterface: true }
+  - { name: pr_check, type: IntegrationPrCheck_v1 }
   - { name: managed, type: IntegrationManaged_v1, isList: true }
 
 - name: IntegrationSharding_v1
