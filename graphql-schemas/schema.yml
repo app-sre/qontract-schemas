@@ -2548,6 +2548,7 @@ confs:
 - name: SlackOutputNotifications_v1
   fields:
   - { name: start, type: boolean }
+  - { name: proposed, type: boolean }
 
 - name: SlackOutput_v1
   fields:

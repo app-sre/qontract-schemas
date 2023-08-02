@@ -42,6 +42,9 @@ properties:
         properties:
           start:
             type: boolean
+          proposed:
+            type: boolean
+            description: post slack notification when promotion is proposed (merge request created)
     required:
     - workspace
     - channel
