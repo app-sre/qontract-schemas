@@ -579,6 +579,16 @@ properties:
     required:
     - url
     - auth
+  ocmSubscriptionLabels:
+    type: object
+    additionalProperties: false
+    properties:
+      sre-capabilities:
+        type: object
+        additionalProperties: false
+        properties:
+          rhidp:
+            type: string
 required:
 - "$schema"
 - labels

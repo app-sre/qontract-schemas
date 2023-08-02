@@ -919,6 +919,7 @@ confs:
   - { name: awsInfrastructureAccess, type: AWSInfrastructureAccess_v1, isList: true }
   - { name: awsInfrastructureManagementAccounts, type: AWSInfrastructureManagementAccount_v1, isList: true }
   - { name: prometheus, type: ClusterPrometheus_v1}
+  - { name: ocmSubscriptionLabels, type: json}
   - name: namespaces
     type: Namespace_v1
     isList: true
