@@ -65,10 +65,6 @@ oneOf:
       - 150
       - 180
       - 365
-      - 400
-      - 545
-      - 731
-      - 1096
   required:
   - provider
   - regex
