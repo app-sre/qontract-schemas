@@ -761,6 +761,7 @@ confs:
   - { name: soakDays, type: int }
   - { name: mutexes, type: string, isList: true }
   - { name: sector, type: string }
+  - { name: blockedVersions, type: string, isList: true }
 
 - name: ClusterUpgradePolicy_v1
   fields:
