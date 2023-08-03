@@ -3271,6 +3271,7 @@ confs:
   - { name: path, type: string, isRequired: true, isResource: true }
 
 - name: QueryValidation_v1
+  datafile: /app-interface/query-validation-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }

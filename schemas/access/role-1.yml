@@ -169,6 +169,7 @@ properties:
                   - /cloudflare/account-1.yml
                   - /cloudflare/dns-zone-1.yml
                   - /app-sre/escalation-policy-1.yml
+                  - /app-interface/query-validation-1.yml
 required:
 - $schema
 - labels
