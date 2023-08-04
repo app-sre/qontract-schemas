@@ -1234,6 +1234,7 @@ confs:
     field: provider
     fieldMap:
       ami: AWSAccountCleanupOptionAMI_v1
+      cloudwatch: AWSAccountCleanupOptionCloudWatch_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1244,6 +1245,13 @@ confs:
   - { name: regex, type: string, isRequired: true }
   - { name: age, type: string, isRequired: true }
   - { name: region, type: string }
+
+- name: AWSAccountCleanupOptionCloudWatch_v1
+  interface: AWSAccountCleanupOption_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: regex, type: string, isRequired: true }
+  - { name: retention_in_days, type: int }
 
 - name: AWSUserPolicy_v1
   datafile: /aws/policy-1.yml
