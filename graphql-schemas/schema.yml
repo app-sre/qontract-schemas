@@ -3069,6 +3069,7 @@ confs:
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
+  - { name: ldapGroup, type: string }
   - name: users
     type: User_v1
     isList: true
