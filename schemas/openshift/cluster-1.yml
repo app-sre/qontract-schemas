@@ -263,8 +263,6 @@ properties:
           maxLength: 15
         instance_type:
           type: string
-        replicas:
-          type: integer
         labels:
           "$ref": "/common-1.json#/definitions/labels"
         subnet:
@@ -289,10 +287,28 @@ properties:
             - key
             - value
             - effect
+        replicas:
+          type: integer
+        autoscale:
+          type: object
+          additionalProperties: false
+          properties:
+            min_replicas:
+              type: integer
+              minimum: 2
+            max_replicas:
+              type: integer
+          required:
+            - min_replicas
+            - max_replicas
       required:
-      - id
-      - instance_type
-      - replicas
+        - id
+        - instance_type
+      oneOf:
+        - required:
+          - replicas
+        - required:
+          - autoscale
   peering:
     type: object
     additionalProperties: false
