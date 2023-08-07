@@ -761,6 +761,7 @@ confs:
   - { name: soakDays, type: int }
   - { name: mutexes, type: string, isList: true }
   - { name: sector, type: string }
+  - { name: blockedVersions, type: string, isList: true }
 
 - name: ClusterUpgradePolicy_v1
   fields:
@@ -919,6 +920,7 @@ confs:
   - { name: awsInfrastructureAccess, type: AWSInfrastructureAccess_v1, isList: true }
   - { name: awsInfrastructureManagementAccounts, type: AWSInfrastructureManagementAccount_v1, isList: true }
   - { name: prometheus, type: ClusterPrometheus_v1}
+  - { name: ocmSubscriptionLabels, type: json}
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -1234,6 +1236,7 @@ confs:
     field: provider
     fieldMap:
       ami: AWSAccountCleanupOptionAMI_v1
+      cloudwatch: AWSAccountCleanupOptionCloudWatch_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1244,6 +1247,13 @@ confs:
   - { name: regex, type: string, isRequired: true }
   - { name: age, type: string, isRequired: true }
   - { name: region, type: string }
+
+- name: AWSAccountCleanupOptionCloudWatch_v1
+  interface: AWSAccountCleanupOption_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: regex, type: string, isRequired: true }
+  - { name: retention_in_days, type: int }
 
 - name: AWSUserPolicy_v1
   datafile: /aws/policy-1.yml
@@ -3271,6 +3281,7 @@ confs:
   - { name: path, type: string, isRequired: true, isResource: true }
 
 - name: QueryValidation_v1
+  datafile: /app-interface/query-validation-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
