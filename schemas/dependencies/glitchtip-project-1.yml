@@ -13,6 +13,8 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     "$ref": "/common-1.json#/definitions/identifierLowercase64"
+  projectId:
+    "$ref": "/common-1.json#/definitions/identifierLowercase64"
   description:
     type: string
   app:
