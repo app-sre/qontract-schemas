@@ -109,6 +109,9 @@ properties:
   ocm:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+  dynatraceEnvironment:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/dynatrace-environment-1.yml"
   managedGroups:
     type: array
     items:

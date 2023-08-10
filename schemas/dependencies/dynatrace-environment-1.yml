@@ -1,0 +1,22 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/dynatrace-environment-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  environmentUrl:
+    type: string
+required:
+- "$schema"
+- name
+- description
+- environmentUrl
