@@ -573,6 +573,14 @@ confs:
   - { name: icon_emoji, type: string, isRequired: true }
   - { name: username, type: string, isRequired: true }
 
+- name: DynatraceEnvironment_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
+
 - name: GithubOrg_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -903,6 +911,7 @@ confs:
   - { name: managedGroups, type: string, isList: true }
   - { name: managedClusterRoles, type: boolean }
   - { name: ocm, type: OpenShiftClusterManager_v1 }
+  - { name: dynatraceEnvironment, type: DynatraceEnvironment_v1 }
   - { name: spec, type: ClusterSpec_v1, isInterface: true }
   - { name: externalConfiguration, type: ClusterExternalConfiguration_v1 }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
@@ -2229,6 +2238,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: delete, type: boolean }
+  - { name: enableDynatraceLogging, type: boolean }
   - { name: description, type: string, isRequired: true }
   - { name: grafanaUrl, type: string }
   - { name: cluster, type: Cluster_v1, isRequired: true }
@@ -3437,6 +3447,7 @@ confs:
   - { name: cloudflare_account_role_v1, type: CloudflareAccountRole_v1, isList: true, datafileSchema: /cloudflare/account-role-1.yml }
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
+  - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3495,6 +3506,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: projectId, type: string }
   - { name: description, type: string, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }
   - { name: platform, type: string, isRequired: true }
