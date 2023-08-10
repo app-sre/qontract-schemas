@@ -519,6 +519,7 @@ confs:
   - { name: server, type: JiraServer_v1, isRequired: true }
   - { name: severityPriorityMappings, type: JiraSeverityPriorityMappings_v1, isRequired: true }
   - { name: slack, type: SlackOutput_v1 }
+  - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
   - name: escalationPolicies
