@@ -3888,7 +3888,7 @@ confs:
 
 - name: ChangeTypeChangeDetectorContextSelector_v1
   fields:
-  - { name: selector, type: string, isRequired: true }
+  - { name: selector, type: string }
   - { name: where, type: "string" }
   - { name: when, type: "string" }
 
