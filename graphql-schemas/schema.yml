@@ -2286,15 +2286,6 @@ confs:
   - { name: public, type: boolean, isRequired: true }
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
-- name: OcpReleaseMirror_v1
-  fields:
-  - { name: hiveCluster, type: Cluster_v1, isRequired: true }
-  - { name: ecrResourcesNamespace, type: Namespace_v1, isRequired: true}
-  - { name: ocpReleaseEcrIdentifier, type: string, isRequired: true }
-  - { name: ocpArtDevEcrIdentifier, type: string, isRequired: true }
-  - { name: quayTargetOrgs, type: QuayOrg_v1, isRequired: true, isList: true}
-  - { name: mirrorChannels, type: string, isRequired: true, isList: true }
-
 - name: ContainerImageMirror_v1
   fields:
   - { name: url, type: string, isRequired: true }
@@ -3431,7 +3422,6 @@ confs:
   - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
   - { name: cloudflare_dns_zone_v1, type: CloudflareDnsZone_v1, isList: true, datafileSchema: /cloudflare/dns-zone-1.yml }
   - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
-  - { name: ocp_release_mirror_v1, type: OcpReleaseMirror_v1, isList: true, datafileSchema: /dependencies/ocp-release-mirror-1.yml}
   - { name: slo_document_v1, type: SLODocument_v1, isList: true, datafileSchema: /app-sre/slo-document-1.yml}
   - { name: shared_resources_v1, type: SharedResources_v1, isList: true, datafileSchema: /openshift/shared-resources-1.yml }
   - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
