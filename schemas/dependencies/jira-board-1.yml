@@ -31,6 +31,8 @@ properties:
         type: string
     required:
     - workspace
+  issueType:
+    type: string
   issueResolveState:
     type: string
   issueReopenState:
