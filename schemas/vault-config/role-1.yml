@@ -14,10 +14,8 @@ properties:
   name:
     type: string
   mount:
-    type: string
-    pattern: '.+\/$'
-  type:
-    type: string
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/auth-1.yml"
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
@@ -69,11 +67,25 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /vault-config/policy-1.yml
         policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /vault-config/policy-1.yml
         secret_id_bound_cidrs:
           type: array
           items:
@@ -159,7 +171,14 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /vault-config/policy-1.yml
         token_bound_cidrs:
           type: array
           items:
@@ -220,7 +239,14 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /vault-config/policy-1.yml
         token_bound_cidrs:
           type: array
           items:
