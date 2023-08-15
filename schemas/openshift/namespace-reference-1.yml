@@ -1,0 +1,55 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/namespace-reference-1.yml
+
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    type: string
+
+  description:
+    type: string
+
+  cluster:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+      serverUrl:
+        type: string
+        format: uri
+      automationToken:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - name
+    - serverUrl
+    - automationToken
+
+  environment:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+      parameters:
+        type: object
+    required:
+    - name
+
+required:
+- "$schema"
+- labels
+- name
+- description
+- cluster
+- environment
