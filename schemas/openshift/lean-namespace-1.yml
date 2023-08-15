@@ -9,7 +9,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /openshift/namespace-reference-1.yml
+    - /openshift/lean-namespace-1.yml
 
   labels:
     "$ref": "/common-1.json#/definitions/labels"

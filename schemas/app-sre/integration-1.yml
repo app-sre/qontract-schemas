@@ -76,7 +76,7 @@ properties:
                 type: string
                 enum:
                 - /openshift/namespace-1.yml
-                - /openshift/namespace-reference-1.yml
+                - /openshift/lean-namespace-1.yml
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
         sharding:
