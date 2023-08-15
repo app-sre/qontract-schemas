@@ -14,7 +14,7 @@ properties:
   annotations:
     "$ref": "/common-1.json#/definitions/annotations"
   identifier:
-    "$ref": "/common-1.json#/definitions/longIdentifier"
+    type: string
   name:
     type: string
   variables:
@@ -400,7 +400,9 @@ oneOf:
       enum:
       - aws-iam-role
     identifier:
-      "$ref": "/common-1.json#/definitions/longIdentifier"
+      type: string
+      # Maximum 64 characters. Use alphanumeric and '+=,.@-_' characters.
+      pattern: '^[a-zA-Z0-9+=,.@_-]{1,64}$'
     assume_role:
       type: object
       additionalProperties: false
