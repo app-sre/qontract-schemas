@@ -69,7 +69,14 @@ properties:
       properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/openshift/namespace-1.yml"
+          "$schemaRef":
+            type: object
+            properties:
+              '$schema':
+                type: string
+                enum:
+                - /openshift/namespace-1.yml
+                - /openshift/lean-namespace-1.yml
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
         sharding:
