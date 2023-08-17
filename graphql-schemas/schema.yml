@@ -30,6 +30,7 @@ confs:
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
+  - { name: ldapGroups, type: LdapGroupsSettings_v1 }
 
 - name: AppInterfaceStateConfiguration_v1
   isInterface: true
@@ -79,6 +80,11 @@ confs:
   - { name: readTimeout, type: int }
   - { name: maxRetries, type: int }
   - { name: mailDomain, type: string }
+
+- name: LdapGroupsSettings_v1
+  fields:
+  - { name: contactList, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
@@ -3069,6 +3075,7 @@ confs:
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
+  - { name: ldapGroup, type: string }
   - name: users
     type: User_v1
     isList: true

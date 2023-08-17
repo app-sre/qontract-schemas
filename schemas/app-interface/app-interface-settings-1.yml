@@ -194,6 +194,17 @@ properties:
       - bucket
       - region
       - credentials
+  ldapGroups:
+    type: object
+    additionalProperties: false
+    properties:
+      contactList:
+        type: string
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - contactList
+    - credentials
 required:
 - "$schema"
 - labels

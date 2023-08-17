@@ -200,6 +200,10 @@
       "type": "string",
       "pattern": "(\\d+[dhms])+",
       "description": "The format is a subset of Go's ParseDuration format, only allowing from days to seconds in resolution, e.g. '1h', '1d1h1m2s', ..."
+    },
+    "ldapGroupName": {
+      "type": "string",
+      "pattern": "^ai-[a-z][a-z0-9-_.]+[a-z0-9]*$"
     }
   }
 }
