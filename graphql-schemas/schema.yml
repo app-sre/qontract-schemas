@@ -3663,8 +3663,22 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }
-  - { name: namespaces, type: Namespace_v1, isList: true, isRequired: true }
+  - { name: namespaces, type: SLONamespaces_v1, isList: true, isRequired: true }
   - { name: slos, type: SLODocumentSLO_v1, isList: true }
+
+- name: SLONamespaces_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true}
+  - { name: external, type: SLOExternalPrometheusAccess_v1 }
+
+- name: SLOExternalPrometheusAccess_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: StatusPage_v1
   fields:
