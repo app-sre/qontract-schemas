@@ -129,6 +129,6 @@ required:
 - "$schema"
 - labels
 - name
-- prometheusAccess
+- namespaces
 - slos
 - app
