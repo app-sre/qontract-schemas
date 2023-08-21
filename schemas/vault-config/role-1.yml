@@ -68,24 +68,12 @@ properties:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef":
-              type: object
-              properties:
-                '$schema':
-                  type: string
-                  enum:
-                  - /vault-config/policy-1.yml
+            "$schemaRef": "/vault-config/policy-1.yml"
         policies:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef":
-              type: object
-              properties:
-                '$schema':
-                  type: string
-                  enum:
-                  - /vault-config/policy-1.yml
+            "$schemaRef": "/vault-config/policy-1.yml"
         secret_id_bound_cidrs:
           type: array
           items:
@@ -172,13 +160,7 @@ properties:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef":
-              type: object
-              properties:
-                '$schema':
-                  type: string
-                  enum:
-                  - /vault-config/policy-1.yml
+            "$schemaRef": "/vault-config/policy-1.yml"
         token_bound_cidrs:
           type: array
           items:
@@ -240,13 +222,7 @@ properties:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef":
-              type: object
-              properties:
-                '$schema':
-                  type: string
-                  enum:
-                  - /vault-config/policy-1.yml
+            "$schemaRef": "/vault-config/policy-1.yml"
         token_bound_cidrs:
           type: array
           items:
