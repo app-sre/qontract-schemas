@@ -24,9 +24,8 @@ properties:
       additionalProperties: false
       properties:
         namespace:
-          items:
-            "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef": "/openshift/namespace-1.yml"
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
         prometheusAccess:
           type: object
           additionalProperties: false
@@ -36,8 +35,8 @@ properties:
               format: uri
             token:
               "$ref": "/common-1.json#/definitions/vaultSecret"
-        required:
-          - namespace
+      required:
+        - namespace
   slos:
     type: array
     items:
