@@ -20,8 +20,23 @@ properties:
   namespaces:
     type: array
     items:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/openshift/namespace-1.yml"
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        prometheusAccess:
+          type: object
+          additionalProperties: false
+          properties:
+            url: 
+              type: string
+              format: uri
+          required:
+          - url
+      required:
+      - namespace
   slos:
     type: array
     items:
