@@ -1,0 +1,18 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+description: |
+  CPU and memory resources requirements to be set in pods limits configuration
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/resource-limits-requirements-1.yml
+  cpu:
+    "$ref": "/common-1.json#/definitions/k8sResourceRequirementQuantity"
+  memory:
+    "$ref": "/common-1.json#/definitions/k8sResourceRequirementQuantity"
+required:
+- memory

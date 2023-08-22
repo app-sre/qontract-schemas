@@ -2556,12 +2556,17 @@ confs:
 
 - name: DeployResources_v1
   fields:
-  - { name: requests, type: ResourceRequirements_v1, isRequired: true }
-  - { name: limits, type: ResourceRequirements_v1, isRequired: true }
+  - { name: requests, type: ResourceRequestsRequirements_v1, isRequired: true }
+  - { name: limits, type: ResourceLimitsRequirements_v1, isRequired: true }
 
-- name: ResourceRequirements_v1
+- name: ResourceRequestsRequirements_v1
   fields:
   - { name: cpu, type: string, isRequired: true }
+  - { name: memory, type: string, isRequired: true }
+
+- name: ResourceLimitsRequirements_v1
+  fields:
+  - { name: cpu, type: string }
   - { name: memory, type: string, isRequired: true }
 
 - name: SlackOutputNotifications_v1
