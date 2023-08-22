@@ -25,6 +25,17 @@ properties:
     type: string
   options:
     type: object
+    properties:
+      policies:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/vault-config/policy-1.yml"
+      token_policies:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/vault-config/policy-1.yml"
     oneOf:
     - properties:
         _type:
