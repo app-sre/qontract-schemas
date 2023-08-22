@@ -33,6 +33,8 @@ properties:
             url: 
               type: string
               format: uri
+          required:
+            - url
       required:
         - namespace
   slos:
