@@ -270,8 +270,8 @@ confs:
   - { name: token_num_uses, type: string, isRequired: true }
   - { name: token_ttl, type: string, isRequired: true }
   - { name: token_type, type: string, isRequired: true }
-  - { name: token_policies, type: string, isList: true, isRequired: true }
-  - { name: policies, type: string, isList: true, isRequired: true }
+  - { name: token_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
+  - { name: policies, type: VaultPolicy_v1, isList: true, isRequired: true }
   - { name: secret_id_bound_cidrs, type: string, isList: true, isRequired: true }
   - { name: token_bound_cidrs, type: string, isList: true, isRequired: true }
 
@@ -297,7 +297,7 @@ confs:
   - { name: token_explicit_max_ttl, type: string, isRequired: true }
   - { name: token_type, type: string, isRequired: true }
   - { name: token_period, type: string, isRequired: true }
-  - { name: token_policies, type: string, isList: true, isRequired: true }
+  - { name: token_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
   - { name: token_bound_cidrs, type: string, isList: true, isRequired: true }
   - { name: token_no_default_policy, type: boolean, isRequired: true }
   - { name: token_num_uses, type: string, isRequired: true }
@@ -317,7 +317,7 @@ confs:
   - { name: token_explicit_max_ttl, type: string, isRequired: true }
   - { name: token_type, type: string, isRequired: true }
   - { name: token_period, type: string, isRequired: true }
-  - { name: token_policies, type: string, isList: true, isRequired: true }
+  - { name: token_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
   - { name: token_bound_cidrs, type: string, isList: true, isRequired: true }
   - { name: token_no_default_policy, type: boolean, isRequired: true }
   - { name: token_num_uses, type: string, isRequired: true }
@@ -326,7 +326,7 @@ confs:
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
-  - { name: mount, type: string, isRequired: true }
+  - { name: mount, type: VaultAuth_v1, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: output_path, type: string, isRequired: false }
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
