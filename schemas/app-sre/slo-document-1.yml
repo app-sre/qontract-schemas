@@ -34,9 +34,9 @@ properties:
               type: string
               format: uri
           required:
-            - url
+          - url
       required:
-        - namespace
+      - namespace
   slos:
     type: array
     items:
