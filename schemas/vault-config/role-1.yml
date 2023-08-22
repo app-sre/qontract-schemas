@@ -16,6 +16,8 @@ properties:
   mount:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/auth-1.yml"
+  type:
+    type: string
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
