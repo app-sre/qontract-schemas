@@ -33,8 +33,6 @@ properties:
             url: 
               type: string
               format: uri
-            token:
-              "$ref": "/common-1.json#/definitions/vaultSecret"
       required:
         - namespace
   slos:

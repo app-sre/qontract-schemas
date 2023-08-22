@@ -3671,14 +3671,13 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true}
-  - { name: external, type: SLOExternalPrometheusAccess_v1 }
+  - { name: prometheusAccess, type: SLOExternalPrometheusAccess_v1 }
 
 - name: SLOExternalPrometheusAccess_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
-  - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: StatusPage_v1
   fields:
