@@ -14,8 +14,8 @@ properties:
   name:
     type: string
   mount:
-    type: string
-    pattern: '.+\/$'
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/vault-config/auth-1.yml"
   type:
     type: string
   instance:
@@ -25,6 +25,17 @@ properties:
     type: string
   options:
     type: object
+    properties:
+      policies:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/vault-config/policy-1.yml"
+      token_policies:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/vault-config/policy-1.yml"
     oneOf:
     - properties:
         _type:
@@ -69,11 +80,13 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/vault-config/policy-1.yml"
         policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/vault-config/policy-1.yml"
         secret_id_bound_cidrs:
           type: array
           items:
@@ -159,7 +172,8 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/vault-config/policy-1.yml"
         token_bound_cidrs:
           type: array
           items:
@@ -220,7 +234,8 @@ properties:
         token_policies:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/vault-config/policy-1.yml"
         token_bound_cidrs:
           type: array
           items:

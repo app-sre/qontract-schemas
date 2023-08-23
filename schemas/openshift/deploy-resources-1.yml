@@ -15,10 +15,10 @@ properties:
     - /openshift/deploy-resources-1.yml
   requests:
     description: "cpu and memory pod requests"
-    "$ref": "/openshift/resource-requirements-1.yml"
+    "$ref": "/openshift/resource-requests-requirements-1.yml"
   limits:
     description: "cpu and memory pod limits"
-    "$ref": "/openshift/resource-requirements-1.yml"
+    "$ref": "/openshift/resource-limits-requirements-1.yml"
 anyOf:
 - required:
   - requests
