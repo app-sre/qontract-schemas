@@ -82,6 +82,16 @@ properties:
   organization:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/glitchtip-organization-1.yml"
+  alerts:
+    type: array
+    items:
+      oneOf:
+      # inline
+      - "$ref": "/dependencies/glitchtip-project-alert-1.yml"
+      # referenced
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/glitchtip-project-alert-1.yml"
+
 required:
 - name
 - description
