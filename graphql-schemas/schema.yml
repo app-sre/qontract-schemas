@@ -586,7 +586,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
-  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true, isUnique: true }
+  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
 
 - name: GithubOrg_v1
   fields:
