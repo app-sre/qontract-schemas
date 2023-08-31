@@ -586,8 +586,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
-  # TODO: this will be required once existing dt envs are adjusted
-  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: false, isUnique: true }
+  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true, isUnique: true }
 
 - name: GithubOrg_v1
   fields:
