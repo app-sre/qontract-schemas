@@ -15,8 +15,11 @@ properties:
     type: string
   environmentUrl:
     type: string
+  bootstrapToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
 - "$schema"
 - name
 - description
 - environmentUrl
+- bootstrapToken
