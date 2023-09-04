@@ -607,7 +607,23 @@ properties:
         additionalProperties: false
         properties:
           rhidp:
-            type: string
+            type: object
+            additionalProperties: false
+            properties:
+              status:
+                type: string
+                enum:
+                - enabled
+                - disabled
+                - enforced
+                - sso-client-only
+                - oidc-only
+              issuer:
+                type: string
+              name:
+                type: string
+            required:
+            - status
 required:
 - "$schema"
 - labels
