@@ -77,26 +77,6 @@ properties:
             - oidc
           name:
             type: string
-          issuer:
-            type: string
-            format: uri
-          claims:
-            email:
-              type: array
-              items:
-                type: string
-            username:
-              type: array
-              items:
-                type: string
-            name:
-              type: array
-              items:
-                type: string
-            groups:
-              type: array
-              items:
-                type: string
         required:
         - service
         - name
@@ -544,7 +524,6 @@ properties:
           - ocm-external-configuration-labels
           - ocm-clusters
           - ocm-github-idp
-          - ocm-oidc-idp
           - ocm-groups
           - ocm-machine-pools
           - ocm-upgrade-scheduler
@@ -607,7 +586,23 @@ properties:
         additionalProperties: false
         properties:
           rhidp:
-            type: string
+            type: object
+            additionalProperties: false
+            properties:
+              status:
+                type: string
+                enum:
+                - enabled
+                - disabled
+                - enforced
+                - sso-client-only
+                - oidc-only
+              issuer:
+                type: string
+              name:
+                type: string
+            required:
+            - status
 required:
 - "$schema"
 - labels
