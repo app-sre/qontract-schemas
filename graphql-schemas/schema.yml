@@ -3536,7 +3536,8 @@ confs:
   interface: GlitchtipProjectAlertRecipient_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: url, type: string, isRequired: true, isContextUnique: true }
+  - { name: url, type: string, isContextUnique: true }
+  - { name: urlSecret, type: VaultSecret_v1, isContextUnique: true }
 
 - name: GlitchtipProjects_v1
   datafile: /dependencies/glitchtip-project-1.yml
