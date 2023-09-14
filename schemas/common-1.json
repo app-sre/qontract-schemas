@@ -141,6 +141,10 @@
         "$ref": {
           "type": "string",
           "format": "uri-reference"
+        },
+        "__identifier": {
+          "type": "string",
+          "description": "this is the field that holds the context uniqueness hash for a crossref. it is managed by qontract-bundler during the bundling process if a crossref datafile defines at least one isContextUnique field"
         }
       },
       "required": [
