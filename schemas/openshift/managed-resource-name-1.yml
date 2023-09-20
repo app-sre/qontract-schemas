@@ -1,0 +1,23 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/managed-resource-name-1.yml
+  resource:
+    type: string
+  resourceNames:
+    type: array
+    items:
+      type: string
+    minItems: 1
+
+required:
+- resource
+- resourceNames
