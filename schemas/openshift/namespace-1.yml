@@ -80,14 +80,7 @@ properties:
   managedResourceNames:
     type: array
     items:
-      type: object
-      properties:
-        resource:
-          type: string
-        resourceNames:
-          type: array
-          items:
-            type: string
+      "$ref": "/openshift/managed-resource-name-1.yml"
 
   sharedResources:
     type: array
