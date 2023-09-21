@@ -28,7 +28,7 @@ properties:
     - OffBoarding      # The app is being off-boarded
     - BestEffort       # The app is supported on a best effort basis
 
-  engagmentModel:
+  engagementModel:
     type: string
     description: level of engagement with the service
     enum:
