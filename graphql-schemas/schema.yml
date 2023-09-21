@@ -3568,6 +3568,11 @@ confs:
   - { name: url, type: string, isContextUnique: true }
   - { name: urlSecret, type: VaultSecret_v1, isContextUnique: true }
 
+- name: GlitchtipProjectJira_v1
+  fields:
+  - { name: project, type: string }
+  - { name: board, type: JiraBoard_v1 }
+
 - name: GlitchtipProjects_v1
   datafile: /dependencies/glitchtip-project-1.yml
   fields:
@@ -3583,6 +3588,7 @@ confs:
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
   - { name: alerts, type: GlitchtipProjectAlert_v1, isList: true }
   - { name: acceptEvents, type: boolean }
+  - { name: jira, type: GlitchtipProjectJira_v1 }
   - name: namespaces
     type: Namespace_v1
     isList: true
