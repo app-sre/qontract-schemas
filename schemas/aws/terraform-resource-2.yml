@@ -80,6 +80,10 @@ properties:
     type: array
     items:
       type: string
+  replication_configurations:
+    type: array
+    items:
+      type: object
   event_notifications:
     type: array
     items:
