@@ -80,10 +80,6 @@ properties:
     type: array
     items:
       type: string
-  replication_configurations:
-    type: array
-    items:
-      type: object
   event_notifications:
     type: array
     items:
@@ -259,6 +255,33 @@ oneOf:
           enum:
           - private
           - public-read
+        replication_configurations:
+          type: array
+          items:
+            type: object
+            properties:
+              rule_name:
+                type: string
+              destination_bucket_identifier:
+                type: string
+              status:
+                type: string
+                enum:
+                - enabled
+                - disabled
+              storage_class:
+                type: string
+                enum:
+                - standard
+                - reduced_redundancy
+                - standard_ia
+                - onezone_ia
+                - intelligent_tiering
+                - glacier
+                - deep_archive
+            required:
+              - rule_name
+              - destination_bucket_identifier
     event_notifications:
       type: array
       items:
@@ -297,33 +320,6 @@ oneOf:
       - intelligent_tiering
       - glacier
       - deep_archive
-    replication_configurations:
-      type: array
-      items:
-        type: object
-        properties:
-          rule_name:
-            type: string
-          destination_bucket_identifier:
-            type: string
-          status:
-            type: string
-            enum:
-            - enabled
-            - disabled
-          storage_class:
-            type: string
-            enum:
-            - standard
-            - reduced_redundancy
-            - standard_ia
-            - onezone_ia
-            - intelligent_tiering
-            - glacier
-            - deep_archive
-        required:
-          - rule_name
-          - destination_bucket_identifier
     bucket_policy:
       type: object
     output_resource_name:
