@@ -714,11 +714,8 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
 
@@ -734,11 +731,8 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: storage, type: int, isRequired: true }
@@ -757,11 +751,8 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: subnet_ids, type: string, isList: True}

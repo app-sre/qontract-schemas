@@ -146,10 +146,6 @@ properties:
         type: string
       multi_az:
         type: boolean
-      nodes:
-        type: integer
-      instance_type:
-        type: string
       private:
         type: boolean
       storage:
@@ -177,18 +173,6 @@ properties:
         - 20
       provision_shard_id:
         type: string
-      autoscale:
-        type: object
-        additionalProperties: false
-        properties:
-          min_replicas:
-            type: integer
-            minimum: 4
-          max_replicas:
-            type: integer
-        required:
-        - min_replicas
-        - max_replicas
       disable_user_workload_monitoring:
         type: boolean
       account:
@@ -215,7 +199,6 @@ properties:
     - version
     - initial_version
     - multi_az
-    - instance_type
     - private
   externalConfiguration:
     type: object
@@ -257,6 +240,7 @@ properties:
         type: string
   machinePools:
     type: array
+    minItems: 1
     items:
       type: object
       additionalProperties: false
