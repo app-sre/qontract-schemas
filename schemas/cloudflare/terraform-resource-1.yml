@@ -156,8 +156,6 @@ properties:
     type: string
   kind:
     type: string
-  name:
-    type: string
   
 oneOf:
 - additionalProperties: false
