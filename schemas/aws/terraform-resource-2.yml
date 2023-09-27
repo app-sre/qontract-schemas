@@ -701,9 +701,9 @@ oneOf:
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     fifo_topic:
-       type: boolean
+      type: boolean
     inline_policy:
-       type: object
+      type: object
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     subscriptions:

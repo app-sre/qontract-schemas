@@ -502,8 +502,8 @@ properties:
   insecureSkipTLSVerify:
     type: boolean
   jumpHost:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/openshift/jump-host-1.yml"
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   clusterAdmin:
