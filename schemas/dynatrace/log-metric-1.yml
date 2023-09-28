@@ -1,0 +1,36 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+# https://www.dynatrace.com/support/help/observe-and-explore/logs/log-management-and-analytics/lma-analysis/lma-log-metrics#log-metrics-create-rule
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dynatrace/log-metric-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  cluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/cluster-1.yml"
+  query:
+    type: string
+  measure:
+    type: string
+    enum:
+    - OCCURRENCE
+  dimensions:
+    type: array
+    items:
+      type: string
+
+required:
+- "$schema"
+- name
+- description
+- query
+- measure

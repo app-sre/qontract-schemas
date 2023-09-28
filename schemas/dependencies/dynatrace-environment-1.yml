@@ -17,9 +17,12 @@ properties:
     type: string
   bootstrapToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  apiToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
 - "$schema"
 - name
 - description
 - environmentUrl
 - bootstrapToken
+# TODO: - apiToken
