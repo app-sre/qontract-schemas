@@ -71,7 +71,7 @@ properties:
             credentialsId:
               type: string
               description: Jenkins credential name of ssh private key to be used for logging in to the remote host.
-            JVMOptions:
+            jvmOptions:
               type: string
               description: JAVA Options to set in the agents
             launchTimeoutSeconds:

@@ -448,7 +448,7 @@ confs:
 - name: JenkinsSSHConnector_v1
   fields:
   - { name: credentialsId, type: string, isRequired: true }
-  - { name: JVMOptions, type: string, isRequired: false }
+  - { name: jvmOptions, type: string, isRequired: false }
   - { name: launchTimeoutSeconds, type: int, isRequired: false }
   - { name: maxNumRetries, type: int, isRequired: false}
   - { name: port, type: int, isRequired: false}
