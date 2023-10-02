@@ -45,6 +45,7 @@ properties:
       properties:
         name:
           type: string
+          pattern: '^[A-Z][a-zA-Z0-9]*$'
         SLIType:
           type: string
           enum:
