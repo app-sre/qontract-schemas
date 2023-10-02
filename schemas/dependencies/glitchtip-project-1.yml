@@ -91,11 +91,11 @@ properties:
       # referenced
       - "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/glitchtip-project-alert-1.yml"
-
+  acceptEvents:
+    type: boolean
 required:
 - name
 - description
-- app
 - platform
 - teams
 - organization

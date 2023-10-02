@@ -3487,6 +3487,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: instance, type: GlitchtipInstance_v1, isRequired: true }
+  - { name: owners, type: string, isList: true }
   - name: roles
     type: Role_v1
     isList: true
@@ -3501,6 +3502,8 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
+  - { name: ldapGroups, type: string, isList: true }
+  - { name: membersOrganizationRole, type: string }
   - name: roles
     type: Role_v1
     isList: true
@@ -3557,11 +3560,12 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: projectId, type: string }
   - { name: description, type: string, isRequired: true }
-  - { name: app, type: App_v1, isRequired: true }
+  - { name: app, type: App_v1 }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
   - { name: alerts, type: GlitchtipProjectAlert_v1, isList: true }
+  - { name: acceptEvents, type: boolean }
   - name: namespaces
     type: Namespace_v1
     isList: true
