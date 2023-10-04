@@ -28,6 +28,5 @@ properties:
     - member
 required:
 - "$schema"
-- labels
 - name
 - description

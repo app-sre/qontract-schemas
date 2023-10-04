@@ -24,7 +24,6 @@ properties:
       type: string
 required:
 - "$schema"
-- labels
 - name
 - description
 - instance
