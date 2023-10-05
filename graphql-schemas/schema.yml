@@ -2467,7 +2467,7 @@ confs:
   - { name: architectureDocument, type: string, isRequired: true }
   - { name: parentApp, type: App_v1 }
   - { name: serviceDocs, type: string, isList: true }
-  - { name: serviceOwners, type: Owner_v1, isList: true, isRequired: true }
+  - { name: serviceOwners, type: Owner_v1, isList: true }
   - { name: serviceNotifications, type: Owner_v1, isList: true }
   - { name: dependencies, type: Dependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
