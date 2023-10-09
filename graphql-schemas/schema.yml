@@ -3191,6 +3191,7 @@ confs:
       static: StaticSharding_v1
       per-aws-account: AWSAccountSharding_v1
       per-openshift-cluster: OpenshiftClusterSharding_v1
+      per-ocm-organization: OCMOrganizationSharding_v1
       per-cloudflare-dns-zone: CloudflareDNSZoneSharding_v1
   fields:
   - { name: strategy, type: string, isRequired: true}
@@ -3232,6 +3233,19 @@ confs:
     - { name: resources, type: DeployResources_v1, isRequired: false }
     - { name: disabled, type: boolean, isRequired: false}
     - { name: subSharding, type: SubSharding_v1, isRequired: false, isInterface: true}
+
+- name: OCMOrganizationSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: OCMOrganizationShardSpecOverride_v1, isList: true}
+
+- name: OCMOrganizationShardSpecOverride_v1
+  fields:
+    - { name: shard, type: OpenShiftClusterManager_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
 
 - name: AWSAccountSharding_v1
   interface: IntegrationSharding_v1
