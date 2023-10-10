@@ -1568,6 +1568,7 @@ confs:
   - { name: records, type: CloudflareDnsRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
+  - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
 
 - name: CloudflareZoneArgo_v1
   fields:
@@ -1598,6 +1599,19 @@ confs:
   - { name: certificate_authority, type: string, isRequired: true }
   - { name: cloudflare_branding, type: boolean }
   - { name: wait_for_active_status, type: boolean }
+
+- name: CertificateSecret_v1
+  fields:
+  - { name: certificate, type: VaultSecret_v1, isRequired: true }
+  - { name: key, type: VaultSecret_v1, isRequired: true }
+
+- name: CloudflareCustomSSLCertificate_v1
+  fields:
+  - { name: identifier, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: bundle_method, type: string }
+  - { name: geo_restrictions, type: string }
+  - { name: certificate_secret, type: CertificateSecret_v1, isRequired: true }
 
 - name: NamespaceTerraformResourceCloudflareWorkerScript_v1
   interface: NamespaceTerraformResourceCloudflare_v1
