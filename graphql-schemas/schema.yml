@@ -2295,6 +2295,11 @@ confs:
   - { name: statusPage, type: string }
   - { name: SLA, type: float, isRequired: true }
   - { name: dependencyFailureImpact, type: string, isRequired: true }
+  - { name: monitoring, type: DependencyMonitoring_v1 }
+
+- name: DependencyMonitoring_v1
+  fields:
+  - {name: url, type: string }
 
 - name: AppGcrReposItems_v1
   fields:
