@@ -166,6 +166,10 @@ properties:
         type: integer
       mailDomain:
         type: string
+      glitchtipJiraBridgeAlertUrl:
+        type: string
+      glitchtipJiraBridgeToken:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
   cloudflareEmailDomainAllowList:
     type: array
     description: Email domain allow list restricts user with specific email domain to get access to Cloudflare systems

@@ -80,6 +80,8 @@ confs:
   - { name: readTimeout, type: int }
   - { name: maxRetries, type: int }
   - { name: mailDomain, type: string }
+  - { name: glitchtipJiraBridgeAlertUrl, type: string }
+  - { name: glitchtipJiraBridgeToken, type: VaultSecret_v1 }
 
 - name: LdapGroupsSettings_v1
   fields:
