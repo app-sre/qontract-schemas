@@ -2300,6 +2300,13 @@ confs:
 - name: DependencyMonitoring_v1
   fields:
   - {name: url, type: string }
+  - {name: namespace, type: DependencyMonitoringNamespace_v1 }
+  - {name: provider, type: string }
+  - {name: path, type: string }
+
+- name: DependencyMonitoringNamespace_v1
+  fields:
+  - {name: ref, type: string }
 
 - name: AppGcrReposItems_v1
   fields:
