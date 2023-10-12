@@ -597,6 +597,17 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
   - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
+  - { name: apiToken, type: VaultSecret_v1, isRequired: false } # TODO: make required
+
+- name: DynatraceLogMetric_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: cluster, type: Cluster_v1, isRequired: true }
+  - { name: query, type: string, isRequired: true }
+  - { name: measure, type: string, isRequired: true }
+  - { name: dimensions, type: string, isList: true }
 
 - name: GithubOrg_v1
   fields:
@@ -953,6 +964,12 @@ confs:
     isList: true
     synthetic:
       schema: /openshift/namespace-1.yml
+      subAttr: cluster
+  - name: dynatraceLogMetrics
+    type: DynatraceLogMetric_v1
+    isList: true
+    synthetic:
+      schema: /dynatrace/log-metric-1.yml
       subAttr: cluster
 
 - name: KafkaCluster_v1
