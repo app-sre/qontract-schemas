@@ -25,6 +25,12 @@ properties:
   retention_in_days:
     type: integer
     description: Cloudwatch log retention
+  region:
+    type: string
+    description: AWS region.
+  delete_empty_log_group:
+    type: boolean
+    description: Enable deletion when log group is empty.
 oneOf:
 - properties:
     provider:
@@ -65,6 +71,10 @@ oneOf:
       - 150
       - 180
       - 365
+    region:
+      type: string
+    delete_empty_log_group:
+      type: boolean
   required:
   - provider
   - regex
