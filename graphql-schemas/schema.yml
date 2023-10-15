@@ -1040,6 +1040,7 @@ confs:
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
   - { name: inheritVersionData, type: OpenShiftClusterManager_v1, isList: true }
   - { name: publishVersionData, type: OpenShiftClusterManager_v1, isList: true }
+  - { name: disable, type: DisableClusterAutomations_v1 }
   - name: clusters
     type: Cluster_v1
     isList: true

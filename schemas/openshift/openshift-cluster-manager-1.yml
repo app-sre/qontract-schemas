@@ -197,6 +197,22 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": /openshift/openshift-cluster-manager-1.yml
+  disable:
+    type: object
+    additionalProperties: false
+    properties:
+      integrations:
+        type: array
+        items:
+          type: string
+          enum:
+          - ocm-standalone-user-management
+          - advanced-upgrade-scheduler
+          - ocm-upgrade-scheduler-org
+          - ocm-addons-upgrade-scheduler-org
+          - ocm-addons-upgrade-tests-trigger
+          - ocm-update-recommended-version
+          - ocm-upgrade-scheduler-org-updater
 dependencies:
   upgradePolicyDefaults:
   - upgradePolicyClusters
