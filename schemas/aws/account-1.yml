@@ -69,6 +69,7 @@ properties:
           - terraform-vpc-peerings
           - terraform-tgw-attachments
           - aws-ami-cleanup
+          - aws-cloudwatch-log-retention
   deleteKeys:
     type: array
     items:
