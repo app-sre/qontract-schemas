@@ -87,8 +87,13 @@ oneOf:
       - admin
       - analyst
       - vuln-admin
-  required:
-  - permission_set
+  oneOf:
+  - required:
+    - permission_set
+    - clusters
+  - required:
+    - permission_set
+    - namespaces
 required:
 - $schema
 - name
