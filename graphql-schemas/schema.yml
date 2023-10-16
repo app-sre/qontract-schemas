@@ -1280,7 +1280,9 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: regex, type: string, isRequired: true }
-  - { name: retention_in_days, type: int }
+  - { name: retention_in_days, type: int, isRequired: true }
+  - { name: region, type: string }
+  - { name: delete_empty_log_group, type: boolean }
 
 - name: AWSUserPolicy_v1
   datafile: /aws/policy-1.yml
