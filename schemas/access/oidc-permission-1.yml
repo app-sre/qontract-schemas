@@ -31,21 +31,16 @@ properties:
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
-  access_scopes:
+  clusters:
     type: array
     items:
-      type: object
-      properties:
-        cluster:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/openshift/cluster-1.yml"
-        namespaces:
-          type: array
-          items:
-            "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef": "/openshift/namespace-1.yml"
-      required:
-      - cluster
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-1.yml"
+  namespaces:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
   permission_set:
     enum:
     - admin
@@ -77,21 +72,16 @@ oneOf:
     service:
       enum:
       - acs
-    access_scopes:
+    clusters:
       type: array
       items:
-        type: object
-        properties:
-          cluster:
-            "$ref": "/common-1.json#/definitions/crossref"
-            "$schemaRef": "/openshift/cluster-1.yml"
-          namespaces:
-            type: array
-            items:
-              "$ref": "/common-1.json#/definitions/crossref"
-              "$schemaRef": "/openshift/namespace-1.yml"
-        required:
-        - cluster
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/cluster-1.yml"
+    namespaces:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
     permission_set:
       enum:
       - admin
