@@ -12,7 +12,7 @@ properties:
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
-    type: string
+    "$ref": "/common-1.json#/definitions/identifier"
   description:
     type: string
   server:
