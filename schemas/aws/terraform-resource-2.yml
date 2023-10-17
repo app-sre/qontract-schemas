@@ -35,6 +35,13 @@ properties:
     type: object
   assume_action:
     type: string
+  database_access:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/database-access-1.yml"
+  database_output_prefix:
+    type: string
   inline_policy:
     type: object
   output_resource_name:
@@ -461,6 +468,14 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
+      type: string
+    database_access:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-interface/database-access-1.yml"
+    database_output_prefix:
+      type: string
     old_parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
     overrides:

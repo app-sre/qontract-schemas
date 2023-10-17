@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/database-access-1.yml
+  name:
+    type: string
+  username:
+    type: string
+  database:
+    type: string
+  delete:
+    type: boolean
+  access:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        grants:
+          type: array
+          items:
+            type: string
+        dbschema:
+          type: string
+      required:
+      - grants
+      - dbschema
+
+required:
+- name
+- username
+- database
