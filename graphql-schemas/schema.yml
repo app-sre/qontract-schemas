@@ -1339,6 +1339,10 @@ confs:
 - name: DatabaseAccessAccess_v1
   fields:
   - { name: grants, type: string, isRequired: true, isList: true }
+  - { name: target, type: DatabaseAccessAccessGrantee_v1, isRequired: true }
+
+- name: DatabaseAccessAccessGrantee_v1
+  fields:
   - { name: dbschema, type: string, isRequired: true }
 
 - name: TerraformState_v1

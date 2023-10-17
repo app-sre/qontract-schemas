@@ -35,11 +35,15 @@ properties:
             - TRUNCATE
             - REFERENCES
             - TRIGGER
-        dbschema:
-          "$ref": "/common-1.json#/definitions/psqlIdentifier"
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            dbschema:
+              "$ref": "/common-1.json#/definitions/psqlIdentifier"
       required:
       - grants
-      - dbschema
+      - target
 
 required:
 - name
