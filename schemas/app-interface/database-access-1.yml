@@ -12,9 +12,9 @@ properties:
   name:
     type: string
   username:
-    type: string
+    "$ref": "/common-1.json#/definitions/psqlIdentifier"
   database:
-    type: string
+    "$ref": "/common-1.json#/definitions/psqlIdentifier"
   delete:
     type: boolean
   access:
@@ -27,8 +27,16 @@ properties:
           type: array
           items:
             type: string
+            enum:
+            - SELECT
+            - INSERT
+            - UPDATE
+            - DELETE
+            - TRUNCATE
+            - REFERENCES
+            - TRIGGER
         dbschema:
-          type: string
+          "$ref": "/common-1.json#/definitions/psqlIdentifier"
       required:
       - grants
       - dbschema
