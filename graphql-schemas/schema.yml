@@ -26,7 +26,6 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
@@ -74,14 +73,6 @@ confs:
   fields:
   - { name: readTimeout, type: int, isRequired: true }
   - { name: connectTimeout, type: int, isRequired: true }
-
-- name: GlitchtipSettings_v1
-  fields:
-  - { name: readTimeout, type: int }
-  - { name: maxRetries, type: int }
-  - { name: mailDomain, type: string }
-  - { name: glitchtipJiraBridgeAlertUrl, type: string }
-  - { name: glitchtipJiraBridgeToken, type: VaultSecret_v1 }
 
 - name: LdapGroupsSettings_v1
   fields:
@@ -3490,6 +3481,11 @@ confs:
   - { name: consoleUrl, type: string, isRequired: true }
   - { name: automationUserEmail, type: VaultSecret_v1, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: readTimeout, type: int }
+  - { name: maxRetries, type: int }
+  - { name: mailDomain, type: string }
+  - { name: glitchtipJiraBridgeAlertUrl, type: string }
+  - { name: glitchtipJiraBridgeToken, type: VaultSecret_v1 }
   - name: organizations
     type: GlitchtipOrganization_v1
     isList: true
