@@ -2857,6 +2857,18 @@ confs:
   - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
+- name: OidcPermissionAcs_v1
+  interface: OidcPermission_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: service, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: permission_set, type: string, isRequired: true }
+  - { name: clusters, type: Cluster_v1, isList: true }
+  - { name: namespaces, type: Namespace_v1, isList: true }
+
 - name: Permission_v1
   datafile: /access/permission-1.yml
   isInterface: true
@@ -3462,6 +3474,7 @@ confs:
   - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
   - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
   - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
+  - { name: oidc_permissions_v1, type: OidcPermission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/oidc-permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
