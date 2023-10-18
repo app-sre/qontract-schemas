@@ -156,16 +156,6 @@ properties:
     required:
     - readTimeout
     - connectTimeout
-  glitchtip:
-    type: object
-    additionalProperties: false
-    properties:
-      readTimeout:
-        type: integer
-      maxRetries:
-        type: integer
-      mailDomain:
-        type: string
   cloudflareEmailDomainAllowList:
     type: array
     description: Email domain allow list restricts user with specific email domain to get access to Cloudflare systems

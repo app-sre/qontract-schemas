@@ -26,7 +26,6 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
@@ -74,12 +73,6 @@ confs:
   fields:
   - { name: readTimeout, type: int, isRequired: true }
   - { name: connectTimeout, type: int, isRequired: true }
-
-- name: GlitchtipSettings_v1
-  fields:
-  - { name: readTimeout, type: int }
-  - { name: maxRetries, type: int }
-  - { name: mailDomain, type: string }
 
 - name: LdapGroupsSettings_v1
   fields:
@@ -3488,6 +3481,11 @@ confs:
   - { name: consoleUrl, type: string, isRequired: true }
   - { name: automationUserEmail, type: VaultSecret_v1, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: readTimeout, type: int }
+  - { name: maxRetries, type: int }
+  - { name: mailDomain, type: string }
+  - { name: glitchtipJiraBridgeAlertUrl, type: string }
+  - { name: glitchtipJiraBridgeToken, type: VaultSecret_v1 }
   - name: organizations
     type: GlitchtipOrganization_v1
     isList: true
@@ -3568,6 +3566,11 @@ confs:
   - { name: url, type: string, isContextUnique: true }
   - { name: urlSecret, type: VaultSecret_v1, isContextUnique: true }
 
+- name: GlitchtipProjectJira_v1
+  fields:
+  - { name: project, type: string }
+  - { name: board, type: JiraBoard_v1 }
+
 - name: GlitchtipProjects_v1
   datafile: /dependencies/glitchtip-project-1.yml
   fields:
@@ -3583,6 +3586,7 @@ confs:
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
   - { name: alerts, type: GlitchtipProjectAlert_v1, isList: true }
   - { name: acceptEvents, type: boolean }
+  - { name: jira, type: GlitchtipProjectJira_v1 }
   - name: namespaces
     type: Namespace_v1
     isList: true

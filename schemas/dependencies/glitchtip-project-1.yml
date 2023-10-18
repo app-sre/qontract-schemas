@@ -93,6 +93,19 @@ properties:
         "$schemaRef": "/dependencies/glitchtip-project-alert-1.yml"
   acceptEvents:
     type: boolean
+  jira:
+    type: object
+    properties:
+      board:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/jira-board-1.yml"
+      project:
+        type: string
+    oneOf:
+    - required:
+      - board
+    - required:
+      - project
 required:
 - name
 - description
