@@ -623,6 +623,16 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: sslVerify, type: boolean }
 
+- name: AcsInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
+
 - name: PagerDutyInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3506,6 +3516,7 @@ confs:
   - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
+  - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
