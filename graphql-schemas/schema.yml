@@ -2849,6 +2849,7 @@ confs:
     field: service
     fieldMap:
       vault: OidcPermissionVault_v1
+      acs: OidcPermissionAcs_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
