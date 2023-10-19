@@ -1777,8 +1777,8 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: availability_zone, type: string }
-  - { name: parameter_group, type: string }
-  - { name: old_parameter_group, type: string }
+  - { name: parameter_group, type: string, isResource: true }
+  - { name: old_parameter_group, type: string, isResource: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
@@ -1863,7 +1863,7 @@ confs:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
-  - { name: parameter_group, type: string }
+  - { name: parameter_group, type: string, isResource: true }
   - { name: region, type: string, isContextUnique: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
