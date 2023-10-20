@@ -1,0 +1,54 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/parameter-group-1.yml
+  name:
+    type: string
+  identifier:
+    type: string
+  family:
+    type: string
+    enum:
+    - mysql5.7
+    - mysql8.0
+    - postgres9.6
+    - postgres10
+    - postgres11
+    - postgres12
+    - postgres13
+    - postgres14
+    - postgres15
+    - redis5.0
+    - redis6.x
+  description:
+    type: string
+  parameters:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          type: [string, integer, number, boolean]
+        apply_method:
+          type: string
+          enum:
+          - immediate
+          - pending-reboot
+      required:
+      - name
+      - value
+required:
+- "$schema"
+- family
+- description
+- parameters

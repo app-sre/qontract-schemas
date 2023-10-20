@@ -44,9 +44,9 @@ properties:
   defaults:
     type: string
   parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -460,9 +460,9 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     overrides:
       type: object
       properties:
@@ -613,7 +613,7 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     overrides:
