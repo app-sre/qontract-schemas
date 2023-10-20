@@ -19,6 +19,16 @@ properties:
     type: string
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  authProvider:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        type: string
+      kind:
+        enum:
+        - oidc
 required:
 - "$schema"
 - labels
@@ -26,3 +36,4 @@ required:
 - description
 - url
 - token
+- authProvider

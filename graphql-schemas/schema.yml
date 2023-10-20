@@ -632,6 +632,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
+  - { name: authProvider, type: json, isRequired: true }
 
 - name: PagerDutyInstance_v1
   fields:
