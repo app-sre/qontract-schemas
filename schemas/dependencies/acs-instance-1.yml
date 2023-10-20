@@ -17,7 +17,7 @@ properties:
     type: string
   url:
     type: string
-  token:
+  credentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   authProvider:
     type: object
@@ -35,5 +35,5 @@ required:
 - name
 - description
 - url
-- token
+- credentials
 - authProvider
