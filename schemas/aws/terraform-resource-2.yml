@@ -468,7 +468,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
-      type: string
+    old_parameter_group:
+      "$ref": "/common-1.json#/definitions/resourceref"
     database_access:
       type: array
       items:
@@ -476,8 +477,6 @@ oneOf:
         "$schemaRef": "/app-interface/database-access-1.yml"
     database_output_prefix:
       type: string
-    old_parameter_group:
-      "$ref": "/common-1.json#/definitions/resourceref"
     overrides:
       type: object
       properties:
