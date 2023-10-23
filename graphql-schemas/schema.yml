@@ -1325,6 +1325,26 @@ confs:
   fields:
   - { name: loss_impact, type: string }
 
+- name: DatabaseAccess_v1
+  datafile: /app-interface/database-access-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true}
+  - { name: username, type: string, isRequired: true }
+  - { name: database, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: access, type: DatabaseAccessAccess_v1, isList: true }
+
+- name: DatabaseAccessAccess_v1
+  fields:
+  - { name: grants, type: string, isRequired: true, isList: true }
+  - { name: target, type: DatabaseAccessAccessGrantee_v1, isRequired: true }
+
+- name: DatabaseAccessAccessGrantee_v1
+  fields:
+  - { name: dbschema, type: string, isRequired: true }
+
 - name: TerraformState_v1
   isInterface: true
   interfaceResolve:
@@ -1780,6 +1800,7 @@ confs:
   - { name: parameter_group, type: string, isResource: true }
   - { name: old_parameter_group, type: string, isResource: true }
   - { name: overrides, type: json }
+  - { name: database_access, type: DatabaseAccess_v1, isList: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_db_name, type: string }
