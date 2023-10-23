@@ -1801,7 +1801,6 @@ confs:
   - { name: old_parameter_group, type: string, isResource: true }
   - { name: overrides, type: json }
   - { name: database_access, type: DatabaseAccess_v1, isList: true }
-  - { name: database_output_prefix, type: string }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_db_name, type: string }

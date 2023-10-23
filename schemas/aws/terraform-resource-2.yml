@@ -40,8 +40,6 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/database-access-1.yml"
-  database_output_prefix:
-    type: string
   inline_policy:
     type: object
   output_resource_name:
@@ -475,8 +473,6 @@ oneOf:
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-interface/database-access-1.yml"
-    database_output_prefix:
-      type: string
     overrides:
       type: object
       properties:
