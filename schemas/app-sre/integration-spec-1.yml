@@ -17,6 +17,7 @@ properties:
     description: command to run
     enum:
     - qontract-reconcile
+    - app-interface-metrics-exporter
     - app-interface-reporter
     - glitchtip-access-reporter
     - glitchtip-access-revalidation
