@@ -3107,6 +3107,7 @@ confs:
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
   - { name: ldapGroup, type: string }
+  - { name: memberSource, type: RoleMembershipSource_V1 }
   - name: users
     type: User_v1
     isList: true
@@ -3121,6 +3122,38 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+
+- name: RoleMembershipSource_V1
+  fields:
+  - { name: provider, type: MembershipProvider_V1, isRequired: true }
+  - { name: group, type: string, isRequired: true }
+
+- name: MembershipProvider_V1
+  datafile: /access/membership-provider-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: hasAuditTrail, type: boolean, isRequired: true }
+  - { name: source, type: MembershipProviderSource_V1, isInterface: true, isRequired: true }
+
+- name: MembershipProviderSource_V1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      app-interface: AppInterfaceMembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true}
+
+- name: AppInterfaceMembershipProviderSource_V1
+  interface: MembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: SelfServiceConfig_v1
   fields:
