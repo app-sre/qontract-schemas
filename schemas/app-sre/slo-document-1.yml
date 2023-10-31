@@ -26,6 +26,9 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+        targetNamespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
         prometheusAccess:
           type: object
           additionalProperties: false
