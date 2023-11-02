@@ -36,8 +36,14 @@ properties:
             url: 
               type: string
               format: uri
+            username:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+            password:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
           required:
           - url
+          - username
+          - password
       required:
       - namespace
   slos:
