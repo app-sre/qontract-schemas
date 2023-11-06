@@ -27,6 +27,7 @@ properties:
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
     - OffBoarding      # The app is being off-boarded
     - BestEffort       # The app is supported on a best effort basis
+    - MetaService      # Not a real app, used only to capture and report data
 
   grafanaUrls:
     type: array
