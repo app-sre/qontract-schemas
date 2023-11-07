@@ -3107,7 +3107,7 @@ confs:
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
   - { name: ldapGroup, type: string }
-  - { name: memberSource, type: RoleMembershipSource_V1 }
+  - { name: memberSources, type: RoleMembershipSource_V1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -3153,7 +3153,8 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
-  - { name: credentials, type: VaultSecret_v1, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
+  - { name: password, type: VaultSecret_v1, isRequired: true }
 
 - name: SelfServiceConfig_v1
   fields:
