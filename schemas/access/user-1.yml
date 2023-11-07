@@ -29,6 +29,9 @@ properties:
   cloudflare_user:
     type: string
     format: email
+  acs_user:
+    type: string
+    format: email
   roles:
     type: array
     items:
