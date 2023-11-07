@@ -25,7 +25,9 @@ properties:
       url:
         type: string
         format: uri
-      credentials:
+      username:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      password:
         "$ref": "/common-1.json#/definitions/vaultSecret"
     oneOf:
     - additionalProperties: false
@@ -37,12 +39,15 @@ properties:
         url:
           type: string
           format: uri
-        credentials:
+        username:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+        password:
           "$ref": "/common-1.json#/definitions/vaultSecret"
       required:
       - provider
       - url
-      - credentials
+      - username
+      - password
 required:
 - name
 - description
