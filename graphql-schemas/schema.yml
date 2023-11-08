@@ -3804,7 +3804,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true}
-  - { name: targetNamespace, type: Namespace_v1 }
+  - { name: SLONamespace, type: Namespace_v1 }
   - { name: prometheusAccess, type: SLOExternalPrometheusAccess_v1 }
 
 - name: SLOExternalPrometheusAccess_v1
