@@ -23,6 +23,11 @@ properties:
   pipelinesProvider:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/pipelines-provider-1.yml"
+  # Setting skipSuccessfulDeployNotifications to true will cause successful
+  # deployments to not have a successful deployment notice sent.
+  skipSuccessfulDeployNotifications:
+    type: boolean
+    default: false
   slack:
     type: object
     properties:
