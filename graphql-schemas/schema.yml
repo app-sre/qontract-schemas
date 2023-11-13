@@ -1030,6 +1030,7 @@ confs:
   - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: allowedClusterExternalConfigLabels, type: string, isList: true }
   - { name: addonManagedUpgrades, type: boolean }
   - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
   - { name: recommendedVersions, type: OpenShiftClusterManagerRecommendedVersions_v1, isList: true }

@@ -30,6 +30,10 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  allowedClusterExternalConfigLabels:
+    type: array
+    items:
+      type: string
   addonManagedUpgrades:
     type: boolean
   addonUpgradeTests:
