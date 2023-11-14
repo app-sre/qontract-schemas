@@ -27,7 +27,7 @@ properties:
   # deployments to not have a successful deployment notice sent.
   skipSuccessfulDeployNotifications:
     type: boolean
-    default: false
+#    default: false
   slack:
     type: object
     properties:
