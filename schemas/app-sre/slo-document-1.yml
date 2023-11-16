@@ -26,6 +26,19 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+        SLONamespace:
+          description: |
+            This field is used to determine in which namespace PrometheusRule
+            object that contain the alerts generated from the expressions of
+            this SLO document is going to be created. Those alerts are being
+            used in the slo-to-status-board flow:
+            https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/docs/status-board/statusboard-alertmanager-receiver.md
+
+            If omitted, the rules will be generated in the namespace
+            observabilityNamespace of the cluster to which the `namespace` of
+            this SLO document belongs to.
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
         prometheusAccess:
           type: object
           additionalProperties: false
@@ -33,8 +46,14 @@ properties:
             url: 
               type: string
               format: uri
+            username:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+            password:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
           required:
           - url
+          - username
+          - password
       required:
       - namespace
   slos:
