@@ -217,7 +217,8 @@ properties:
           - ocm-machine-pools
           - ocm-oidc-idp
           - ocm-upgrade-scheduler-org
-          - ocm-subscription-labels
+          - ocm-labels
+          - advanced-upgrade-scheduler
           - ocm-labels
           - ocm-standalone-user-management
           - ocm-update-recommended-version
