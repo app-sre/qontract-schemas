@@ -201,6 +201,33 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": /openshift/openshift-cluster-manager-1.yml
+  disable:
+    type: object
+    additionalProperties: false
+    properties:
+      integrations:
+        type: array
+        description: integrations to disable for the ocm organization
+        items:
+          type: string
+          enum:
+          - ocm-additional-routers
+          - ocm-addons-upgrade-scheduler-org
+          - ocm-addons-upgrade-tests-trigger
+          - ocm-addons
+          - ocm-aws-infrastructure-access
+          - ocm-clusters
+          - ocm-external-configuration-labels
+          - ocm-machine-pools
+          - ocm-oidc-idp
+          - ocm-upgrade-scheduler-org
+          - ocm-labels
+          - advanced-upgrade-scheduler
+          - ocm-labels
+          - ocm-standalone-user-management
+          - ocm-update-recommended-version
+          - ocm-upgrade-scheduler-org-updater
+          - ocm-groups
 dependencies:
   upgradePolicyDefaults:
   - upgradePolicyClusters
