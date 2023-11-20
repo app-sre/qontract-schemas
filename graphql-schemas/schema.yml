@@ -623,6 +623,24 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: sslVerify, type: boolean }
 
+- name: AcsInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
+  - { name: authProvider, type: AcsInstanceAuthProvider_v1, isRequired: true }
+
+- name: AcsInstanceAuthProvider_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: id, type: string, isRequired: true }
+  - { name: kind, type: string, isRequired: true }
+
 - name: PagerDutyInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1012,6 +1030,7 @@ confs:
   - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: allowedClusterExternalConfigLabels, type: string, isList: true }
   - { name: addonManagedUpgrades, type: boolean }
   - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
   - { name: recommendedVersions, type: OpenShiftClusterManagerRecommendedVersions_v1, isList: true }
@@ -1024,6 +1043,7 @@ confs:
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
   - { name: inheritVersionData, type: OpenShiftClusterManager_v1, isList: true }
   - { name: publishVersionData, type: OpenShiftClusterManager_v1, isList: true }
+  - { name: disable, type: DisableClusterAutomations_v1 }
   - name: clusters
     type: Cluster_v1
     isList: true
@@ -2840,10 +2860,11 @@ confs:
     field: service
     fieldMap:
       vault: OidcPermissionVault_v1
+      acs: OidcPermissionAcs_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
 
@@ -2852,11 +2873,23 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
+
+- name: OidcPermissionAcs_v1
+  interface: OidcPermission_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: service, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: permission_set, type: string, isRequired: true }
+  - { name: clusters, type: Cluster_v1, isList: true }
+  - { name: namespaces, type: Namespace_v1, isList: true }
 
 - name: Permission_v1
   datafile: /access/permission-1.yml
@@ -3108,6 +3141,7 @@ confs:
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
   - { name: ldapGroup, type: string }
+  - { name: memberSources, type: RoleMembershipSource_V1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -3122,6 +3156,39 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+
+- name: RoleMembershipSource_V1
+  fields:
+  - { name: provider, type: MembershipProvider_V1, isRequired: true }
+  - { name: group, type: string, isRequired: true }
+
+- name: MembershipProvider_V1
+  datafile: /access/membership-provider-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: hasAuditTrail, type: boolean, isRequired: true }
+  - { name: source, type: MembershipProviderSource_V1, isInterface: true, isRequired: true }
+
+- name: MembershipProviderSource_V1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      app-interface: AppInterfaceMembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true}
+
+- name: AppInterfaceMembershipProviderSource_V1
+  interface: MembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
+  - { name: password, type: VaultSecret_v1, isRequired: true }
 
 - name: SelfServiceConfig_v1
   fields:
@@ -3429,6 +3496,7 @@ confs:
   - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
   - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
   - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
+  - { name: oidc_permissions_v1, type: OidcPermission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/oidc-permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
@@ -3460,6 +3528,7 @@ confs:
   - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
+  - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
@@ -3771,6 +3840,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true}
+  - { name: SLONamespace, type: Namespace_v1 }
   - { name: prometheusAccess, type: SLOExternalPrometheusAccess_v1 }
 
 - name: SLOExternalPrometheusAccess_v1
@@ -3778,6 +3848,8 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
+  - { name: password, type: VaultSecret_v1, isRequired: true }
 
 - name: StatusPage_v1
   fields:

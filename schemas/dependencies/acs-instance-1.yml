@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/acs-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  url:
+    type: string
+  credentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  authProvider:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        type: string
+      kind:
+        enum:
+        - oidc
+required:
+- "$schema"
+- labels
+- name
+- description
+- url
+- credentials
+- authProvider
