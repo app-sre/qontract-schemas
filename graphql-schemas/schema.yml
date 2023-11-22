@@ -2588,6 +2588,7 @@ confs:
   - { name: takeover, type: boolean }
   - { name: deprecated, type: boolean }
   - { name: compare, type: boolean }
+  - { name: skipSuccessfulDeployNotifications, type: boolean, isRequired: false }
   - { name: timeout, type: string }
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
