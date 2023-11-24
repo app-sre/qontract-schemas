@@ -4084,7 +4084,7 @@ confs:
   - { name: creator_role_arn, type: string, isRequired: true}
   - { name: installer_role_arn, type: string, isRequired: true}
   - { name: support_role_arn, type: string, isRequired: true}
-  - { name: controlplane_role_arn, type: string, isRequired: true}
+  - { name: controlplane_role_arn, type: string, isRequired: false}
   - { name: worker_role_arn, type: string, isRequired: true}
 
 - name: PgpReencryptSettings_v1
