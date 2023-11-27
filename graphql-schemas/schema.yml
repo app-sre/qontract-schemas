@@ -3661,6 +3661,7 @@ confs:
   fields:
   - { name: project, type: string }
   - { name: board, type: JiraBoard_v1 }
+  - { name: labels, type: string, isList: true }
 
 - name: GlitchtipProjects_v1
   datafile: /dependencies/glitchtip-project-1.yml
