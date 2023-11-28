@@ -29,7 +29,7 @@ properties:
     description: set to true to delete the repo
     type: boolean
   requireFips:
-    description: whether this repo should be validated to ensure it is using FIPs endpoints for AWS
+    description: whether this repo should be validated to ensure it is using FIPS endpoints for AWS
     type: boolean
 required:
 - "$schema"
