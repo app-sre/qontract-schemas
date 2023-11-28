@@ -1610,6 +1610,7 @@ confs:
   - { name: ref, type: string, isRequired: true }
   - { name: projectPath, type: string, isRequired: true }
   - { name: delete, type: boolean }
+  - { name: requireFips, type: boolean }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
