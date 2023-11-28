@@ -101,6 +101,10 @@ properties:
         "$schemaRef": "/dependencies/jira-board-1.yml"
       project:
         type: string
+      labels:
+        type: array
+        items:
+          type: string
     oneOf:
     - required:
       - board
