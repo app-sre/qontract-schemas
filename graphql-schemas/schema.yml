@@ -531,6 +531,7 @@ confs:
   - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
+  - { name: issueSecurityId, type: string }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
     isList: true
