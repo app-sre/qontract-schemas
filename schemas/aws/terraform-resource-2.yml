@@ -557,6 +557,10 @@ oneOf:
               type: string
             delete:
               type: string
+        storage_type:
+          type: string
+        iops:
+          type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
