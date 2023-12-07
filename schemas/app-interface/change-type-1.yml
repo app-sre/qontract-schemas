@@ -33,6 +33,7 @@ properties:
     description: a disabled change-type does not have any effect but will still log into the PR check logs
   restrictive:
     type: boolean
+    description: an entity protected with restriced change-type can only be changed by the team that has the change-type assigned
   inherit:
     type: array
     description: inherit the changes of additional change types
