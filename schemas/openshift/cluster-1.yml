@@ -282,7 +282,7 @@ properties:
           properties:
             min_replicas:
               type: integer
-              minimum: 2
+              minimum: 1
             max_replicas:
               type: integer
           required:
