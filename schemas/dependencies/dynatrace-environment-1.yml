@@ -14,9 +14,27 @@ properties:
   description:
     type: string
   environmentUrl:
+    description: the URL to a specific Dynatrace entity called environment, which is also known as tenant.
     type: string
   bootstrapToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  environment:
+    type: string
+    enum:
+    - integration
+    - stage
+    - production
+  dynatraceRegion:
+    type: string
+    enum:
+    - us-east-virginia
+    - eu-west-ireland
+    - ap-southeast-singapore
+  awsRegion:
+    description: a list of HCP AWS regions
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
 - name
