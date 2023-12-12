@@ -195,6 +195,20 @@ properties:
     required:
     - contactList
     - credentials
+  jiralert:
+    type: object
+    additionalProperties: false
+    properties:
+      defaultIssueType:
+        type: string
+      defaultPriority:
+        type: string
+      defaultReopenState:
+        type: string
+    required:
+    - defaultIssueType
+    - defaultPriority
+    - defaultReopenState
 required:
 - "$schema"
 - labels

@@ -30,6 +30,7 @@ confs:
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
+  - { name: jiralert, type: JiralertSettings_v1 }
 
 - name: AppInterfaceStateConfiguration_v1
   isInterface: true
@@ -78,6 +79,12 @@ confs:
   fields:
   - { name: contactList, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
+
+- name: JiralertSettings_v1
+  fields:
+  - { name: defaultIssueType, type: string, isRequired: true }
+  - { name: defaultPriority, type: string, isRequired: true }
+  - { name: defaultReopenState, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
