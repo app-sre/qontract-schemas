@@ -192,6 +192,9 @@ properties:
           Hosted Clusters only: list of availability_zones to use with the cluster creation.
       hypershift:
         type: boolean
+      oidc_endpoint_url:
+        type: string
+        format: uri
     required:
     - product
     - provider

@@ -769,6 +769,7 @@ confs:
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: subnet_ids, type: string, isList: True}
   - { name: availability_zones, type: string, isList: True}
+  - { name: oidc_endpoint_url, type: string }
 
 
 - name: ClusterSpecAutoScale_v1
