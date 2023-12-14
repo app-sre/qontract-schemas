@@ -4027,6 +4027,7 @@ confs:
   - { name: contextSchema, type: string } # schema of a datafile or resource
   - { name: disabled, type: boolean }
   - { name: inherit, type: ChangeType_v1, isList: true }
+  - { name: restrictive, type: boolean }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
   - { name: implicitOwnership, type: ChangeTypeImplicitOwnership_v1, isInterface: true, isList: true }
 
