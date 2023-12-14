@@ -924,7 +924,7 @@ confs:
   - { name: observabilityNamespace, type: Namespace_v1 }
   - { name: grafanaUrl, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
-  - { name: kibanaUrl, type: string, isRequired: true }
+  - { name: kibanaUrl, type: string }
   - { name: prometheusUrl, type: string, isRequired: true }
   - { name: alertmanagerUrl, type: string, isRequired: true }
   - { name: serverUrl, type: string, isRequired: true }
