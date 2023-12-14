@@ -591,6 +591,9 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
   - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
+  - { name: environment, type: string}
+  - { name: dynatraceRegion, type: string}
+  - { name: awsRegion, type: string}
 
 - name: GithubOrg_v1
   fields:

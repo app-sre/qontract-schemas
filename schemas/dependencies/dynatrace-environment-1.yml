@@ -14,11 +14,12 @@ properties:
   description:
     type: string
   environmentUrl:
-    description: the URL to a specific Dynatrace entity called environment, which is also known as tenant.
+    description: The URL to a specific Dynatrace entity called environment, which is also known as tenant.
     type: string
   bootstrapToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   environment:
+    description: Which of integration, stage or production are the data coming from.
     type: string
     enum:
     - integration
@@ -31,10 +32,10 @@ properties:
     - eu-west-ireland
     - ap-southeast-singapore
   awsRegion:
-    description: a list of HCP AWS regions
+    description: A list of HCP AWS regions.
     type: array
     items:
-      type: string
+      "$ref": "/aws/regions-1.yml#/properties/region"
 required:
 - "$schema"
 - name
