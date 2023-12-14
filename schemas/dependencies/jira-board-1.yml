@@ -37,6 +37,8 @@ properties:
     type: string
   issueReopenState:
     type: string
+  issueSecurityId:
+    type: string
 required:
 - "$schema"
 - labels
