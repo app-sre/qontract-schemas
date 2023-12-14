@@ -616,7 +616,6 @@ required:
 - labels
 - name
 - consoleUrl
-- kibanaUrl
 - prometheusUrl
 - serverUrl
 - elbFQDN
