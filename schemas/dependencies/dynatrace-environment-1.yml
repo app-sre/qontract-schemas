@@ -26,11 +26,12 @@ properties:
     - stage
     - production
   dynatraceRegion:
+    description: https://gitlab.cee.redhat.com/service/app-interface/-/blame/9f303046645ebbb48e87ccf5d89778521a2d8345/data/services/osd-operators/cicd/saas/saas-dynatrace-operator.yaml#L356-433
     type: string
     enum:
     - us-east-virginia
     - eu-west-ireland
-    - ap-southeast-singapore
+    - ap-southeast-sydney
   awsRegion:
     description: A list of HCP AWS regions.
     type: array
