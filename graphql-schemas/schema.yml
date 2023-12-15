@@ -593,7 +593,7 @@ confs:
   - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
   - { name: environment, type: string}
   - { name: dynatraceRegion, type: string}
-  - { name: awsRegion, type: string}
+  - { name: awsRegion, type: string, isList: true}
 
 - name: GithubOrg_v1
   fields:
