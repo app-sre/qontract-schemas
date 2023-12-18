@@ -195,6 +195,21 @@ properties:
     required:
     - contactList
     - credentials
+  jiralert:
+    type: object
+    additionalProperties: false
+    # we can't use enum here because the values are highly customisable per jira project/instance
+    properties:
+      defaultIssueType:
+        type: string
+      defaultPriority:
+        type: string
+      defaultReopenState:
+        type: string
+    required:
+    - defaultIssueType
+    - defaultPriority
+    - defaultReopenState
 required:
 - "$schema"
 - labels
