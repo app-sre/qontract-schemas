@@ -39,6 +39,16 @@ properties:
     type: string
   issueSecurityId:
     type: string
+  disable:
+    type: object
+    additionalProperties: false
+    properties:
+      integrations:
+        type: array
+        items:
+          type: string
+          enum:
+          - jira-permissions-validator
 required:
 - "$schema"
 - labels
