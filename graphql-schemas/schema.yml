@@ -539,12 +539,17 @@ confs:
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
   - { name: issueSecurityId, type: string }
+  - { name: disable, type: DisableJiraBoardAutomations_v1 }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
     isList: true
     synthetic:
       schema: /app-sre/escalation-policy-1.yml
       subAttr: channels.jiraBoard
+
+- name: DisableJiraBoardAutomations_v1
+  fields:
+  - { name: integrations, type: string, isList: true }
 
 - name: SendGridAccount_v1
   fields:
