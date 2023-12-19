@@ -75,6 +75,13 @@ properties:
     type: integer
   publicly_accessible:
     type: boolean
+  ca_cert_identifier:
+    type: string
+    enum:
+    - rds-ca-2019
+    - rds-ca-rsa2048-g1
+    - rds-ca-rsa4096-g1
+    - rds-ca-ecc384-g1
   timeouts:
     type: object
     additionalProperties: false
