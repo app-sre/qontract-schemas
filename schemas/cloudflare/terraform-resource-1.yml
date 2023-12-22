@@ -139,6 +139,48 @@ properties:
       - validation_method
       - validity_days
       - certificate_authority
+  # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
+  custom_ssl_certificates:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        type:
+          type: string
+          enum:
+            - legacy_custom
+            - sni_custom
+        bundle_method:
+          type: string
+          enum:
+            - ubiquitous
+            - optimal
+            - force
+        geo_restrictions:
+          type: string
+          enum:
+            - us
+            - eu
+            - highest_security
+        certificate_secret:
+          type: object
+          additionalProperties: false
+          properties:
+            certificate:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+            key:
+              "$ref": "/common-1.json#/definitions/vaultSecret"
+          required:
+            - certificate
+            - key
+    required:
+      - identifier
+      - type
+      - bundle_method
+      - certificate_secret
   destination_conf:
     type: string
     pattern: 's3:\/\/.+$'
@@ -303,6 +345,48 @@ oneOf:
         - validation_method
         - validity_days
         - certificate_authority
+    # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
+    custom_ssl_certificates:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          identifier:
+            type: string
+          type:
+            type: string
+            enum:
+              - legacy_custom
+              - sni_custom
+          bundle_method:
+            type: string
+            enum:
+              - ubiquitous
+              - optimal
+              - force
+          geo_restrictions:
+            type: string
+            enum:
+              - us
+              - eu
+              - highest_security
+          certificate_secret:
+            type: object
+            additionalProperties: false
+            properties:
+              certificate:
+                "$ref": "/common-1.json#/definitions/vaultSecret"
+              key:
+                "$ref": "/common-1.json#/definitions/vaultSecret"
+            required:
+              - certificate
+              - key
+      required:
+        - identifier
+        - type
+        - bundle_method
+        - certificate_secret
   required:
   - identifier
   - zone
