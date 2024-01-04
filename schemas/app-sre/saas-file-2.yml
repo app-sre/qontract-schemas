@@ -29,6 +29,7 @@ properties:
     type: boolean
   slack:
     type: object
+    additionalProperties: false
     properties:
       output:
         type: string
