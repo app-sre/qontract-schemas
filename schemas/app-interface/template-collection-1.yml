@@ -1,0 +1,54 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+description: A collection of templates to be generated
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/template-collection-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  variables:
+    type: object
+    description: variables to be used in the template
+    additionalProperties: false
+    properties:
+      static: 
+        type: object
+        description: static variables
+        additionalProperties: true
+      dynamic:
+        type: array
+        description: dynamic variables from GQL
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+            query:
+              type: string
+          required:
+          - name
+          - query
+  templates:
+    type: array
+    description: templates to be tested
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/template-1.yml"
+
+
+required:
+- "$schema"
+- name
+- description
+- templates
