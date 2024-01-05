@@ -657,6 +657,63 @@ confs:
   - { name: id, type: string, isRequired: true }
   - { name: kind, type: string, isRequired: true }
 
+- name: AcsPolicy_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: severity, type: string, isRequired: true }
+  - { name: categories, type: string, isList: true, isRequired: true }
+  - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
+  - { name: conditions, type: AcsPolicyConditions_v1, isRequired: true }
+
+- name: AcsPolicyScope_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: level
+    fieldMap:
+      cluster: AcsPolicyScopeCluster_v1
+      namespace: AcsPolicyScopeNamespace_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+
+- name: AcsPolicyScopeCluster_v1
+  interface: AcsPolicyScope_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+  - { name: clusters, type: Cluster_v1, isList: true, isRequired: true }
+
+- name: AcsPolicyScopeNamespace_v1
+  interface: AcsPolicyScope_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+  - { name: namespaces, type: Namespace_v1, isList: true, isRequired: true }
+
+- name: AcsPolicyConditions_v1
+  fields:
+  - { name: cvss, type: AcsPolicyConditionsCvss_v1 }
+  - { name: severity, type: AcsPolicyConditionsSeverity_v1 }
+  - { name: imageTag, type: AcsPolicyConditionsImageTag_v1 }
+  - { name: fixableCve, type: boolean }
+  - { name: imageAge, type: int }
+
+- name: AcsPolicyConditionsCvss_v1
+  fields:
+  - { name: comparison, type: string, isRequired: true }
+  - { name: score, type: int, isRequired: true }
+
+- name: AcsPolicyConditionsSeverity_v1
+  fields:
+  - { name: comparison, type: string, isRequired: true }
+  - { name: level, type: string, isRequired: true }
+
+- name: AcsPolicyConditionsImageTag_v1
+  fields:
+  - { name: values, type: string, isList: true, isRequired: true }
+  - { name: negate, type: boolean }
+
 - name: PagerDutyInstance_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3561,6 +3618,7 @@ confs:
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
   - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
+  - { name: acs_policy_v1, type: AcsPolicy_v1, isList: true, datafileSchema: /acs/acs-policy-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
