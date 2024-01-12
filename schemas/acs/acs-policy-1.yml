@@ -78,53 +78,9 @@ properties:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/openshift/namespace-1.yml"
   conditions:
-    type: object
-    additionalProperties: false
-    properties:
-      cvss:
-        type: object
-        properties:
-          comparison: 
-            type: string
-            enum:
-            - gt
-            - gte
-            - eq
-            - lt
-            - lte
-          score:
-            type: integer
-      severity:
-        type: object
-        properties:
-          comparison: 
-            type: string
-            enum:
-            - gt
-            - gte
-            - eq
-            - lt
-            - lte
-          level:
-            type: string
-            enum:
-            - low
-            - moderate
-            - important
-            - critical
-      fixableCve:
-        type: boolean
-      imageTag:
-        type: object
-        properties:
-          values:
-            type: array
-            items: 
-              type: string
-          negate:
-            type: boolean
-      imageAge:
-        type: integer
+    type: array
+    items:
+      "$ref": "/acs/acs-policy-condition-1.yml"
 required:
 - "$schema"
 - name

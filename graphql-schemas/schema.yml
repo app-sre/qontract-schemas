@@ -666,7 +666,7 @@ confs:
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
   - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
-  - { name: conditions, type: AcsPolicyConditions_v1, isRequired: true }
+  - { name: conditions, type: AcsPolicyConditions_v1, isList: true, isInterface: true, isRequired: true }
 
 - name: AcsPolicyScope_v1
   isInterface: true
@@ -692,27 +692,51 @@ confs:
   - { name: namespaces, type: Namespace_v1, isList: true, isRequired: true }
 
 - name: AcsPolicyConditions_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: policyField
+    fieldMap:
+      cvss: AcsPolicyConditionsCvss_v1
+      severity: AcsPolicyConditionsSeverity_v1
+      cve: AcsPolicyConditionsCve_v1
+      image_tag: AcsPolicyConditionsImageTag_v1
+      image_age: AcsPolicyConditionsImageAge_v1
   fields:
-  - { name: cvss, type: AcsPolicyConditionsCvss_v1 }
-  - { name: severity, type: AcsPolicyConditionsSeverity_v1 }
-  - { name: imageTag, type: AcsPolicyConditionsImageTag_v1 }
-  - { name: fixableCve, type: boolean }
-  - { name: imageAge, type: int }
+  - { name: policyField, type: string, isRequired: true }
 
 - name: AcsPolicyConditionsCvss_v1
+  interface: AcsPolicyConditions_v1
   fields:
+  - { name: policyField, type: string, isRequired: true }
   - { name: comparison, type: string, isRequired: true }
   - { name: score, type: int, isRequired: true }
 
 - name: AcsPolicyConditionsSeverity_v1
+  interface: AcsPolicyConditions_v1
   fields:
+  - { name: policyField, type: string, isRequired: true }
   - { name: comparison, type: string, isRequired: true }
   - { name: level, type: string, isRequired: true }
 
-- name: AcsPolicyConditionsImageTag_v1
+- name: AcsPolicyConditionsCve_v1
+  interface: AcsPolicyConditions_v1
   fields:
-  - { name: values, type: string, isList: true, isRequired: true }
+  - { name: policyField, type: string, isRequired: true }
+  - { name: fixable, type: boolean, isRequired: true }
+
+- name: AcsPolicyConditionsImageTag_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: tags, type: string, isList: true, isRequired: true }
   - { name: negate, type: boolean }
+
+- name: AcsPolicyConditionsImageAge_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: days, type: int, isRequired: true }
 
 - name: PagerDutyInstance_v1
   fields:
