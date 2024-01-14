@@ -58,6 +58,7 @@ properties:
           - slack-usergroups
           - qontract-cli
           - sd-app-sre-alert-report
+          - ocm-internal-notifications
       token:
         "$ref": "/common-1.json#/definitions/vaultSecret"
       channel:
