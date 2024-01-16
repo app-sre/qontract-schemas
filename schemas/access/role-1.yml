@@ -170,6 +170,7 @@ properties:
                   - /cloudflare/dns-zone-1.yml
                   - /app-sre/escalation-policy-1.yml
                   - /app-interface/query-validation-1.yml
+                  - /access/bot-1.yml
   ldapGroup:
     "$ref": "/common-1.json#/definitions/ldapGroupName"
   memberSources:
