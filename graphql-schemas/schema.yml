@@ -663,6 +663,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
+  - { name: notifiers, type: string, isList: true }
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
   - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }

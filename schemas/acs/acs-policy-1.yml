@@ -15,6 +15,10 @@ properties:
     type: string
   name:
     type: string
+  notifiers:
+    type: array
+    items:
+      type: string
   severity:
     type: string
     enum:
