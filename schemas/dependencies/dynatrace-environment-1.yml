@@ -32,6 +32,7 @@ properties:
     - us-east-virginia
     - eu-west-ireland
     - ap-southeast-sydney
+    - ca-central-canada
   awsRegion:
     description: A list of HCP AWS regions.
     type: array
