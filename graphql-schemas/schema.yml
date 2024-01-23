@@ -603,7 +603,8 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
-  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
+  - { name: bootstrapAPIToken, type: VaultSecret_v1 }
+  - { name: automationAPIToken, type: VaultSecret_v1 }
   - { name: environment, type: string}
   - { name: dynatraceRegion, type: string}
   - { name: awsRegion, type: string, isList: true}
