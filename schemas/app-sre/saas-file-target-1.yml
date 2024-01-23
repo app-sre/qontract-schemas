@@ -54,6 +54,11 @@ properties:
         items:
           type: string
         minItems: 1
+      parameters:
+        type: array
+        description: parameters to be promoted
+        items:
+          type: string
       promotion_data:
         type: array
         items:
