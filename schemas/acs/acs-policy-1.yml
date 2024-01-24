@@ -1,0 +1,94 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /acs/acs-policy-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  description:
+    type: string
+  name:
+    type: string
+  notifiers:
+    type: array
+    items:
+      type: string
+  severity:
+    type: string
+    enum:
+    - low
+    - medium
+    - high
+    - critical
+  categories:
+    type: array
+    items:
+      type: string
+      enum:
+      - anomalous-activity
+      - kubernetes
+      - privileges
+      - devops-best-practices
+      - security-best-practices
+      - vulnerability-management
+  scope:
+    type: object
+    additionalProperties: false
+    properties:
+      level:
+        type: string
+        enum: 
+        - cluster
+        - namespace
+      clusters:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/cluster-1.yml"
+      namespaces:
+        type: array
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+    oneOf:
+    - type: object
+      additionalProperties: false
+      properties:
+        level:
+          type: string
+          enum:
+          - cluster
+        clusters:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/cluster-1.yml"
+    - type: object
+      additionalProperties: false
+      properties:
+        level:
+          type: string
+          enum:
+          - namespace
+        namespaces:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+  conditions:
+    type: array
+    items:
+      "$ref": "/acs/acs-policy-condition-1.yml"
+required:
+- "$schema"
+- name
+- severity
+- categories
+- scope
+- conditions

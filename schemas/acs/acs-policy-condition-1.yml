@@ -1,0 +1,120 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /acs/acs-policy-condition-1.yml
+  policyField:
+    type: string
+  comparison: 
+    type: string
+    enum:
+    - gt
+    - gte
+    - eq
+    - lt
+    - lte
+  score:
+    type: integer
+  level:
+    type: string
+    enum:
+    - low
+    - moderate
+    - important
+    - critical
+  fixable:
+    type: boolean
+  tags:
+    type: array
+    items: 
+      type: string
+  negate:
+    type: boolean
+  days:
+    type: integer
+oneOf:
+- additionalProperties: false
+  properties:
+    policyField:
+      type: string
+      enum:
+      - cvss
+    comparison: 
+      type: string
+      enum:
+      - gt
+      - gte
+      - eq
+      - lt
+      - lte
+    score:
+      type: integer
+  required:
+  - comparison
+  - score
+- additionalProperties: false
+  properties:
+    policyField:
+      type: string
+      enum:
+      - severity
+    comparison: 
+      type: string
+      enum:
+      - gt
+      - gte
+      - eq
+      - lt
+      - lte
+    level:
+      type: string
+      enum:
+      - low
+      - moderate
+      - important
+      - critical
+  required:
+  - comparison
+  - level
+- additionalProperties: false
+  properties:
+    policyField:
+      type: string
+      enum:
+      - cve
+    fixable:
+      type: boolean
+  required:
+  - fixable
+- additionalProperties: false
+  properties:
+    policyField:
+      type: string
+      enum:
+      - image_tag
+    tags:
+      type: array
+      items: 
+        type: string
+    negate:
+      type: boolean
+  required:
+  - tags
+- additionalProperties: false
+  properties:
+    policyField:
+      type: string
+      enum:
+      - image_age
+    days:
+      type: integer
+  required:
+  - days
+required:
+- policyField
