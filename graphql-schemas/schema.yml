@@ -3572,7 +3572,7 @@ confs:
   - { name: instances, type: GabiNamespace_v1, isRequired: true, isList: true }
   - { name: expirationDate, type: string, isRequired: true }
 
-- name: TemplateTest_v1
+- name: ResourceTemplateTest_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3658,7 +3658,7 @@ confs:
   - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
   - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }
   - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
-  - { name: template_tests_v1, type: TemplateTest_v1, isList: true, datafileSchema: /app-interface/template-test-1.yml }
+  - { name: resource_template_tests_v1, type: ResourceTemplateTest_v1, isList: true, datafileSchema: /app-interface/resource-template-test-1.yml }
   - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
   - { name: cloudflare_dns_zone_v1, type: CloudflareDnsZone_v1, isList: true, datafileSchema: /cloudflare/dns-zone-1.yml }
   - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
