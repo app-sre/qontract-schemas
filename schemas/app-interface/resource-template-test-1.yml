@@ -10,7 +10,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /app-interface/template-test-1.yml
+    - /app-interface/resource-template-test-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
