@@ -31,6 +31,8 @@ properties:
     type: boolean
   user_policy:
     type: object
+  role_policy:
+    type: object
   assume_role:
     type: object
   assume_condition:
@@ -442,6 +444,9 @@ oneOf:
       description: alternate sts call instead of AssumeRole
       type: string
     inline_policy:
+      type: object
+    role_policy:
+      description: a policy to be created and attached to the role
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"

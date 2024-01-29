@@ -2015,6 +2015,7 @@ confs:
   - { name: assume_condition, type: json }
   - { name: assume_action, type: string }
   - { name: inline_policy, type: json }
+  - { name: role_policy, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
