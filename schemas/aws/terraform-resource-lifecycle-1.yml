@@ -25,3 +25,4 @@ properties:
       enum:
       - all # should be handled in code to not be passed as a list
       - inline_policy
+      - assume_role_policy
