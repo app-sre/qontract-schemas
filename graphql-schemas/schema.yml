@@ -1811,6 +1811,12 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: data, type: json }
 
+- name: NamespaceTerraformResourceLifecycle_v1
+  fields:
+  - { name: create_before_destroy, type: boolean }
+  - { name: prevent_destroy, type: boolean }
+  - { name: ignore_changes, type: string, isList: true }
+
 - name: NamespaceTerraformResourceASG_v1
   interface: NamespaceTerraformResourceAWS_v1
   fields:
