@@ -58,6 +58,8 @@ properties:
       check_only_affected_shards:
         type: boolean
         description: "defaults to false"
+      run_order:
+        type: integer
     required:
     - cmd
 

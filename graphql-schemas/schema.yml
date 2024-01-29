@@ -3331,6 +3331,7 @@ confs:
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
   - { name: check_only_affected_shards, type: boolean }
+  - { name: run_order, type: int }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
