@@ -13,6 +13,8 @@ properties:
     type: string
   annotations:
     "$ref": "/common-1.json#/definitions/annotations"
+  lifecycle:
+    "$ref": "/aws/terraform-resource-lifecycle-1.yml"
   identifier:
     type: string
   name:
@@ -452,6 +454,8 @@ oneOf:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    lifecycle:
+      "$ref": "/aws/terraform-resource-lifecycle-1.yml"
   required:
   - identifier
   - assume_role
