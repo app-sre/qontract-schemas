@@ -1233,6 +1233,7 @@ confs:
   - { name: cleanup, type: AWSAccountCleanupOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
+  - { name: sso, type: boolean }
 
   - name: ecrs
     type: AWSECR_v1
