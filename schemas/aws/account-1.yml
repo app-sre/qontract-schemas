@@ -114,6 +114,7 @@ properties:
     "$schemaRef": "/dependencies/rosa-ocm-1.yml"
   sso:
     type: boolean
+    description: "Enable single sign on for the account. Default is enabled."
 required:
 - "$schema"
 - labels
