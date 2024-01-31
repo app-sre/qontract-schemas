@@ -3802,7 +3802,7 @@ confs:
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
   - { name: alerts, type: GlitchtipProjectAlert_v1, isList: true }
-  - { name: acceptEvents, type: boolean }
+  - { name: eventThrottleRate, type: int }
   - { name: jira, type: GlitchtipProjectJira_v1 }
   - name: namespaces
     type: Namespace_v1
