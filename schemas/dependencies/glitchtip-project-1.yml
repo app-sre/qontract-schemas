@@ -91,8 +91,9 @@ properties:
       # referenced
       - "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/glitchtip-project-alert-1.yml"
-  acceptEvents:
-    type: boolean
+  eventThrottleRate:
+    "$ref": "/common-1.json#/definitions/percentage"
+    description: Percentage of new events to deny. 0-100
   jira:
     type: object
     properties:

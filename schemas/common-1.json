@@ -216,6 +216,11 @@
     "positiveInteger": {
       "type": "number",
       "minimum": 1
+    },
+    "percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
     }
   }
 }
