@@ -1,0 +1,46 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/prometheus-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifier"
+  description:
+    type: string
+  baseUrl:
+    type: string
+    format: uri
+  queryPath:
+    type: string
+  auth:
+    type: object
+    additionalProperties: false
+    properties:
+      provider:
+        type: string
+        enum:
+        - bearer
+      token:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    oneOf:
+    - properties:
+        provider:
+          type: string
+          enum:
+          - bearer
+        token:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+required:
+- "$schema"
+- name
+- baseUrl
+- auth
