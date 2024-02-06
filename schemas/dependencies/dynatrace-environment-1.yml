@@ -13,6 +13,9 @@ properties:
     type: string
   description:
     type: string
+  environmentID:
+    description: Dynatrace tenant ID.
+    type: string
   environmentUrl:
     description: The URL to a specific Dynatrace entity called environment, which is also known as tenant.
     type: string
@@ -38,6 +41,7 @@ required:
 - "$schema"
 - name
 - description
+- environmentID
 - environmentUrl
 - bootstrapToken
 
