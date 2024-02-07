@@ -23,14 +23,16 @@ properties:
     description: the current content of the file to be templated
   expectedTargetPath:
     type: string
-    description: the exected result of the templating to compare to
+    description: the exected result of target Path 
   expectedOutput:
     type: string
-    description: the exected result of the templating to compare to
+    description: the expected result of the templating
+  expectedToRender:
+    type: boolean
+    description: whether the template is expected to render or not
 
 
 required:
 - "$schema"
 - name
-- expectedTargetPath
 - expectedOutput

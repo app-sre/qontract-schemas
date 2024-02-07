@@ -4277,5 +4277,6 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: variables, type: json }
   - { name: current, type: string }
-  - { name: expectedTargetPath, type: string, isRequired: true }
+  - { name: expectedTargetPath, type: string }
   - { name: expectedOutput, type: string, isRequired: true }
+  - { name: expectedToRender, type: boolean }
