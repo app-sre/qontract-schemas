@@ -1,0 +1,36 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+description: Test for a template
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/template-test-1.yml
+  name:
+    type: string
+  variables:
+    type: object
+    description: variables to be used in the test
+    additionalProperties: true
+  current:
+    type: string
+    description: the current content of the file to be templated
+  expectedTargetPath:
+    type: string
+    description: the exected result of the templating to compare to
+  expectedOutput:
+    type: string
+    description: the exected result of the templating to compare to
+
+
+required:
+- "$schema"
+- name
+- expectedTargetPath
+- expectedOutput
