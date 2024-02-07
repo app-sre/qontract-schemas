@@ -28,7 +28,6 @@ properties:
         type: string
     required:
     - path
-    - identifier
   template: 
     type: string
   templateTest:
