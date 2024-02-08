@@ -1,0 +1,45 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+
+type: object
+description: Template to be generated
+
+additionalProperties: false
+
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/template-1.yml
+  name:
+    type: string
+  targetPath:
+    type: string
+  condition:
+    type: string
+  patch:
+    type: object
+    additionalProperties: false
+    properties:
+      path:
+        type: string
+      identifier:
+        type: string
+    required:
+    - path
+  template: 
+    type: string
+  templateTest:
+    type: array
+    description: list of tests
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/template-test-1.yml"
+
+required:
+- "$schema"
+- name
+- targetPath
+- template
+- templateTest
