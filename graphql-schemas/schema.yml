@@ -2291,6 +2291,7 @@ confs:
     fieldMap:
       forward: NamespaceTerraformResourceALBActionForward_v1
       fixed-response: NamespaceTerraformResourceALBActionFixedResponse_v1
+      redirect: NamespaceTerraformResourceALBActionRedirect_v1
   fields:
   - { name: type, type: string, isRequired: true }
 
@@ -2305,6 +2306,12 @@ confs:
   fields:
   - { name: type, type: string, isRequired: true }
   - { name: fixed_response, type: NamespaceTerraformResourceALBActionFixedResponseSettings_v1, isRequired: true }
+
+- name: NamespaceTerraformResourceALBActionRedirect_v1
+  interface: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: redirect, type: NamespaceTerraformResourceALBActionRedirectSettings_v1, isRequired: true }
 
 - name: NamespaceTerraformResourceALBActionForwardSettings_v1
   fields:
@@ -2321,6 +2328,14 @@ confs:
   - { name: message_body, type: string, isRequired: true }
   - { name: status_code, type: string, isRequired: true }
 
+- name: NamespaceTerraformResourceALBActionRedirectSettings_v1
+  fields:
+  - { name: host, type: string }
+  - { name: path, type: string }
+  - { name: port, type: int }
+  - { name: protocol, type: string }
+  - { name: query, type: string }
+  - { name: status_code, type: string }
 
 - name: ResourceValues_v1
   fields:

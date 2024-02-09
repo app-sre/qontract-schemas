@@ -1131,6 +1131,7 @@ oneOf:
                 enum:
                 - fixed-response
                 - forward
+                - redirect
             oneOf:
             - additionalProperties: false
               properties:
@@ -1185,6 +1186,39 @@ oneOf:
               required:
               - type
               - forward
+            - additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - redirect
+                redirect:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    host:
+                      type: string
+                    path:
+                      type: string
+                    port:
+                      type: integer
+                    protocol:
+                      type: string
+                      enum:
+                      - HTTP
+                      - HTTPS
+                    query:
+                      type: string
+                    status_code:
+                      type: string
+                      enum:
+                      - HTTP_301
+                      - HTTP_302
+                  required:
+                  - status_code
+              required:
+              - type
+              - redirect
         required:
         - condition
         - action
