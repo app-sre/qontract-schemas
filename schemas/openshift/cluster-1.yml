@@ -146,10 +146,6 @@ properties:
         type: string
       multi_az:
         type: boolean
-      nodes:
-        type: integer
-      instance_type:
-        type: string
       private:
         type: boolean
       storage:
@@ -177,18 +173,6 @@ properties:
         - 20
       provision_shard_id:
         type: string
-      autoscale:
-        type: object
-        additionalProperties: false
-        properties:
-          min_replicas:
-            type: integer
-            minimum: 4
-          max_replicas:
-            type: integer
-        required:
-        - min_replicas
-        - max_replicas
       disable_user_workload_monitoring:
         type: boolean
       account:
@@ -208,6 +192,9 @@ properties:
           Hosted Clusters only: list of availability_zones to use with the cluster creation.
       hypershift:
         type: boolean
+      oidc_endpoint_url:
+        type: string
+        format: uri
     required:
     - product
     - provider
@@ -215,7 +202,6 @@ properties:
     - version
     - initial_version
     - multi_az
-    - instance_type
     - private
   externalConfiguration:
     type: object
@@ -257,6 +243,7 @@ properties:
         type: string
   machinePools:
     type: array
+    minItems: 1
     items:
       type: object
       additionalProperties: false
@@ -298,7 +285,7 @@ properties:
           properties:
             min_replicas:
               type: integer
-              minimum: 2
+              minimum: 1
             max_replicas:
               type: integer
           required:
@@ -502,8 +489,8 @@ properties:
   insecureSkipTLSVerify:
     type: boolean
   jumpHost:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/openshift/jump-host-1.yml"
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   clusterAdmin:
@@ -607,13 +594,28 @@ properties:
         additionalProperties: false
         properties:
           rhidp:
-            type: string
+            type: object
+            additionalProperties: false
+            properties:
+              status:
+                type: string
+                enum:
+                - enabled
+                - disabled
+                - enforced
+                - sso-client-only
+                - oidc-only
+              issuer:
+                type: string
+              name:
+                type: string
+            required:
+            - status
 required:
 - "$schema"
 - labels
 - name
 - consoleUrl
-- kibanaUrl
 - prometheusUrl
 - serverUrl
 - elbFQDN

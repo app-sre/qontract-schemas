@@ -138,6 +138,8 @@ properties:
                           type: string
                         group:
                           type: string
+                        exhaustion:
+                          type: string
                         exported_namespace:
                           type: string
                         exported_service:

@@ -1,0 +1,64 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/glitchtip-project-alert-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifier"
+  description:
+    type: string
+  quantity:
+    "$ref": "/common-1.json#/definitions/positiveInteger"
+  timespanMinutes:
+    "$ref": "/common-1.json#/definitions/positiveInteger"
+  recipients:
+    type: array
+    items:
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        url:
+          type: string
+        urlSecret:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      oneOf:
+      - additionalProperties: false
+        properties:
+          provider:
+            type: string
+            enum:
+            - email-project-members
+        required:
+        - provider
+      - additionalProperties: false
+        properties:
+          provider:
+            type: string
+            enum:
+            - webhook
+          url:
+            type: string
+          urlSecret:
+            "$ref": "/common-1.json#/definitions/vaultSecret"
+        required:
+        - provider
+        oneOf:
+        - required:
+          - url
+        - required:
+          - urlSecret
+required:
+- name
+- description
+- quantity
+- timespanMinutes
+- recipients

@@ -26,11 +26,11 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: glitchtip, type: GlitchtipSettings_v1, isRequired: false}
   - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
+  - { name: jiralert, type: JiralertSettings_v1 }
 
 - name: AppInterfaceStateConfiguration_v1
   isInterface: true
@@ -75,16 +75,16 @@ confs:
   - { name: readTimeout, type: int, isRequired: true }
   - { name: connectTimeout, type: int, isRequired: true }
 
-- name: GlitchtipSettings_v1
-  fields:
-  - { name: readTimeout, type: int }
-  - { name: maxRetries, type: int }
-  - { name: mailDomain, type: string }
-
 - name: LdapGroupsSettings_v1
   fields:
   - { name: contactList, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
+
+- name: JiralertSettings_v1
+  fields:
+  - { name: defaultIssueType, type: string, isRequired: true }
+  - { name: defaultPriority, type: string, isRequired: true }
+  - { name: defaultReopenState, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
@@ -445,12 +445,22 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: keep_hours, type: int, isRequired: true }
 
+- name: JenkinsSSHConnector_v1
+  fields:
+  - { name: credentialsId, type: string, isRequired: true }
+  - { name: jvmOptions, type: string, isRequired: false }
+  - { name: launchTimeoutSeconds, type: int, isRequired: false }
+  - { name: maxNumRetries, type: int, isRequired: false}
+  - { name: port, type: int, isRequired: false}
+  - { name: retryWaitTime, type: int, isRequired: false}
+  - { name: sshHostKeyVerificationStrategy, type: string, isRequired: false}
+
 - name: JenkinsWorkerFleets_v1
   fields:
   - { name: account, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: credentialsId, type: string, isRequired: true }
+  - { name: sshConnector, type: JenkinsSSHConnector_v1, isRequired: true}
   - { name: fsRoot, type: string }
   - { name: labelString, type: string, isRequired: true }
   - { name: numExecutors, type: int }
@@ -528,12 +538,18 @@ confs:
   - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
+  - { name: issueSecurityId, type: string }
+  - { name: disable, type: DisableJiraBoardAutomations_v1 }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
     isList: true
     synthetic:
       schema: /app-sre/escalation-policy-1.yml
       subAttr: channels.jiraBoard
+
+- name: DisableJiraBoardAutomations_v1
+  fields:
+  - { name: integrations, type: string, isList: true }
 
 - name: SendGridAccount_v1
   fields:
@@ -580,12 +596,18 @@ confs:
   - { name: username, type: string, isRequired: true }
 
 - name: DynatraceEnvironment_v1
+  datafile: /dependencies/dynatrace-environment-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
+  - { name: environmentID, type: string, isRequired: true, isUnique: true }
   - { name: environmentUrl, type: string, isRequired: true, isUnique: true }
+  - { name: bootstrapToken, type: VaultSecret_v1, isRequired: true }
+  - { name: environment, type: string}
+  - { name: dynatraceRegion, type: string}
+  - { name: awsRegion, type: string, isList: true}
 
 - name: GithubOrg_v1
   fields:
@@ -618,6 +640,106 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: sslVerify, type: boolean }
+
+- name: AcsInstance_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
+  - { name: authProvider, type: AcsInstanceAuthProvider_v1, isRequired: true }
+
+- name: AcsInstanceAuthProvider_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: id, type: string, isRequired: true }
+  - { name: kind, type: string, isRequired: true }
+
+- name: AcsPolicy_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: notifiers, type: string, isList: true }
+  - { name: severity, type: string, isRequired: true }
+  - { name: categories, type: string, isList: true, isRequired: true }
+  - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
+  - { name: conditions, type: AcsPolicyConditions_v1, isList: true, isInterface: true, isRequired: true }
+
+- name: AcsPolicyScope_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: level
+    fieldMap:
+      cluster: AcsPolicyScopeCluster_v1
+      namespace: AcsPolicyScopeNamespace_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+
+- name: AcsPolicyScopeCluster_v1
+  interface: AcsPolicyScope_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+  - { name: clusters, type: Cluster_v1, isList: true, isRequired: true }
+
+- name: AcsPolicyScopeNamespace_v1
+  interface: AcsPolicyScope_v1
+  fields:
+  - { name: level, type: string, isRequired: true }
+  - { name: namespaces, type: Namespace_v1, isList: true, isRequired: true }
+
+- name: AcsPolicyConditions_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: policyField
+    fieldMap:
+      cvss: AcsPolicyConditionsCvss_v1
+      severity: AcsPolicyConditionsSeverity_v1
+      cve: AcsPolicyConditionsCve_v1
+      image_tag: AcsPolicyConditionsImageTag_v1
+      image_age: AcsPolicyConditionsImageAge_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+
+- name: AcsPolicyConditionsCvss_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: comparison, type: string, isRequired: true }
+  - { name: score, type: int, isRequired: true }
+
+- name: AcsPolicyConditionsSeverity_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: comparison, type: string, isRequired: true }
+  - { name: level, type: string, isRequired: true }
+
+- name: AcsPolicyConditionsCve_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: fixable, type: boolean, isRequired: true }
+
+- name: AcsPolicyConditionsImageTag_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: tags, type: string, isList: true, isRequired: true }
+  - { name: negate, type: boolean }
+
+- name: AcsPolicyConditionsImageAge_v1
+  interface: AcsPolicyConditions_v1
+  fields:
+  - { name: policyField, type: string, isRequired: true }
+  - { name: days, type: int, isRequired: true }
 
 - name: PagerDutyInstance_v1
   fields:
@@ -703,11 +825,8 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
 
@@ -723,11 +842,8 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: storage, type: int, isRequired: true }
@@ -746,15 +862,13 @@ confs:
   - { name: version, type: string, isRequired: true }
   - { name: initial_version, type: string, isRequired: true }
   - { name: multi_az, type: boolean, isRequired: true }
-  - { name: nodes, type: int }
-  - { name: instance_type, type: string, isRequired: true }
   - { name: private, type: boolean, isRequired: true }
   - { name: provision_shard_id, type: string }
-  - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: subnet_ids, type: string, isList: True}
   - { name: availability_zones, type: string, isList: True}
+  - { name: oidc_endpoint_url, type: string }
 
 
 - name: ClusterSpecAutoScale_v1
@@ -909,7 +1023,7 @@ confs:
   - { name: observabilityNamespace, type: Namespace_v1 }
   - { name: grafanaUrl, type: string }
   - { name: consoleUrl, type: string, isRequired: true }
-  - { name: kibanaUrl, type: string, isRequired: true }
+  - { name: kibanaUrl, type: string }
   - { name: prometheusUrl, type: string, isRequired: true }
   - { name: alertmanagerUrl, type: string, isRequired: true }
   - { name: serverUrl, type: string, isRequired: true }
@@ -1017,6 +1131,7 @@ confs:
   - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
   - { name: accessTokenClientSecret, type: VaultSecret_v1 }
+  - { name: allowedClusterExternalConfigLabels, type: string, isList: true }
   - { name: addonManagedUpgrades, type: boolean }
   - { name: addonUpgradeTests, type: AddonUpgradeTest_v1, isList: true }
   - { name: recommendedVersions, type: OpenShiftClusterManagerRecommendedVersions_v1, isList: true }
@@ -1029,6 +1144,7 @@ confs:
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
   - { name: inheritVersionData, type: OpenShiftClusterManager_v1, isList: true }
   - { name: publishVersionData, type: OpenShiftClusterManager_v1, isList: true }
+  - { name: disable, type: DisableClusterAutomations_v1 }
   - name: clusters
     type: Cluster_v1
     isList: true
@@ -1118,6 +1234,7 @@ confs:
   - { name: cleanup, type: AWSAccountCleanupOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
+  - { name: sso, type: boolean }
 
   - name: ecrs
     type: AWSECR_v1
@@ -1269,7 +1386,9 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: regex, type: string, isRequired: true }
-  - { name: retention_in_days, type: int }
+  - { name: retention_in_days, type: int, isRequired: true }
+  - { name: region, type: string }
+  - { name: delete_empty_log_group, type: boolean }
 
 - name: AWSUserPolicy_v1
   datafile: /aws/policy-1.yml
@@ -1327,6 +1446,26 @@ confs:
 - name: AWSRDSDataClassification_v1
   fields:
   - { name: loss_impact, type: string }
+
+- name: DatabaseAccess_v1
+  datafile: /app-interface/database-access-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true}
+  - { name: username, type: string, isRequired: true }
+  - { name: database, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: access, type: DatabaseAccessAccess_v1, isList: true }
+
+- name: DatabaseAccessAccess_v1
+  fields:
+  - { name: grants, type: string, isRequired: true, isList: true }
+  - { name: target, type: DatabaseAccessAccessGrantee_v1, isRequired: true }
+
+- name: DatabaseAccessAccessGrantee_v1
+  fields:
+  - { name: dbschema, type: string, isRequired: true }
 
 - name: TerraformState_v1
   isInterface: true
@@ -1514,6 +1653,7 @@ confs:
   - { name: records, type: CloudflareDnsRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
+  - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
 
 - name: CloudflareZoneArgo_v1
   fields:
@@ -1545,6 +1685,19 @@ confs:
   - { name: cloudflare_branding, type: boolean }
   - { name: wait_for_active_status, type: boolean }
 
+- name: CertificateSecret_v1
+  fields:
+  - { name: certificate, type: VaultSecret_v1, isRequired: true }
+  - { name: key, type: VaultSecret_v1, isRequired: true }
+
+- name: CloudflareCustomSSLCertificate_v1
+  fields:
+  - { name: identifier, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: bundle_method, type: string }
+  - { name: geo_restrictions, type: string }
+  - { name: certificate_secret, type: CertificateSecret_v1, isRequired: true }
+
 - name: NamespaceTerraformResourceCloudflareWorkerScript_v1
   interface: NamespaceTerraformResourceCloudflare_v1
   fields:
@@ -1573,6 +1726,7 @@ confs:
   - { name: ref, type: string, isRequired: true }
   - { name: projectPath, type: string, isRequired: true }
   - { name: delete, type: boolean }
+  - { name: requireFips, type: boolean }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
@@ -1658,6 +1812,12 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: data, type: json }
+
+- name: NamespaceTerraformResourceLifecycle_v1
+  fields:
+  - { name: create_before_destroy, type: boolean }
+  - { name: prevent_destroy, type: boolean }
+  - { name: ignore_changes, type: string, isList: true }
 
 - name: NamespaceTerraformResourceASG_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -1780,9 +1940,10 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: availability_zone, type: string }
-  - { name: parameter_group, type: string }
-  - { name: old_parameter_group, type: string }
+  - { name: parameter_group, type: string, isResource: true }
+  - { name: old_parameter_group, type: string, isResource: true }
   - { name: overrides, type: json }
+  - { name: database_access, type: DatabaseAccess_v1, isList: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: output_resource_db_name, type: string }
@@ -1856,9 +2017,11 @@ confs:
   - { name: assume_condition, type: json }
   - { name: assume_action, type: string }
   - { name: inline_policy, type: json }
+  - { name: role_policy, type: json }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: lifecycle, type: NamespaceTerraformResourceLifecycle_v1 }
 
 - name: NamespaceTerraformResourceElastiCache_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -1866,7 +2029,7 @@ confs:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
-  - { name: parameter_group, type: string }
+  - { name: parameter_group, type: string, isResource: true }
   - { name: region, type: string, isContextUnique: true }
   - { name: overrides, type: json }
   - { name: output_resource_name, type: string }
@@ -2128,6 +2291,7 @@ confs:
     fieldMap:
       forward: NamespaceTerraformResourceALBActionForward_v1
       fixed-response: NamespaceTerraformResourceALBActionFixedResponse_v1
+      redirect: NamespaceTerraformResourceALBActionRedirect_v1
   fields:
   - { name: type, type: string, isRequired: true }
 
@@ -2142,6 +2306,12 @@ confs:
   fields:
   - { name: type, type: string, isRequired: true }
   - { name: fixed_response, type: NamespaceTerraformResourceALBActionFixedResponseSettings_v1, isRequired: true }
+
+- name: NamespaceTerraformResourceALBActionRedirect_v1
+  interface: NamespaceTerraformResourceALBAction_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: redirect, type: NamespaceTerraformResourceALBActionRedirectSettings_v1, isRequired: true }
 
 - name: NamespaceTerraformResourceALBActionForwardSettings_v1
   fields:
@@ -2158,6 +2328,14 @@ confs:
   - { name: message_body, type: string, isRequired: true }
   - { name: status_code, type: string, isRequired: true }
 
+- name: NamespaceTerraformResourceALBActionRedirectSettings_v1
+  fields:
+  - { name: host, type: string }
+  - { name: path, type: string }
+  - { name: port, type: int }
+  - { name: protocol, type: string }
+  - { name: query, type: string }
+  - { name: status_code, type: string }
 
 - name: ResourceValues_v1
   fields:
@@ -2284,6 +2462,14 @@ confs:
   - { name: statusPage, type: string }
   - { name: SLA, type: float, isRequired: true }
   - { name: dependencyFailureImpact, type: string, isRequired: true }
+  - { name: monitoring, type: DependencyMonitoring_v1 }
+
+- name: DependencyMonitoring_v1
+  fields:
+  - {name: url, type: string }
+  - {name: namespace, type: Namespace_v1 }
+  - {name: provider, type: string }
+  - {name: path, type: string }
 
 - name: AppGcrReposItems_v1
   fields:
@@ -2456,7 +2642,7 @@ confs:
   - { name: architectureDocument, type: string, isRequired: true }
   - { name: parentApp, type: App_v1 }
   - { name: serviceDocs, type: string, isList: true }
-  - { name: serviceOwners, type: Owner_v1, isList: true, isRequired: true }
+  - { name: serviceOwners, type: Owner_v1, isList: true }
   - { name: serviceNotifications, type: Owner_v1, isList: true }
   - { name: dependencies, type: Dependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
@@ -2542,6 +2728,7 @@ confs:
   - { name: takeover, type: boolean }
   - { name: deprecated, type: boolean }
   - { name: compare, type: boolean }
+  - { name: skipSuccessfulDeployNotifications, type: boolean, isRequired: false }
   - { name: timeout, type: string }
   - { name: publishJobLogs, type: boolean }
   - { name: clusterAdmin, type: boolean }
@@ -2813,10 +3000,11 @@ confs:
     field: service
     fieldMap:
       vault: OidcPermissionVault_v1
+      acs: OidcPermissionAcs_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
 
@@ -2825,11 +3013,23 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: vault_policies, type: VaultPolicy_v1, isList: true, isRequired: true }
+
+- name: OidcPermissionAcs_v1
+  interface: OidcPermission_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: service, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: permission_set, type: string, isRequired: true }
+  - { name: clusters, type: Cluster_v1, isList: true }
+  - { name: namespaces, type: Namespace_v1, isList: true }
 
 - name: Permission_v1
   datafile: /access/permission-1.yml
@@ -3081,6 +3281,7 @@ confs:
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
   - { name: ldapGroup, type: string }
+  - { name: memberSources, type: RoleMembershipSource_V1, isList: true }
   - name: users
     type: User_v1
     isList: true
@@ -3095,6 +3296,39 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+
+- name: RoleMembershipSource_V1
+  fields:
+  - { name: provider, type: MembershipProvider_V1, isRequired: true }
+  - { name: group, type: string, isRequired: true }
+
+- name: MembershipProvider_V1
+  datafile: /access/membership-provider-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: hasAuditTrail, type: boolean, isRequired: true }
+  - { name: source, type: MembershipProviderSource_V1, isInterface: true, isRequired: true }
+
+- name: MembershipProviderSource_V1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      app-interface: AppInterfaceMembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true}
+
+- name: AppInterfaceMembershipProviderSource_V1
+  interface: MembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
+  - { name: password, type: VaultSecret_v1, isRequired: true }
 
 - name: SelfServiceConfig_v1
   fields:
@@ -3114,6 +3348,7 @@ confs:
   - { name: run_for_valid_saas_file_changes, type: boolean }
   - { name: early_exit, type: boolean }
   - { name: check_only_affected_shards, type: boolean }
+  - { name: run_order, type: int }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
@@ -3180,6 +3415,7 @@ confs:
       static: StaticSharding_v1
       per-aws-account: AWSAccountSharding_v1
       per-openshift-cluster: OpenshiftClusterSharding_v1
+      per-ocm-organization: OCMOrganizationSharding_v1
       per-cloudflare-dns-zone: CloudflareDNSZoneSharding_v1
   fields:
   - { name: strategy, type: string, isRequired: true}
@@ -3221,6 +3457,19 @@ confs:
     - { name: resources, type: DeployResources_v1, isRequired: false }
     - { name: disabled, type: boolean, isRequired: false}
     - { name: subSharding, type: SubSharding_v1, isRequired: false, isInterface: true}
+
+- name: OCMOrganizationSharding_v1
+  interface: IntegrationSharding_v1
+  fields:
+    - { name: strategy, type: string, isRequired: true }
+    - { name: shardSpecOverrides, type: OCMOrganizationShardSpecOverride_v1, isList: true}
+
+- name: OCMOrganizationShardSpecOverride_v1
+  fields:
+    - { name: shard, type: OpenShiftClusterManager_v1, isRequired: true}
+    - { name: imageRef, type: string, isRequired: false }
+    - { name: resources, type: DeployResources_v1, isRequired: false }
+    - { name: disabled, type: boolean, isRequired: false}
 
 - name: AWSAccountSharding_v1
   interface: IntegrationSharding_v1
@@ -3349,7 +3598,7 @@ confs:
   - { name: instances, type: GabiNamespace_v1, isRequired: true, isList: true }
   - { name: expirationDate, type: string, isRequired: true }
 
-- name: TemplateTest_v1
+- name: ResourceTemplateTest_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3388,8 +3637,10 @@ confs:
   - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
   - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
   - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
+  - { name: oidc_permissions_v1, type: OidcPermission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/oidc-permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
+  - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
@@ -3418,6 +3669,8 @@ confs:
   - { name: dependencies_v1, type: Dependency_v1, isList: true, datafileSchema: /dependencies/dependency-1.yml }
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
+  - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
+  - { name: acs_policy_v1, type: AcsPolicy_v1, isList: true, datafileSchema: /acs/acs-policy-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
   - { name: sre_checkpoints_v1, type: SRECheckpoint_v1, isList: true, datafileSchema: /app-sre/sre-checkpoint-1.yml}
@@ -3431,7 +3684,7 @@ confs:
   - { name: pipelines_providers_v1, type: PipelinesProvider_v1, isList: true, isInterface: true, datafileSchema: /app-sre/pipelines-provider-1.yml }
   - { name: unleash_instances_v1, type: UnleashInstance_v1, isList: true, datafileSchema: /app-sre/unleash-instance-1.yml }
   - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
-  - { name: template_tests_v1, type: TemplateTest_v1, isList: true, datafileSchema: /app-interface/template-test-1.yml }
+  - { name: resource_template_tests_v1, type: ResourceTemplateTest_v1, isList: true, datafileSchema: /app-interface/resource-template-test-1.yml }
   - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
   - { name: cloudflare_dns_zone_v1, type: CloudflareDnsZone_v1, isList: true, datafileSchema: /cloudflare/dns-zone-1.yml }
   - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
@@ -3451,6 +3704,7 @@ confs:
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
   - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
+  - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -3461,6 +3715,11 @@ confs:
   - { name: consoleUrl, type: string, isRequired: true }
   - { name: automationUserEmail, type: VaultSecret_v1, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: readTimeout, type: int }
+  - { name: maxRetries, type: int }
+  - { name: mailDomain, type: string }
+  - { name: glitchtipJiraBridgeAlertUrl, type: string }
+  - { name: glitchtipJiraBridgeToken, type: VaultSecret_v1 }
   - name: organizations
     type: GlitchtipOrganization_v1
     isList: true
@@ -3476,6 +3735,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: instance, type: GlitchtipInstance_v1, isRequired: true }
+  - { name: owners, type: string, isList: true }
   - name: roles
     type: Role_v1
     isList: true
@@ -3490,6 +3750,8 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
+  - { name: ldapGroups, type: string, isList: true }
+  - { name: membersOrganizationRole, type: string }
   - name: roles
     type: Role_v1
     isList: true
@@ -3503,18 +3765,63 @@ confs:
   - { name: role, type: string, isRequired: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
 
+- name: GlitchtipProjectAlert_v1
+  datafile: /dependencies/glitchtip-project-alert-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: quantity, type: int, isRequired: true }
+  - { name: timespanMinutes, type: int, isRequired: true }
+  - { name: recipients, type: GlitchtipProjectAlertRecipient_v1, isRequired: true, isList: true, isInterface: true }
+
+- name: GlitchtipProjectAlertRecipient_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      email-project-members: GlitchtipProjectAlertRecipientEmail_v1
+      webhook: GlitchtipProjectAlertRecipientWebhook_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: GlitchtipProjectAlertRecipientEmail_v1
+  interface: GlitchtipProjectAlertRecipient_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+
+- name: GlitchtipProjectAlertRecipientWebhook_v1
+  interface: GlitchtipProjectAlertRecipient_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: url, type: string, isContextUnique: true }
+  - { name: urlSecret, type: VaultSecret_v1, isContextUnique: true }
+
+- name: GlitchtipProjectJira_v1
+  fields:
+  - { name: project, type: string }
+  - { name: board, type: JiraBoard_v1 }
+  - { name: labels, type: string, isList: true }
+
 - name: GlitchtipProjects_v1
   datafile: /dependencies/glitchtip-project-1.yml
   fields:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: projectId, type: string }
   - { name: description, type: string, isRequired: true }
-  - { name: app, type: App_v1, isRequired: true }
+  - { name: app, type: App_v1 }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
+  - { name: alerts, type: GlitchtipProjectAlert_v1, isList: true }
+  - { name: eventThrottleRate, type: int }
+  - { name: jira, type: GlitchtipProjectJira_v1 }
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -3677,6 +3984,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true}
+  - { name: SLONamespace, type: Namespace_v1 }
   - { name: prometheusAccess, type: SLOExternalPrometheusAccess_v1 }
 
 - name: SLOExternalPrometheusAccess_v1
@@ -3684,6 +3992,8 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
+  - { name: password, type: VaultSecret_v1, isRequired: true }
 
 - name: StatusPage_v1
   fields:
@@ -3854,6 +4164,7 @@ confs:
   - { name: contextSchema, type: string } # schema of a datafile or resource
   - { name: disabled, type: boolean }
   - { name: inherit, type: ChangeType_v1, isList: true }
+  - { name: restrictive, type: boolean }
   - { name: changes, type: ChangeTypeChangeDetector_v1, isInterface: true, isRequired: true, isList: true }
   - { name: implicitOwnership, type: ChangeTypeImplicitOwnership_v1, isInterface: true, isList: true }
 
@@ -3918,7 +4229,7 @@ confs:
   - { name: creator_role_arn, type: string, isRequired: true}
   - { name: installer_role_arn, type: string, isRequired: true}
   - { name: support_role_arn, type: string, isRequired: true}
-  - { name: controlplane_role_arn, type: string, isRequired: true}
+  - { name: controlplane_role_arn, type: string, isRequired: false}
   - { name: worker_role_arn, type: string, isRequired: true}
 
 - name: PgpReencryptSettings_v1
@@ -3955,3 +4266,32 @@ confs:
   - { name: network, type: SkupperNetwork_v1, isRequired: true }
   - { name: delete, type: boolean }
   - { name: siteControllerTemplates, type: SkupperSiteControllerTemplate_v1, isList: true }
+
+- name: Template_v1
+  datafile: /app-interface/template-1.yml
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: patch, type: TemplatePatch_v1 }
+  - { name: condition, type: string }
+  - { name: targetPath, type: string, isRequired: true }
+  - { name: template, type: string, isRequired: true }
+  - { name: templateTest, type: TemplateTest_v1, isList: true, isRequired: true }
+
+- name: TemplatePatch_v1
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: identifier, type: string }
+
+- name: TemplateTest_v1
+  datafile: /app-interface/template-test-1.yml
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: variables, type: json }
+  - { name: current, type: string }
+  - { name: expectedTargetPath, type: string }
+  - { name: expectedOutput, type: string, isRequired: true }
+  - { name: expectedToRender, type: boolean }

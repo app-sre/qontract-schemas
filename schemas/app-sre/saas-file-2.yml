@@ -23,8 +23,13 @@ properties:
   pipelinesProvider:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/pipelines-provider-1.yml"
+  # Setting skipSuccessfulDeployNotifications to true will cause successful
+  # deployments to not have a successful deployment notice sent.
+  skipSuccessfulDeployNotifications:
+    type: boolean
   slack:
     type: object
+    additionalProperties: false
     properties:
       output:
         type: string
@@ -52,14 +57,7 @@ properties:
   managedResourceNames:
     type: array
     items:
-      type: object
-      properties:
-        resource:
-          type: string
-        resourceNames:
-          type: array
-          items:
-            type: string
+      "$ref": "/openshift/managed-resource-name-1.yml"
   authentication:
     type: object
     properties:

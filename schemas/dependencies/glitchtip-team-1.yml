@@ -15,8 +15,18 @@ properties:
     "$ref": "/common-1.json#/definitions/identifier"
   description:
     type: string
+  ldapGroups:
+    type: array
+    items:
+      type: string
+  membersOrganizationRole:
+    type: string
+    enum:
+    - owner
+    - admin
+    - manager
+    - member
 required:
 - "$schema"
-- labels
 - name
 - description

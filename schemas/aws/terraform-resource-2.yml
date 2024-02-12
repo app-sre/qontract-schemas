@@ -13,6 +13,8 @@ properties:
     type: string
   annotations:
     "$ref": "/common-1.json#/definitions/annotations"
+  lifecycle:
+    "$ref": "/aws/terraform-resource-lifecycle-1.yml"
   identifier:
     type: string
   name:
@@ -29,12 +31,19 @@ properties:
     type: boolean
   user_policy:
     type: object
+  role_policy:
+    type: object
   assume_role:
     type: object
   assume_condition:
     type: object
   assume_action:
     type: string
+  database_access:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/database-access-1.yml"
   inline_policy:
     type: object
   output_resource_name:
@@ -44,9 +53,9 @@ properties:
   defaults:
     type: string
   parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -80,6 +89,10 @@ properties:
     type: array
     items:
       type: string
+  replication_configurations:
+    type: array
+    items:
+      type: object
   event_notifications:
     type: array
     items:
@@ -432,12 +445,17 @@ oneOf:
       type: string
     inline_policy:
       type: object
+    role_policy:
+      description: a policy to be created and attached to the role
+      type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    lifecycle:
+      "$ref": "/aws/terraform-resource-lifecycle-1.yml"
   required:
   - identifier
   - assume_role
@@ -456,9 +474,14 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
+    database_access:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-interface/database-access-1.yml"
     overrides:
       type: object
       properties:
@@ -495,6 +518,10 @@ oneOf:
               type: string
             delete:
               type: string
+        storage_type:
+          type: string
+        iops:
+          type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
@@ -561,7 +588,7 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     overrides:
@@ -649,9 +676,9 @@ oneOf:
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     fifo_topic:
-       type: boolean
+      type: boolean
     inline_policy:
-       type: object
+      type: object
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     subscriptions:
@@ -1056,6 +1083,7 @@ oneOf:
                 enum:
                 - fixed-response
                 - forward
+                - redirect
             oneOf:
             - additionalProperties: false
               properties:
@@ -1110,6 +1138,39 @@ oneOf:
               required:
               - type
               - forward
+            - additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - redirect
+                redirect:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    host:
+                      type: string
+                    path:
+                      type: string
+                    port:
+                      type: integer
+                    protocol:
+                      type: string
+                      enum:
+                      - HTTP
+                      - HTTPS
+                    query:
+                      type: string
+                    status_code:
+                      type: string
+                      enum:
+                      - HTTP_301
+                      - HTTP_302
+                  required:
+                  - status_code
+              required:
+              - type
+              - redirect
         required:
         - condition
         - action

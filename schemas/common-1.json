@@ -28,6 +28,10 @@
         "type": "string"
       }
     },
+    "psqlIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-_]{0,30}[a-z0-9]$"
+    },
     "identifier": {
       "type": "string",
       "pattern": "^[A-Za-z0-9][A-Za-z0-9-_]{0,30}[A-Za-z0-9]$"
@@ -141,6 +145,10 @@
         "$ref": {
           "type": "string",
           "format": "uri-reference"
+        },
+        "__identifier": {
+          "type": "string",
+          "description": "this is the field that holds the context uniqueness hash for a crossref. it is managed by qontract-bundler during the bundling process if a crossref datafile defines at least one isContextUnique field"
         }
       },
       "required": [
@@ -204,6 +212,15 @@
     "ldapGroupName": {
       "type": "string",
       "pattern": "^ai-[a-z][a-z0-9-_.]+[a-z0-9]*$"
+    },
+    "positiveInteger": {
+      "type": "number",
+      "minimum": 1
+    },
+    "percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
     }
   }
 }

@@ -13,10 +13,35 @@ properties:
     type: string
   description:
     type: string
-  environmentUrl:
+  environmentID:
+    description: Dynatrace tenant ID.
     type: string
+  environmentUrl:
+    description: The URL to a specific Dynatrace entity called environment, which is also known as tenant.
+    type: string
+  bootstrapToken:
+    description: Dynatrace API token dedicated for generating new API tokens for Hypershift.
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  environment:
+    description: Which of integration, stage or production are the data coming from.
+    type: string
+    enum:
+    - integration
+    - stage
+    - production
+  dynatraceRegion:
+    description: https://gitlab.cee.redhat.com/service/app-interface/-/blame/9f303046645ebbb48e87ccf5d89778521a2d8345/data/services/osd-operators/cicd/saas/saas-dynatrace-operator.yaml#L356-433
+    type: string
+  awsRegion:
+    description: A list of HCP AWS regions.
+    type: array
+    items:
+      "$ref": "/aws/regions-1.yml#/properties/region"
 required:
 - "$schema"
 - name
 - description
+- environmentID
 - environmentUrl
+- bootstrapToken
+

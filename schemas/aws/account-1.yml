@@ -69,6 +69,9 @@ properties:
           - terraform-vpc-peerings
           - terraform-tgw-attachments
           - aws-ami-cleanup
+          - aws-cloudwatch-log-retention
+          - aws-saml-idp
+          - aws-saml-roles
   deleteKeys:
     type: array
     items:
@@ -111,6 +114,9 @@ properties:
     description: "Rosa related attributes in the aws account."
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/rosa-ocm-1.yml"
+  sso:
+    type: boolean
+    description: "Enable single sign on for the account. Default is enabled."
 required:
 - "$schema"
 - labels

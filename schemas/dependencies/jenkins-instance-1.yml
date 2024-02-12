@@ -64,9 +64,31 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
-        credentialsId:
-          type: string
-          description: Jenkins credential name of ssh private key to be used for logging in to the remote host.
+        sshConnector:
+          type: object
+          additionalProperties: false
+          properties:
+            credentialsId:
+              type: string
+              description: Jenkins credential name of ssh private key to be used for logging in to the remote host.
+            jvmOptions:
+              type: string
+              description: JAVA Options to set in the agents
+            launchTimeoutSeconds:
+              type: integer
+            maxNumRetries:
+              type: integer
+            port:
+              type: integer
+            retryWaitTime:
+              type: integer
+            sshHostKeyVerificationStrategy:
+              type: string
+              enum:
+              - nonVerifyingKeyVerificationStrategy
+              # Other options might need additional properties
+          required:
+          - credentialsId
         # following options comes form https://github.com/jenkinsci/ec2-fleet-plugin/blob/master/docs/
         fsRoot:
           type: string
@@ -88,7 +110,7 @@ properties:
       - account
       - identifier
       - namespace
-      - credentialsId
+      - sshConnector
       - labelString
 required:
 - "$schema"

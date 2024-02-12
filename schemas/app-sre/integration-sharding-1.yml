@@ -16,6 +16,7 @@ properties:
       - per-aws-account
       - per-cloudflare-dns-zone
       - per-openshift-cluster
+      - per-ocm-organization
       - static
   # Static Sharding
   shards:   # Static sharding
@@ -36,6 +37,7 @@ properties:
                 type: string
                 enum:
                 - /openshift/cluster-1.yml
+                - /openshift/openshift-cluster-manager-1.yml
                 - /aws/account-1.yml
                 - /cloudflare/dns-zone-1.yml
         imageRef:

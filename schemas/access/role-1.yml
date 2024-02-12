@@ -170,8 +170,21 @@ properties:
                   - /cloudflare/dns-zone-1.yml
                   - /app-sre/escalation-policy-1.yml
                   - /app-interface/query-validation-1.yml
+                  - /access/bot-1.yml
+                  - /dependencies/dynatrace-environment-1.yml
   ldapGroup:
     "$ref": "/common-1.json#/definitions/ldapGroupName"
+  memberSources:
+    type: array
+    items:
+      type: object
+      properties:
+        provider:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/access/membership-provider-1.yml"
+        group:
+          type: string
+
 required:
 - $schema
 - labels

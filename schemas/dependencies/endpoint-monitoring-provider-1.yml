@@ -34,25 +34,25 @@ properties:
     "$ref": "/common-1.json#/definitions/prometheusLabels"
     description: Labels to be added to the resulting Prometheus metrics
   blackboxExporter:
-      type: object
-      description: blackbox-exporter specific configuration options
-      additionalProperties: false
-      properties:
-        module:
-          type: string
-          description: the blackbox exporter module to use for the endpoint check, e.g. http_2xx
-        namespace:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/openshift/namespace-1.yml"
-          description: the namespace where the prometheus Probe CR will be created
-        exporterUrl:
-          type: string
-          format: uri
-          description: the blackbox-exporter URL to use, must be a full scrape URL
-      required:
-      - module
-      - namespace
-      - exporterUrl
+    type: object
+    description: blackbox-exporter specific configuration options
+    additionalProperties: false
+    properties:
+      module:
+        type: string
+        description: the blackbox exporter module to use for the endpoint check, e.g. http_2xx
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+        description: the namespace where the prometheus Probe CR will be created
+      exporterUrl:
+        type: string
+        format: uri
+        description: the blackbox-exporter URL to use, must be a full scrape URL
+    required:
+    - module
+    - namespace
+    - exporterUrl
   signalFx:
     type: object
     description: signalfx exporter specific configuration options

@@ -31,6 +31,21 @@ properties:
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+  clusters:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-1.yml"
+  namespaces:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
+  permission_set:
+    enum:
+    - admin
+    - analyst
+    - vuln-admin
 oneOf:
 - properties:
     service:
@@ -53,6 +68,32 @@ oneOf:
   required:
   - vault_policies
   - instance
+- properties:
+    service:
+      enum:
+      - acs
+    clusters:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/cluster-1.yml"
+    namespaces:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+    permission_set:
+      enum:
+      - admin
+      - analyst
+      - vuln-admin
+  oneOf:
+  - required:
+    - permission_set
+    - clusters
+  - required:
+    - permission_set
+    - namespaces
 required:
 - $schema
 - name

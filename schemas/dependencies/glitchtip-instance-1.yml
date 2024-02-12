@@ -22,6 +22,16 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  readTimeout:
+    type: integer
+  maxRetries:
+    type: integer
+  mailDomain:
+    type: string
+  glitchtipJiraBridgeAlertUrl:
+    type: string
+  glitchtipJiraBridgeToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
 - "$schema"
 - labels
