@@ -1264,6 +1264,37 @@ confs:
       schema: /aws/policy-1.yml
       subAttr: account
 
+- name: AWSOrganizationAccount_v1
+  datafile: /aws/organization-account-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string }
+  - { name: accountOwner, type: Owner_v1, isRequired: true }
+  - { name: organizationalUnit, type: string, isRequired: true }
+  - { name: payerAccount, type: AWSAccount_v1, isRequired: true }
+  - { name: tags, type: json }
+  - { name: quotaLimits, type: AWSQuotaLimits_v1 }
+  - { name: account, type: AWSAccount_v1 }
+
+- name: AWSQuotaLimits_v1
+  datafile: /aws/quota-limits-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: quotas, type: AWSQuota_v1, isList: true }
+
+- name: AWSQuota_v1
+  fields:
+  - { name: serviceCode, type: string, isRequired: true }
+  - { name: quotaCode, type: string, isRequired: true }
+  - { name: value, type: float, isRequired: true }
+
 - name: CNAExperimentalProvisioner_v1
   interface: ExternalResourcesProvisioner_v1
   fields:
@@ -3664,6 +3695,7 @@ confs:
   - { name: oidc_permissions_v1, type: OidcPermission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/oidc-permission-1.yml }
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
+  - { name: aws_org_accounts_v1, type: AWSOrganizationAccount_v1, isList: true, datafileSchema: /aws/organization-account-1.yml }
   - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
