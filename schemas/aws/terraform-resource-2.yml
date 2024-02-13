@@ -501,15 +501,29 @@ oneOf:
           enum:
           - db.t2.micro
           - db.t2.small
+          - db.t2.medium
+          - db.t2.large
+          - db.t2.xlarge
+          - db.t2.2xlarge
+          - db.t3.micro
           - db.t3.small
-          - db.m3.medium
           - db.t3.medium
           - db.t3.large
           - db.t3.xlarge
           - db.t3.2xlarge
+          - db.t4g.micro
+          - db.t4g.small
+          - db.t4g.medium
+          - db.t4g.large
+          - db.t4g.xlarge
+          - db.t4g.2xlarge
+          - db.m3.medium
           - db.m4.large
           - db.m4.xlarge
           - db.m4.2xlarge
+          - db.m4.4xlarge
+          - db.m4.10xlarge
+          - db.m4.16xlarge
           - db.m5.large
           - db.m5.xlarge
           - db.m5.2xlarge
@@ -518,6 +532,14 @@ oneOf:
           - db.m5.12xlarge
           - db.m5.16xlarge
           - db.m5.24xlarge
+          - db.m5d.large
+          - db.m5d.xlarge
+          - db.m5d.2xlarge
+          - db.m5d.4xlarge
+          - db.m5d.8xlarge
+          - db.m5d.12xlarge
+          - db.m5d.16xlarge
+          - db.m5d.24xlarge
           - db.m6g.large
           - db.m6g.xlarge
           - db.m6g.2xlarge
@@ -525,6 +547,14 @@ oneOf:
           - db.m6g.8xlarge
           - db.m6g.12xlarge
           - db.m6g.16xlarge
+          - db.m6i.large
+          - db.m6i.xlarge
+          - db.m6i.2xlarge
+          - db.m6i.4xlarge
+          - db.m6i.8xlarge
+          - db.m6i.12xlarge
+          - db.m6i.16xlarge
+          - db.m6i.32xlarge
           - db.m7g.large
           - db.m7g.xlarge
           - db.m7g.2xlarge
@@ -546,6 +576,28 @@ oneOf:
           - db.r5.12xlarge
           - db.r5.16xlarge
           - db.r5.24xlarge
+          - db.r6g.large
+          - db.r6g.xlarge
+          - db.r6g.2xlarge
+          - db.r6g.4xlarge
+          - db.r6g.8xlarge
+          - db.r6g.12xlarge
+          - db.r6g.16xlarge
+          - db.r7g.large
+          - db.r7g.xlarge
+          - db.r7g.2xlarge
+          - db.r7g.4xlarge
+          - db.r7g.8xlarge
+          - db.r7g.12xlarge
+          - db.r7g.16xlarge
+          - db.x2.medium
+          - db.x2.large
+          - db.x2.xlarge
+          - db.x2.2xlarge
+          - db.x2.4xlarge
+          - db.x2.8xlarge
+          - db.x2.12xlarge
+          - db.x2.16xlarge
         allocated_storage:
           type: integer
         backup_retention_period:
