@@ -35,4 +35,8 @@ properties:
 required:
 - "$schema"
 - name
-- expectedOutput
+oneOf:
+  - required:
+    - expectedTargetPath
+  - required:
+    - expectedOutput
