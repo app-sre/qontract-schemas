@@ -3710,6 +3710,7 @@ confs:
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
   - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
+  - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
 
 - name: GlitchtipInstance_v1
@@ -4301,3 +4302,23 @@ confs:
   - { name: expectedTargetPath, type: string }
   - { name: expectedOutput, type: string, isRequired: true }
   - { name: expectedToRender, type: boolean }
+
+- name: TemplateCollection_v1
+  datafile: /app-interface/template-collection-1.yml
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: variables, type: TemplateCollectionVariables_v1 }
+  - { name: templates, type: Template_v1, isList: true, isRequired: true }
+
+- name: TemplateCollectionVariables_v1
+  fields:
+  - { name: static, type: json }
+  - { name: dynamic, type: TemplateCollectionVariablesQueries_v1, isList: true }
+
+- name: TemplateCollectionVariablesQueries_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: query, type: string, isRequired: true }
