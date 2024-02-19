@@ -210,6 +210,22 @@ properties:
     - defaultIssueType
     - defaultPriority
     - defaultReopenState
+  customMessages:
+    type: array
+    description: custom messages to be used in integrations
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: unique id of the message
+        content:
+          type: string
+          description: content of the message
+      required:
+      - id
+      - content
 required:
 - "$schema"
 - labels

@@ -31,6 +31,12 @@ confs:
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
   - { name: jiralert, type: JiralertSettings_v1 }
+  - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
+
+- name: AppInterfaceCustomMessage_v1
+  fields:
+  - { name: id, type: string, isRequired: true, isContextUnique: true }
+  - { name: content, type: string, isRequired: true }
 
 - name: AppInterfaceStateConfiguration_v1
   isInterface: true
