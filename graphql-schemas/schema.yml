@@ -903,6 +903,7 @@ confs:
   - { name: schedule_type, type: string } # deprecated
   - { name: schedule, type: string, isRequired: true }
   - { name: workloads, type: string, isList: true, isRequired: true }
+  - { name: versionGateApprovals, type: string, isList: true }
   - { name: conditions, type: ClusterUpgradePolicyConditions_v1, isRequired: true }
 
 - name: ClusterNetwork_v1
