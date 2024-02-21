@@ -2615,6 +2615,12 @@ confs:
     synthetic:
       schema: /app-sre/environment-1.yml
       subAttr: product
+  - name: apps
+    type: App_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/app-1.yml
+      subAttr: product
 
 - name: Environment_v1
   datafile: /app-sre/environment-1.yml
@@ -2642,6 +2648,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
+  - { name: product, type: Product_v1 }
   - { name: description, type: string, isRequired: true }
   - { name: onboardingStatus, type: string, isRequired: true }
   - { name: grafanaUrls, isList: true, type: GrafanaDashboardUrls_v1, isRequired: true }
