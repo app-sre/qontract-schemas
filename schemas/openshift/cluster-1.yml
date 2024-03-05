@@ -342,6 +342,11 @@ properties:
               type: boolean
             manageRoute53Associations:
               type: boolean
+            allowPrivateHcpApiAccess:
+              type: boolean
+              description: |
+                if set to true, enable traffic from attached TGW to reach the API and oauth server
+                of a private HCP by adapting the VPC endpoint security group
             cidrBlock:
               type: string
             delete:
@@ -421,6 +426,8 @@ properties:
               manageSecurityGroups:
                 type: boolean
               manageRoute53Associations:
+                type: boolean
+              allowPrivateHcpApiAccess:
                 type: boolean
               cidrBlock:
                 type: string

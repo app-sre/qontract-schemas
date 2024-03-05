@@ -982,6 +982,7 @@ confs:
   - { name: manageRoutes, type: boolean }
   - { name: manageSecurityGroups, type: boolean }
   - { name: manageRoute53Associations, type: boolean }
+  - { name: allowPrivateHcpApiAccess, type: boolean }
   - { name: cidrBlock, type: string }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
