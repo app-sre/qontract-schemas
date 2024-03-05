@@ -342,6 +342,8 @@ properties:
               type: boolean
             manageRoute53Associations:
               type: boolean
+            allowPrivateHcpApiAccess:
+              type: boolean
             cidrBlock:
               type: string
             delete:
@@ -421,6 +423,8 @@ properties:
               manageSecurityGroups:
                 type: boolean
               manageRoute53Associations:
+                type: boolean
+              allowPrivateHcpApiAccess:
                 type: boolean
               cidrBlock:
                 type: string
