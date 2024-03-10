@@ -60,6 +60,9 @@ properties:
         description: "defaults to false"
       run_order:
         type: integer
+      imageRef:
+        type: string
+        description: image ref to be used
     required:
     - cmd
 

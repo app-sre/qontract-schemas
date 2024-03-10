@@ -3363,6 +3363,7 @@ confs:
   - { name: early_exit, type: boolean }
   - { name: check_only_affected_shards, type: boolean }
   - { name: run_order, type: int }
+  - { name: imageRef, type: string }
 
 - name: IntegrationSpecExtraEnv_v1
   fields:
