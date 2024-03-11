@@ -221,6 +221,10 @@
       "type": "number",
       "minimum": 0,
       "maximum": 100
+    },
+    "awsPolicyName": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9-_]{0,126}[A-Za-z0-9]$"
     }
   }
 }
