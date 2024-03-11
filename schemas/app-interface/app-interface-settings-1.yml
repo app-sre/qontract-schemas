@@ -195,6 +195,18 @@ properties:
     required:
     - contactList
     - credentials
+  deadMansSnitchSettings:
+    type: object
+    additionalProperties: false
+    properties:
+      alertEmail:
+        type: string
+      notesLink:
+        type: string
+      snitchesPath:
+        type: string
+      tokenCreds:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
   jiralert:
     type: object
     additionalProperties: false

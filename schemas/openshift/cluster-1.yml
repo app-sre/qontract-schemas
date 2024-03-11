@@ -118,6 +118,8 @@ properties:
       type: string
   managedClusterRoles:
     type: boolean
+  enableDeadMansSnitch:
+    type: boolean
   spec:
     type: object
     additionalProperties: false
