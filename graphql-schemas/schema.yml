@@ -1126,6 +1126,11 @@ confs:
   - { name: workload, type: string, isRequired: true }
   - { name: channel, type: string }
 
+- name: AusClusterHealthCheck_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: enforced, type: boolean, isRequired: true }
+
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
@@ -1147,6 +1152,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: ausClusterHealthChecks, type: AusClusterHealthCheck_v1, isList: true }
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
