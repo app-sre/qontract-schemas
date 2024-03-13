@@ -33,6 +33,7 @@ properties:
   templateTest:
     type: array
     description: list of tests
+    minItems: 1
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/template-test-1.yml"
