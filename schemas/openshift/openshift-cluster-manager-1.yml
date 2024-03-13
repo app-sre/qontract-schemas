@@ -102,6 +102,22 @@ properties:
     type: array
     items:
       type: string
+  ausClusterHealthChecks:
+    description: List of cluster health check providers
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - telemeter
+        enforced:
+          type: boolean
+      required:
+      - provider
+      - enforced
   sectors:
     description: List of allowed deployment sectors and their dependencies
     type: array
