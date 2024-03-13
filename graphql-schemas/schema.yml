@@ -1126,6 +1126,11 @@ confs:
   - { name: workload, type: string, isRequired: true }
   - { name: channel, type: string }
 
+- name: AusClusterHealthCheck_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: enforced, type: boolean, isRequired: true }
+
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
@@ -1147,6 +1152,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: ausClusterHealthChecks, type: AusClusterHealthCheck_v1, isList: true }
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
@@ -1172,6 +1178,7 @@ confs:
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
   - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
+  - { name: telemeter, type: PrometheusInstance_v1 }
 
 - name: AddonUpgradeTest_v1
   fields:
@@ -3720,9 +3727,11 @@ confs:
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
   - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
+  - { name: prometheus_instances_v1, type: PrometheusInstance_v1, isList: true, datafileSchema: /dependencies/prometheus-instance-1.yml }
   - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
   - { name: network_v1, type: Network_v1, isList: true, datafileSchema: /app-sre/network-1.yml }
+
 
 - name: GlitchtipInstance_v1
   fields:
@@ -4284,6 +4293,43 @@ confs:
   - { name: network, type: SkupperNetwork_v1, isRequired: true }
   - { name: delete, type: boolean }
   - { name: siteControllerTemplates, type: SkupperSiteControllerTemplate_v1, isList: true }
+
+- name: PrometheusInstance_v1
+  datafile: /dependencies/prometheus-instance-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true}
+  - { name: labels, type: json }
+  - { name: description, type: string }
+  - { name: baseUrl, type: string, isRequired: true }
+  - { name: queryPath, type: string }
+  - { name: auth, type: PrometheusInstanceAuth_v1, isInterface: true, isRequired: true }
+
+- name: PrometheusInstanceAuth_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      bearer: PrometheusInstanceBearerAuth_v1
+      oidc: PrometheusInstanceOidcAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: PrometheusInstanceBearerAuth_v1
+  interface: PrometheusInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
+
+- name: PrometheusInstanceOidcAuth_v1
+  interface: PrometheusInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: accessTokenClientId, type: string, isRequired: true }
+  - { name: accessTokenUrl, type: string, isRequired: true }
+  - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
 
 - name: Template_v1
   datafile: /app-interface/template-1.yml

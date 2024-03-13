@@ -25,6 +25,9 @@ properties:
     format: uri
   accessTokenClientSecret:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  telemeter:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/prometheus-instance-1.yml"
 required:
 - "$schema"
 - labels
