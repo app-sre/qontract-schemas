@@ -4311,6 +4311,7 @@ confs:
     field: provider
     fieldMap:
       bearer: PrometheusInstanceBearerAuth_v1
+      oidc: PrometheusInstanceOidcAuth_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -4319,6 +4320,14 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
+
+- name: PrometheusInstanceOidcAuth_v1
+  interface: PrometheusInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: accessTokenClientId, type: string, isRequired: true }
+  - { name: accessTokenUrl, type: string, isRequired: true }
+  - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
 
 - name: Template_v1
   datafile: /app-interface/template-1.yml

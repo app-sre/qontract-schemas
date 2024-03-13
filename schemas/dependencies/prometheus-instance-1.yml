@@ -29,7 +29,15 @@ properties:
         type: string
         enum:
         - bearer
+        - oidc
       token:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      accessTokenClientId:
+        type: string
+      accessTokenUrl:
+        type: string
+        format: uri
+      accessTokenClientSecret:
         "$ref": "/common-1.json#/definitions/vaultSecret"
     oneOf:
     - properties:
@@ -39,6 +47,26 @@ properties:
           - bearer
         token:
           "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - provider
+      - token
+    - properties:
+        provider:
+          type: string
+          enum:
+          - oidc
+        accessTokenClientId:
+          type: string
+        accessTokenUrl:
+          type: string
+          format: uri
+        accessTokenClientSecret:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - provider
+      - accessTokenClientId
+      - accessTokenUrl
+      - accessTokenClientSecret
 required:
 - "$schema"
 - name
