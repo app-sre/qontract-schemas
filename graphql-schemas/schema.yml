@@ -2541,7 +2541,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
   - { name: labels, type: json }
   - { name: description, type: string, isRequired: true }
   - { name: channels, type: AppEscalationPolicyChannels_v1, isRequired: true }
