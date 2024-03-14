@@ -1411,13 +1411,14 @@ confs:
   - { name: policy, type: json, isRequired: true }
 
 - name: AWSVPC_v1
+  datafile: /aws/vpc-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: name, type: string, isRequired: true }
-  - { name: description, type: string }
+  - { name: description, type: string, isRequired: true }
   - { name: vpc_id, type: string, isRequired: true }
   - { name: cidr_block, type: string, isRequired: true }
   - { name: region, type: string, isRequired: true }
@@ -4340,7 +4341,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: false }
-  - { name: inUseBy, type: string, isRequired: false }
+  - { name: inUseBy, type: DatafileObject_v1, isInterface: true }
   - { name: networkAddress, type: string, isRequired: true }
   - { name: region, type: string, isRequired: false }
   - { name: parentNetwork, type: Network_v1, isRequired: false }

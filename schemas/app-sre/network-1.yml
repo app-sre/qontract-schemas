@@ -29,8 +29,9 @@ properties:
         '$schema':
           type: string
           enum:
+          # Add other claimants to the list so long as they implement the
+          # datafile interface.
           - /aws/vpc-1.yml
-          - /app-sre/app.yml
   networkAddress:
     description: "The network address in CIDR format"
     type: string
@@ -43,3 +44,9 @@ properties:
   region:
     description: "Region where this network resides"
     type: string
+
+required:
+- $schema
+- name
+- description
+- networkAddress
