@@ -4387,7 +4387,12 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: false }
-  - { name: inUseBy, type: DatafileObject_v1, isInterface: true }
+  - { name: inUseBy, type: NetworkInUseBy_v1 }
   - { name: networkAddress, type: string, isRequired: true }
   - { name: region, type: string, isRequired: false }
   - { name: parentNetwork, type: Network_v1, isRequired: false }
+
+- name: NetworkInUseBy_v1
+  fields:
+  - { name: vpc, type: AWSVPC_v1 }
+  - { name: app, type: App_v1 }

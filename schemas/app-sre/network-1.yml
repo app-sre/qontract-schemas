@@ -22,16 +22,18 @@ properties:
   inUseBy:
     description: "A reference to some entity that is able to, and has claimed this network. If this network is unclaimed, this will have a null value."
     type: object
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": 
-      type: object
-      properties:
-        '$schema':
-          type: string
-          enum:
-          # Add other claimants to the list so long as they implement the
-          # datafile interface.
-          - /aws/vpc-1.yml
+    properties:
+      vpc:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": /aws/vpc-1.yml
+      app:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-sre/app-1.yml"
+    oneOf:
+    - required:
+      - vpc
+    - required:
+      - app
   networkAddress:
     description: "The network address in CIDR format"
     type: string
