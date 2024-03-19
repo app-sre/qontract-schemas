@@ -27,6 +27,7 @@ properties:
       enum:
       - api.openshift.com/gate-sts
       - api.openshift.com/gate-ocp
+      - api.openshift.com/gate-ingress
   conditions:
     additionalProperties: false
     properties:
