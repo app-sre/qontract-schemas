@@ -4395,4 +4395,3 @@ confs:
 - name: NetworkInUseBy_v1
   fields:
   - { name: vpc, type: AWSVPC_v1 }
-  - { name: app, type: App_v1 }

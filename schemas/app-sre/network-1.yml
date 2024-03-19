@@ -26,14 +26,9 @@ properties:
       vpc:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": /aws/vpc-1.yml
-      app:
-        "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/app-sre/app-1.yml"
     oneOf:
     - required:
       - vpc
-    - required:
-      - app
   networkAddress:
     description: "The network address in CIDR format"
     type: string
