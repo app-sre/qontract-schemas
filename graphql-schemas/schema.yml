@@ -4453,4 +4453,4 @@ confs:
 
 - name: NetworkInUseBy_v1
   fields:
-  - { name: placeholder, type: string }
+  - { name: vpc, type: AWSVPC_v1 }
