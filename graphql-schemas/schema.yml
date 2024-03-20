@@ -3733,6 +3733,7 @@ confs:
   - { name: awsgroups_v1, type: AWSGroup_v1, isList: true, datafileSchema: /aws/group-1.yml }
   - { name: awsaccounts_v1, type: AWSAccount_v1, isList: true, datafileSchema: /aws/account-1.yml }
   - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
+  - { name: aws_managed_vpcs_v1, type: AWSManagedVPC_v1, isList: true }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
@@ -4463,4 +4464,4 @@ confs:
 
 - name: NetworkInUseBy_v1
   fields:
-  - { name: vpc, type: AWSVPC_v1 }
+  - { name: vpc, type: AWSManagedVPC_v1}
