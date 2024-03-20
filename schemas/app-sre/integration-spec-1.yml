@@ -97,6 +97,13 @@ properties:
   storage:
     type: string
     description: size of cache storage
+  storageClassName:
+    type: string
+    description: kubernetes storage class name for the cache
+    enum:
+    - gp2
+    - gp2-csi
+    - gp3-csi
   trigger:
     type: boolean
     description: integration is an openshift-saas-deploy trigger
