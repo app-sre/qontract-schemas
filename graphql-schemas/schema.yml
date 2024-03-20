@@ -3399,6 +3399,7 @@ confs:
   - { name: sleepDurationSecs, type: string }
   - { name: state, type: boolean }
   - { name: storage, type: string }
+  - { name: storageClassName, type: string }
   - { name: trigger, type: boolean }
   - { name: cron, type: string }
   - { name: dashdotdb, type: boolean }
