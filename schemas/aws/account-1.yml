@@ -45,6 +45,13 @@ properties:
       - email
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  automationRole:
+    type: object
+    description: "Role per integration or use-case to assume in the account"
+    properties:
+      awsAccountManager:
+        type: string
+        description: "The AWS account manager IAM role name in the payer account"
   garbageCollection:
     type: boolean
   enableDeletion:

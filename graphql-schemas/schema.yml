@@ -1237,6 +1237,7 @@ confs:
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: automationRole, type: AWSAutomationRole_v1 }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
@@ -1277,6 +1278,10 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+
+- name: AWSAutomationRole_v1
+  fields:
+  - { name: awsAccountManager, type: string }
 
 - name: AWSOrganization_v1
   fields:
