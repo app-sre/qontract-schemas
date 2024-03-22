@@ -1489,6 +1489,10 @@ confs:
   - { name: region, type: string, isRequired: true }
   - { name: subnets, type: AWSSubnet_v1, isList: true }
 
+- name: ManagedVPCCIDRBlock_v1
+  fields:
+  - { name: network, type: Network_v1, isRequired: true }
+
 - name: AWSManagedVPC_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -1496,7 +1500,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
-  - { name: network, type: Network_v1, isRequired: true }
+  - { name: cidr_block, type: ManagedVPCCIDRBlock_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
 
 - name: AWSSubnet_v1

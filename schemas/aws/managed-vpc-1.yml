@@ -15,13 +15,19 @@ properties:
     type: string
   description:
     type: string
-  network:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$scemaRef": "/app-sre/network-1.yml"
+  cidr_block:
+    type: object
+    additionalPropeties: false
+    properties:
+      network:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$scemaRef": "/app-sre/network-1.yml"
+    required:
+    - network
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
 required:
 - "$schema"
 - name
-- network
+- cidr_block
