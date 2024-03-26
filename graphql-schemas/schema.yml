@@ -1418,6 +1418,7 @@ confs:
   - { name: policy, type: json, isRequired: true }
 
 - name: AWSVPC_v1
+  datafile: /aws/vpc-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3730,6 +3731,7 @@ confs:
   - { name: prometheus_instances_v1, type: PrometheusInstance_v1, isList: true, datafileSchema: /dependencies/prometheus-instance-1.yml }
   - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
+  - { name: network_v1, type: Network_v1, isList: true, datafileSchema: /app-sre/network-1.yml }
 
 
 - name: GlitchtipInstance_v1
@@ -4378,3 +4380,19 @@ confs:
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: query, type: string, isRequired: true }
+
+- name: Network_v1
+  datafile: /app-sre/network-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: false }
+  - { name: inUseBy, type: NetworkInUseBy_v1 }
+  - { name: networkAddress, type: string, isRequired: true, isUnique: true }
+  - { name: region, type: string, isRequired: false }
+  - { name: parentNetwork, type: Network_v1, isRequired: false }
+
+- name: NetworkInUseBy_v1
+  fields:
+  - { name: placeholder, type: string }
