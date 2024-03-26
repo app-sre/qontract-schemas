@@ -4395,3 +4395,4 @@ confs:
 
 - name: NetworkInUseBy_v1
   fields:
+  - { name: placeholder, type: string }
