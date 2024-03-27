@@ -25,7 +25,7 @@ properties:
     properties:
       vpc:
         "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": /aws/managed-vpc-1.yml
+        "$schemaRef": /aws/vpc-request-1.yml
     oneOf:
     - required:
       - vpc
