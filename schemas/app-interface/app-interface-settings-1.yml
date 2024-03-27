@@ -213,6 +213,7 @@ properties:
         description: credentials to interact with deadmanssnitch api
         "$ref": "/common-1.json#/definitions/vaultSecret"
       defaultTags:
+        description: tags to filter relevant snitch data from deadmanssnitch
         type: array
         items:
           type: string  
