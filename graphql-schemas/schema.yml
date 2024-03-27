@@ -1502,6 +1502,7 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
+  - { name: region, type: string, isRequired: true }
   - { name: cidr_block, type: Network_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: subnets, type: VPCRequestSubnets }

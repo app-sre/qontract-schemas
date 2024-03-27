@@ -13,9 +13,12 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+  region:
+    type: string
   description:
     type: string
   cidr_block:
+    description: "Reference to a network reservation file"
     "$ref": "/common-1.json#/definitions/crossref"
     "$scemaRef": "/app-sre/network-1.yml"
   account:
@@ -37,3 +40,4 @@ required:
 - "$schema"
 - name
 - cidr_block
+- region
