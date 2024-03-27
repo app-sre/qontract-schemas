@@ -1494,6 +1494,7 @@ confs:
   - { name: network, type: Network_v1, isRequired: true }
 
 - name: AWSManagedVPC_v1
+  datafile: /aws/managed-vpc-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
