@@ -202,7 +202,7 @@ properties:
     properties:
       alertEmail:
         type: string
-        description: email address used by deadmanssnitch to send alert in case no check in by prometheus url
+        description: email address used by deadmanssnitch to send alert in case no check in
       notesLink:
         description: the link to SOP in case endpoint is not checking in
         type: string
