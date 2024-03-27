@@ -1237,6 +1237,7 @@ confs:
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: automationRole, type: AWSAutomationRole_v1 }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
@@ -1250,7 +1251,21 @@ confs:
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
   - { name: sso, type: boolean }
-
+  - { name: alias, type: string }
+  - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
+  - { name: organization, type: AWSOrganization_v1 }
+  - name: account_requests
+    type: AWSAccountRequest_v1
+    isList: true
+    synthetic:
+      schema: /aws/account-request-1.yml
+      subAttr: organization.payerAccount
+  - name: organization_accounts
+    type: AWSAccount_v1
+    isList: true
+    synthetic:
+      schema: /aws/account-1.yml
+      subAttr: organization.payerAccount
   - name: ecrs
     type: AWSECR_v1
     isList: true
@@ -1263,6 +1278,44 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+
+- name: AWSAutomationRole_v1
+  fields:
+  - { name: awsAccountManager, type: string }
+
+- name: AWSOrganization_v1
+  fields:
+  - { name: payerAccount, type: AWSAccount_v1, isRequired: true }
+  - { name: ou, type: string, isRequired: true }
+  - { name: tags, type: json, isRequired: true }
+
+- name: AWSAccountRequest_v1
+  datafile: /aws/account-request-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: accountOwner, type: Owner_v1, isRequired: true }
+  - { name: organization, type: AWSOrganization_v1, isRequired: true }
+  - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
+
+- name: AWSQuotaLimits_v1
+  datafile: /aws/quota-limits-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: quotas, type: AWSQuota_v1, isList: true, isRequired: true }
+
+- name: AWSQuota_v1
+  fields:
+  - { name: serviceCode, type: string, isRequired: true }
+  - { name: quotaCode, type: string, isRequired: true }
+  - { name: value, type: float, isRequired: true }
 
 - name: CNAExperimentalProvisioner_v1
   interface: ExternalResourcesProvisioner_v1

@@ -225,6 +225,11 @@
     "awsPolicyName": {
       "type": "string",
       "pattern": "^[A-Za-z][A-Za-z0-9-_]{0,126}[A-Za-z0-9]$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^\\/[a-zA-Z0-9_ -\\/]+[^\\/]$",
+      "description": "A path is a string that starts with a forward slash and contains only alphanumeric characters, hyphens, spaces, and underscores. It does not end with a slash."
     }
   }
 }
