@@ -93,6 +93,7 @@ confs:
   - { name: notesLink, type: string, isRequired: true }
   - { name: snitchesPath, type: string, isRequired: true }
   - { name: tokenCreds, type: VaultSecret_v1, isRequired: true}
+  - { name: defaultTags, type: string, isList: true, isRequired: true }
 
 - name: JiralertSettings_v1
   fields:

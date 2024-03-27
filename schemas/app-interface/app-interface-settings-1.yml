@@ -197,16 +197,25 @@ properties:
     - credentials
   deadMansSnitchSettings:
     type: object
+    description: this settings object is used by deadmanssnitch integration
     additionalProperties: false
     properties:
       alertEmail:
         type: string
+        description: email address used by deadmanssnitch to send alert in case no check in by prometheus url
       notesLink:
+        description: the link to SOP in case endpoint is not checking in
         type: string
       snitchesPath:
+        description: vault location to fetch snitch url secrets from
         type: string
       tokenCreds:
+        description: credentials to interact with deadmanssnitch api
         "$ref": "/common-1.json#/definitions/vaultSecret"
+      defaultTags:
+        type: array
+        items:
+          type: string  
   jiralert:
     type: object
     additionalProperties: false
