@@ -224,6 +224,14 @@ properties:
         description: the type of alert to be configured for snitch
       
           
+  costReport:
+    type: object
+    additionalProperties: false
+    properties:
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - credentials
   jiralert:
     type: object
     additionalProperties: false

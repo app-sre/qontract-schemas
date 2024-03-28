@@ -1,0 +1,40 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/quota-limits-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  quotas:
+    type: array
+    items:
+      type: object
+      properties:
+        serviceCode:
+          type: string
+          description: "Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the ListServices operation."
+        quotaCode:
+          type: string
+          description: "Specifies the quota identifier. To find the quota code for a specific quota, use the ListServiceQuotas operation, and look for the QuotaCode response in the output for the quota you want."
+        value:
+          type: number
+          description: "Specifies the new, increased value for the quota."
+      required:
+      - serviceCode
+      - quotaCode
+      - value
+required:
+- "$schema"
+- labels
+- name
+- quotas

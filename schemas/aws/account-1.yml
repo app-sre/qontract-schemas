@@ -45,6 +45,13 @@ properties:
       - email
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  automationRole:
+    type: object
+    description: "Role per integration or use-case to assume in the account"
+    properties:
+      awsAccountManager:
+        type: string
+        description: "The AWS account manager IAM role name in the payer account"
   garbageCollection:
     type: boolean
   enableDeletion:
@@ -72,6 +79,7 @@ properties:
           - aws-cloudwatch-log-retention
           - aws-saml-idp
           - aws-saml-roles
+          - aws-account-manager
   deleteKeys:
     type: array
     items:
@@ -117,6 +125,17 @@ properties:
   sso:
     type: boolean
     description: "Enable single sign on for the account. Default is enabled."
+  organization:
+    "$ref": "/aws/organization-1.yml"
+  alias:
+    type: string
+    description: "The alias for the account. This is the name that appears in the AWS SSO page. If not set, the account name will be used."
+  quotaLimits:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/quota-limits-1.yml"
+      description: "AWS quota limits for this account"
 required:
 - "$schema"
 - labels

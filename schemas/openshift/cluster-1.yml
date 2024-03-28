@@ -621,6 +621,16 @@ properties:
                 type: string
             required:
             - status
+          dtp:
+            type: object
+            description: request dynatrace-token-provider to issue a token for the cluster
+            additionalProperties: false
+            properties:
+              tenant:
+                type: string
+                description: tenant id to issue token for
+            required:
+            - tenant
 required:
 - "$schema"
 - labels

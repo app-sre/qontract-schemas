@@ -1,0 +1,49 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum: 
+      - /app-sre/network-1.yml
+
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+
+  description:
+    type: string
+
+  inUseBy:
+    description: "A reference to some entity that is able to, and has claimed this network. If this network is unclaimed, this will have a null value."
+    type: object
+    properties:
+      vpc:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": /aws/managed-vpc-1.yml
+    oneOf:
+    - required:
+      - vpc
+  networkAddress:
+    description: "The network address in CIDR format"
+    type: string
+    # Naive regeg; validate in code before use.
+    pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\/\\d+$"
+  parentNetwork:
+    description: "A reference to this network's parent network. If this is a 'root' network, it will have no parent."
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/network-1.yml"
+  region:
+    description: "Region where this network resides"
+    type: string
+
+required:
+- $schema
+- name
+- description
+- networkAddress

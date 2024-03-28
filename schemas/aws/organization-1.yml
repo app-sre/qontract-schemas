@@ -1,0 +1,24 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/organization-1.yml
+  payerAccount:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+    description: "AWS parent account"
+  ou:
+    "$ref": "/common-1.json#/definitions/path"
+    description: "AWS organizational unit. Use path to the OU, e.g. /Root/OrgUnit1/Foo/Bar"
+  tags:
+    "$ref": "/common-1.json#/definitions/labels"
+    description: "Tags for this account"
+required:
+- payerAccount
+- ou

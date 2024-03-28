@@ -33,6 +33,7 @@ confs:
   - { name: deadMansSnitchSettings, type: DeadMansSnitchSettings_v1}
   - { name: jiralert, type: JiralertSettings_v1 }
   - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
+  - { name: costReport, type: CostReportSettings_v1 }
 
 - name: AppInterfaceCustomMessage_v1
   fields:
@@ -96,6 +97,9 @@ confs:
   - { name: tags, type: string, isList: true, isRequired: true }
   - { name: interval, type: string, isRequired: true }
   - { name: alertType, type: string, isRequired: true }
+- name: CostReportSettings_v1
+  fields:
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: JiralertSettings_v1
   fields:
@@ -1138,6 +1142,11 @@ confs:
   - { name: workload, type: string, isRequired: true }
   - { name: channel, type: string }
 
+- name: AusClusterHealthCheck_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: enforced, type: boolean, isRequired: true }
+
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
   fields:
@@ -1159,6 +1168,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: ausClusterHealthChecks, type: AusClusterHealthCheck_v1, isList: true }
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
   - { name: upgradePolicyClusters, type: OpenShiftClusterManagerUpgradePolicyCluster_v1, isList: true }
@@ -1184,6 +1194,7 @@ confs:
   - { name: accessTokenClientId, type: string, isRequired: true }
   - { name: accessTokenUrl, type: string, isRequired: true }
   - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
+  - { name: telemeter, type: PrometheusInstance_v1 }
 
 - name: AddonUpgradeTest_v1
   fields:
@@ -1242,6 +1253,7 @@ confs:
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
+  - { name: automationRole, type: AWSAutomationRole_v1 }
   - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
@@ -1255,7 +1267,21 @@ confs:
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
   - { name: sso, type: boolean }
-
+  - { name: alias, type: string }
+  - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
+  - { name: organization, type: AWSOrganization_v1 }
+  - name: account_requests
+    type: AWSAccountRequest_v1
+    isList: true
+    synthetic:
+      schema: /aws/account-request-1.yml
+      subAttr: organization.payerAccount
+  - name: organization_accounts
+    type: AWSAccount_v1
+    isList: true
+    synthetic:
+      schema: /aws/account-1.yml
+      subAttr: organization.payerAccount
   - name: ecrs
     type: AWSECR_v1
     isList: true
@@ -1268,6 +1294,44 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+
+- name: AWSAutomationRole_v1
+  fields:
+  - { name: awsAccountManager, type: string }
+
+- name: AWSOrganization_v1
+  fields:
+  - { name: payerAccount, type: AWSAccount_v1, isRequired: true }
+  - { name: ou, type: string, isRequired: true }
+  - { name: tags, type: json, isRequired: true }
+
+- name: AWSAccountRequest_v1
+  datafile: /aws/account-request-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: accountOwner, type: Owner_v1, isRequired: true }
+  - { name: organization, type: AWSOrganization_v1, isRequired: true }
+  - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
+
+- name: AWSQuotaLimits_v1
+  datafile: /aws/quota-limits-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: quotas, type: AWSQuota_v1, isList: true, isRequired: true }
+
+- name: AWSQuota_v1
+  fields:
+  - { name: serviceCode, type: string, isRequired: true }
+  - { name: quotaCode, type: string, isRequired: true }
+  - { name: value, type: float, isRequired: true }
 
 - name: CNAExperimentalProvisioner_v1
   interface: ExternalResourcesProvisioner_v1
@@ -1423,6 +1487,7 @@ confs:
   - { name: policy, type: json, isRequired: true }
 
 - name: AWSVPC_v1
+  datafile: /aws/vpc-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -2552,7 +2617,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
   - { name: labels, type: json }
   - { name: description, type: string, isRequired: true }
   - { name: channels, type: AppEscalationPolicyChannels_v1, isRequired: true }
@@ -3404,6 +3469,7 @@ confs:
   - { name: sleepDurationSecs, type: string }
   - { name: state, type: boolean }
   - { name: storage, type: string }
+  - { name: storageClassName, type: string }
   - { name: trigger, type: boolean }
   - { name: cron, type: string }
   - { name: dashdotdb, type: boolean }
@@ -3731,8 +3797,11 @@ confs:
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
   - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
+  - { name: prometheus_instances_v1, type: PrometheusInstance_v1, isList: true, datafileSchema: /dependencies/prometheus-instance-1.yml }
   - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
+  - { name: network_v1, type: Network_v1, isList: true, datafileSchema: /app-sre/network-1.yml }
+
 
 - name: GlitchtipInstance_v1
   fields:
@@ -4295,6 +4364,43 @@ confs:
   - { name: delete, type: boolean }
   - { name: siteControllerTemplates, type: SkupperSiteControllerTemplate_v1, isList: true }
 
+- name: PrometheusInstance_v1
+  datafile: /dependencies/prometheus-instance-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true}
+  - { name: labels, type: json }
+  - { name: description, type: string }
+  - { name: baseUrl, type: string, isRequired: true }
+  - { name: queryPath, type: string }
+  - { name: auth, type: PrometheusInstanceAuth_v1, isInterface: true, isRequired: true }
+
+- name: PrometheusInstanceAuth_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      bearer: PrometheusInstanceBearerAuth_v1
+      oidc: PrometheusInstanceOidcAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+
+- name: PrometheusInstanceBearerAuth_v1
+  interface: PrometheusInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: token, type: VaultSecret_v1, isRequired: true }
+
+- name: PrometheusInstanceOidcAuth_v1
+  interface: PrometheusInstanceAuth_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: accessTokenClientId, type: string, isRequired: true }
+  - { name: accessTokenUrl, type: string, isRequired: true }
+  - { name: accessTokenClientSecret, type: VaultSecret_v1, isRequired: true }
+
 - name: Template_v1
   datafile: /app-interface/template-1.yml
   fields:
@@ -4343,3 +4449,19 @@ confs:
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: query, type: string, isRequired: true }
+
+- name: Network_v1
+  datafile: /app-sre/network-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: false }
+  - { name: inUseBy, type: NetworkInUseBy_v1 }
+  - { name: networkAddress, type: string, isRequired: true, isUnique: true }
+  - { name: region, type: string, isRequired: false }
+  - { name: parentNetwork, type: Network_v1, isRequired: false }
+
+- name: NetworkInUseBy_v1
+  fields:
+  - { name: placeholder, type: string }
