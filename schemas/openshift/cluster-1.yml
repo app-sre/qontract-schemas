@@ -119,7 +119,7 @@ properties:
   managedClusterRoles:
     type: boolean
   enableDeadMansSnitch:
-    description: Flag to automate deadmanssnitch creation/deletion by integration
+    description: Flag to automate snitch creation/deletion by deadmanssnitch integration
     type: boolean
   spec:
     type: object
