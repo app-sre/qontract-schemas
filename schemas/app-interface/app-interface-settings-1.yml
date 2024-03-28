@@ -212,11 +212,18 @@ properties:
       tokenCreds:
         description: credentials to interact with deadmanssnitch api
         "$ref": "/common-1.json#/definitions/vaultSecret"
-      defaultTags:
+      tags:
         description: tags to filter relevant snitch data from deadmanssnitch
         type: array
         items:
-          type: string  
+          type: string
+      interval:
+        description: the time interval between snitch to check in
+        type: string
+      alertType:
+        description: the type of alert to be configured for snitch
+      
+          
   jiralert:
     type: object
     additionalProperties: false
