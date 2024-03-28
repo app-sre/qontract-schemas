@@ -1489,7 +1489,7 @@ confs:
   - { name: region, type: string, isRequired: true }
   - { name: subnets, type: AWSSubnet_v1, isList: true }
 
-- name: VPCRequestSubnets
+- name: VPCRequestSubnets_v1
   fields:
   - { name: private, type: string, isList: true }
   - { name: public, type: string, isList: true }
@@ -1505,7 +1505,7 @@ confs:
   - { name: region, type: string, isRequired: true }
   - { name: cidr_block, type: Network_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
-  - { name: subnets, type: VPCRequestSubnets }
+  - { name: subnets, type: VPCRequestSubnets_v1 }
 
 - name: AWSSubnet_v1
   fields:
