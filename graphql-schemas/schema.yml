@@ -32,6 +32,7 @@ confs:
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
   - { name: jiralert, type: JiralertSettings_v1 }
   - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
+  - { name: costReport, type: CostReportSettings_v1 }
 
 - name: AppInterfaceCustomMessage_v1
   fields:
@@ -84,6 +85,10 @@ confs:
 - name: LdapGroupsSettings_v1
   fields:
   - { name: contactList, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
+
+- name: CostReportSettings_v1
+  fields:
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: JiralertSettings_v1

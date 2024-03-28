@@ -195,6 +195,14 @@ properties:
     required:
     - contactList
     - credentials
+  costReport:
+    type: object
+    additionalProperties: false
+    properties:
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - credentials
   jiralert:
     type: object
     additionalProperties: false
