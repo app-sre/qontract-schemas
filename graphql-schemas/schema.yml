@@ -90,7 +90,7 @@ confs:
 
 - name: DeadMansSnitchSettings_v1
   fields:
-  - { name: alertEmail, type: string, isRequired: true }
+  - { name: alertMailAddresses, type: string, isList: true, isRequired: true }
   - { name: notesLink, type: string, isRequired: true }
   - { name: snitchesPath, type: string, isRequired: true }
   - { name: tokenCreds, type: VaultSecret_v1, isRequired: true}

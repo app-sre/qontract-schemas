@@ -200,9 +200,11 @@ properties:
     description: this settings object is used by deadmanssnitch integration
     additionalProperties: false
     properties:
-      alertEmail:
-        type: string
-        description: email address used by deadmanssnitch to send alert in case no check in
+      alertMailAddresses:
+        type: array
+        description: email addresses used by deadmanssnitch to send alert in case no check in
+        items:
+          type: string
       notesLink:
         description: the link to SOP in case endpoint is not checking in
         type: string
