@@ -30,6 +30,7 @@ confs:
   - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
+  - { name: deadMansSnitchSettings, type: DeadMansSnitchSettings_v1}
   - { name: jiralert, type: JiralertSettings_v1 }
   - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
   - { name: costReport, type: CostReportSettings_v1 }
@@ -87,6 +88,15 @@ confs:
   - { name: contactList, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
+- name: DeadMansSnitchSettings_v1
+  fields:
+  - { name: alertMailAddresses, type: string, isList: true, isRequired: true }
+  - { name: notesLink, type: string, isRequired: true }
+  - { name: snitchesPath, type: string, isRequired: true }
+  - { name: tokenCreds, type: VaultSecret_v1, isRequired: true}
+  - { name: tags, type: string, isList: true, isRequired: true }
+  - { name: interval, type: string, isRequired: true }
+  - { name: alertType, type: string, isRequired: true }
 - name: CostReportSettings_v1
   fields:
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
@@ -1064,6 +1074,7 @@ confs:
   - { name: awsInfrastructureManagementAccounts, type: AWSInfrastructureManagementAccount_v1, isList: true }
   - { name: prometheus, type: ClusterPrometheus_v1}
   - { name: ocmSubscriptionLabels, type: json}
+  - { name: enableDeadMansSnitch, type: boolean }
   - name: namespaces
     type: Namespace_v1
     isList: true

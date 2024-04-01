@@ -195,6 +195,37 @@ properties:
     required:
     - contactList
     - credentials
+  deadMansSnitchSettings:
+    type: object
+    description: this settings object is used by deadmanssnitch integration
+    additionalProperties: false
+    properties:
+      alertMailAddresses:
+        type: array
+        description: email addresses used by deadmanssnitch to send alert in case no check in
+        items:
+          type: string
+      notesLink:
+        description: the link to SOP in case endpoint is not checking in
+        type: string
+      snitchesPath:
+        description: vault location to fetch snitch url secrets from
+        type: string
+      tokenCreds:
+        description: credentials to interact with deadmanssnitch api
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      tags:
+        description: tags to filter relevant snitch data from deadmanssnitch
+        type: array
+        items:
+          type: string
+      interval:
+        description: the time interval between snitch to check in
+        type: string
+      alertType:
+        description: the type of alert to be configured for snitch
+      
+          
   costReport:
     type: object
     additionalProperties: false
