@@ -1,0 +1,43 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/vpc-request-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  region:
+    type: string
+  description:
+    type: string
+  cidr_block:
+    description: "Reference to a network reservation file"
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$scemaRef": "/app-sre/network-1.yml"
+  account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
+  subnets:
+    type: object
+    additionalProperties: false
+    properties:
+      private:
+        type: array
+        items:
+          type: string
+      public:
+        type: array
+        items:
+          type: string
+required:
+- "$schema"
+- name
+- cidr_block
+- region
