@@ -3005,6 +3005,7 @@ confs:
   fields:
   - { name: days, type: int }
   - { name: minimum, type: int }
+  - { name: maximum, type: int }
 
 - name: PipelinesProviderTektonObjectTemplate_v1
   fields:
