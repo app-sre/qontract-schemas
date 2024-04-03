@@ -36,6 +36,9 @@ properties:
       minimum:
         description: "Minimum amount of builds that will be kept no matter what 'days' says"
         type: integer
+      maximum:
+        description: "Maximum amount of builds that will be kept no matter what 'days' says"
+        type: integer
     required:
     - days
   taskTemplates:
@@ -64,14 +67,23 @@ oneOf:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
     retention:
-      additionalProperties: false
-      properties:
-        days:
-          type: integer
-        minimum:
-          type: integer
-      required:
-      - days
+      oneOf:
+      - additionalProperties: false
+        properties:
+          days:
+            type: integer
+          minimum:
+            type: integer
+        required:
+        - days
+      - additionalProperties: false
+        properties:
+          days:
+            type: integer
+          maximum:
+            type: integer
+        required:
+        - days
     taskTemplates:
       description: |
         Tekton Task jinja2 templates that will be used to create the corresponding
