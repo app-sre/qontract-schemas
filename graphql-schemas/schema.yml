@@ -2058,6 +2058,7 @@ confs:
   - { name: annotations, type: json }
   - { name: event_notifications, type: AWSRDSEventNotification_v1, isList: true}
   - { name: data_classification, type: AWSRDSDataClassification_v1 }
+  - { name: managed_by_erv2, type: boolean}
 
 - name: NamespaceTerraformResourceS3_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2125,6 +2126,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: lifecycle, type: NamespaceTerraformResourceLifecycle_v1 }
+  - { name: managed_by_erv2, type: boolean}
 
 - name: NamespaceTerraformResourceElastiCache_v1
   interface: NamespaceTerraformResourceAWS_v1
