@@ -25,3 +25,12 @@ properties:
     type: integer
   reconcile_timeout_minutes:
     type: integer
+required:
+- "$schema"
+- provision_provider
+- provider
+- module_type
+- image
+- default_version
+- reconcile_drift_interval_minutes
+- reconcile_timeout_minutes

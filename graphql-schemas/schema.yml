@@ -4491,7 +4491,10 @@ confs:
   - { name: vpc, type: VPCRequest_v1}
 
 - name: ExternalResourcesSettings_v1
+  datafile: /external-resources/settings-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
   - { name: state_dynamodb_table, type: string, isRequired: true}
   - { name: state_dynamodb_index, type: string, isRequired: true}
   - { name: tf_state_bucket, type: string, isRequired: false}
@@ -4499,7 +4502,10 @@ confs:
   - { name: tf_state_region, type: string, isRequired: false }
 
 - name: ExternalResourcesModule_v1
+  datafile: /external-resources/module-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
   - { name: provision_provider, type: string, isRequired: true}
   - { name: provider, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: true}
