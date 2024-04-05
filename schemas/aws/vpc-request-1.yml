@@ -11,8 +11,8 @@ properties:
     - /aws/vpc-request-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-  name:
-    type: string
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
   region:
     type: string
   description:
@@ -38,6 +38,6 @@ properties:
           type: string
 required:
 - "$schema"
-- name
+- identifier
 - cidr_block
 - region
