@@ -45,6 +45,9 @@ properties:
       jiraComponent:
         type: string
         description: component to set on jira tickets
+      jiraCustomFieldsJSON:
+        type: object
+        description: JSON values for custom fields in jira
       nextEscalationPolicy:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/escalation-policy-1.yml"
