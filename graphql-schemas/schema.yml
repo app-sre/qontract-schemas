@@ -687,6 +687,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: notifiers, type: string, isList: true }
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
   - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
@@ -2641,6 +2642,12 @@ confs:
   - { name: labels, type: json }
   - { name: description, type: string, isRequired: true }
   - { name: channels, type: AppEscalationPolicyChannels_v1, isRequired: true }
+  - name: AcsPolicies
+    type: AcsPolicy_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/escalation-policy-1.yml
+      subAttr: escalationPolicy
 
 - name: AppEscalationPolicyChannels_v1
   fields:
