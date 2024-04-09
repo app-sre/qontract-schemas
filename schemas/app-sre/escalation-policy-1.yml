@@ -45,6 +45,11 @@ properties:
       jiraComponent:
         type: string
         description: component to set on jira tickets
+      jiraLabels:
+        type: array
+        description: labels to add on jira tickets
+        items:
+          type: string
       nextEscalationPolicy:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/escalation-policy-1.yml"
