@@ -687,6 +687,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: notifiers, type: string, isList: true }
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
   - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
@@ -1511,7 +1512,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: region, type: string, isRequired: true }
   - { name: cidr_block, type: Network_v1, isRequired: true }
@@ -2641,6 +2642,12 @@ confs:
   - { name: labels, type: json }
   - { name: description, type: string, isRequired: true }
   - { name: channels, type: AppEscalationPolicyChannels_v1, isRequired: true }
+  - name: AcsPolicies
+    type: AcsPolicy_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/escalation-policy-1.yml
+      subAttr: escalationPolicy
 
 - name: AppEscalationPolicyChannels_v1
   fields:
@@ -2649,6 +2656,7 @@ confs:
   - { name: pagerduty, type: PagerDutyTarget_v1 }
   - { name: jiraBoard, type: JiraBoard_v1, isList: true, isRequired: true }
   - { name: jiraComponent, type: string }
+  - { name: jiraLabels, type: string, isList: true }
   - { name: nextEscalationPolicy, type: AppEscalationPolicy_v1 }
 
 - name: AppEndPoints_v1
