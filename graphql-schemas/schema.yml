@@ -529,6 +529,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: serverUrl, type: string, isRequired: true }
+  - { name: username, type: VaultSecret_v1, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: SeverityPriorityMapping_v1
