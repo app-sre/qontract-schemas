@@ -31,11 +31,29 @@ properties:
       private:
         type: array
         items:
-          type: string
+          type: object
+          additionalProperties: false
+          properties:
+            availability_zone:
+              type: string
+            cidr_block:
+              type: string
+          required:
+          - availability_zone
+          - cidr_block
       public:
         type: array
         items:
-          type: string
+          type: object
+          additionalProperties: false
+          properties:
+            availability_zone:
+              type: string
+            cidr_block:
+              type: string
+          required:
+          - availability_zone
+          - cidr_block
 required:
 - "$schema"
 - identifier
