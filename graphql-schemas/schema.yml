@@ -3832,6 +3832,8 @@ confs:
   - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
   - { name: network_v1, type: Network_v1, isList: true, datafileSchema: /app-sre/network-1.yml }
+  - { name: external_resources_settings_v1, type: ExternalResourcesSettings_v1, isList: true, datafileSchema: /external-resources/settings-1.yml }
+  - { name: external_resources_modules_v1, type: ExternalResourcesModule_v1, isList: true, datafileSchema: /external-resources/module-1.yml }
 
 
 - name: GlitchtipInstance_v1
@@ -4496,3 +4498,27 @@ confs:
 - name: NetworkInUseBy_v1
   fields:
   - { name: vpc, type: VPCRequest_v1}
+
+- name: ExternalResourcesSettings_v1
+  datafile: /external-resources/settings-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
+  - { name: state_dynamodb_table, type: string, isRequired: true}
+  - { name: state_dynamodb_index, type: string, isRequired: true}
+  - { name: tf_state_bucket, type: string, isRequired: false}
+  - { name: tf_state_dynamodb_table, type: string, isRequired: false }
+  - { name: tf_state_region, type: string, isRequired: false }
+
+- name: ExternalResourcesModule_v1
+  datafile: /external-resources/module-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
+  - { name: provision_provider, type: string, isRequired: true}
+  - { name: provider, type: string, isRequired: true}
+  - { name: module_type, type: string, isRequired: true}
+  - { name: image, type: string, isRequired: true}
+  - { name: default_version, type: string, isRequired: true}
+  - { name: reconcile_drift_interval_minutes, type: string, isRequired: true}
+  - { name: reconcile_timeout_minutes, type: string, isRequired: true}

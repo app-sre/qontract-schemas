@@ -1,0 +1,27 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /external-resources/settings-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  tf_state_bucket:
+    type: string
+  tf_state_dynamodb_table:
+    type: string
+  tf_state_region:
+    type: string
+  state_dynamodb_table:
+    type: string
+  state_dynamodb_index:
+    type: string
+required:
+- "$schema"
+- state_dynamodb_table
+- state_dynamodb_index
