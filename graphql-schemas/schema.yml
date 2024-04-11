@@ -688,11 +688,23 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
   - { name: notifiers, type: string, isList: true }
-  - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
+  - { name: integrations, type: AcsPolicyIntegrations_v1 }
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
   - { name: scope, type: AcsPolicyScope_v1, isRequired: true, isInterface: true }
   - { name: conditions, type: AcsPolicyConditions_v1, isList: true, isInterface: true, isRequired: true }
+
+- name: AcsPolicyIntegrations_v1
+  fields:
+  - { name: notifiers, type: AcsPolicyIntegrationNotifiers_v1 }
+
+- name: AcsPolicyIntegrationNotifiers_v1
+  fields:
+  - { name: jira, type: AcsPolicyIntegrationNotifierJira_v1 }
+
+- name: AcsPolicyIntegrationNotifierJira_v1
+  fields:
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
 
 - name: AcsPolicyScope_v1
   isInterface: true
