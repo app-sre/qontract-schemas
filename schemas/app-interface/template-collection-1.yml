@@ -14,8 +14,10 @@ properties:
     - /app-interface/template-collection-1.yml
   name:
     type: string
-  labels:
-    "$ref": "/common-1.json#/definitions/labels"
+  additionalMrLabels:
+    type: array
+    items:
+      type: string
   description:
     type: string
   enableAutoApproval:
