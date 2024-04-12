@@ -4485,6 +4485,7 @@ confs:
   datafile: /app-interface/template-collection-1.yml
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: labels, type: json }
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: enableAutoApproval, type: boolean, isRequired: false }
