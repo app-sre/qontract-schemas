@@ -14,6 +14,12 @@ BUNDLE_FILENAME ?= data.json
 PWD := $(shell pwd)
 GIT_COMMIT := $(shell git rev-parse HEAD)
 GIT_COMMIT_TIMESTAMP := $(shell git log -1 --format=%ct $(GIT_COMMIT))
+UNAME ?= $(shell uname -s || echo Unknown)
+ifeq ($(UNAME), Linux)
+SELINUX_MOUNT_CHAR = :z
+else
+SELINUX_MOUNT_CHAR =
+endif
 
 ifneq (,$(wildcard $(CURDIR)/.docker))
 	DOCKER_CONF := $(CURDIR)/.docker
@@ -25,33 +31,33 @@ help: ## Prints help for targets with comments
 	@grep -E '^[a-zA-Z0-9.\ _-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build:
-	@docker build -t $(IMAGE_NAME):latest -f Dockerfile .
-	@docker tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
+	@$(CONTAINER_ENGINE) build -t $(IMAGE_NAME):latest -f Dockerfile .
+	@$(CONTAINER_ENGINE) tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
 
 push:
-	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):latest
-	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):$(IMAGE_TAG)
+	@$(CONTAINER_ENGINE) --config=$(DOCKER_CONF) push $(IMAGE_NAME):latest
+	@$(CONTAINER_ENGINE) --config=$(DOCKER_CONF) push $(IMAGE_NAME):$(IMAGE_TAG)
 
 bundle: ## Use qontract-validator image to bundle schemas into $BUNDLE_FILENAME NOTE
 	mkdir -p $(OUTPUT_DIR) fake_data fake_resources
 	@$(CONTAINER_ENGINE) run --rm \
-		-v $(PWD)/schemas:/schemas:z \
-		-v $(PWD)/graphql-schemas:/graphql:z \
-		-v $(PWD)/fake_data:/data:z \
-		-v $(PWD)/fake_resources:/resources:z \
+		-v $(PWD)/schemas:/schemas$(SELINUX_MOUNT_CHAR) \
+		-v $(PWD)/graphql-schemas:/graphql$(SELINUX_MOUNT_CHAR) \
+		-v $(PWD)/fake_data:/data$(SELINUX_MOUNT_CHAR) \
+		-v $(PWD)/fake_resources:/resources$(SELINUX_MOUNT_CHAR) \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-bundler /schemas /graphql/schema.yml /data /resources $(GIT_COMMIT) $(GIT_COMMIT_TIMESTAMP) > $(OUTPUT_DIR)/$(BUNDLE_FILENAME)
 	rm -rf fake_data fake_resources
 
 validate: ## Use qcontract-validator image to show any validation errors of schemas in $BUNDLE_FILENAME
 	@$(CONTAINER_ENGINE) run --rm \
-		-v $(OUTPUT_DIR):/bundle:z \
+		-v $(OUTPUT_DIR):/bundle$(SELINUX_MOUNT_CHAR) \
 		$(VALIDATOR_IMAGE):$(VALIDATOR_IMAGE_TAG) \
 		qontract-validator --only-errors /bundle/$(BUNDLE_FILENAME)
 
 gql_validate: ## Run qontract-server with the schema bundle and no data to reveal any GQL schema issues
 	@$(CONTAINER_ENGINE) run --rm \
-		-v $(OUTPUT_DIR):/bundle:z \
+		-v $(OUTPUT_DIR):/bundle$(SELINUX_MOUNT_CHAR) \
 		-p 4000:4000 \
 		-e LOAD_METHOD=fs \
 		-e DATAFILES_FILE=/bundle/$(BUNDLE_FILENAME) \
@@ -61,10 +67,10 @@ gql_validate: ## Run qontract-server with the schema bundle and no data to revea
 	
 
 build-test: clean
-	@docker build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .
+	@$(CONTAINER_ENGINE) build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .
 
 test: build-test
-	@docker run --rm $(IMAGE_TEST)
+	@$(CONTAINER_ENGINE) run --rm $(IMAGE_TEST)
 
 clean:
 	@rm -rf .tox .eggs *.egg-info buid .pytest_cache
