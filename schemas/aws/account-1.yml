@@ -80,6 +80,7 @@ properties:
           - aws-saml-idp
           - aws-saml-roles
           - aws-account-manager
+          - terraform-init
   deleteKeys:
     type: array
     items:

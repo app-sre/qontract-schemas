@@ -1,0 +1,17 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+description: saas file authentication section for image and/or code credentials
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/saas-file-authentication-1.yml
+  code:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  image:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+required: []
