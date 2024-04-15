@@ -59,7 +59,12 @@ properties:
     items:
       "$ref": "/openshift/managed-resource-name-1.yml"
   authentication:
-    "$ref": "/app-sre/saas-file-authentication-1.yml"
+    oneOf:
+    # inline
+    - "$ref": "/app-sre/saas-file-authentication-1.yml"
+    # referenced
+    - "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/saas-file-authentication-1.yml"
   parameters:
     type: object
   allowedSecretParameterPaths:
