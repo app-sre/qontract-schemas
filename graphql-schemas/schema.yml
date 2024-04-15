@@ -4457,6 +4457,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
+  - { name: autoApproved, type: boolean, isRequired: false }
   - { name: patch, type: TemplatePatch_v1 }
   - { name: condition, type: string }
   - { name: targetPath, type: string, isRequired: true }
@@ -4484,8 +4485,10 @@ confs:
   datafile: /app-interface/template-collection-1.yml
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: additionalMrLabels, type: string, isList: true }
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
+  - { name: enableAutoApproval, type: boolean, isRequired: false }
   - { name: description, type: string, isRequired: true }
   - { name: variables, type: TemplateCollectionVariables_v1 }
   - { name: templates, type: Template_v1, isList: true, isRequired: true }
