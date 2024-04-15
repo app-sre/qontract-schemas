@@ -21,6 +21,8 @@ properties:
     type: string
   state_dynamodb_index:
     type: string
+  state_dynamodb_region:
+    type: string
 required:
 - "$schema"
 - state_dynamodb_table
