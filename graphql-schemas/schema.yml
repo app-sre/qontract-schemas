@@ -1513,15 +1513,11 @@ confs:
   - { name: region, type: string, isRequired: true }
   - { name: subnets, type: AWSSubnet_v1, isList: true }
 
-- name: VPCRequestSubnets_v1
-  fields:
-  - { name: availability_zone, type: string, isRequired: true }
-  - { name: cidr_block, type: string, isRequired: true }
-
 - name: VPCRequestSubnetsLists_v1
   fields:
-  - { name: private, type: VPCRequestSubnets_v1, isList: true }
-  - { name: public, type: VPCRequestSubnets_v1, isList: true }
+  - { name: private, type: string, isList: true }
+  - { name: public, type: string, isList: true }
+  - { name: availability_zones, type: string, isList: true }
 
 - name: VPCRequest_v1
   datafile: /aws/vpc-request-1.yml

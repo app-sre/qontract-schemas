@@ -29,31 +29,20 @@ properties:
     additionalProperties: false
     properties:
       private:
+        description: Private subnets CIDR blocks.
         type: array
         items:
-          type: object
-          additionalProperties: false
-          properties:
-            availability_zone:
-              type: string
-            cidr_block:
-              type: string
-          required:
-          - availability_zone
-          - cidr_block
+          type: string
       public:
+        description: Public subnets CIDR blocks.
         type: array
         items:
-          type: object
-          additionalProperties: false
-          properties:
-            availability_zone:
-              type: string
-            cidr_block:
-              type: string
-          required:
-          - availability_zone
-          - cidr_block
+          type: string
+      availability_zones:
+        description: A list of availability zones names in the region.
+        type: array
+        items:
+          type: string
 required:
 - "$schema"
 - identifier
