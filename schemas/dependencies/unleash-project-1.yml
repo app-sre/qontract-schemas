@@ -1,0 +1,23 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/unleash-project-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+    description: The name of the project. For open-source Unleash it must be "default"!
+  server:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/unleash-instance-1.yml"
+required:
+- "$schema"
+- name
+- server

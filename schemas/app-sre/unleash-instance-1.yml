@@ -20,6 +20,11 @@ properties:
     format: uri
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  adminToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  allowUnmanagedFeatureToggles:
+    type: boolean
+    description: Set to true to allow unmanaged/manually created feature toggles
   notifications:
     type: object
     properties:
@@ -40,20 +45,6 @@ properties:
           required:
           - workspace
           - channel
-  featureToggles:
-    type: array
-    items:
-      type: object
-      properties:
-        name:
-          type: string
-        enabled:
-          type: boolean
-        reason:
-          type: string
-      required:
-      - name
-      - enabled
 required:
 - "$schema"
 - labels
@@ -61,4 +52,3 @@ required:
 - description
 - url
 - token
-- featureToggles
