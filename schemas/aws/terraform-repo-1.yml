@@ -31,6 +31,24 @@ properties:
   requireFips:
     description: whether this repo should be validated to ensure it is using FIPS endpoints for AWS
     type: boolean
+  tfVersion:
+    description: Which version of terraform binary to use
+    type: string
+    enum:
+    - "1.4.5"
+    - "1.4.7"
+    - "1.5.7" # last version pre hashicorp license change
+  variables:
+    type: object
+    description: Vault paths defining where Terraform inputs are read from and where Terraform outputs are written to
+    properties:
+      inputs:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      outputs:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    required:
+    - inputs
+    - outputs
 required:
 - "$schema"
 - account
@@ -38,4 +56,4 @@ required:
 - repository
 - ref
 - projectPath
-
+- tfVersion
