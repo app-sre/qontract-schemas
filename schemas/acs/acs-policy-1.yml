@@ -15,10 +15,6 @@ properties:
     type: string
   name:
     type: string
-  notifiers:
-    type: array
-    items:
-      type: string
   integrations:
     type: object
     description: manage integrations for a policy

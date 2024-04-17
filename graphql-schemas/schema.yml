@@ -687,7 +687,6 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
-  - { name: notifiers, type: string, isList: true }
   - { name: integrations, type: AcsPolicyIntegrations_v1 }
   - { name: severity, type: string, isRequired: true }
   - { name: categories, type: string, isList: true, isRequired: true }
