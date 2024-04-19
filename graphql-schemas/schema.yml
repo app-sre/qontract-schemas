@@ -2971,6 +2971,7 @@ confs:
   - { name: publish, type: string, isList: true }
   - { name: subscribe, type: string, isList: true }
   - { name: promotion_data, type: PromotionData_v1, isList: true }
+  - { name: soakDays, type: int }
 
 - name: SaasSecretParameters_v1
   fields:

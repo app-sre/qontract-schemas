@@ -54,6 +54,9 @@ properties:
         items:
           type: string
         minItems: 1
+      soakDays:
+        type: integer
+        description: number of days to hold promotion
       promotion_data:
         type: array
         items:
