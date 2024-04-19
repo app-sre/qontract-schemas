@@ -47,6 +47,10 @@ properties:
         type: integer
       digest:
         type: string
+      tag:
+        type: string
+      value:
+        type: string
   proxied:
     type: boolean
   priority:
