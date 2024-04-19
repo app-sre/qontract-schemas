@@ -4076,6 +4076,8 @@ confs:
   - { name: public_key, type: string }
   - { name: digest_type, type: int }
   - { name: digest, type: string }
+  - { name: tag, type: string }
+  - { name: value, type: string }
 
 - name: CloudflareDnsRecord_v1
   fields:
