@@ -549,6 +549,7 @@ properties:
           - skupper-network
           - glitchtip-project-dsn
           - aws-ami-cleanup
+          - gabi-authorized-users
   awsInfrastructureAccess:
     type: array
     items:
