@@ -933,6 +933,15 @@ confs:
   - { name: workloads, type: string, isList: true, isRequired: true }
   - { name: versionGateApprovals, type: string, isList: true }
   - { name: conditions, type: ClusterUpgradePolicyConditions_v1, isRequired: true }
+  - { name: fastPath, type: ClusterUpgradeFastPath_v1 }
+
+- name: ClusterUpgradeFastPath_v1
+  fields:
+  - { name: path, type: string }
+  - { name: towardsVersions, type: string, isList: true, isRequired: true }
+  - { name: schedule, type: string }
+  - { name: speedUpFactor, type: int, isRequired: true }
+  - { name: description, type: string }
 
 - name: ClusterNetwork_v1
   fields:
@@ -1181,6 +1190,7 @@ confs:
   - { name: blockedVersions, type: string, isList: true }
   - { name: upgradePolicyAllowedWorkloads, type: string, isList: true }
   - { name: upgradePolicyAllowedMutexes, type: string, isList: true }
+  - { name: upgradePolicyFastPath, type: ClusterUpgradeFastPath_v1 }
   - { name: ausClusterHealthChecks, type: AusClusterHealthCheck_v1, isList: true }
   - { name: sectors, type: OpenShiftClusterManagerSector_v1, isList: true }
   - { name: upgradePolicyDefaults, type: OpenShiftClusterManagerUpgradePolicyDefault_v1, isList: true }
