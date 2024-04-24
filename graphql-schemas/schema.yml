@@ -940,7 +940,7 @@ confs:
   - { name: path, type: string }
   - { name: towardsVersions, type: string, isList: true, isRequired: true }
   - { name: schedule, type: string }
-  - { name: speedUpFactor, type: int, isRequired: true }
+  - { name: speedUpFactor, type: float, isRequired: true }
   - { name: description, type: string }
 
 - name: ClusterNetwork_v1

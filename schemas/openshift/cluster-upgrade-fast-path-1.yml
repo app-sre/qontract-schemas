@@ -31,7 +31,8 @@ properties:
     description: |
       The speed up factor scales down the required soak days for a version
       on a cluster.
-    type: integer
+    type: number
+    minimum: 1
 required:
 - towardsVersions
 - speedUpFactor
