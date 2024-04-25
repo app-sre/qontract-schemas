@@ -4529,7 +4529,6 @@ confs:
   - { name: schema, type: string, isRequired: true}
   - { name: path, type: string, isRequired: true}
   - { name: state_dynamodb_table, type: string, isRequired: true}
-  - { name: state_dynamodb_index, type: string, isRequired: true}
   - { name: state_dynamodb_region, type: string, isRequired: true}
   - { name: tf_state_bucket, type: string, isRequired: false}
   - { name: tf_state_dynamodb_table, type: string, isRequired: false }
