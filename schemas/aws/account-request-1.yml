@@ -35,6 +35,12 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/quota-limits-1.yml"
       description: "Initial AWS quota limits for this account"
+  resourcesDefaultRegion:
+    type: string
+  supportedDeploymentRegions:
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
 - labels
@@ -42,4 +48,4 @@ required:
 - description
 - accountOwner
 - organization
-
+- resourcesDefaultRegion

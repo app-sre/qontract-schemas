@@ -1329,6 +1329,8 @@ confs:
   - { name: accountOwner, type: Owner_v1, isRequired: true }
   - { name: organization, type: AWSOrganization_v1, isRequired: true }
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
+  - { name: resourcesDefaultRegion, type: string, isRequired: true }
+  - { name: supportedDeploymentRegions, type: string, isList: true }
 
 - name: AWSQuotaLimits_v1
   datafile: /aws/quota-limits-1.yml
