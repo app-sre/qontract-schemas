@@ -3422,7 +3422,7 @@ confs:
   - { name: sendgrid_accounts, type: SendGridAccount_v1, isList: true }
   - { name: self_service, type: SelfServiceConfig_v1, isList: true }
   - { name: cloudflare_access, type: CloudflareAccountRole_v1, isList: true }
-  - { name: ldapGroup, type: string }
+  - { name: ldapGroup, type: LdapGroup_v1 }
   - { name: memberSources, type: RoleMembershipSource_V1, isList: true }
   - name: users
     type: User_v1
@@ -3438,6 +3438,12 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+
+- name: LdapGroup_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: notes, type: string }
+  - { name: membersAreOwners, type: boolean }
 
 - name: RoleMembershipSource_V1
   fields:

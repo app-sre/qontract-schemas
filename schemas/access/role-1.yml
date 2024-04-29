@@ -173,7 +173,19 @@ properties:
                   - /access/bot-1.yml
                   - /dependencies/dynatrace-environment-1.yml
   ldapGroup:
-    "$ref": "/common-1.json#/definitions/ldapGroupName"
+    type: object
+    properties:
+      name:
+        "$ref": "/common-1.json#/definitions/ldapGroupName"
+        description: The name of the LDAP/Rover group
+      notes:
+        type: string
+        description: Notes added to the LDAP/Rover group
+      membersAreOwners:
+        type: boolean
+        description: Grant "owner" permission to all members of the LDAP/Rover group
+    required:
+    - name
   memberSources:
     type: array
     items:
