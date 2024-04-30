@@ -17,10 +17,28 @@ properties:
     type: string
   tf_state_region:
     type: string
-  state_dynamodb_table:
-    type: string
+
+  state_dynamodb_account:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
   state_dynamodb_region:
     type: string
+  state_dynamodb_table:
+    type: string
+
+  workers_cluster:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/cluster-1.yml"
+  workers_namespace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+
+    type: string
+
 required:
 - "$schema"
+- state_dynamodb_account
+- state_dynamodb_region
 - state_dynamodb_table
+- workers_cluster
+- workers_namespace
