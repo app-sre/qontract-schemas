@@ -91,11 +91,29 @@ properties:
       # referenced
       - "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/glitchtip-project-alert-1.yml"
-
+  eventThrottleRate:
+    "$ref": "/common-1.json#/definitions/percentage"
+    description: Percentage of new events to deny. 0-100
+  jira:
+    type: object
+    properties:
+      board:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/dependencies/jira-board-1.yml"
+      project:
+        type: string
+      labels:
+        type: array
+        items:
+          type: string
+    oneOf:
+    - required:
+      - board
+    - required:
+      - project
 required:
 - name
 - description
-- app
 - platform
 - teams
 - organization

@@ -3,30 +3,36 @@
 version: '1.0'
 
 type: object
-description: a specification for a template test
+description: Test for a template
 
 additionalProperties: false
+
 properties:
   "$schema":
     type: string
     enum:
     - /app-interface/template-test-1.yml
-  labels:
-    "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
-  description:
+  variables:
+    type: object
+    description: variables to be used in the test
+    additionalProperties: true
+  current:
     type: string
-  resourcePath:
+    description: the current content of the file to be templated
+  expectedTargetPath:
     type: string
-    description: path to resource template to be tested
-  expectedResult:
+    description: the exected result of target Path 
+  expectedOutput:
     type: string
-    description: the exected result of the templating to compare to
+    description: the expected result of the templating
+  expectedToRender:
+    type: boolean
+    description: whether the template is expected to render or not
+
+
 required:
 - "$schema"
-- labels
 - name
-- description
-- resourcePath
-- expectedResult
+- expectedOutput

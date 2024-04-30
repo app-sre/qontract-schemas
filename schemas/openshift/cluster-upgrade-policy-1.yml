@@ -20,6 +20,14 @@ properties:
     type: array
     items:
       type: string
+  versionGateApprovals:
+    type: array
+    items:
+      type: string
+      enum:
+      - api.openshift.com/gate-sts
+      - api.openshift.com/gate-ocp
+      - api.openshift.com/gate-ingress
   conditions:
     additionalProperties: false
     properties:

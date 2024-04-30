@@ -4,31 +4,23 @@ version: '1.0'
 type: object
 
 additionalProperties: false
-
 properties:
   "$schema":
     type: string
     enum:
-    - /app-sre/report-1.yml
+    - /external-resources/settings-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-  app:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/app-sre/app-1.yml"
-  name:
+  tf_state_bucket:
     type: string
-  date:
+  tf_state_dynamodb_table:
     type: string
-  contentFormatVersion:
+  tf_state_region:
     type: string
-    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
-  content:
+  state_dynamodb_table:
+    type: string
+  state_dynamodb_region:
     type: string
 required:
 - "$schema"
-- labels
-- app
-- name
-- date
-- contentFormatVersion
-- content
+- state_dynamodb_table

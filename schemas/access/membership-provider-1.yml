@@ -1,0 +1,55 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/membership-provider-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  hasAuditTrail:
+    type: boolean
+  source:
+    type: object
+    properties:
+      provider:
+        type: string
+        enum:
+        - app-interface
+      url:
+        type: string
+        format: uri
+      username:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+      password:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+    oneOf:
+    - additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - app-interface
+        url:
+          type: string
+          format: uri
+        username:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+        password:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - provider
+      - url
+      - username
+      - password
+required:
+- name
+- description
+- hasAuditTrail
+- source

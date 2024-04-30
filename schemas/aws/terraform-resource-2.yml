@@ -13,6 +13,8 @@ properties:
     type: string
   annotations:
     "$ref": "/common-1.json#/definitions/annotations"
+  lifecycle:
+    "$ref": "/aws/terraform-resource-lifecycle-1.yml"
   identifier:
     type: string
   name:
@@ -29,12 +31,19 @@ properties:
     type: boolean
   user_policy:
     type: object
+  role_policy:
+    type: object
   assume_role:
     type: object
   assume_condition:
     type: object
   assume_action:
     type: string
+  database_access:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-interface/database-access-1.yml"
   inline_policy:
     type: object
   output_resource_name:
@@ -44,9 +53,9 @@ properties:
   defaults:
     type: string
   parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
-    type: string
+    "$ref": "/common-1.json#/definitions/resourceref"
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -80,6 +89,10 @@ properties:
     type: array
     items:
       type: string
+  replication_configurations:
+    type: array
+    items:
+      type: object
   event_notifications:
     type: array
     items:
@@ -228,6 +241,10 @@ properties:
       required:
       - name
       - secret
+  managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -432,12 +449,21 @@ oneOf:
       type: string
     inline_policy:
       type: object
+    role_policy:
+      description: a policy to be created and attached to the role
+      type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    lifecycle:
+      "$ref": "/aws/terraform-resource-lifecycle-1.yml"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
   required:
   - identifier
   - assume_role
@@ -456,9 +482,14 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
+    database_access:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-interface/database-access-1.yml"
     overrides:
       type: object
       properties:
@@ -478,15 +509,29 @@ oneOf:
           enum:
           - db.t2.micro
           - db.t2.small
+          - db.t2.medium
+          - db.t2.large
+          - db.t2.xlarge
+          - db.t2.2xlarge
+          - db.t3.micro
           - db.t3.small
-          - db.m3.medium
           - db.t3.medium
           - db.t3.large
           - db.t3.xlarge
           - db.t3.2xlarge
+          - db.t4g.micro
+          - db.t4g.small
+          - db.t4g.medium
+          - db.t4g.large
+          - db.t4g.xlarge
+          - db.t4g.2xlarge
+          - db.m3.medium
           - db.m4.large
           - db.m4.xlarge
           - db.m4.2xlarge
+          - db.m4.4xlarge
+          - db.m4.10xlarge
+          - db.m4.16xlarge
           - db.m5.large
           - db.m5.xlarge
           - db.m5.2xlarge
@@ -495,6 +540,14 @@ oneOf:
           - db.m5.12xlarge
           - db.m5.16xlarge
           - db.m5.24xlarge
+          - db.m5d.large
+          - db.m5d.xlarge
+          - db.m5d.2xlarge
+          - db.m5d.4xlarge
+          - db.m5d.8xlarge
+          - db.m5d.12xlarge
+          - db.m5d.16xlarge
+          - db.m5d.24xlarge
           - db.m6g.large
           - db.m6g.xlarge
           - db.m6g.2xlarge
@@ -502,6 +555,14 @@ oneOf:
           - db.m6g.8xlarge
           - db.m6g.12xlarge
           - db.m6g.16xlarge
+          - db.m6i.large
+          - db.m6i.xlarge
+          - db.m6i.2xlarge
+          - db.m6i.4xlarge
+          - db.m6i.8xlarge
+          - db.m6i.12xlarge
+          - db.m6i.16xlarge
+          - db.m6i.32xlarge
           - db.m7g.large
           - db.m7g.xlarge
           - db.m7g.2xlarge
@@ -523,6 +584,28 @@ oneOf:
           - db.r5.12xlarge
           - db.r5.16xlarge
           - db.r5.24xlarge
+          - db.r6g.large
+          - db.r6g.xlarge
+          - db.r6g.2xlarge
+          - db.r6g.4xlarge
+          - db.r6g.8xlarge
+          - db.r6g.12xlarge
+          - db.r6g.16xlarge
+          - db.r7g.large
+          - db.r7g.xlarge
+          - db.r7g.2xlarge
+          - db.r7g.4xlarge
+          - db.r7g.8xlarge
+          - db.r7g.12xlarge
+          - db.r7g.16xlarge
+          - db.x2.medium
+          - db.x2.large
+          - db.x2.xlarge
+          - db.x2.2xlarge
+          - db.x2.4xlarge
+          - db.x2.8xlarge
+          - db.x2.12xlarge
+          - db.x2.16xlarge
         allocated_storage:
           type: integer
         backup_retention_period:
@@ -543,6 +626,10 @@ oneOf:
               type: string
             delete:
               type: string
+        storage_type:
+          type: string
+        iops:
+          type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
@@ -592,6 +679,10 @@ oneOf:
           - medium
           - low
           - none
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
   required:
   - identifier
   - defaults
@@ -609,7 +700,7 @@ oneOf:
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
     parameter_group:
-      type: string
+      "$ref": "/common-1.json#/definitions/resourceref"
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     overrides:
@@ -697,9 +788,9 @@ oneOf:
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     fifo_topic:
-       type: boolean
+      type: boolean
     inline_policy:
-       type: object
+      type: object
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
     subscriptions:
@@ -1104,6 +1195,7 @@ oneOf:
                 enum:
                 - fixed-response
                 - forward
+                - redirect
             oneOf:
             - additionalProperties: false
               properties:
@@ -1140,8 +1232,7 @@ oneOf:
                   properties:
                     target_group:
                       type: array
-                      # https://github.com/hashicorp/terraform-provider-aws/pull/12574#issuecomment-639642524
-                      minItems: 2
+                      minItems: 1
                       items:
                         type: object
                         additionalProperties: false
@@ -1158,6 +1249,39 @@ oneOf:
               required:
               - type
               - forward
+            - additionalProperties: false
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - redirect
+                redirect:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    host:
+                      type: string
+                    path:
+                      type: string
+                    port:
+                      type: integer
+                    protocol:
+                      type: string
+                      enum:
+                      - HTTP
+                      - HTTPS
+                    query:
+                      type: string
+                    status_code:
+                      type: string
+                      enum:
+                      - HTTP_301
+                      - HTTP_302
+                  required:
+                  - status_code
+              required:
+              - type
+              - redirect
         required:
         - condition
         - action

@@ -8,25 +8,32 @@ properties:
   "$schema":
     type: string
     enum:
-    - /dependencies/jira-server-1.yml
+    - /dependencies/acs-instance-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
   description:
     type: string
-  serverUrl:
+  url:
     type: string
-    format: uri
-  username:
-    type: string
-  token:
+  credentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  authProvider:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        type: string
+      kind:
+        enum:
+        - oidc
 required:
 - "$schema"
 - labels
 - name
 - description
-- serverUrl
-- username
-- token
+- url
+- credentials
+- authProvider

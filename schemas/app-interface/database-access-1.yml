@@ -1,0 +1,51 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-interface/database-access-1.yml
+  name:
+    type: string
+  username:
+    "$ref": "/common-1.json#/definitions/psqlIdentifier"
+  database:
+    "$ref": "/common-1.json#/definitions/psqlIdentifier"
+  delete:
+    type: boolean
+  access:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        grants:
+          type: array
+          items:
+            type: string
+            enum:
+            - SELECT
+            - INSERT
+            - UPDATE
+            - DELETE
+            - TRUNCATE
+            - REFERENCES
+            - TRIGGER
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            dbschema:
+              "$ref": "/common-1.json#/definitions/psqlIdentifier"
+      required:
+      - grants
+      - target
+
+required:
+- name
+- username
+- database

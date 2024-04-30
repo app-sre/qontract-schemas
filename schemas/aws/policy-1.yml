@@ -15,7 +15,7 @@ properties:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
   name:
-    type: string
+    "$ref": "/common-1.json#/definitions/awsPolicyName"
   description:
     type: string
   mandatory:

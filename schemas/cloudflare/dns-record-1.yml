@@ -18,6 +18,7 @@ properties:
     enum:
     - A
     - AAAA
+    - CAA
     - CNAME
     - TXT
     - NS
@@ -45,6 +46,10 @@ properties:
       digest_type:
         type: integer
       digest:
+        type: string
+      tag:
+        type: string
+      value:
         type: string
   proxied:
     type: boolean

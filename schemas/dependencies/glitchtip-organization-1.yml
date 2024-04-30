@@ -18,9 +18,12 @@ properties:
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/glitchtip-instance-1.yml"
+  owners:
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
-- labels
 - name
 - description
 - instance

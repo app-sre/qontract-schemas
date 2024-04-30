@@ -287,6 +287,8 @@ properties:
           description: Include MRs from this repo in the AppSRE Review Queue
         url:
           type: string
+          format: uri
+          pattern: "^https:\/\/.+(?<!\/)$"
         gitlabSync:
           type: object
           properties:

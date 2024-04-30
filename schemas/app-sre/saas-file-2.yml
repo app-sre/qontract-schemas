@@ -23,8 +23,13 @@ properties:
   pipelinesProvider:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/pipelines-provider-1.yml"
+  # Setting skipSuccessfulDeployNotifications to true will cause successful
+  # deployments to not have a successful deployment notice sent.
+  skipSuccessfulDeployNotifications:
+    type: boolean
   slack:
     type: object
+    additionalProperties: false
     properties:
       output:
         type: string
@@ -54,12 +59,12 @@ properties:
     items:
       "$ref": "/openshift/managed-resource-name-1.yml"
   authentication:
-    type: object
-    properties:
-      code:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
-      image:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
+    oneOf:
+    # inline
+    - "$ref": "/app-sre/saas-file-authentication-1.yml"
+    # referenced
+    - "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/saas-file-authentication-1.yml"
   parameters:
     type: object
   allowedSecretParameterPaths:

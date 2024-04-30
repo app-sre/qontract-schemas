@@ -1,0 +1,28 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+# https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle
+description: meta-arguments available for all resource blocks regardless of type
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/terraform-resource-lifecycle-1.yml
+  create_before_destroy:
+    description: create replacement object before the prior object is destroyed
+    type: boolean
+  prevent_destroy:
+    description: reject with an error any plan that would destroy the object
+    type: boolean
+  ignore_changes:
+    description: attributes to ignore when planning updates to the object
+    type: array
+    items:
+      type: string
+      enum:
+      - all # should be handled in code to not be passed as a list
+      - inline_policy
+      - assume_role_policy
