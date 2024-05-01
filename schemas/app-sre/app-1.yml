@@ -295,20 +295,20 @@ properties:
             sourceProject:
               type: object
               properties:
-                name: 
+                name:
                   type: string
-                group: 
+                group:
                   type: string
-                branch: 
+                branch:
                   type: string
             destinationProject:
               type: object
               properties:
-                name: 
+                name:
                   type: string
-                group: 
+                group:
                   type: string
-                branch: 
+                branch:
                   type: string
           required:
           - sourceProject
@@ -362,6 +362,11 @@ properties:
           type: string
           format: uri
           description: GitLab repo to mirror from
+        imageBuildUrl:
+          type: string
+          format: uri
+          pattern: "^https:\/\/.+(?<!\/)$"
+          description: URL for the component's image build job (jenkins job, rhtap pipeline page, etc.)
       required:
       - name
       - resource
