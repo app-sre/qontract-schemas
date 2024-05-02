@@ -2733,6 +2733,7 @@ confs:
   - { name: gitlabHousekeeping, type: CodeComponentGitlabHousekeeping_v1 }
   - { name: jira, type: JiraServer_v1 }
   - { name: mirror, type: string }
+  - { name: imageBuildUrl, type: string }
 
 - name: Product_v1
   datafile: /app-sre/product-1.yml
