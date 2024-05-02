@@ -804,6 +804,7 @@ confs:
       github-org: ClusterAuthGithubOrg_v1
       github-org-team: ClusterAuthGithubOrgTeam_v1
       oidc: ClusterAuthOIDC_v1
+      rhidp: ClusterAuthRHIDP_v1
   fields:
   - { name: service, type: string, isRequired: true }
 
@@ -834,6 +835,14 @@ confs:
   - { name: username, type: string, isList: true }
   - { name: name, type: string, isList: true }
   - { name: groups, type: string, isList: true }
+
+- name: ClusterAuthRHIDP_v1
+  interface: ClusterAuth_v1
+  fields:
+  - { name: service, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: status, type: string }
+  - { name: issuer, type: string }
 
 - name: KafkaClusterSpec_v1
   fields:
