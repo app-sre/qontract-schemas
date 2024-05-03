@@ -42,6 +42,7 @@ properties:
           - github-org
           - github-org-team
           - oidc
+          - rhidp
         org:
           type: string
         team:
@@ -97,6 +98,26 @@ properties:
               type: array
               items:
                 type: string
+        required:
+        - service
+        - name
+      - properties:
+          service:
+            type: string
+            enum:
+            - rhidp
+          name:
+            type: string
+          status:
+            type: string
+            enum:
+            - enabled
+            - disabled
+            - enforced
+            - sso-client-only
+            - oidc-only
+          issuer:
+            type: string
         required:
         - service
         - name
@@ -550,6 +571,7 @@ properties:
           - glitchtip-project-dsn
           - aws-ami-cleanup
           - gabi-authorized-users
+          - cluster-auth-rhidp
   awsInfrastructureAccess:
     type: array
     items:
@@ -604,24 +626,6 @@ properties:
         type: object
         additionalProperties: false
         properties:
-          rhidp:
-            type: object
-            additionalProperties: false
-            properties:
-              status:
-                type: string
-                enum:
-                - enabled
-                - disabled
-                - enforced
-                - sso-client-only
-                - oidc-only
-              issuer:
-                type: string
-              name:
-                type: string
-            required:
-            - status
           dtp:
             type: object
             description: request dynatrace-token-provider to issue a token for the cluster
