@@ -4241,13 +4241,14 @@ confs:
   - { name: provider, type: string, isRequired: true }
 
 - name: MaintenanceStatuspageAnnouncement_v1
+  interface: MaintenanceAnnouncement_v1
   fields:
-  - { name: "provider", type: string, isRequired: true }
-  - { name: "announceAt", type: string, isRequired: true }
-  - { name: "message", type: string, isRequired: true }
-  - { name: "remindSubscribers", type: boolean }
-  - { name: "notifySubscribersOnStart", type: boolean }
-  - { name: "notifySubscribersOnCompletion", type: boolean }
+  - { name: provider, type: string, isRequired: true }
+  - { name: announceAt, type: string, isRequired: true }
+  - { name: message, type: string, isRequired: true }
+  - { name: remindSubscribers, type: boolean }
+  - { name: notifySubscribersOnStart, type: boolean }
+  - { name: notifySubscribersOnCompletion, type: boolean }
   - name: statuspageComponents
     type: StatusPageComponent_v1
     isList: true
