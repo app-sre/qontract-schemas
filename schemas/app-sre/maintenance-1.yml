@@ -34,7 +34,7 @@ properties:
   scheduledEnd:
     type: string
     format: date-time
-  anouncements:
+  announcements:
     type: array
     items:
       type: object

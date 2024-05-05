@@ -56,7 +56,7 @@ properties:
     - componentStatus
   maintenance:
     "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/openshift/namespace-1.yml"
+    "$schemaRef": "/app-sre/maintenance-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
