@@ -44,6 +44,9 @@ properties:
           type: string
           enum:
           - statuspage
+        page:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/status-page-1.yml"
         announceAt:
           type: string
           format: date-time
@@ -67,6 +70,9 @@ properties:
           type: string
           enum:
           - statuspage
+        page:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/status-page-1.yml"
         announceAt:
           type: string
           format: date-time
@@ -82,6 +88,7 @@ properties:
           type: boolean
       required:
       - provider
+      - page
       - announceAt
       - message
 required:

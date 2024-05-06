@@ -4244,6 +4244,7 @@ confs:
   interface: MaintenanceAnnouncement_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: page, type: StatusPage_v1, isRequired: true }
   - { name: announceAt, type: string, isRequired: true }
   - { name: message, type: string, isRequired: true }
   - { name: remindSubscribers, type: boolean }
