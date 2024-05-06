@@ -4221,7 +4221,10 @@ confs:
   - { name: exclude, type: string, isList: true }
 
 - name: Maintenance_v1
+  datafile: /app-sre/maintenance-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: title, type: string, isRequired: true }
   - { name: stage, type: string, isRequired: true }
@@ -4244,6 +4247,7 @@ confs:
   interface: MaintenanceAnnouncement_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: page, type: StatusPage_v1, isRequired: true }
   - { name: announceAt, type: string, isRequired: true }
   - { name: message, type: string, isRequired: true }
   - { name: remindSubscribers, type: boolean }

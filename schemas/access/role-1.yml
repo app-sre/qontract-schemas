@@ -173,6 +173,7 @@ properties:
                   - /access/bot-1.yml
                   - /dependencies/dynatrace-environment-1.yml
                   - /app-sre/integration-1.yml
+                  - /app-sre/maintenance-1.yml
   ldapGroup:
     type: object
     properties:
