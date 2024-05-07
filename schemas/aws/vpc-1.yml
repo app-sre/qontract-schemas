@@ -32,6 +32,8 @@ properties:
       properties:
         id:
           type: string
+        privacy:
+          type: string
       required:
       - id
 required:
