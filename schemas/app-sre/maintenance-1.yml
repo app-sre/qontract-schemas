@@ -38,6 +38,7 @@ properties:
           - statuspage
         page:
           "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/status-page-1.yml"
         remindSubscribers:
           type: boolean
         notifySubscribersOnStart:
