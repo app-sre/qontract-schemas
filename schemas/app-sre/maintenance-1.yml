@@ -12,17 +12,9 @@ properties:
   name:
     type: string
     description: the name of the maintenance
-  title:
+  message:
     type: string
-    description: the display name of the maintenance, e.g. visible name on status page
-  stage:
-    type: string
-    description: the current stage the maintenance is in
-    enum:
-    - scheduled
-    - in_progress
-    - verifying
-    - completed
+    description: a message describing the maintenance
   affectedServices:
     type: array
     items:
@@ -46,14 +38,6 @@ properties:
           - statuspage
         page:
           "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/dependencies/status-page-1.yml"
-        announceAt:
-          type: string
-          format: date-time
-          description: the date and time when the maintenance will be announced
-        message:
-          type: string
-          description: a message describing the maintenance
         remindSubscribers:
           type: boolean
         notifySubscribersOnStart:
@@ -62,8 +46,6 @@ properties:
           type: boolean
       required:
       - provider
-      - announceAt
-      - message
     oneOf:
     - properties:
         provider:
@@ -73,13 +55,6 @@ properties:
         page:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/status-page-1.yml"
-        announceAt:
-          type: string
-          format: date-time
-          description: the date and time when the maintenance will be announced
-        message:
-          type: string
-          description: a message describing the maintenance
         remindSubscribers:
           type: boolean
         notifySubscribersOnStart:
@@ -89,11 +64,9 @@ properties:
       required:
       - provider
       - page
-      - announceAt
-      - message
 required:
 - name
-- title
-- stage
+- message
 - affectedServices
 - scheduledStart
+- scheduledEnd

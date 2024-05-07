@@ -4184,6 +4184,12 @@ confs:
     synthetic:
       schema: /dependencies/status-page-component-1.yml
       subAttr: page
+  - name: maintenances
+    type: Maintenance_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/maintenance-1.yml
+      subAttr: announcements.page
 
 - name: StatusPageComponent_v1
   datafile: /dependencies/status-page-component-1.yml
@@ -4225,12 +4231,11 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: title, type: string, isRequired: true }
-  - { name: stage, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: message, type: string, isRequired: true }
   - { name: affectedServices, type: App_v1, isList: true, isRequired: true }
   - { name: scheduledStart, type: string, isRequired: true }
-  - { name: scheduledEnd, type: string }
+  - { name: scheduledEnd, type: string, isRequired: true }
   - { name: announcements, type: MaintenanceAnnouncement_v1, isInterface: true, isList: true }
 
 - name: MaintenanceAnnouncement_v1
@@ -4248,8 +4253,6 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: page, type: StatusPage_v1, isRequired: true }
-  - { name: announceAt, type: string, isRequired: true }
-  - { name: message, type: string, isRequired: true }
   - { name: remindSubscribers, type: boolean }
   - { name: notifySubscribersOnStart, type: boolean }
   - { name: notifySubscribersOnCompletion, type: boolean }
