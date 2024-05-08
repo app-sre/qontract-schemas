@@ -1546,6 +1546,7 @@ confs:
 - name: AWSSubnet_v1
   fields:
   - { name: id, type: string, isRequired: true }
+  - { name: privacy, type: string }
 
 - name: AWSECR_v1
   fields:
