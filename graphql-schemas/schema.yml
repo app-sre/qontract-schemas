@@ -2623,7 +2623,10 @@ confs:
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
 - name: ContainerImageMirror_v1
+  datafile: /dependencies/container-image-mirror-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: pullCredentials, type: VaultSecret_v1 }
   - { name: tags, type: string, isList: true }
