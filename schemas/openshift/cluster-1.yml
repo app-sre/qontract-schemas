@@ -142,6 +142,9 @@ properties:
   enableDeadMansSnitch:
     description: Flag to automate snitch creation/deletion by deadmanssnitch integration
     type: boolean
+  enableCostReport:
+    description: Flag to enable openshift cost report
+    type: boolean
   spec:
     type: object
     additionalProperties: false
