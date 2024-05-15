@@ -31,7 +31,7 @@ properties:
         description: The type of the feature toggle. Default is "release"
         enum:
         - experiment
-        - kill-switch
+        - kill_switch
         - release
         - operational
         - permission
@@ -63,7 +63,7 @@ oneOf:
           description: The type of the feature toggle. Default is "release"
           enum:
           - experiment
-          - kill-switch
+          - kill_switch
           - release
           - operational
           - permission
