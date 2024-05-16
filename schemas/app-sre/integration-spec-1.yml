@@ -21,6 +21,7 @@ properties:
     - app-interface-reporter
     - glitchtip-access-reporter
     - glitchtip-access-revalidation
+    - saas-metrics-exporter
   disableUnleash:
     type: boolean
     description: disable integration interaction with unleash instance

@@ -1097,6 +1097,7 @@ confs:
   - { name: prometheus, type: ClusterPrometheus_v1}
   - { name: ocmSubscriptionLabels, type: json}
   - { name: enableDeadMansSnitch, type: boolean }
+  - { name: enableCostReport, type: boolean }
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -2623,7 +2624,10 @@ confs:
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
 - name: ContainerImageMirror_v1
+  datafile: /dependencies/container-image-mirror-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: pullCredentials, type: VaultSecret_v1 }
   - { name: tags, type: string, isList: true }
@@ -3721,12 +3725,6 @@ confs:
   fields:
   - { name: slack, type: SlackOutput_v1, isList: true }
 
-- name: UnleashFeatureToggle_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: enabled, type: boolean, isRequired: true }
-  - { name: reason, type: string }
-
 - name: UnleashInstance_v1
   datafile: /app-sre/unleash-instance-1.yml
   fields:
@@ -3737,8 +3735,66 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: token, type: VaultSecret_v1, isRequired: true }
+  - { name: adminToken, type: VaultSecret_v1 }
+  - { name: allowUnmanagedFeatureToggles, type: boolean }
   - { name: notifications, type: UnleashNotifications_v1 }
-  - { name: featureToggles, type: UnleashFeatureToggle_v1, isRequired: true, isList: true }
+  - name: projects
+    type: UnleashProject_v1
+    isList: true
+    synthetic:
+      schema: /dependencies/unleash-project-1.yml
+      subAttr: server
+
+- name: UnleashProject_v1
+  datafile: /dependencies/unleash-project-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: server, type: UnleashInstance_v1, isRequired: true }
+  - name: feature_toggles
+    type: FeatureToggleUnleash_v1
+    isList: true
+    synthetic:
+      schema: /dependencies/feature-toggle-1.yml
+      subAttr: unleash.projects
+
+- name: UnleashFeatureToggle_v1
+  fields:
+  - { name: type, type: string }
+  - { name: impressionData, type: boolean }
+  - { name: projects, type: UnleashProject_v1, isRequired: true, isList: true}
+  - { name: environments, type: json}
+
+- name: FeatureToggle_v1
+  datafile: /dependencies/feature-toggle-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: provider
+    fieldMap:
+      unleash: FeatureToggleUnleash_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: provider, type: string, isRequired: true }
+
+- name: FeatureToggleUnleash_v1
+  interface: FeatureToggle_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: provider, type: string, isRequired: true }
+  - { name: unleash, type: UnleashFeatureToggle_v1, isRequired: true }
 
 - name: GabiNamespace_v1
   fields:
