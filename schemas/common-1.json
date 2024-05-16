@@ -230,6 +230,12 @@
       "type": "string",
       "pattern": "^\\/[a-zA-Z0-9_ -\\/]+[^\\/]$",
       "description": "A path is a string that starts with a forward slash and contains only alphanumeric characters, hyphens, spaces, and underscores. It does not end with a slash."
+    },
+    "unleash-environments": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
     }
   }
 }
