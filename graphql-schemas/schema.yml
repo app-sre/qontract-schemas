@@ -4670,6 +4670,7 @@ confs:
   - { name: state_dynamodb_table, type: string, isRequired: true}
   - { name: workers_cluster, type: Cluster_v1, isRequired: true }
   - { name: workers_namespace, type: Namespace_v1, isRequired: true}
+  - { name: vault_secrets_path, type: string, isRequired: true }
   - { name: tf_state_bucket, type: string, isRequired: false}
   - { name: tf_state_dynamodb_table, type: string, isRequired: false }
   - { name: tf_state_region, type: string, isRequired: false }
