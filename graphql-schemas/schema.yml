@@ -583,6 +583,7 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: SlackWorkspace_v1
+  datafile: /dependencies/slack-workspace-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
