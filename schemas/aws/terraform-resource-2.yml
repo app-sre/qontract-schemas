@@ -241,6 +241,10 @@ properties:
       required:
       - name
       - secret
+  managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -456,6 +460,10 @@ oneOf:
       "$ref": "/common-1.json#/definitions/annotations"
     lifecycle:
       "$ref": "/aws/terraform-resource-lifecycle-1.yml"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
   required:
   - identifier
   - assume_role
@@ -671,6 +679,10 @@ oneOf:
           - medium
           - low
           - none
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+
   required:
   - identifier
   - defaults
@@ -1220,8 +1232,7 @@ oneOf:
                   properties:
                     target_group:
                       type: array
-                      # https://github.com/hashicorp/terraform-provider-aws/pull/12574#issuecomment-639642524
-                      minItems: 2
+                      minItems: 1
                       items:
                         type: object
                         additionalProperties: false

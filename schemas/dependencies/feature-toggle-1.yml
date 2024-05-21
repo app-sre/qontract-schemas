@@ -1,0 +1,90 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/feature-toggle-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+    description: The name of the feature toggle
+  description:
+    type: string
+    description: A description of the feature toggle
+  delete:
+    type: boolean
+    description: Whether to delete the feature toggle
+  provider:
+    type: string
+  unleash:
+    type: object
+    description: Configuration for an Unleash feature toggle
+    properties:
+      type:
+        type: string
+        description: The type of the feature toggle. Default is "release"
+        enum:
+        - experiment
+        - kill_switch
+        - release
+        - operational
+        - permission
+      impressionData:
+        type: boolean
+        description: Whether to collect impression data
+      projects:
+        type: array
+        description: The projects that the feature toggle is associated with
+        items:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/unleash-project-1.yml"
+        minItems: 1
+      environments:
+        "$ref": "/common-1.json#/definitions/unleash-environments"
+oneOf:
+- properties:
+    provider:
+      type: string
+      description: The provider of the feature toggle
+      enum:
+      - unleash
+    unleash:
+      type: object
+      description: Configuration for an Unleash feature toggle
+      properties:
+        type:
+          type: string
+          description: The type of the feature toggle. Default is "release"
+          enum:
+          - experiment
+          - kill_switch
+          - release
+          - operational
+          - permission
+        impressionData:
+          type: boolean
+          description: Whether to collect impression data
+        projects:
+          type: array
+          description: The projects that the feature toggle is associated with
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/dependencies/unleash-project-1.yml"
+          minItems: 1
+        environments:
+          "$ref": "/common-1.json#/definitions/unleash-environments"
+      required:
+      - projects
+  required:
+    - unleash
+required:
+- "$schema"
+- name
+- description
+- provider

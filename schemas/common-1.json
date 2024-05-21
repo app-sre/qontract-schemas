@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema",
+  "$schema": "/json-schema-spec-draft-06.json",
   "version": "1.0",
   "type": "object",
   "definitions": {
@@ -221,6 +221,21 @@
       "type": "number",
       "minimum": 0,
       "maximum": 100
+    },
+    "awsPolicyName": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9-_]{0,126}[A-Za-z0-9]$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^\\/[a-zA-Z0-9_ -\\/]+[^\\/]$",
+      "description": "A path is a string that starts with a forward slash and contains only alphanumeric characters, hyphens, spaces, and underscores. It does not end with a slash."
+    },
+    "unleash-environments": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
     }
   }
 }

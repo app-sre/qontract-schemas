@@ -15,10 +15,26 @@ properties:
     type: string
   name:
     type: string
-  notifiers:
-    type: array
-    items:
-      type: string
+  integrations:
+    type: object
+    description: manage integrations for a policy
+    additionalProperties: false
+    properties:
+      notifiers:
+        type: object
+        description: manage notifier integrations for a policy
+        additionalProperties: false
+        properties:
+          jira:
+            type: object
+            description: manage notifier integration for a policy with jira
+            additionalProperties: false
+            properties:
+              escalationPolicy:
+                "$ref": "/common-1.json#/definitions/crossref"
+                "$schemaRef": "/app-sre/escalation-policy-1.yml"
+            required:
+            - escalationPolicy
   severity:
     type: string
     enum:

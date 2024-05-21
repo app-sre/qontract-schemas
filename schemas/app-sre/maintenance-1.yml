@@ -1,0 +1,73 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/maintenance-1.yml
+  name:
+    type: string
+    description: the name of the maintenance
+  message:
+    type: string
+    description: a message describing the maintenance
+  affectedServices:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/app-1.yml"
+  scheduledStart:
+    type: string
+    format: date-time
+  scheduledEnd:
+    type: string
+    format: date-time
+  announcements:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - statuspage
+        page:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/status-page-1.yml"
+        remindSubscribers:
+          type: boolean
+        notifySubscribersOnStart:
+          type: boolean
+        notifySubscribersOnCompletion:
+          type: boolean
+      required:
+      - provider
+    oneOf:
+    - properties:
+        provider:
+          type: string
+          enum:
+          - statuspage
+        page:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/dependencies/status-page-1.yml"
+        remindSubscribers:
+          type: boolean
+        notifySubscribersOnStart:
+          type: boolean
+        notifySubscribersOnCompletion:
+          type: boolean
+      required:
+      - provider
+      - page
+required:
+- name
+- message
+- affectedServices
+- scheduledStart
+- scheduledEnd

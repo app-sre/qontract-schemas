@@ -18,6 +18,8 @@ properties:
   serverUrl:
     type: string
     format: uri
+  username:
+    type: string
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
@@ -26,4 +28,5 @@ required:
 - name
 - description
 - serverUrl
+- username
 - token

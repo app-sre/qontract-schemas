@@ -14,8 +14,14 @@ properties:
     - /app-interface/template-collection-1.yml
   name:
     type: string
+  additionalMrLabels:
+    type: array
+    items:
+      type: string
   description:
     type: string
+  enableAutoApproval:
+    type: boolean
   variables:
     type: object
     description: variables to be used in the template

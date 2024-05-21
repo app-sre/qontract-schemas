@@ -1,0 +1,51 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/account-request-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  accountOwner:
+    type: object
+    description: "Account owner"
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+        format: email
+    required:
+    - name
+    - email
+  organization:
+    "$ref": "/aws/organization-1.yml"
+  quotaLimits:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/quota-limits-1.yml"
+      description: "Initial AWS quota limits for this account"
+  resourcesDefaultRegion:
+    type: string
+  supportedDeploymentRegions:
+    type: array
+    items:
+      type: string
+required:
+- "$schema"
+- labels
+- name
+- description
+- accountOwner
+- organization
+- resourcesDefaultRegion

@@ -42,6 +42,7 @@ properties:
           - github-org
           - github-org-team
           - oidc
+          - rhidp
         org:
           type: string
         team:
@@ -100,6 +101,26 @@ properties:
         required:
         - service
         - name
+      - properties:
+          service:
+            type: string
+            enum:
+            - rhidp
+          name:
+            type: string
+          status:
+            type: string
+            enum:
+            - enabled
+            - disabled
+            - enforced
+            - sso-client-only
+            - oidc-only
+          issuer:
+            type: string
+        required:
+        - service
+        - name
   observabilityNamespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
@@ -117,6 +138,12 @@ properties:
     items:
       type: string
   managedClusterRoles:
+    type: boolean
+  enableDeadMansSnitch:
+    description: Flag to automate snitch creation/deletion by deadmanssnitch integration
+    type: boolean
+  enableCostReport:
+    description: Flag to enable openshift cost report
     type: boolean
   spec:
     type: object
@@ -342,6 +369,11 @@ properties:
               type: boolean
             manageRoute53Associations:
               type: boolean
+            allowPrivateHcpApiAccess:
+              type: boolean
+              description: |
+                if set to true, enable traffic from attached TGW to reach the API and oauth server
+                of a private HCP by adapting the VPC endpoint security group
             cidrBlock:
               type: string
             delete:
@@ -421,6 +453,8 @@ properties:
               manageSecurityGroups:
                 type: boolean
               manageRoute53Associations:
+                type: boolean
+              allowPrivateHcpApiAccess:
                 type: boolean
               cidrBlock:
                 type: string
@@ -539,6 +573,8 @@ properties:
           - skupper-network
           - glitchtip-project-dsn
           - aws-ami-cleanup
+          - gabi-authorized-users
+          - cluster-auth-rhidp
   awsInfrastructureAccess:
     type: array
     items:
@@ -593,24 +629,16 @@ properties:
         type: object
         additionalProperties: false
         properties:
-          rhidp:
+          dtp:
             type: object
+            description: request dynatrace-token-provider to issue a token for the cluster
             additionalProperties: false
             properties:
-              status:
+              tenant:
                 type: string
-                enum:
-                - enabled
-                - disabled
-                - enforced
-                - sso-client-only
-                - oidc-only
-              issuer:
-                type: string
-              name:
-                type: string
+                description: tenant id to issue token for
             required:
-            - status
+            - tenant
 required:
 - "$schema"
 - labels

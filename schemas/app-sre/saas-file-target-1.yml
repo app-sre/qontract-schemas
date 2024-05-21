@@ -37,7 +37,7 @@ properties:
       - include
   ref:
     type: string
-    pattern: '^([0-9a-f]{40}|master|main|internal|stable)$'
+    pattern: '^([0-9a-f]{40}|master|main|internal|stable|release-4\.\d+)$'
   promotion:
     type: object
     additionalProperties: false
@@ -54,6 +54,9 @@ properties:
         items:
           type: string
         minItems: 1
+      soakDays:
+        type: integer
+        description: number of days to wait for promotion
       promotion_data:
         type: array
         items:

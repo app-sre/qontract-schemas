@@ -59,12 +59,12 @@ properties:
     items:
       "$ref": "/openshift/managed-resource-name-1.yml"
   authentication:
-    type: object
-    properties:
-      code:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
-      image:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
+    oneOf:
+    # inline
+    - "$ref": "/app-sre/saas-file-authentication-1.yml"
+    # referenced
+    - "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/saas-file-authentication-1.yml"
   parameters:
     type: object
   allowedSecretParameterPaths:

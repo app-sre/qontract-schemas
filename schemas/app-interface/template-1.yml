@@ -14,6 +14,8 @@ properties:
     - /app-interface/template-1.yml
   name:
     type: string
+  autoApproved:
+    type: boolean
   targetPath:
     type: string
   condition:
@@ -33,6 +35,7 @@ properties:
   templateTest:
     type: array
     description: list of tests
+    minItems: 1
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/template-test-1.yml"

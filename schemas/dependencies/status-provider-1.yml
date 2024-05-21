@@ -54,6 +54,9 @@ properties:
         format: date-time
     required:
     - componentStatus
+  maintenance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/maintenance-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -129,6 +132,18 @@ oneOf:
       - componentStatus
   required:
   - manual
+
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - maintenance
+    maintenance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/maintenance-1.yml"
+  required:
+  - maintenance
 
 required:
 - provider
