@@ -2751,6 +2751,7 @@ confs:
   - { name: jira, type: JiraServer_v1 }
   - { name: mirror, type: string }
   - { name: imageBuildUrl, type: string }
+  - { name: managePermissions, type: boolean }
 
 - name: Product_v1
   datafile: /app-sre/product-1.yml
