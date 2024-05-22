@@ -39,6 +39,8 @@ properties:
     type: string
   issueSecurityId:
     type: string
+  wontFixResolution:
+    type: string
   disable:
     type: object
     additionalProperties: false
