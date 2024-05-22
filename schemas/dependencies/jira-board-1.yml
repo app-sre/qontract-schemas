@@ -41,6 +41,8 @@ properties:
     type: string
   wontFixResolution:
     type: string
+  reopenDuration:
+    type: string
   disable:
     type: object
     additionalProperties: false

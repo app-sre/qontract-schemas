@@ -562,6 +562,7 @@ confs:
   - { name: issueReopenState, type: string }
   - { name: issueSecurityId, type: string }
   - { name: wontFixResolution, type: string }
+  - { name: reopenDuration, type: string }
   - { name: disable, type: DisableJiraBoardAutomations_v1 }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
