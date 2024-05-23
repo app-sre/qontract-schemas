@@ -630,6 +630,8 @@ oneOf:
           type: string
         iops:
           type: integer
+        storage_throughput:
+          type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_format:
