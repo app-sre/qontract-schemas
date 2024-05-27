@@ -282,8 +282,6 @@ properties:
           type: string
           enum:
           - upstream
-          - cicd
-          - saasrepo
           - bundle
           - other
           - app-interface
