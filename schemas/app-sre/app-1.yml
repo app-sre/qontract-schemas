@@ -282,10 +282,9 @@ properties:
           type: string
           enum:
           - upstream
-          - cicd
-          - saasrepo
           - bundle
           - other
+          - app-interface
         showInReviewQueue:
           type: boolean
           description: Include MRs from this repo in the AppSRE Review Queue
