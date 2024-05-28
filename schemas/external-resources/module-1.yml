@@ -25,6 +25,8 @@ properties:
     type: integer
   reconcile_timeout_minutes:
     type: integer
+  outputs_secret_sync:
+    type: boolean
 required:
 - "$schema"
 - provision_provider
@@ -34,3 +36,4 @@ required:
 - default_version
 - reconcile_drift_interval_minutes
 - reconcile_timeout_minutes
+- outputs_secret_sync

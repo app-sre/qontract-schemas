@@ -4687,6 +4687,7 @@ confs:
   - { name: default_version, type: string, isRequired: true}
   - { name: reconcile_drift_interval_minutes, type: string, isRequired: true}
   - { name: reconcile_timeout_minutes, type: string, isRequired: true}
+  - { name: outputs_secret_sync, type: boolean, isRequired: true}
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1
