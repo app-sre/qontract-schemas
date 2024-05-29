@@ -278,13 +278,16 @@ properties:
       properties:
         name:
           type: string
+        description:
+          type: string
         resource:
           type: string
           enum:
           - upstream
           - bundle
           - other
-          - app-interface
+          - gitops
+          - infrastructure
         showInReviewQueue:
           type: boolean
           description: Include MRs from this repo in the AppSRE Review Queue
