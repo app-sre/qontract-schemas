@@ -1544,6 +1544,7 @@ confs:
   - { name: labels, type: json }
   - { name: identifier, type: string, isRequired: true }
   - { name: description, type: string }
+  - { name: delete, type: boolean }
   - { name: region, type: string, isRequired: true }
   - { name: cidr_block, type: Network_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
