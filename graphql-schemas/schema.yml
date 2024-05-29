@@ -2742,6 +2742,7 @@ confs:
 - name: AppCodeComponents_v1
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
   - { name: resource, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: gitlabSync, type: CodeComponentGitlabSync_v1 }
