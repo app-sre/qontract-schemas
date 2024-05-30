@@ -1154,6 +1154,8 @@ confs:
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: serverUrl, type: string }
+  - { name: spec, type: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1 }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
 
 - name: OpenShiftClusterManagerRecommendedVersionsWeight_v1
