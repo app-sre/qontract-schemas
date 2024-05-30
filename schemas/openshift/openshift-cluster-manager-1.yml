@@ -200,6 +200,16 @@ properties:
         name:
           description: cluster name
           type: string
+        serverUrl:
+          description: cluster server url
+          type: string
+          format: uri
+        spec:
+          type: object
+          additionalProperties: false
+          properties:
+            id:
+              type: string
         upgradePolicy:
           "$ref": "/openshift/cluster-upgrade-policy-1.yml"
       required:
