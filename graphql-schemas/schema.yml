@@ -4670,6 +4670,7 @@ confs:
   - { name: state_dynamodb_table, type: string, isRequired: true}
   - { name: workers_cluster, type: Cluster_v1, isRequired: true }
   - { name: workers_namespace, type: Namespace_v1, isRequired: true}
+  - { name: vault_secrets_path, type: string, isRequired: true }
   - { name: tf_state_bucket, type: string, isRequired: false}
   - { name: tf_state_dynamodb_table, type: string, isRequired: false }
   - { name: tf_state_region, type: string, isRequired: false }
@@ -4686,6 +4687,7 @@ confs:
   - { name: default_version, type: string, isRequired: true}
   - { name: reconcile_drift_interval_minutes, type: string, isRequired: true}
   - { name: reconcile_timeout_minutes, type: string, isRequired: true}
+  - { name: outputs_secret_sync, type: boolean, isRequired: true}
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1

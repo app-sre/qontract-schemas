@@ -33,6 +33,7 @@ properties:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
 
+  vault_secrets_path:
     type: string
 
 required:
@@ -42,3 +43,4 @@ required:
 - state_dynamodb_table
 - workers_cluster
 - workers_namespace
+- vault_secrets_path
