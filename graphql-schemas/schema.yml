@@ -653,6 +653,7 @@ confs:
   - { name: projects, type: string, isList: true, isRequired: true }
 
 - name: GitlabInstance_v1
+  datafile: /dependencies/gitlab-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
