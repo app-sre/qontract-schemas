@@ -1281,7 +1281,7 @@ confs:
   - { name: qontractReconcileVersion, type: string }
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
-  - { name: securityContact, type: AwsContact_v1 }
+  - { name: securityContact, type: AWSContact_v1 }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - { name: automationRole, type: AWSAutomationRole_v1 }
   - { name: garbageCollection, type: boolean }
@@ -2603,7 +2603,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: email, type: string, isRequired: true }
 
-- name: AwsContact_v1
+- name: AWSContact_v1
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: title, type: string }
