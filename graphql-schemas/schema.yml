@@ -3893,7 +3893,7 @@ confs:
   - { name: products_v1, type: Product_v1, isList: true, datafileSchema: /app-sre/product-1.yml }
   - { name: environments_v1, type: Environment_v1, isList: true, datafileSchema: /app-sre/environment-1.yml }
   - { name: apps_v1, type: App_v1, isList: true, datafileSchema: /app-sre/app-1.yml }
-  - { name: escalation_policies_1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
+  - { name: escalation_policies_v1, type: AppEscalationPolicy_v1, isList: true, datafileSchema: /app-sre/escalation-policy-1.yml }
   - { name: resources_v1, type: Resource_v1, isResource: true, isRequired: true, isList: true }
   - { name: vault_instances_v1, type: VaultInstance_v1, isList: true, datafileSchema: /vault-config/instance-1.yml }
   - { name: vault_audit_backends_v1, type: VaultAudit_v1, isList: true, datafileSchema: /vault-config/audit-1.yml }
