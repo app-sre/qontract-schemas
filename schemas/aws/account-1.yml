@@ -56,7 +56,7 @@ properties:
         type: string
         format: email
       phoneNumber:
-        type: string
+        "$ref": "/common-1.json#/definitions/phoneNumber"
     required:
     - name
     - email
