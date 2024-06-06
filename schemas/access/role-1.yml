@@ -177,6 +177,9 @@ properties:
                   - /dependencies/container-image-mirror-1.yml
                   - /dependencies/slack-workspace-1.yml
                   - /dependencies/gitlab-instance-1.yml
+                  - /app-interface/template-collection-1.yml
+                  - /app-interface/template-1.yml
+                  - /app-interface/template-test-1.yml
   ldapGroup:
     type: object
     properties:
