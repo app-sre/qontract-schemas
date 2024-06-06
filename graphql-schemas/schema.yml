@@ -4630,9 +4630,14 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: enableAutoApproval, type: boolean, isRequired: false }
+  - { name: forEach, type: TemplateCollectionForEach_v1 }
   - { name: description, type: string, isRequired: true }
   - { name: variables, type: TemplateCollectionVariables_v1 }
   - { name: templates, type: Template_v1, isList: true, isRequired: true }
+
+- name: TemplateCollectionForEach_v1
+  fields:
+  - { name: items, type: json, isList: true, isRequired: true }
 
 - name: TemplateCollectionVariables_v1
   fields:

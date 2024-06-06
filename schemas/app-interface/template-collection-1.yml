@@ -22,6 +22,14 @@ properties:
     type: string
   enableAutoApproval:
     type: boolean
+  forEach:
+    type: object
+    properties:
+      items:
+        type: array
+        description: object items on which to run this collection
+        items:
+          type: object
   variables:
     type: object
     description: variables to be used in the template
