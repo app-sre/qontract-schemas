@@ -97,18 +97,22 @@ properties:
   jira:
     type: object
     properties:
-      board:
+      escalationPolicy:
         "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/dependencies/jira-board-1.yml"
+        "$schemaRef": "/app-sre/escalation-policy-1.yml"
       project:
         type: string
+      components:
+        type: array
+        items:
+          type: string
       labels:
         type: array
         items:
           type: string
     oneOf:
     - required:
-      - board
+      - escalationPolicy
     - required:
       - project
 required:
