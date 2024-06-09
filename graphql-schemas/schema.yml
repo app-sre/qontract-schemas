@@ -2757,6 +2757,7 @@ confs:
   - { name: mirror, type: string }
   - { name: imageBuildUrl, type: string }
   - { name: managePermissions, type: boolean }
+  - { name: hotfixVersions, type: string, isList: true }
 
 - name: Product_v1
   datafile: /app-sre/product-1.yml

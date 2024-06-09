@@ -376,6 +376,11 @@ properties:
         managePermissions:
           type: boolean
           description: should permissions be managed on the repository
+        hotfixVersions:
+          type: array
+          items:
+            type: string
+            description: commit sha of this repository that should be promoted even being published with success to any subscribed channels 
       required:
       - name
       - resource
