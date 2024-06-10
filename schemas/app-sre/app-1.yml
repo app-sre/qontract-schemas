@@ -381,6 +381,7 @@ properties:
           items:
             type: string
             description: commit sha of this repository that should be promoted even being published with success to any subscribed channels 
+            pattern: '^[0-9a-f]{40}$'
       required:
       - name
       - resource
