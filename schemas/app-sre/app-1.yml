@@ -376,6 +376,12 @@ properties:
         managePermissions:
           type: boolean
           description: should permissions be managed on the repository
+        blockedVersions:
+          type: array
+          items:
+            type: string
+            description: commit sha of this repository that should not be promoted
+            pattern: '^[0-9a-f]{40}$'
         hotfixVersions:
           type: array
           items:
