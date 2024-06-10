@@ -43,6 +43,24 @@ properties:
       required:
       - name
       - email
+  securityContact:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "The name of the security contact."
+      title:
+        type: string
+        description: "The title of the security contact. Default use the name."
+      email:
+        type: string
+        format: email
+      phoneNumber:
+        "$ref": "/common-1.json#/definitions/phoneNumber"
+    required:
+    - name
+    - email
+    - phoneNumber
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   automationRole:
