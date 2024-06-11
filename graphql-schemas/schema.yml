@@ -4054,8 +4054,9 @@ confs:
 
 - name: GlitchtipProjectJira_v1
   fields:
+  - { name: escalationPolicy, type: AppEscalationPolicy_v1 }
   - { name: project, type: string }
-  - { name: board, type: JiraBoard_v1 }
+  - { name: components, type: string, isList: true }
   - { name: labels, type: string, isList: true }
 
 - name: GlitchtipProject_v1
