@@ -41,6 +41,11 @@ properties:
     type: array
     items:
       type: string
+  uid:
+    type: string
+    description: |
+      Specifying an account UID will takeover an existing account instead of creating a new one.
+      Please make sure you specify the current account owner and the current organization.
 required:
 - "$schema"
 - labels
