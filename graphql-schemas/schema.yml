@@ -1348,6 +1348,7 @@ confs:
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
   - { name: resourcesDefaultRegion, type: string, isRequired: true }
   - { name: supportedDeploymentRegions, type: string, isList: true }
+  - { name: uid, type: string }
 
 - name: AWSQuotaLimits_v1
   datafile: /aws/quota-limits-1.yml
