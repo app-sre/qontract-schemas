@@ -178,6 +178,7 @@ oneOf:
   - handle
   - description
   - workspace
+  - channels
 required:
 - $schema
 - labels
