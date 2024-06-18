@@ -46,6 +46,10 @@ properties:
     description: |
       Specifying an account UID will takeover an existing account instead of creating a new one.
       Please make sure you specify the current account owner and the current organization.
+  additionalFeatures:
+    type: object
+    description: |
+      Enable/disable additional features for this account. See account template for all available feature options.
 required:
 - "$schema"
 - labels
