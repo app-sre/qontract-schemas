@@ -30,7 +30,7 @@ properties:
         type: string
     required:
     - path
-  template: 
+  template:
     type: string
   templateTest:
     type: array
@@ -39,6 +39,16 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/template-test-1.yml"
+  templateRenderOptions:
+    type: object
+    additionalProperties: false
+    properties:
+      trimBlocks:
+        type: boolean
+      lstripBlocks:
+        type: boolean
+      keepTrailingNewline:
+        type: boolean
 
 required:
 - "$schema"
