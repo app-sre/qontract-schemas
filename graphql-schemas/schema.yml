@@ -3311,7 +3311,7 @@ confs:
   - { name: handle, type: string, isRequired: true }
   - { name: workspace, type: SlackWorkspace_v1, isRequired: true }
   - { name: pagerduty, type: PagerDutyTarget_v1, isList: true }
-  - { name: channels, type: string, isList: true }
+  - { name: channels, type: string, isList: true, isRequired: true }
   - { name: ownersFromRepos, type: string, isList: true }
   - { name: schedule, type: Schedule_v1 }
   - { name: skip, type: boolean }

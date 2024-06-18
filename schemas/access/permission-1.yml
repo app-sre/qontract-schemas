@@ -166,6 +166,7 @@ oneOf:
       type: array
       items:
         type: string
+      minItems: 1
     schedule:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/schedule-1.yml"
@@ -178,6 +179,7 @@ oneOf:
   - handle
   - description
   - workspace
+  - channels
 required:
 - $schema
 - labels
