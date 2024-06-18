@@ -98,6 +98,7 @@ properties:
           enum:
           - openshift-template
           - directory
+          - helm
         hash_length:
           type: integer
         parameters:
