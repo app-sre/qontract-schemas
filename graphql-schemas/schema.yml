@@ -4617,6 +4617,13 @@ confs:
   - { name: targetPath, type: string, isRequired: true }
   - { name: template, type: string, isRequired: true }
   - { name: templateTest, type: TemplateTest_v1, isList: true, isRequired: true }
+  - { name: templateRenderOptions, type: TemplateRenderOptions_v1 }
+
+- name: TemplateRenderOptions_v1
+  fields:
+  - { name: trimBlocks, type: boolean }
+  - { name: lstripBlocks, type: boolean }
+  - { name: keepTrailingNewline, type: boolean }
 
 - name: TemplatePatch_v1
   fields:
