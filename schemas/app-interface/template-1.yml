@@ -20,6 +20,8 @@ properties:
     type: string
   condition:
     type: string
+  createOnly:
+    type: boolean
   patch:
     type: object
     additionalProperties: false

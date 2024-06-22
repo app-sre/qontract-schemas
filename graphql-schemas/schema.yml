@@ -4613,6 +4613,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: autoApproved, type: boolean, isRequired: false }
   - { name: patch, type: TemplatePatch_v1 }
+  - { name: createOnly, type: boolean }
   - { name: condition, type: string }
   - { name: targetPath, type: string, isRequired: true }
   - { name: template, type: string, isRequired: true }
