@@ -2821,6 +2821,7 @@ confs:
   - { name: product, type: Product_v1 }
   - { name: description, type: string, isRequired: true }
   - { name: onboardingStatus, type: string, isRequired: true }
+  - { name: engagementModel, type: string, isRequired: false }
   - { name: grafanaUrls, isList: true, type: GrafanaDashboardUrls_v1, isRequired: true }
   - { name: sopsUrl, type: string, isRequired: true }
   - { name: architectureDocument, type: string, isRequired: true }
