@@ -3007,6 +3007,7 @@ confs:
   - { name: image, type: SaasResourceTemplateTargetImage_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
+  - { name: schedule, type: string }
 
 - name: SaasResourceTemplateTargetReference_v2
   datafile: /app-sre/saas-file-target-1.yml
