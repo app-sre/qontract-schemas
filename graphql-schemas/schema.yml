@@ -1296,6 +1296,7 @@ confs:
   - { name: cleanup, type: AWSAccountCleanupOption_v1, isList: true, isInterface: true }
   - { name: terraformState, type: TerraformStateAWS_v1, isRequired: false }
   - { name: rosa, type: RosaOcmSpec_v1, isRequired: false}
+  - { name: billingAccount, type: AWSAccount_v1 }
   - { name: sso, type: boolean }
   - { name: alias, type: string }
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
