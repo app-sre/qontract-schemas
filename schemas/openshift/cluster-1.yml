@@ -284,6 +284,10 @@ properties:
           "$ref": "/common-1.json#/definitions/labels"
         subnet:
           type: string
+        subnets:
+          type: array
+          items:
+            type: string
         taints:
           type: array
           items:

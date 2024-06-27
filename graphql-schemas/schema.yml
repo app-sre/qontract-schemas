@@ -961,6 +961,7 @@ confs:
   - { name: replicas, type: int }
   - { name: autoscale, type: ClusterSpecAutoScale_v1 }
   - { name: subnet, type: string }
+  - { name: subnets, type: string, isList: true }
   - { name: labels, type: json }
   - { name: taints, type: Taint_v1, isList: true }
 
