@@ -3976,6 +3976,7 @@ confs:
   - { name: terraform_repo_v1, type: TerraformRepo_v1, isList: true, datafileSchema: /aws/terraform-repo-1.yml }
   - { name: status_board_v1, type: StatusBoard_v1, isList: true, datafileSchema: /dependencies/status-board-1.yml }
   - { name: dynatrace_environment_v1, type: DynatraceEnvironment_v1, isList: true, datafileSchema: /dependencies/dynatrace-environment-1.yml }
+  - { name: dynatrace_token_provider_token_spec_v1, type: DynatraceTokenProviderTokenSpec_v1, isList: true, datafileSchema: /dynatrace/dynatrace-token-provider-token-spec-1.yml }
   - { name: prometheus_instances_v1, type: PrometheusInstance_v1, isList: true, datafileSchema: /dependencies/prometheus-instance-1.yml }
   - { name: template_collection_v1, type: TemplateCollection_v1, isList: true, datafileSchema: /app-interface/template-collection-1.yml }
   - { name: template_v1, type: Template_v1, isList: true, datafileSchema: /app-interface/template-1.yml }
@@ -4743,3 +4744,24 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: maintenance, type: Maintenance_v1, isRequired: true }
+
+- name: DynatraceTokenProviderTokenSpec_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true , isUnique: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: ocm_org_ids, type: string, isList: true, isRequired: true }
+  - { name: secrets , type: DynatraceTokenProviderTokenSecret_v1, isList: true, isRequired: true }
+  
+- name: DynatraceTokenProviderTokenSecret_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: namespace, type: string, isRequired: true }
+  - { name: tokens, type: DynatraceAPIToken_v1, isList: true, isRequired: true }
+
+- name: DynatraceAPIToken_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: keyNameInSecret, type: string }
+  - { name: scopes, type: string, isList: true, isRequired: true }
+
