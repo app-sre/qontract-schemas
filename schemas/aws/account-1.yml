@@ -141,6 +141,10 @@ properties:
     description: "Rosa related attributes in the aws account."
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/rosa-ocm-1.yml"
+  billingAccount:
+    description: AWS account to be used as the Billing account for ROSA HCP cluster provisioning
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/aws/account-1.yml"
   sso:
     type: boolean
     description: "Enable single sign on for the account. Default is enabled."
