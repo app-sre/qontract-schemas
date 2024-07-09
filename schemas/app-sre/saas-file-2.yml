@@ -147,7 +147,8 @@ properties:
       # - quay.io
       # - registry.redhat.io
       # - ECR
-      pattern: '^(quay\.io|registry\.redhat\.io|[^.]+\.dkr\.ecr\.[^.]+\.amazonaws\.com).*$'
+      # - dynatrace.com
+      pattern: '^(quay\.io|registry\.redhat\.io|[^.]+\.dkr\.ecr\.[^.]+\.amazonaws\.com|[^.]+\.live\.dynatrace\.com).*$'
   use_channel_in_image_tag:
     type: boolean
   deployResources:
