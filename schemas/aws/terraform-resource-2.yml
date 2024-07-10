@@ -247,6 +247,16 @@ properties:
   delete:
     type: boolean
     description: Flag to delete the resource
+  module:
+    type: object
+    additionalProperties: false
+    properties:
+      url:
+        type: string
+      path:
+        type: string
+      ref:
+        type: string
 
 
 oneOf:
@@ -1576,5 +1586,38 @@ oneOf:
   required:
   - identifier
   - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - module-poc
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    overrides:
+      type: object
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    module:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        path:
+          type: string
+        ref:
+          type: string
+  required:
+  - identifier
+  - module
 required:
 - provider

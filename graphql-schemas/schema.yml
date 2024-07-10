@@ -1938,6 +1938,7 @@ confs:
       rosa-authenticator: NamespaceTerraformResourceRosaAuthenticator_V1
       rosa-authenticator-vpce: NamespaceTerraformResourceRosaAuthenticatorVPCE_V1
       msk: NamespaceTerraformResourceMsk_v1
+      module-poc: NamespaceTerraformResourceModulePoC_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
@@ -2487,6 +2488,25 @@ confs:
   - { name: protocol, type: string }
   - { name: query, type: string }
   - { name: status_code, type: string }
+
+- name: NamespaceTerraformResourceModulePoC_v1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: region, type: string, isContextUnique: true }
+  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: overrides, type: json }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
+  - { name: module, type: NamespaceTerraformResourceModulePoCSpec_v1, isRequired: true }
+
+- name: NamespaceTerraformResourceModulePoCSpec_v1
+  fields:
+  - { name: url, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: ref, type: string, isRequired: true }
 
 - name: ResourceValues_v1
   fields:
