@@ -558,6 +558,8 @@ properties:
           - openshift-resourcequotas
           - openshift-limitranges
           - openshift-serviceaccount-tokens
+          - openshift-prometheus-rules
+          - integrations-manager
           - terraform-resources
           - ocm-additional-routers
           - ocm-addons
