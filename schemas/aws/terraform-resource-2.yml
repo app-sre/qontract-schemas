@@ -1591,7 +1591,7 @@ oneOf:
     provider:
       type: string
       enum:
-      - module
+      - module-poc
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     identifier:
