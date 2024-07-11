@@ -2167,6 +2167,7 @@ confs:
   - { name: assume_role, type: AssumeRole_v1, isRequired: true }
   - { name: assume_condition, type: json }
   - { name: assume_action, type: string }
+  - { name: policies, type: string, isList: true }
   - { name: inline_policy, type: json }
   - { name: role_policy, type: json }
   - { name: output_resource_name, type: string }
