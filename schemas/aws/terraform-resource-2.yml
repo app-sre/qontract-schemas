@@ -461,6 +461,10 @@ oneOf:
     assume_action:
       description: alternate sts call instead of AssumeRole
       type: string
+    policies:
+      type: array
+      items:
+        type: string
     inline_policy:
       type: object
     role_policy:
