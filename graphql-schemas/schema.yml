@@ -1868,6 +1868,7 @@ confs:
   - { name: projectPath, type: string, isRequired: true }
   - { name: delete, type: boolean }
   - { name: requireFips, type: boolean }
+  - { name: forceRerunTimestamp, type: string }
   - { name: tfVersion, type: string, isRequired: true }
   - { name: variables, type: TerraformRepoVariables_v1 }
 
