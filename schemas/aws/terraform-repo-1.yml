@@ -38,6 +38,10 @@ properties:
     - "1.4.5"
     - "1.4.7"
     - "1.5.7" # last version pre hashicorp license change
+  forceRerunTimestamp:
+    description: force a rerun of tf-repo using ISO8601 format which can be grabbed with https://www.utctime.net/
+    type: string
+    format: date-time
   variables:
     type: object
     description: Vault paths defining where Terraform inputs are read from and where Terraform outputs are written to
