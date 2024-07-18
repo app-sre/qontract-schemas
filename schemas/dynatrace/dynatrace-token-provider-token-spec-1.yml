@@ -1,0 +1,71 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dynatrace/dynatrace-token-provider-token-spec-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  ocm_org_ids:
+    type: array
+    items:
+      type: string
+  secrets:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        namespace:
+          type: string
+        tokens:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              name:
+                description: Name used in the Dynatrace API as prefix for token.
+                type: string
+              keyNameInSecret:
+                description: Key for this token inside the openshift secret object. If not set, uses "name"
+                type: string
+              scopes:
+                type: array
+                items:
+                  type: string
+                  # https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication
+                  description: official Dynatrace API Token scopes 
+                  enum:
+                  - metrics.ingest
+                  - logs.ingest
+                  - events.ingest
+                  - activeGateTokenManagement.create
+                  - entities.read
+                  - settings.write
+                  - settings.read
+                  - DataExport
+                  - InstallerDownload
+
+            required:
+            - name
+            - scopes
+      required:
+      - name
+      - namespace
+      - tokens
+required:
+- "$schema"
+- name
+- description
+- ocm_org_ids
+- secrets
