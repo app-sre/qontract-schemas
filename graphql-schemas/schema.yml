@@ -2738,7 +2738,7 @@ confs:
 
 - name: AppEndPoints_v1
   fields:
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
   - { name: monitoring, type: AppEndPointMonitoring_v1, isList: true }
