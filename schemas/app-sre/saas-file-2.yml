@@ -79,6 +79,9 @@ properties:
   validateTargetsInApp:
     description: indicates a desire to validate that all targets belong to the same app as the saas file itself
     type: boolean
+  validatePlannedData:
+    type: boolean
+    description: enable skipping planned data validation, mostly for automated bootstrap pusrposes
   resourceTemplates:
     type: array
     items:
