@@ -55,6 +55,7 @@ properties:
                   - settings.read
                   - DataExport
                   - InstallerDownload
+                  - SupportAlert
 
             required:
             - name
