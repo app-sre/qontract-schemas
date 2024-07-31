@@ -1,4 +1,4 @@
-.PHONY: build push build-test test
+.PHONY: build push sqs build-test test
 
 IMAGE_NAME := quay.io/app-sre/qontract-schemas
 IMAGE_TEST := $(IMAGE_NAME)-test
@@ -31,6 +31,12 @@ build:
 push:
 	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):latest
 	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):$(IMAGE_TAG)
+
+sqs:
+	@AWS_ACCESS_KEY_ID=$(APP_INTERFACE_SQS_AWS_ACCESS_KEY_ID) \
+	AWS_SECRET_ACCESS_KEY=$(APP_INTERFACE_SQS_AWS_SECRET_ACCESS_KEY) \
+	AWS_REGION=$(APP_INTERFACE_SQS_AWS_REGION) \
+	aws sqs send-message --queue-url $(APP_INTERFACE_SQS_QUEUE_URL) --message-body "{\"pr_type\": \"promote_qontract_schemas\", \"version\": \"$(IMAGE_TAG)\"}"
 
 bundle: ## Use qontract-validator image to bundle schemas into $BUNDLE_FILENAME NOTE
 	mkdir -p $(OUTPUT_DIR) fake_data fake_resources
