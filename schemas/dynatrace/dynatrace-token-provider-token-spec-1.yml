@@ -55,6 +55,8 @@ properties:
                   - settings.read
                   - DataExport
                   - InstallerDownload
+                  - SupportAlert
+                  - ExternalSyntheticIntegration
 
             required:
             - name
