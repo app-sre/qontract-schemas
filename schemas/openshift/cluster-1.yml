@@ -576,6 +576,7 @@ properties:
           - aws-ami-cleanup
           - gabi-authorized-users
           - cluster-auth-rhidp
+          - endpoints-discovery
   awsInfrastructureAccess:
     type: array
     items:
