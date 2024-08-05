@@ -1940,6 +1940,7 @@ confs:
       rosa-authenticator-vpce: NamespaceTerraformResourceRosaAuthenticatorVPCE_V1
       msk: NamespaceTerraformResourceMsk_v1
       module-poc: NamespaceTerraformResourceModulePoC_v1
+
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
@@ -2107,6 +2108,7 @@ confs:
   - { name: data_classification, type: AWSRDSDataClassification_v1 }
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
 
 - name: NamespaceTerraformResourceS3_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -4736,10 +4738,20 @@ confs:
   - { name: provider, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: true}
   - { name: image, type: string, isRequired: true}
-  - { name: default_version, type: string, isRequired: true}
-  - { name: reconcile_drift_interval_minutes, type: string, isRequired: true}
-  - { name: reconcile_timeout_minutes, type: string, isRequired: true}
+  - { name: version, type: string, isRequired: true}
+  - { name: reconcile_drift_interval_minutes, type: int, isRequired: true}
+  - { name: reconcile_timeout_minutes, type: int, isRequired: true}
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
+
+- name: ExternalResourcesModuleOverrides_v1
+  datafile: /external-resources/module-overrides-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true}
+  - { name: path, type: string, isRequired: true}
+  - { name: module_type, type: string, isRequired: false}
+  - { name: image, type: string, isRequired: false}
+  - { name: version, type: string, isRequired: false}
+  - { name: reconcile_timeout_minutes, type: int, isRequired: false}
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1
@@ -4754,7 +4766,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: ocm_org_ids, type: string, isList: true, isRequired: true }
   - { name: secrets , type: DynatraceTokenProviderTokenSecret_v1, isList: true, isRequired: true }
-  
+
 - name: DynatraceTokenProviderTokenSecret_v1
   fields:
   - { name: name, type: string, isRequired: true }
@@ -4766,4 +4778,3 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: keyNameInSecret, type: string }
   - { name: scopes, type: string, isList: true, isRequired: true }
-

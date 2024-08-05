@@ -8,32 +8,16 @@ properties:
   "$schema":
     type: string
     enum:
-    - /external-resources/module-1.yml
+    - /external-resources/module-overrides-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-  provision_provider:
-    type: string
-  provider:
-    type: string
   module_type:
     type: string
   image:
     type: string
   version:
     type: string
-  reconcile_drift_interval_minutes:
-    type: integer
   reconcile_timeout_minutes:
     type: integer
-  outputs_secret_sync:
-    type: boolean
 required:
 - "$schema"
-- provision_provider
-- provider
-- module_type
-- image
-- version
-- reconcile_drift_interval_minutes
-- reconcile_timeout_minutes
-- outputs_secret_sync
