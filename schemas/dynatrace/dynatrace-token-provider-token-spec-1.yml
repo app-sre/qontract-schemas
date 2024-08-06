@@ -34,7 +34,10 @@ properties:
             additionalProperties: false
             properties:
               name:
-                description: Name used in the Dynatrace API as prefix for token.
+                description: |
+                  Name used in the Dynatrace API as prefix for token.
+                  Note, that due to Dynatrace API the token name length is limited.
+                maxLength: 46
                 type: string
               keyNameInSecret:
                 description: Key for this token inside the openshift secret object. If not set, uses "name"
