@@ -14,6 +14,7 @@ BUNDLE_FILENAME ?= data.json
 PWD := $(shell pwd)
 GIT_COMMIT := $(shell git rev-parse HEAD)
 GIT_COMMIT_TIMESTAMP := $(shell git log -1 --format=%ct $(GIT_COMMIT))
+COMMIT_AUTHOR_EMAIL := $(shell git show -s --format='%ae' HEAD)
 
 ifneq (,$(wildcard $(CURDIR)/.docker))
 	DOCKER_CONF := $(CURDIR)/.docker
@@ -36,7 +37,7 @@ sqs:
 	@AWS_ACCESS_KEY_ID=$(APP_INTERFACE_SQS_AWS_ACCESS_KEY_ID) \
 	AWS_SECRET_ACCESS_KEY=$(APP_INTERFACE_SQS_AWS_SECRET_ACCESS_KEY) \
 	AWS_REGION=$(APP_INTERFACE_SQS_AWS_REGION) \
-	aws sqs send-message --queue-url $(APP_INTERFACE_SQS_QUEUE_URL) --message-body "{\"pr_type\": \"promote_qontract_schemas\", \"version\": \"$(IMAGE_TAG), \"author_email\": \"$(COMMIT_AUTHOR_EMAIL)\"}"
+	aws sqs send-message --queue-url $(APP_INTERFACE_SQS_QUEUE_URL) --message-body "{\"pr_type\": \"promote_qontract_schemas\", \"version\": \"$(IMAGE_TAG)\", \"author_email\": \"$(COMMIT_AUTHOR_EMAIL)\"}"
 
 bundle: ## Use qontract-validator image to bundle schemas into $BUNDLE_FILENAME NOTE
 	mkdir -p $(OUTPUT_DIR) fake_data fake_resources
