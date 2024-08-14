@@ -86,6 +86,12 @@ properties:
         type: string
       warm_count:
         type: integer
+      cold_storage_options:
+        type: object
+        additionalProperties: false
+        properties:
+          enabled:
+            type: boolean
   snapshot_options:
     type: object
     additionalProperties: false
