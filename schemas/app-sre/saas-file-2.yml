@@ -140,12 +140,6 @@ properties:
       PipelineRun pods, hence destroying logs.
   publishJobLogs:
     type: boolean
-  hasTestJobs:
-    description: |
-      Specify whether this saas file is defining any test jobs. Test jobs are treated differently
-      in (auto-)promotions (they use target_config_hash). If not set, then we assume the saas file
-      holds no tests
-    type: boolean
   clusterAdmin:
     type: boolean
   imagePatterns:
