@@ -3040,6 +3040,7 @@ confs:
 - name: SaasResourceTemplateTargetPromotion_v1
   fields:
   - { name: auto, type: boolean }
+  - { name: reDeployOnPublisherConfigChange, type: boolean }
   - { name: publish, type: string, isList: true }
   - { name: subscribe, type: string, isList: true }
   - { name: soakDays, type: int }

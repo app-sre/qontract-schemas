@@ -44,6 +44,11 @@ properties:
     properties:
       auto:
         type: boolean
+      reDeployOnPublisherConfigChange:
+        description: |
+          Whether to redeploy if a config change happened in a publisher. This will set
+          target_config_hash in promotion_data. This is mainly intended for test jobs.
+        type: boolean
       publish:
         type: array
         items:
