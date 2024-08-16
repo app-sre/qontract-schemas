@@ -15,6 +15,8 @@ properties:
   name:
     type: string
     maxLength: 39
+  display_name:
+    type: string
   description:
     type: string
   app:
@@ -164,6 +166,7 @@ required:
 - "$schema"
 - labels
 - name
+- display_name
 - description
 - app
 - pipelinesProvider
