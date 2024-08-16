@@ -2942,7 +2942,6 @@ confs:
   - { name: skipSuccessfulDeployNotifications, type: boolean, isRequired: false }
   - { name: timeout, type: string }
   - { name: publishJobLogs, type: boolean }
-  - { name: hasTestJobs, type: boolean }
   - { name: clusterAdmin, type: boolean }
   - { name: use_channel_in_image_tag, type: boolean }
   - { name: deployResources, type: DeployResources_v1 }
