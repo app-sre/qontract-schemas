@@ -18,6 +18,7 @@ properties:
     properties:
       client_subnets:
         type: array
+        minItems: 3
         items:
           type: string
       instance_type:
