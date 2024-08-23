@@ -1024,7 +1024,8 @@ confs:
   - { name: manageSecurityGroups, type: boolean }
   - { name: manageRoute53Associations, type: boolean }
   - { name: allowPrivateHcpApiAccess, type: boolean }
-  - { name: cidrBlock, type: string }
+  - { name: cidrBlock, type: string }  # deprecated
+  - { name: cidrBlocks, type: string, isList: true }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
 
