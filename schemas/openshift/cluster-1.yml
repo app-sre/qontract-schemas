@@ -462,8 +462,10 @@ properties:
                 type: boolean
               cidrBlock:
                 type: string
+                description: deprecated, use cidrBlocks instead
               cidrBlocks:
                 type: array
+                description: the list of cidr blocks to route through this transit gateway
                 items:
                   type: string
               delete:
