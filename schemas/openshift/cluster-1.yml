@@ -376,6 +376,10 @@ properties:
                 of a private HCP by adapting the VPC endpoint security group
             cidrBlock:
               type: string
+            cidrBlocks:
+              type: array
+              items:
+                type: string
             delete:
               type: boolean
             assumeRole:
@@ -458,6 +462,10 @@ properties:
                 type: boolean
               cidrBlock:
                 type: string
+              cidrBlocks:
+                type: array
+                items:
+                  type: string
               delete:
                 type: boolean
               assumeRole:

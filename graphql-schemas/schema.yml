@@ -1025,6 +1025,7 @@ confs:
   - { name: manageRoute53Associations, type: boolean }
   - { name: allowPrivateHcpApiAccess, type: boolean }
   - { name: cidrBlock, type: string }
+  - { name: cidrBlocks, type: string, isList: true }
   - { name: delete, type: boolean }
   - { name: assumeRole, type: string }
 
