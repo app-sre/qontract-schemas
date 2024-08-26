@@ -258,17 +258,7 @@ properties:
       ref:
         type: string
   module_overrides:
-    type: object
-    additionalProperties: false
-    properties:
-      module_type:
-        type: string
-      image:
-        type: string
-      version:
-        type: string
-      reconcile_timeout_minutes:
-        type: integer
+    "$ref": "/external-resources/module-overrides-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -716,17 +706,7 @@ oneOf:
       type: boolean
       description: Flag a resource to be deleted
     module_overrides:
-      type: object
-      additionalProperties: false
-      properties:
-        module_type:
-          type: string
-        image:
-          type: string
-        version:
-          type: string
-        reconcile_timeout_minutes:
-          type: integer
+      "$ref": "/external-resources/module-overrides-1.yml"
   required:
   - identifier
   - defaults
@@ -1615,17 +1595,7 @@ oneOf:
       type: boolean
       description: Flag a resource to be deleted
     module_overrides:
-      type: object
-      additionalProperties: false
-      properties:
-        module_type:
-          type: string
-        image:
-          type: string
-        version:
-          type: string
-        reconcile_timeout_minutes:
-          type: integer
+      "$ref": "/external-resources/module-overrides-1.yml"
   required:
   - identifier
   - defaults
