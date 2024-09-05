@@ -648,9 +648,13 @@ properties:
             properties:
               tenant:
                 type: string
-                description: tenant id to issue token for
+                description: dynatrace tenant id to issue tokens for
+              token-spec:
+                type: string
+                description: name of the DTP token-spec to use for this cluster
             required:
             - tenant
+            - token-spec
 required:
 - "$schema"
 - labels
