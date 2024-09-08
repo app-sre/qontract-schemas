@@ -159,6 +159,14 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/quota-limits-1.yml"
       description: "AWS quota limits for this account"
+dependencies:
+  resetPasswords:
+    properties:
+      sso:
+        enum:
+        - false
+    required:
+    - sso
 required:
 - "$schema"
 - labels
