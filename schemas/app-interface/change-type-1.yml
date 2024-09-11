@@ -166,3 +166,4 @@ required:
 - description
 - priority
 - contextType
+- changes
