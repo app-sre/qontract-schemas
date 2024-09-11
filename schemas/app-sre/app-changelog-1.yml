@@ -1,0 +1,42 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/app-changelog-1.yml
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+  changelog:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          $ref: /common-1.json#/definitions/date
+        changes:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              tags:
+                type: array
+                items:
+                  type: string
+              description:
+                type: string
+            required:
+            - description
+      required:
+      - date
+      - changes
+required:
+- app
+- changelog
