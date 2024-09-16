@@ -3993,7 +3993,7 @@ confs:
   - { name: network_v1, type: Network_v1, isList: true, datafileSchema: /app-sre/network-1.yml }
   - { name: external_resources_settings_v1, type: ExternalResourcesSettings_v1, isList: true, datafileSchema: /external-resources/settings-1.yml }
   - { name: external_resources_modules_v1, type: ExternalResourcesModule_v1, isList: true, datafileSchema: /external-resources/module-1.yml }
-
+  - { name: app_changelog_v1, type: AppChangelog_v1, isList: true, datafileSchema: /app-sre/app-changelog-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -4784,3 +4784,21 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: keyNameInSecret, type: string }
   - { name: scopes, type: string, isList: true, isRequired: true }
+
+- name: AppChangelog_v1
+  datafile: /app-sre/app-changelog-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: app, type: App_v1, isRequired: true }
+  - { name: changelog, type: AppChangelogEntry_v1, isList: true, isRequired: true }
+
+- name: AppChangelogEntry_v1
+  fields:
+  - { name: date, type: string, isRequired: true }
+  - { name: changes, type: AppChangelogEntryItem_v1, isList: true, isRequired: true }
+
+- name: AppChangelogEntryItem_v1
+  fields:
+  - { name: tags, type: string, isList: true }
+  - { name: description, type: string, isRequired: true }
