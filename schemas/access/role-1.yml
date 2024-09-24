@@ -180,6 +180,7 @@ properties:
                   - /app-interface/template-collection-1.yml
                   - /app-interface/template-1.yml
                   - /app-interface/template-test-1.yml
+                  - /vault-config/policy-1.yml
   ldapGroup:
     type: object
     properties:
