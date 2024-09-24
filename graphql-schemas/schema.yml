@@ -353,7 +353,10 @@ confs:
   - { name: options, type: VaultRoleOptions_v1, isInterface: true, isRequired: true }
 
 - name: VaultPolicy_v1
+  datafile: /vault-config/policy-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
   - { name: rules, type: string, isRequired: true }
