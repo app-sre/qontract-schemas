@@ -355,6 +355,7 @@ confs:
 - name: VaultPolicy_v1
   datafile: /vault-config/policy-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
