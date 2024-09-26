@@ -361,6 +361,10 @@ oneOf:
       type: boolean
     kms_encryption:
       type: boolean
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+
   required:
   - identifier
   - defaults
