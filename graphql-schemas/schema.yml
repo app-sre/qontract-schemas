@@ -2133,6 +2133,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean}
 
 - name: NamespaceTerraformResourceServiceAccountAWSInfrastructureAccess_v1
   fields:
