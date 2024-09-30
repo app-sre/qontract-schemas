@@ -4302,39 +4302,14 @@ confs:
 - name: ManagedSLODocument_v1
   fields:
   - { name: name, type: string, isRequired: true }
-  - { name: annotations, type: ManagedSLOAnnotations_v1, isRequired: true }
-  - { name: spec, type: ManagedSLOSpec_v1, isRequired: true }
-
-- name: ManagedSLOAnnotations_v1
-  fields:
   - { name: runbook, type: string, isRequired: true }
   - { name: message, type: string, isRequired: true }
   - { name: dashboard, type: string, isRequired: true }
   - { name: link_url, type: string, isRequired: true }
-
-- name: ManagedSLOSpec_v1
-  fields:
-  - { name: description, type: string, isRequired: true }
-  - { name: indicator, type: ManagedSLOIndicator_v1, isRequired: true }
-  - { name: target, type: string, isRequired: true }
+  - { name: error_metric, type: string, isRequired: true }
+  - { name: total_metric, type: string, isRequired: true }
+  - { name: slo_target, type: string, isRequired: true }
   - { name: window, type: string, isRequired: true }
-
-- name: ManagedSLOIndicator_v1
-  fields:
-  - { name: ratio, type: ManagedSLORatio_v1, isRequired: true }
-
-- name: ManagedSLORatio_v1
-  fields:
-  - { name: errors, type: ManagedSLOErrors_v1, isRequired: true }
-  - { name: total, type: ManagedSLOTotal_v1, isRequired: true }
-
-- name: ManagedSLOErrors_v1
-  fields:
-  - { name: metric, type: string, isRequired: true }
-
-- name: ManagedSLOTotal_v1
-  fields:
-  - { name: metric, type: string, isRequired: true }
 
 - name: SLONamespaces_v1
   fields:
