@@ -4288,8 +4288,8 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: url, type: string, isRequired: true }
-  - { name: username, type: VaultSecret_v1, isRequired: true }
-  - { name: password, type: VaultSecret_v1, isRequired: true }
+  - { name: username, type: VaultSecret_v1 }
+  - { name: password, type: VaultSecret_v1 }
 
 - name: StatusPage_v1
   fields:
