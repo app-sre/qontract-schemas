@@ -2340,6 +2340,7 @@ confs:
   - { name: ingress_cidr_blocks, type: string, isRequired: true, isList: true }
   - { name: ip_address_type, type: string }
   - { name: access_logs, type: boolean }
+  - { name: ssl_policy, type: string }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
