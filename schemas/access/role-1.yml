@@ -182,6 +182,7 @@ properties:
                   - /app-interface/template-test-1.yml
                   - /vault-config/policy-1.yml
                   - /app-sre/app-changelog-1.yml
+                  - /app-sre/sre-checkpoint-1.yml
   ldapGroup:
     type: object
     properties:
