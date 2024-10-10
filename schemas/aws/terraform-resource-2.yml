@@ -259,6 +259,8 @@ properties:
         type: string
   module_overrides:
     "$ref": "/external-resources/module-overrides-1.yml"
+  upgradePolicy:
+    "$ref": "/openshift/cluster-upgrade-policy-1.yml"
 oneOf:
 - additionalProperties: false
   properties:
@@ -711,6 +713,8 @@ oneOf:
       description: Flag a resource to be deleted
     module_overrides:
       "$ref": "/external-resources/module-overrides-1.yml"
+    upgradePolicy:
+      "$ref": "/openshift/cluster-upgrade-policy-1.yml"
   required:
   - identifier
   - defaults
@@ -758,6 +762,8 @@ oneOf:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    upgradePolicy:
+      "$ref": "/openshift/cluster-upgrade-policy-1.yml"
   required:
   - identifier
   - defaults
@@ -1632,6 +1638,8 @@ oneOf:
       description: Flag a resource to be deleted
     module_overrides:
       "$ref": "/external-resources/module-overrides-1.yml"
+    upgradePolicy:
+      "$ref": "/openshift/cluster-upgrade-policy-1.yml"
   required:
   - identifier
   - defaults
