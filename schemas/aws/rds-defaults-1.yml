@@ -39,6 +39,10 @@ properties:
     type: integer
   storage_type:
     type: string
+    enum:
+    - gp3
+    - io1
+    - io2
   multi_az:
     type: boolean
   db_subnet_group_name:

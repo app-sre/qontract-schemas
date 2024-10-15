@@ -650,6 +650,10 @@ oneOf:
               type: string
         storage_type:
           type: string
+          enum:
+          - gp3
+          - io1
+          - io2
         iops:
           type: integer
         storage_throughput:
