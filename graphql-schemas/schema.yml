@@ -2199,6 +2199,9 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean}
+  - { name: delete, type: boolean}
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
 
 - name: SQSQueuesSpecs_v1
   fields:
