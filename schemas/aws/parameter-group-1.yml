@@ -27,6 +27,7 @@ properties:
     - postgres16
     - redis5.0
     - redis6.x
+    - redis7
   description:
     type: string
   parameters:
