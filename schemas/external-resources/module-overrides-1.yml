@@ -19,5 +19,11 @@ properties:
     type: string
   reconcile_timeout_minutes:
     type: integer
+  outputs_secret_image:
+    type: string
+    description: Docker image to use for the outputs secret container
+  outputs_secret_version:
+    type: string
+    description: Version of the outputs secret container to use
 required:
 - "$schema"
