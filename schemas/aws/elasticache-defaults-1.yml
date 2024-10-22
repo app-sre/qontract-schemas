@@ -1,0 +1,137 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/elasticache-defaults-1.yml
+  apply_immediately:
+    type: boolean
+    description: "Specifies whether any modifications are applied immediately, or during the next maintenance window."
+  at_rest_encryption_enabled:
+    type: boolean
+    description: "Specifies whether to enable encryption at rest."
+  auto_minor_version_upgrade:
+    type: boolean
+    description: "Specifies whether minor engine upgrades are applied automatically to the cache cluster during the maintenance window."
+  automatic_failover_enabled:
+    type: boolean
+    description: "Specifies whether a read-only replica is automatically promoted to read/write primary if the existing primary fails."
+  availability_zones:
+    type: array
+    description: "List of Availability Zones in which cache nodes are created. terraform attribute: preferred_cache_cluster_azs"
+    items:
+      type: string
+  cluster_mode:
+    type: object
+    additionalProperties: false
+    description: "Enables data partitioning across distinct nodes in a Redis (cluster mode enabled) replication group."
+    properties:
+      num_node_groups:
+        type: integer
+        description: "The number of node groups (shards) for this Redis replication group. Terraform attribute: num_node_groups"
+      replicas_per_node_group:
+        type: integer
+        description: "An optional parameter that specifies the number of replica nodes in each node group (shard). Terraform attribute: replicas_per_node_group"
+    required:
+    - num_node_groups
+  engine:
+    type: string
+    description: "The name of the cache engine to be used for the cache clusters in this replication group."
+    enum:
+    - redis
+    # https://github.com/hashicorp/terraform-provider-aws/issues/39641
+    # - valkey
+  engine_version:
+    type: string
+    description: "The version number of the cache engine to be used for the cache clusters in this replication group."
+  log_delivery_configuration:
+    type: array
+    maxItems: 2
+    items:
+    - type: object
+      additionalProperties: false
+      description: "Specifies the destination and format of Redis SLOWLOG or Redis Engine Log"
+      properties:
+        destination:
+          type: string
+        destination_type:
+          type: string
+          enum:
+          - cloudwatch-logs
+          - kinesis-firehose
+        log_format:
+          type: string
+          enum:
+          - text
+          - json
+        log_type:
+          type: string
+          enum:
+          - slow-log
+          - engine-log
+      required:
+      - destination
+      - destination_type
+      - log_format
+      - log_type
+  maintenance_window:
+    type: string
+    description: "The weekly time range (in UTC) during which system maintenance can occur. Format: ddd:hh24:mi-ddd:hh24:mi"
+  multi_az_enabled:
+    type: boolean
+    description: "Specifies whether to enable Multi-AZ Support for the replication group"
+  node_type:
+    type: string
+    description: "Instance class for the cache cluster. See https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html"
+  notification_topic_arn:
+    type: string
+    description: "ARN of an SNS topic to send ElastiCache notifications to."
+  number_cache_clusters:
+    type: integer
+    description: "The number of cache clusters (primary and replicas) in this replication group. Terraform attribute: num_cache_clusters"
+  parameter_group_name:
+    type: string
+    description: "The name of the parameter group to associate with this replication group. If this argument is omitted, the default cache parameter group for the specified engine is used."
+  port:
+    type: integer
+    description: "The port number on which each of the cache nodes accepts connections. Default: 6379"
+  replication_group_id:
+    type: string
+    description: "The replication group identifier."
+  replication_group_description:
+    type: string
+    description: "The replication group description. Default: 'elasticache cluster'"
+  security_group_ids:
+    type: array
+    description: "List of security group IDs to associate with this replication group."
+    items:
+      type: string
+  snapshot_retention_limit:
+    type: integer
+    description: "The number of days for which ElastiCache retains automatic cache cluster snapshots before deleting them. For zero (0), backups are turned off."
+  snapshot_window:
+    type: string
+    description: "The daily time range (in UTC) during which ElastiCache begins taking a daily snapshot of the node group. Minimum a 60 minute period. Format: hh24:mi-hh24:mi"
+  subnet_group_name:
+    type: string
+    description: "The name of the cache subnet group to be used for the replication group."
+  transit_encryption_enabled:
+    type: boolean
+    description: "Specifies whether to enable encryption in transit."
+  transit_encryption_mode:
+    type: string
+    description: "Specifies whether to use encryption in transit for the replication group."
+    enum:
+    - preferred
+    - required
+required:
+- "$schema"
+- auto_minor_version_upgrade
+- engine
+- engine_version
+- node_type
+- security_group_ids
