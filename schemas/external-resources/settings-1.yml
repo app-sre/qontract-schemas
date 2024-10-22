@@ -36,6 +36,14 @@ properties:
   vault_secrets_path:
     type: string
 
+  outputs_secret_image:
+    type: string
+    description: Docker image to use for the outputs secret container
+
+  outputs_secret_version:
+    type: string
+    description: Version of the outputs secret container to use
+
 required:
 - "$schema"
 - state_dynamodb_account
@@ -44,3 +52,5 @@ required:
 - workers_cluster
 - workers_namespace
 - vault_secrets_path
+- outputs_secret_image
+- outputs_secret_version
