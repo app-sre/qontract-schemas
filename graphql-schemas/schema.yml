@@ -4742,6 +4742,8 @@ confs:
   - { name: tf_state_bucket, type: string, isRequired: false}
   - { name: tf_state_dynamodb_table, type: string, isRequired: false }
   - { name: tf_state_region, type: string, isRequired: false }
+  - { name: outputs_secret_image, type: string, isRequired: true }
+  - { name: outputs_secret_version, type: string, isRequired: true }
 
 - name: ExternalResourcesModule_v1
   datafile: /external-resources/module-1.yml
@@ -4756,6 +4758,8 @@ confs:
   - { name: reconcile_drift_interval_minutes, type: int, isRequired: true}
   - { name: reconcile_timeout_minutes, type: int, isRequired: true}
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
+  - { name: outputs_secret_image, type: string }
+  - { name: outputs_secret_version, type: string }
 
 - name: ExternalResourcesModuleOverrides_v1
   datafile: /external-resources/module-overrides-1.yml
@@ -4766,6 +4770,8 @@ confs:
   - { name: image, type: string, isRequired: false}
   - { name: version, type: string, isRequired: false}
   - { name: reconcile_timeout_minutes, type: int, isRequired: false}
+  - { name: outputs_secret_image, type: string }
+  - { name: outputs_secret_version, type: string }
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1
