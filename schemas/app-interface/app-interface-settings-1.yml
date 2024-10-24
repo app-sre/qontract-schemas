@@ -224,8 +224,8 @@ properties:
         type: string
       alertType:
         description: the type of alert to be configured for snitch
-      
-          
+
+
   costReport:
     type: object
     additionalProperties: false
@@ -265,6 +265,26 @@ properties:
       required:
       - id
       - content
+  terraformResourcesProviderExclusionsByProvisioner:
+    type: array
+    description: |
+      Object to hold provider exclusions on provisioners.
+      e.g: RDS is not managed by terraform-resources on app-sre-stage.
+      The use-case is the Erv2 resources migration
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        provisioner:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        excludedProviders:
+          type: array
+          items:
+            type: string
+      required:
+        - provisioner
+        - excludedProviders
 required:
 - "$schema"
 - labels

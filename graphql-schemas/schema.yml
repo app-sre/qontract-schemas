@@ -34,6 +34,12 @@ confs:
   - { name: jiralert, type: JiralertSettings_v1 }
   - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
   - { name: costReport, type: CostReportSettings_v1 }
+  - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
+
+- name: TerraformResourcesProviderExclusionsByProvisioner_v1
+  fields:
+  - { name: provisioner, type: ExternalResourcesProvisioner_v1, isInterface: true, isRequired: True}
+  - { name: excludedProviders, type: string, isList: true, isRequired: true}
 
 - name: AppInterfaceCustomMessage_v1
   fields:
@@ -1263,8 +1269,7 @@ confs:
 - name: ExternalResourcesProvisioner_v1
   isInterface: true
   interfaceResolve:
-    strategy: fieldMap
-    fieldMap: {}
+    strategy: schema
   fields:
   - { name: name, type: string, isRequired: true }
 
