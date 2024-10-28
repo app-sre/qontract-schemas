@@ -27,6 +27,12 @@ properties:
     type: integer
   outputs_secret_sync:
     type: boolean
+  outputs_secret_image:
+    type: string
+    description: Docker image to use for the outputs secret container
+  outputs_secret_version:
+    type: string
+    description: Version of the outputs secret container to use
 required:
 - "$schema"
 - provision_provider
