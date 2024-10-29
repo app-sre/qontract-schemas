@@ -19,6 +19,14 @@ properties:
   description:
     type: string
 
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+
+  environment:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/environment-1.yml"
+
   openshiftResources:
     type: array
     items:
