@@ -34,12 +34,13 @@ confs:
   - { name: jiralert, type: JiralertSettings_v1 }
   - { name: customMessages, type: AppInterfaceCustomMessage_v1, isList: true }
   - { name: costReport, type: CostReportSettings_v1 }
-  - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
+  - { name: terraformResourcesProviderExclusions, type: TerraformResourcesProviderExclusions_v1, isList: true}
 
-- name: TerraformResourcesProviderExclusionsByProvisioner_v1
+- name: TerraformResourcesProviderExclusions_v1
   fields:
-  - { name: provisioner, type: ExternalResourcesProvisioner_v1, isInterface: true, isRequired: True}
-  - { name: excludedProviders, type: string, isList: true, isRequired: true}
+    - { name: provider, type: string, isRequired: true}
+    - { name: excludeProvisioners, type: ExternalResourcesProvisioner_v1 , isList: true, isInterface: true}
+    - { name: excludeAllProvisioners, type: boolean}
 
 - name: AppInterfaceCustomMessage_v1
   fields:
