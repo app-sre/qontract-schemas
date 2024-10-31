@@ -265,26 +265,33 @@ properties:
       required:
       - id
       - content
-  terraformResourcesProviderExclusionsByProvisioner:
+  terraformResourcesProviderExclusions:
     type: array
     description: |
-      Object to hold provider exclusions on provisioners.
+      Object to hold provisioner exclusions by provider.
       e.g: RDS is not managed by terraform-resources on app-sre-stage.
       The use-case is the Erv2 resources migration
     items:
       type: object
       additionalProperties: false
       properties:
-        provisioner:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/aws/account-1.yml"
-        excludedProviders:
+        provider:
+          type: string
+        excludeAllProvisioners:
+          type: boolean
+        excludeProvisioners:
           type: array
           items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/aws/account-1.yml"
       required:
-        - provisioner
-        - excludedProviders
+        - provider
+      oneOf:
+      - required:
+        - excludeAllProvisioners
+      - required:
+        - excludeProvisioners
+
 required:
 - "$schema"
 - labels
