@@ -305,7 +305,8 @@ properties:
         excludedProviders:
            type: array
            items:
-            type: string
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/aws/account-1.yml"
       required:
         - provisioner
         - excludedProvideres
