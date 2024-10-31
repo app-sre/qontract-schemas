@@ -37,7 +37,10 @@ properties:
     enum:
     - "1.4.5"
     - "1.4.7"
-    - "1.5.7" # last version pre hashicorp license change
+    - "1.5.7"
+    - "1.6.6"
+    - "1.7.5"
+    - "1.8.5"
   forceRerunTimestamp:
     description: force a rerun of tf-repo using ISO8601 format which can be grabbed with https://www.utctime.net/
     type: string
