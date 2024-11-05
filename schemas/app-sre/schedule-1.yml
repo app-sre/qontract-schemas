@@ -32,7 +32,6 @@ properties:
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/access/user-1.yml"
-          minItems: 1
       required:
       - start
       - end

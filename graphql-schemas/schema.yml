@@ -3476,6 +3476,12 @@ confs:
     synthetic:
       schema: /aws/account-1.yml
       subAttr: resetPasswords.user
+  - name: schedules
+    type: Schedule_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/schedule-1.yml
+      subAttr: schedule.users
 
 - name: Bot_v1
   fields:
