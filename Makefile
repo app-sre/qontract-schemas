@@ -26,7 +26,7 @@ help: ## Prints help for targets with comments
 	@grep -E '^[a-zA-Z0-9.\ _-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build:
-	@docker build -t $(IMAGE_NAME):latest -f Dockerfile .
+	@docker build -t $(IMAGE_NAME):latest --target prod -f Dockerfile .
 	@docker tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
 
 push:
@@ -68,7 +68,7 @@ gql_validate: ## Run qontract-server with the schema bundle and no data to revea
 	
 
 build-test: clean
-	@docker build -t $(IMAGE_TEST) -f dockerfiles/Dockerfile.test .
+	@docker build -t $(IMAGE_TEST) --target test .
 
 test: build-test
 	@docker run --rm $(IMAGE_TEST)
