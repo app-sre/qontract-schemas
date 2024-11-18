@@ -12,6 +12,9 @@ properties:
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
   name:
     type: string
   repository:

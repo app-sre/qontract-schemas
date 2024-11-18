@@ -1878,6 +1878,7 @@ confs:
 - name: TerraformRepo_v1
   fields:
   - { name: account, type: AWSAccount_v1, isRequired: true }
+  - { name: app, type: App_v1 }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: repository, type: string, isRequired: true }
   - { name: ref, type: string, isRequired: true }
