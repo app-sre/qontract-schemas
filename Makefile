@@ -3,7 +3,7 @@
 IMAGE_NAME := quay.io/app-sre/qontract-schemas
 IMAGE_TEST := $(IMAGE_NAME)-test
 IMAGE_TAG := $(shell git rev-parse --short=7 HEAD)
-VALIDATOR_IMAGE := quay.io/app-sre/qontract-validator
+VALIDATOR_IMAGE := quay.io/redhat-services-prod/app-sre-tenant/qontract-validator-master/qontract-validator-master
 VALIDATOR_IMAGE_TAG := latest
 SERVER_IMAGE := quay.io/app-sre/qontract-server
 SERVER_IMAGE_TAG := latest
@@ -65,7 +65,7 @@ gql_validate: ## Run qontract-server with the schema bundle and no data to revea
 		$(SERVER_IMAGE):$(SERVER_IMAGE_TAG) \
 		timeout 10 node ./dist/server.js || \
 	if [ $$? -eq 124 ]; then exit 0; else exit $$?; fi;
-	
+
 
 build-test: clean
 	@docker build -t $(IMAGE_TEST) --target test .
