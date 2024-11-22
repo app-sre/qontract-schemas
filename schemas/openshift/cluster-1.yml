@@ -175,6 +175,7 @@ properties:
         type: boolean
       private:
         type: boolean
+        description: kube API (load balancer) and router is private, access require peering
       storage:
         type: integer
         enum:
@@ -546,6 +547,7 @@ properties:
     type: string
   internal:
     type: boolean
+    description: the cluster is attached to the transit gateway to the VPN, only private cluster can be internal
   disable:
     type: object
     additionalProperties: false
