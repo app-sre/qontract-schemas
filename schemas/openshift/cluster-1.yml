@@ -669,8 +669,6 @@ required:
 - internal
 - auth
 dependencies:
-  jumpHost:
-  - automationToken
   ocm:
   - spec
   - network
