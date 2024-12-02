@@ -150,6 +150,8 @@ properties:
       properties:
         name:
           type: string
+        indicator_type:
+          type: string
         runbook:
           type: string
         message:
