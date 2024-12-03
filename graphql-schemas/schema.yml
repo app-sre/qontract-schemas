@@ -4302,6 +4302,7 @@ confs:
 - name: ManagedSLODocument_v1
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: indicator_type, type: string, isRequired: true } 
   - { name: runbook, type: string, isRequired: true }
   - { name: message, type: string, isRequired: true }
   - { name: dashboard, type: string, isRequired: true }
