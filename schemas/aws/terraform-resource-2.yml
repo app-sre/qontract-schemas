@@ -135,6 +135,8 @@ properties:
     "$schemaRef": "/aws/vpc-1.yml"
   certificate_arn:
     type: string
+  ssl_policy:
+    type: string
   idle_timeout:
     type: integer
   enable_http2:
