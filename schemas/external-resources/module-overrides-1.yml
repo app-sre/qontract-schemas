@@ -25,5 +25,3 @@ properties:
   outputs_secret_version:
     type: string
     description: Version of the outputs secret container to use
-required:
-- "$schema"
