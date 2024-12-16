@@ -51,14 +51,28 @@ properties:
   variables:
     type: object
     description: Vault paths defining where Terraform inputs are read from and where Terraform outputs are written to
-    properties:
-      inputs:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
-      outputs:
-        "$ref": "/common-1.json#/definitions/vaultSecret"
-    required:
-    - inputs
-    - outputs
+    oneOf:
+    - additionalProperties: false
+      properties:
+        inputs:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+        outputs:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - inputs
+      - outputs
+    - additionalProperties: false
+      properties:
+        inputs:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - inputs
+    - additionalProperties: false
+      properties:
+        outputs:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+      required:
+      - outputs
 required:
 - "$schema"
 - account
