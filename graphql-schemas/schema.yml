@@ -1891,8 +1891,8 @@ confs:
 
 - name: TerraformRepoVariables_v1
   fields:
-  - { name: inputs, type: VaultSecret_v1, isRequired: true }
-  - { name: outputs, type: VaultSecret_v1, isRequired: true }
+  - { name: inputs, type: VaultSecret_v1 }
+  - { name: outputs, type: VaultSecret_v1 }
 
 - name: NamespaceTerraformProviderResourceGCPProject_v1
   interface: NamespaceExternalResource_v1
