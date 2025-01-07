@@ -43,6 +43,9 @@ properties:
           - edit
           - view
           - tekton-trigger-access
+          - appstudio-admin-user-actions
+          - appstudio-contributor-user-actions
+          - appstudio-maintainer-user-actions
         cluster:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
