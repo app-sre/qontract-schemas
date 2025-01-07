@@ -38,11 +38,6 @@ properties:
           "$schemaRef": "/openshift/namespace-1.yml"
         role:
           type: string
-          enum:
-          - admin
-          - edit
-          - view
-          - tekton-trigger-access
         cluster:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
