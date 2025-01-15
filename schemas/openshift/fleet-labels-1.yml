@@ -1,0 +1,84 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/fleet-labels-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  ocm:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+  labelDefaults:
+    description: List of default labels to apply to clusters by external configuration labels
+    type: array
+    items:
+      oneOf:
+      - additionalProperties: false
+        properties:
+          name:
+            type: string
+          matchLabels:
+            type: object
+            additionalProperties:
+              type: string
+          labelTemplate:
+            type: object
+            properties:
+              path:
+                "$ref": "/common-1.json#/definitions/resourceref"
+              type:
+                type: string
+                enum:
+                - jinja2
+                - extracurlyjinja2
+              variables:
+                type: object
+            required:
+            - path
+        required:
+        - name
+        - matchLabels
+        - labelTemplate
+  clusters:
+    description: List of clusters to define dynatrace token provider labels for
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: cluster name
+          type: string
+        serverUrl:
+          description: cluster server url
+          type: string
+          format: uri
+        clusterId:
+          description: cluster ID
+          type: string
+        labels:
+          type: object
+          additionalProperties: false
+          properties:
+            tenant:
+              type: string
+            token-spec:
+              type: string
+      required:
+      - name
+      - serverUrl
+      - clusterId
+      - labels
+required:
+- name
+- ocm
+- labelDefaults
+- clusters
