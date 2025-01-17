@@ -358,6 +358,14 @@ properties:
                     "$schemaRef": "/access/role-1.yml"
                 required:
                 - role
+            must_pass:
+              type: array
+              items:
+                type: string
+                description: List of tests must pass before merging.
+            persistent_pass:
+              type: boolean
+              description: Persistent pass results for ondemand tests in case of auto rebase.
           required:
           - enabled
           - rebase
