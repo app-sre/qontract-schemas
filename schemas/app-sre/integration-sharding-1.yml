@@ -15,6 +15,7 @@ properties:
     enum:
       - per-aws-account
       - per-cloudflare-dns-zone
+      - per-jira-board
       - per-openshift-cluster
       - per-ocm-organization
       - static
