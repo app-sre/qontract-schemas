@@ -217,6 +217,8 @@ properties:
           type: array
           items:
             type: string
+        bound_service_account_namespace_selector:
+          type: string
         token_ttl:
           type: string
           pattern: '^\d+$'
@@ -249,6 +251,7 @@ properties:
       - alias_name_source
       - bound_service_account_names
       - bound_service_account_namespaces
+      - bound_service_account_namespace_selector
       - token_ttl
       - token_max_ttl
       - token_explicit_max_ttl

@@ -346,6 +346,7 @@ confs:
   - { name: audience, type: string }
   - { name: bound_service_account_names, type: string, isList: true, isRequired: true }
   - { name: bound_service_account_namespaces, type: string, isList: true, isRequired: true }
+  - { name: bound_service_account_namespace_selector, type: string, isRequired: true }
   - { name: token_ttl, type: string, isRequired: true }
   - { name: token_max_ttl, type: string, isRequired: true }
   - { name: token_explicit_max_ttl, type: string, isRequired: true }
