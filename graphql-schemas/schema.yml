@@ -4767,6 +4767,7 @@ confs:
   - { name: tf_state_region, type: string, isRequired: false }
   - { name: outputs_secret_image, type: string, isRequired: true }
   - { name: outputs_secret_version, type: string, isRequired: true }
+  - { name: module_default_resources, type: DeployResources_v1, isRequired: true }
 
 - name: ExternalResourcesModule_v1
   datafile: /external-resources/module-1.yml
@@ -4783,6 +4784,7 @@ confs:
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
   - { name: outputs_secret_image, type: string }
   - { name: outputs_secret_version, type: string }
+  - { name: resources, type: DeployResources_v1}
 
 - name: ExternalResourcesModuleOverrides_v1
   datafile: /external-resources/module-overrides-1.yml
@@ -4793,8 +4795,9 @@ confs:
   - { name: image, type: string, isRequired: false}
   - { name: version, type: string, isRequired: false}
   - { name: reconcile_timeout_minutes, type: int, isRequired: false}
-  - { name: outputs_secret_image, type: string }
-  - { name: outputs_secret_version, type: string }
+  - { name: outputs_secret_image, type: string, isRequired: false }
+  - { name: outputs_secret_version, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false}
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1

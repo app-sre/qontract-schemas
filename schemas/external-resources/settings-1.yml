@@ -44,6 +44,10 @@ properties:
     type: string
     description: Version of the outputs secret container to use
 
+  module_default_resources:
+    "$ref": "/openshift/deploy-resources-1.yml"
+
+
 required:
 - "$schema"
 - state_dynamodb_account
@@ -54,3 +58,4 @@ required:
 - vault_secrets_path
 - outputs_secret_image
 - outputs_secret_version
+- module_default_resources
