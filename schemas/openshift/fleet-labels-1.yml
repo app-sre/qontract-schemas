@@ -13,40 +13,44 @@ properties:
     type: string
   description:
     type: string
-  ocm:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+  managedSubscriptionLabelPrefix:
+    type: string
+  ocms:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
   labelDefaults:
     description: List of default labels to apply to clusters by external configuration labels
     type: array
     items:
-      oneOf:
-      - additionalProperties: false
-        properties:
-          name:
+      additionalProperties: false
+      type: object
+      properties:
+        name:
+          type: string
+        matchSubscriptionLabels:
+          type: object
+          additionalProperties:
             type: string
-          matchLabels:
-            type: object
-            additionalProperties:
+        subscriptionLabelTemplate:
+          type: object
+          properties:
+            path:
+              "$ref": "/common-1.json#/definitions/resourceref"
+            type:
               type: string
-          labelTemplate:
-            type: object
-            properties:
-              path:
-                "$ref": "/common-1.json#/definitions/resourceref"
-              type:
-                type: string
-                enum:
-                - jinja2
-                - extracurlyjinja2
-              variables:
-                type: object
-            required:
-            - path
-        required:
-        - name
-        - matchLabels
-        - labelTemplate
+              enum:
+              - jinja2
+              - extracurlyjinja2
+            variables:
+              type: object
+          required:
+          - path
+      required:
+      - name
+      - matchSubscriptionLabels
+      - subscriptionLabelTemplate
   clusters:
     description: List of clusters to define dynatrace token provider labels for
     type: array
@@ -64,7 +68,7 @@ properties:
         clusterId:
           description: cluster ID
           type: string
-        labels:
+        subscriptionLabels:
           type: object
           additionalProperties: false
           properties:
@@ -76,9 +80,10 @@ properties:
       - name
       - serverUrl
       - clusterId
-      - labels
+      - subscriptionLabels
 required:
 - name
-- ocm
+- ocms
+- managedSubscriptionLabelPrefix
 - labelDefaults
 - clusters
