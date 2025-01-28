@@ -358,6 +358,11 @@ properties:
                     "$schemaRef": "/access/role-1.yml"
                 required:
                 - role
+            must_pass:
+              type: array
+              items:
+                type: string
+                description: List of tests must pass before merging.
           required:
           - enabled
           - rebase
