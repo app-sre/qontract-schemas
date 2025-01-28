@@ -2260,6 +2260,9 @@ confs:
   interface: NamespaceTerraformResourceAWS_v1
   fields:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: delete, type: boolean}
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
   - { name: region, type: string, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: output_resource_name, type: string }
