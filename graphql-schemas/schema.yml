@@ -2852,7 +2852,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
+  - { name: labels, type: json, isRequired: true }
   - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: product, type: Product_v1, isRequired: true }
