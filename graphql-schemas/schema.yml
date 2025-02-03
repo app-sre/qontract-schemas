@@ -1179,7 +1179,7 @@ confs:
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: matchSubscriptionLabels, type: json, isRequired: true }
-  - { name: subscriptionLabelTemplate, type: FleetSubscriptionLabelTemplate_v1 }
+  - { name: subscriptionLabelTemplate, type: FleetSubscriptionLabelTemplate_v1, isRequired: true }
 
 - name: FleetCluster_v1
   fields:
