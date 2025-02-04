@@ -43,8 +43,7 @@ properties:
     description: "The name of the cache engine to be used for the cache clusters in this replication group."
     enum:
     - redis
-    # https://github.com/hashicorp/terraform-provider-aws/issues/39641
-    # - valkey
+    - valkey
   engine_version:
     type: string
     description: "The version number of the cache engine to be used for the cache clusters in this replication group."
