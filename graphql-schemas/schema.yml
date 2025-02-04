@@ -1372,6 +1372,12 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: externalResources.provisioner
 
 - name: AWSAutomationRole_v1
   fields:
