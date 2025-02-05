@@ -56,6 +56,17 @@ properties:
     "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
     "$ref": "/common-1.json#/definitions/resourceref"
+  new_parameter_group:
+    "$ref": "/common-1.json#/definitions/resourceref"
+  blue_green_deployment:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      switchover:
+        type: boolean
+      delete:
+        type: boolean
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -522,6 +533,17 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
+    new_parameter_group:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    blue_green_deployment:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        switchover:
+          type: boolean
+        delete:
+          type: boolean
     database_access:
       type: array
       items:
