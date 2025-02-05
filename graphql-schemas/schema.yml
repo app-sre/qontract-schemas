@@ -1212,14 +1212,14 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: enforced, type: boolean, isRequired: true }
 
-- name: FleetLabels_v1
-  datafile: /openshift/fleet-labels-1.yml
+- name: FleetLabelsSpec_v1
+  datafile: /openshift/fleet-labels-spec-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
-  - { name: ocms, type: OpenShiftClusterManager_v1, isList: true, isRequired: true }
+  - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
   - { name: managedSubscriptionLabelPrefix, type: string, isRequired: true }
   - { name: labelDefaults, type: FleetLabelDefault_v1, isList: true, isRequired: true }
   - { name: clusters, type: FleetCluster_v1, isList: true, isRequired: true }
@@ -4062,7 +4062,7 @@ confs:
   - { name: external_resources_settings_v1, type: ExternalResourcesSettings_v1, isList: true, datafileSchema: /external-resources/settings-1.yml }
   - { name: external_resources_modules_v1, type: ExternalResourcesModule_v1, isList: true, datafileSchema: /external-resources/module-1.yml }
   - { name: app_changelog_v1, type: AppChangelog_v1, isList: true, datafileSchema: /app-sre/app-changelog-1.yml }
-  - { name: fleet_labels_v1, type: FleetLabels_v1, isList: true, datafileSchema: /openshift/fleet-labels-1.yml }
+  - { name: fleet_labels_specs_v1, type: FleetLabelsSpec_v1, isList: true, datafileSchema: /openshift/fleet-labels-spec-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
