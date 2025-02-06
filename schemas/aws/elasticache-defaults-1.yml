@@ -10,16 +10,16 @@ properties:
     - /aws/elasticache-defaults-1.yml
   apply_immediately:
     type: boolean
-    description: "Specifies whether any modifications are applied immediately, or during the next maintenance window."
+    description: "Specifies whether any modifications are applied immediately, or during the next maintenance window. Default: false"
   at_rest_encryption_enabled:
     type: boolean
     description: "Specifies whether to enable encryption at rest."
   auto_minor_version_upgrade:
     type: boolean
-    description: "Specifies whether minor engine upgrades are applied automatically to the cache cluster during the maintenance window."
+    description: "Specifies whether minor engine upgrades are applied automatically to the cache cluster during the maintenance window. Default: true"
   automatic_failover_enabled:
     type: boolean
-    description: "Specifies whether a read-only replica is automatically promoted to read/write primary if the existing primary fails."
+    description: "Specifies whether a read-only replica is automatically promoted to read/write primary if the existing primary fails. Default: true"
   availability_zones:
     type: array
     description: "List of Availability Zones in which cache nodes are created. terraform attribute: preferred_cache_cluster_azs"
