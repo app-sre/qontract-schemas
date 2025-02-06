@@ -1169,6 +1169,25 @@ confs:
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
   - { name: upgradePolicyTemplate, type: OpenShiftClusterManagerUpgradePolicyTemplate_v1 }
 
+- name: FleetSubscriptionLabelTemplate_v1
+  fields:
+  - { name: path, type: string, isRequired: true, isResource: true, resolveResource: true }
+  - { name: type, type: string }
+  - { name: variables, type: json }
+
+- name: FleetLabelDefault_v1
+  fields:
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: matchSubscriptionLabels, type: json, isRequired: true }
+  - { name: subscriptionLabelTemplate, type: FleetSubscriptionLabelTemplate_v1, isRequired: true }
+
+- name: FleetCluster_v1
+  fields:
+  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: serverUrl, type: string, isRequired: true, isUnique: true }
+  - { name: clusterId, type: string, isRequired: true, isUnique: true }
+  - { name: subscriptionLabels, type: json, isRequired: true }
+
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
   - { name: name, type: string, isRequired: true, isUnique: true }
@@ -1192,6 +1211,18 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: enforced, type: boolean, isRequired: true }
+
+- name: FleetLabels_v1
+  datafile: /openshift/fleet-labels-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
+  - { name: description, type: string }
+  - { name: ocms, type: OpenShiftClusterManager_v1, isList: true, isRequired: true }
+  - { name: managedSubscriptionLabelPrefix, type: string, isRequired: true }
+  - { name: labelDefaults, type: FleetLabelDefault_v1, isList: true, isRequired: true }
+  - { name: clusters, type: FleetCluster_v1, isList: true, isRequired: true }
 
 - name: OpenShiftClusterManager_v1
   datafile: /openshift/openshift-cluster-manager-1.yml
@@ -1341,6 +1372,12 @@ confs:
     synthetic:
       schema: /aws/policy-1.yml
       subAttr: account
+  - name: namespaces
+    type: Namespace_v1
+    isList: true
+    synthetic:
+      schema: /openshift/namespace-1.yml
+      subAttr: externalResources.provisioner
 
 - name: AWSAutomationRole_v1
   fields:
@@ -2794,6 +2831,7 @@ confs:
   - { name: enable_closing, type: boolean }
   - { name: pipeline_timeout, type: int }
   - { name: labels_allowed, type: CodeComponentGitlabHousekeepingLabelsAllowed_v1, isList: true }
+  - { name: must_pass, type: string, isList: true }
 
 - name: CodeComponentGitlabHousekeepingLabelsAllowed_v1
   fields:
@@ -2854,7 +2892,7 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
+  - { name: labels, type: json, isRequired: true }
   - { name: name, type: string, isRequired: true, isSearchable: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: product, type: Product_v1, isRequired: true }
@@ -3040,6 +3078,7 @@ confs:
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
+  - { name: images, type: SaasResourceTemplateTargetImage_v1, isList: true }
   - { name: image, type: SaasResourceTemplateTargetImage_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
@@ -4026,6 +4065,7 @@ confs:
   - { name: external_resources_settings_v1, type: ExternalResourcesSettings_v1, isList: true, datafileSchema: /external-resources/settings-1.yml }
   - { name: external_resources_modules_v1, type: ExternalResourcesModule_v1, isList: true, datafileSchema: /external-resources/module-1.yml }
   - { name: app_changelog_v1, type: AppChangelog_v1, isList: true, datafileSchema: /app-sre/app-changelog-1.yml }
+  - { name: fleet_labels_v1, type: FleetLabels_v1, isList: true, datafileSchema: /openshift/fleet-labels-1.yml }
 
 - name: GlitchtipInstance_v1
   fields:
@@ -4768,6 +4808,7 @@ confs:
   - { name: tf_state_region, type: string, isRequired: false }
   - { name: outputs_secret_image, type: string, isRequired: true }
   - { name: outputs_secret_version, type: string, isRequired: true }
+  - { name: module_default_resources, type: DeployResources_v1, isRequired: true }
 
 - name: ExternalResourcesModule_v1
   datafile: /external-resources/module-1.yml
@@ -4784,6 +4825,7 @@ confs:
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
   - { name: outputs_secret_image, type: string }
   - { name: outputs_secret_version, type: string }
+  - { name: resources, type: DeployResources_v1}
 
 - name: ExternalResourcesModuleOverrides_v1
   datafile: /external-resources/module-overrides-1.yml
@@ -4794,8 +4836,9 @@ confs:
   - { name: image, type: string, isRequired: false}
   - { name: version, type: string, isRequired: false}
   - { name: reconcile_timeout_minutes, type: int, isRequired: false}
-  - { name: outputs_secret_image, type: string }
-  - { name: outputs_secret_version, type: string }
+  - { name: outputs_secret_image, type: string, isRequired: false }
+  - { name: outputs_secret_version, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false}
 
 - name: MaintenanceStatusProvider_v1
   interface: StatusProvider_v1

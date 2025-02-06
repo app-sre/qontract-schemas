@@ -28,7 +28,8 @@ properties:
     - postgres17
     - redis5.0
     - redis6.x
-    - redis7
+    - valkey7
+    - valkey8
   description:
     type: string
   parameters:

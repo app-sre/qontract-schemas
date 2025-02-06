@@ -43,8 +43,7 @@ properties:
     description: "The name of the cache engine to be used for the cache clusters in this replication group."
     enum:
     - redis
-    # https://github.com/hashicorp/terraform-provider-aws/issues/39641
-    # - valkey
+    - valkey
   engine_version:
     type: string
     description: "The version number of the cache engine to be used for the cache clusters in this replication group."
@@ -128,9 +127,24 @@ properties:
     enum:
     - preferred
     - required
+  service_updates_enabled:
+    type: boolean
+    description: "Enable or disable automatic service updates for the ElastiCache cluster. Default: true"
+  service_updates_severities:
+    type: array
+    description: "A list of the service update severity levels that can be applied for the replication group. Default: ['critical', 'important']"
+    items:
+      type: string
+      enum:
+      - critical
+      - important
+      - medium
+      - low
+  service_updates_cooldown_days:
+    type: integer
+    description: "The number of days that ElastiCache will wait before applying a service update to the replication group. Default: 14 days for production, 7 days for staging, and 5 days for others."
 required:
 - "$schema"
-- auto_minor_version_upgrade
 - engine
 - engine_version
 - node_type
