@@ -2152,7 +2152,6 @@ confs:
   - { name: availability_zone, type: string }
   - { name: parameter_group, type: string, isResource: true }
   - { name: old_parameter_group, type: string, isResource: true }
-  - { name: new_parameter_group, type: string, isResource: true }
   - { name: blue_green_deployment, type: RDSBlueGreenDeployment_v1 }
   - { name: overrides, type: json }
   - { name: database_access, type: DatabaseAccess_v1, isList: true }
@@ -2176,6 +2175,17 @@ confs:
   - { name: enabled, type: boolean }
   - { name: switchover, type: boolean }
   - { name: delete, type: boolean }
+  - { name: target, type: RDSBlueGreenDeploymentTarget_v1 }
+
+- name: RDSBlueGreenDeploymentTarget_v1
+  fields:
+  - { name: parameter_group, type: string, isResource: true }
+  - { name: engine_version, type: string }
+  - { name: instance_class, type: string }
+  - { name: allocated_storage, type: int }
+  - { name: storage_type, type: string }
+  - { name: iops, type: int }
+  - { name: storage_throughput, type: string }
 
 - name: NamespaceTerraformResourceS3_v1
   interface: NamespaceTerraformResourceAWS_v1

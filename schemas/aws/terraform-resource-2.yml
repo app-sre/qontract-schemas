@@ -56,10 +56,9 @@ properties:
     "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
     "$ref": "/common-1.json#/definitions/resourceref"
-  new_parameter_group:
-    "$ref": "/common-1.json#/definitions/resourceref"
   blue_green_deployment:
     type: object
+    additionalProperties: false
     properties:
       enabled:
         type: boolean
@@ -67,6 +66,28 @@ properties:
         type: boolean
       delete:
         type: boolean
+      target:
+        type: object
+        additionalProperties: false
+        properties:
+          parameter_group:
+            "$ref": "/common-1.json#/definitions/resourceref"
+          engine_version:
+            type: string
+          instance_class:
+            type: string
+          allocated_storage:
+            type: integer
+          storage_type:
+            type: string
+            enum:
+            - gp3
+            - io1
+            - io2
+          iops:
+            type: integer
+          storage_throughput:
+            type: integer
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -533,10 +554,9 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
-    new_parameter_group:
-      "$ref": "/common-1.json#/definitions/resourceref"
     blue_green_deployment:
       type: object
+      additionalProperties: false
       properties:
         enabled:
           type: boolean
@@ -544,6 +564,28 @@ oneOf:
           type: boolean
         delete:
           type: boolean
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            parameter_group:
+              "$ref": "/common-1.json#/definitions/resourceref"
+            engine_version:
+              type: string
+            instance_class:
+              type: string
+            allocated_storage:
+              type: integer
+            storage_type:
+              type: string
+              enum:
+              - gp3
+              - io1
+              - io2
+            iops:
+              type: integer
+            storage_throughput:
+              type: integer
     database_access:
       type: array
       items:
