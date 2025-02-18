@@ -3076,7 +3076,6 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
   - { name: images, type: SaasResourceTemplateTargetImage_v1, isList: true }
-  - { name: image, type: SaasResourceTemplateTargetImage_v1 }
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
 
