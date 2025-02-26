@@ -66,6 +66,9 @@ properties:
         clusterId:
           description: cluster ID
           type: string
+        subscriptionId:
+          description: subscription ID
+          type: string
         subscriptionLabels:
           type: object
           additionalProperties:
@@ -74,6 +77,7 @@ properties:
       - name
       - serverUrl
       - clusterId
+      - subscriptionId
       - subscriptionLabels
 required:
 - name

@@ -1186,6 +1186,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: serverUrl, type: string, isRequired: true, isUnique: true }
   - { name: clusterId, type: string, isRequired: true, isUnique: true }
+  - { name: subscriptionId, type: string, isRequired: true, isUnique: true }
   - { name: subscriptionLabels, type: json, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
