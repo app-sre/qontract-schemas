@@ -2236,6 +2236,7 @@ confs:
   - { name: annotations, type: json }
   - { name: lifecycle, type: NamespaceTerraformResourceLifecycle_v1 }
   - { name: managed_by_erv2, type: boolean}
+  - { name: max_session_duration, type: int}
 
 - name: NamespaceTerraformResourceElastiCache_v1
   interface: NamespaceTerraformResourceAWS_v1
