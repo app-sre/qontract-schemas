@@ -16,7 +16,7 @@ properties:
   description:
     type: string
   org_username:
-    "$ref": "/common-1.json#/definitions/identifier"
+    "$ref": "/common-1.json#/definitions/gitlabUsername"
   github_username:
     "$ref": "/common-1.json#/definitions/botIdentifier"
   openshift_serviceaccount:
