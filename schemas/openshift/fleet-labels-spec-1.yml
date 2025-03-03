@@ -18,6 +18,12 @@ properties:
   ocm:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+  disableLabelSynchronization:
+    description: |
+      Disable the synchronization of labels from the subscription to the cluster.
+      This is useful if you want to let fleet labeler render the inventory first and
+      investigate/change any desired labels manually before the synchronization starts.
+    type: boolean
   labelDefaults:
     description: List of default labels to apply to clusters by external configuration labels
     type: array

@@ -1221,6 +1221,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
+  - { name: disableLabelSynchronization, type: boolean }
   - { name: managedSubscriptionLabelPrefix, type: string, isRequired: true }
   - { name: labelDefaults, type: FleetLabelDefault_v1, isList: true, isRequired: true }
   - { name: clusters, type: FleetCluster_v1, isList: true, isRequired: true }
