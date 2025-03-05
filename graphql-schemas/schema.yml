@@ -1186,6 +1186,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: serverUrl, type: string, isRequired: true, isUnique: true }
   - { name: clusterId, type: string, isRequired: true, isUnique: true }
+  - { name: subscriptionId, type: string, isRequired: true, isUnique: true }
   - { name: subscriptionLabels, type: json, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
@@ -1220,6 +1221,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
+  - { name: dryRunLabelSynchronization, type: boolean }
   - { name: managedSubscriptionLabelPrefix, type: string, isRequired: true }
   - { name: labelDefaults, type: FleetLabelDefault_v1, isList: true, isRequired: true }
   - { name: clusters, type: FleetCluster_v1, isList: true, isRequired: true }
@@ -2236,6 +2238,7 @@ confs:
   - { name: annotations, type: json }
   - { name: lifecycle, type: NamespaceTerraformResourceLifecycle_v1 }
   - { name: managed_by_erv2, type: boolean}
+  - { name: max_session_duration, type: int}
 
 - name: NamespaceTerraformResourceElastiCache_v1
   interface: NamespaceTerraformResourceAWS_v1
