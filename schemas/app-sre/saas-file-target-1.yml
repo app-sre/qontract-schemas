@@ -121,6 +121,12 @@ properties:
       required:
       - org
       - name
+  slos:
+    type: array
+    description: list of file path of slo documents to be evaluated before promoting changes
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/slo-document-1.yml" 
   disable:
     type: boolean
   delete:
