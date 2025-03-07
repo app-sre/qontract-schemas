@@ -15,9 +15,9 @@ properties:
     type: string
   managedSubscriptionLabelPrefix:
     type: string
-  ocm:
+  ocmEnv:
     "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/openshift/openshift-cluster-manager-1.yml"
+    "$schemaRef": "/openshift/openshift-cluster-manager-environment-1.yml"
   dryRunLabelSynchronization:
     description: |
       Disable the synchronization of labels from the subscription to the cluster.
@@ -87,7 +87,7 @@ properties:
       - subscriptionLabels
 required:
 - name
-- ocm
+- ocmEnv
 - managedSubscriptionLabelPrefix
 - labelDefaults
 - clusters
