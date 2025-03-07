@@ -648,15 +648,19 @@ properties:
             description: request dynatrace-token-provider to issue a token for the cluster
             additionalProperties: false
             properties:
-              tenant:
-                type: string
-                description: dynatrace tenant id to issue tokens for
-              token-spec:
-                type: string
-                description: name of the DTP token-spec to use for this cluster
-            required:
-            - tenant
-            - token-spec
+              v2:
+                type: object
+                additionalProperties: false
+                properties:
+                  tenant:
+                    type: string
+                    description: dynatrace tenant id to issue tokens for
+                  token-spec:
+                    type: string
+                    description: name of the DTP token-spec to use for this cluster
+                required:
+                - tenant
+                - token-spec
 required:
 - "$schema"
 - labels
