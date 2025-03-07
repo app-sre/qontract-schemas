@@ -1,0 +1,27 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/automated-action-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  operationId:
+    type: string
+    description: The automated action OpenApi operation id.
+  description:
+    type: string
+  retries:
+    type: number
+    description: "Number of times to retry the action. Default: 5"
+  maxOps:
+    type: number
+    description: "Maximum number of operations to perform per hour. Default: no limit"
+required:
+- "$schema"
+- operationId

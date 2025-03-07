@@ -1,0 +1,25 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/automated-actions-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/extendedIdentifier"
+  description:
+    type: string
+  # reference to the automated actions deployment. This will be replaced by proper URL and token references in the future.
+  deployment:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+required:
+- "$schema"
+- name
+- deployment
