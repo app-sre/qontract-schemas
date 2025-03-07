@@ -3355,6 +3355,7 @@ confs:
       jenkins-role: PermissionJenkinsRole_v1
       slack-usergroup: PermissionSlackUsergroup_v1
       gitlab-group-membership: PermissionGitlabGroupMembership_v1
+      automated-actions: PermissionAutomatedActions_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4007,6 +4008,7 @@ confs:
   - { name: app_interface_slack_notifications_v1, type: AppInterfaceSlackNotification_v1,
       isList: true,
       datafileSchema: /app-interface/app-interface-slack-notification-1.yml }
+  - { name: automated_actions_instances_v1, type: AutomatedActionsInstance_v1, isList: true, datafileSchema: /app-sre/automated-actions-instance-1.yml }
   - { name: credentials_requests_v1, type: CredentialsRequest_v1, isList: true, datafileSchema: /app-interface/credentials-request-1.yml }
   - { name: users_v1, type: User_v1, isList: true, datafileSchema: /access/user-1.yml }
   - { name: external_users_v1, type: ExternalUser_v1, isList: true, datafileSchema: /access/external-user-1.yml }
@@ -4908,3 +4910,75 @@ confs:
   fields:
   - { name: tags, type: string, isList: true }
   - { name: description, type: string, isRequired: true }
+
+- name: AutomatedActionsInstance_v1
+  datafile: /app-sre/automated-actions-instance-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: deployment, type: Namespace_v1, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: instances
+
+- name: AutomatedAction_v1
+  datafile: /app-sre/automated-action-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: operationId, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: retries, type: int }
+  - { name: maxOps, type: int }
+
+- name: AutomatedActionArgument_v1
+  datafile: /app-sre/automated-action-argument-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: type
+    fieldMap:
+      openshift: AutomatedActionArgumentOpenshift_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: type, type: string, isRequired: true }
+
+- name: AutomatedActionArgumentOpenshift_v1
+  datafile: /app-sre/automated-action-argument-1.yml
+  interface: AutomatedActionArgument_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: type, type: string, isRequired: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: kind_pattern, type: string }
+  - { name: name_pattern, type: string, isRequired: true }
+
+- name: PermissionAutomatedActions_v1
+  datafile: /access/permission-1.yml
+  interface: Permission_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: service, type: string, isRequired: true }
+  - { name: action, type: AutomatedAction_v1, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - { name: arguments, type: AutomatedActionArgument_v1, isList: true, isInterface: true }
+  - name: roles
+    type: Role_v1
+    isList: true
+    synthetic:
+      schema: /access/role-1.yml
+      subAttr: permissions
