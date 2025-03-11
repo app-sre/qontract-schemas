@@ -4960,7 +4960,7 @@ confs:
   - { name: labels, type: json }
   - { name: type, type: string, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: kind_pattern, type: string }
+  - { name: kind_pattern, type: string, isRequired: true }
   - { name: name_pattern, type: string, isRequired: true }
 
 - name: PermissionAutomatedActions_v1

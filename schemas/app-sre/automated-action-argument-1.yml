@@ -20,7 +20,7 @@ properties:
     "$schemaRef": "/openshift/namespace-1.yml"
   kind_pattern:
     type: string
-    description: "The kind pattern to match. Default: Deployment|Pod"
+    description: "The kind pattern to match."
   name_pattern:
     type: string
     description: "The name pattern to match."
@@ -40,6 +40,7 @@ oneOf:
   required:
   - namespace
   - name_pattern
+  - kind_pattern
 
 required:
 - type
