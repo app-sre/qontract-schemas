@@ -18,10 +18,12 @@ properties:
     type: string
   retries:
     type: number
-    description: "Number of times to retry the action. Default: 5"
+    description: "Number of times to retry the action."
   maxOps:
     type: number
-    description: "Maximum number of operations to perform per hour. Default: 6"
+    description: "Maximum number of operations to perform per hour."
 required:
 - "$schema"
 - operationId
+- retries
+- maxOps
