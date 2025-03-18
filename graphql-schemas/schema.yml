@@ -2482,6 +2482,14 @@ confs:
   - { name: openshift_service, type: string }
   - { name: protocol, type: string }
   - { name: protocol_version, type: string }
+  - { name: health_check, type: NamespaceTerraformResourceALBTargetHealthcheck_v1 }
+
+- name: NamespaceTerraformResourceALBTargetHealthcheck_v1
+  fields:
+  - { name: unhealthy_threshold, type: int }
+  - { name: timeout, type: int }
+  - { name: interval, type: int }
+  - { name: healthy_threshold, type: int }
 
 - name: NamespaceTerraformResourceALBRules_v1
   fields:

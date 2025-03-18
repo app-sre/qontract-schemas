@@ -1261,6 +1261,20 @@ oneOf:
               - HTTP1
               - HTTP2
               - GRPC
+          health_check:
+            type: object
+            additionalProperties: false
+            properties:
+              unhealthy_threshold:
+                type: number
+              timeout:
+                description: "In seconds"
+                type: number
+              interval:
+                description: "In seconds"
+                type: number
+              healthy_threshold:
+                type: number
         required:
         - name
         - default
