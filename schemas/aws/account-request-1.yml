@@ -50,6 +50,10 @@ properties:
     type: object
     description: |
       Enable/disable additional features for this account. See account template for all available feature options.
+  accountFileTargetPath:
+    type: string
+    description: |
+      Specifying the target path for the new account file. Default: `/aws/<account_name>/account.yml`
 required:
 - "$schema"
 - labels
