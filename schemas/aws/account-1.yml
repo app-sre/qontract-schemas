@@ -26,6 +26,7 @@ properties:
     type: array
     items:
       type: string
+      description: "The regions where the account is enabled and can be used."
   providerVersion:
     type: string
   terraformUsername:
