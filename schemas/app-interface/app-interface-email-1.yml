@@ -2,6 +2,8 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "app-interface-email"
+description: "Specification for single automated email message. Recipients can be static or dynamic based on service, cluster, namespace, aws account, role, or user relations."
 
 additionalProperties: false
 properties:
@@ -13,13 +15,17 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: "Internal name for an email instantiation."
   subject:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
+    description: "Subject line of email message"
   to:
     type: object
+    description: "Recipients of email message"
     properties:
       aliases:
         type: array
+        description: "Recipient group aliases. Group names and membership logic defined in qontract-reconcile email-sender integration."
         items:
           type: string
           enum:
@@ -27,36 +33,43 @@ properties:
           - all-service-owners
       services:
         type: array
+        description: "Dynamic recipient group depending on service <> role <> user relations."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/app-sre/app-1.yml"
       clusters:
         type: array
+        description: "Dynamic recipient group depending on cluster <> role <> user relations."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
       namespaces:
         type: array
+        description: "Dynamic recipient group depending on namespace <> role <> user relations."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
       aws_accounts:
         type: array
+        description: "Dynamic recipient group depending on aws account <> role <> user relations."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/aws/account-1.yml"
       roles:
         type: array
+        description: "Dynamic recipient group depending on role <> user relations."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/role-1.yml"
       users:
         type: array
+        description: "Explicit list of recipients by user schema references."
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/user-1.yml"
   body:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
+    description: "Body of email message"
 required:
 - "$schema"
 - labels
