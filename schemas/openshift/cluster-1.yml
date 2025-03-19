@@ -589,6 +589,7 @@ properties:
           - gabi-authorized-users
           - cluster-auth-rhidp
           - endpoints-discovery
+          - automated-actions
   awsInfrastructureAccess:
     type: array
     items:
