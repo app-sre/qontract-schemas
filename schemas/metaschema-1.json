@@ -2,6 +2,8 @@
   "$schema": "/json-schema-spec-draft-06.json",
   "version": "1.0",
   "type": "object",
+  "title": "metaschema",
+  "description": "Defines the structure of a qontract-schema",
   "properties": {
     "$schema": {
       "type": "string",
@@ -14,6 +16,12 @@
     },
     "labels": {
       "type": "object"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
     },
     "additionalProperties": {
       "type": "boolean",
