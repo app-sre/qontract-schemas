@@ -3,7 +3,9 @@
 version: '1.0'
 type: object
 title: "app-interface-email"
-description: "Specification for single automated email message. Recipients can be static or dynamic based on service, cluster, namespace, aws account, role, or user relations."
+description: |
+  Specification for a single automated email message. 
+  Recipients can be static or dynamic based on service, cluster, namespace, aws account, role, or user relations.
 
 additionalProperties: false
 properties:
