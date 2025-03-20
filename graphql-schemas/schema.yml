@@ -1350,6 +1350,7 @@ confs:
   - { name: alias, type: string }
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
   - { name: organization, type: AWSOrganization_v1 }
+  - { name: organizationAccountTags, type: json }
   - name: account_requests
     type: AWSAccountRequest_v1
     isList: true
