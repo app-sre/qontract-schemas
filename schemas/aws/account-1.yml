@@ -162,7 +162,7 @@ properties:
       description: "AWS quota limits for this account"
   organizationAccountTags:
     "$ref": "/common-1.json#/definitions/labels"
-    description: "Apply these tags to all accounts in the organization. This is useful for tagging all accounts in the organization with the same tags."
+    description: "For payer accounts only! Apply these tags to all accounts in the organization. This is useful for tagging all accounts in the organization with the same tags."
 dependencies:
   resetPasswords:
     properties:
