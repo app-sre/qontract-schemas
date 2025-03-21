@@ -2486,12 +2486,16 @@ confs:
   - { name: protocol_version, type: string }
   - { name: health_check, type: NamespaceTerraformResourceALBTargetHealthcheck_v1 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group
 - name: NamespaceTerraformResourceALBTargetHealthcheck_v1
   fields:
   - { name: unhealthy_threshold, type: int }
   - { name: timeout, type: int }
   - { name: interval, type: int }
   - { name: healthy_threshold, type: int }
+  - { name: port, type: int }
+  - { name: path, type: string }
+  - { name: protocol, type: string }
 
 - name: NamespaceTerraformResourceALBRules_v1
   fields:
