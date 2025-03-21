@@ -1275,6 +1275,15 @@ oneOf:
                 type: number
               healthy_threshold:
                 type: number
+              port:
+                type: number
+              path:
+                type: string
+              protocol:
+                type: string
+                enum:
+                  - HTTPS
+                  - HTTP
         required:
         - name
         - default
