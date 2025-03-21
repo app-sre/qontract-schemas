@@ -21,7 +21,9 @@ properties:
     type: string
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
-  pushCredentials:
+  gcrPushCredentials:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  artifactPushCredentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
 - "$schema"

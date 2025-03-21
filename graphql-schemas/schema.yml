@@ -438,7 +438,8 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: managedTeams, type: string, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1 }
-  - { name: pushCredentials, type: VaultSecret_v1 }
+  - { name: gcrPushCredentials, type: VaultSecret_v1 }
+  - { name: artifactPushCredentials, type: VaultSecret_v1, isRequired: true }
 
 - name: GrafanaDashboardUrls_v1
   fields:
@@ -2778,6 +2779,16 @@ confs:
   - { name: public, type: boolean, isRequired: true }
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
+- name: AppArtifactRegistryMirrorsItems_v1
+  fields:
+  - { name: imageURL, type: string, isRequired: true }
+  - { name: mirror, type: ContainerImageMirror_v1, isRequired: true }
+
+- name: AppArtifactRegistryMirrors_v1
+  fields:
+  - { name: project, type: GcpProject_v1, isRequired: true }
+  - { name: items, type: AppArtifactRegistryMirrorsItems_v1, isRequired: true, isList: true }
+
 - name: ContainerImageMirror_v1
   datafile: /dependencies/container-image-mirror-1.yml
   fields:
@@ -2969,6 +2980,7 @@ confs:
   - { name: serviceNotifications, type: Owner_v1, isList: true }
   - { name: dependencies, type: Dependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
+  - { name: artifactRegistryMirrors, type: AppArtifactRegistryMirrors_v1, isList: true }
   - { name: quayRepos, type: AppQuayRepos_v1, isList: true }
   - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
