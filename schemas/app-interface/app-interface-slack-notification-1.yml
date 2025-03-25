@@ -17,8 +17,6 @@ properties:
       The schema reference for this Slack notification file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-    description: |
-      Labels associated with this Slack notification object.
   name:
     type: string
     description: |
