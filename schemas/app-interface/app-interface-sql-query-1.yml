@@ -17,8 +17,6 @@ properties:
       The schema reference for this SQL query file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-    description: |
-      Labels associated with this SQL query object.
   name:
     "$ref": "/common-1.json#/definitions/k8sValidContainerName"
     description: |
