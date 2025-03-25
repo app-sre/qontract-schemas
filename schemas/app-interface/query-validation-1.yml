@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "App Interface Query Validation"
+description: |
+  Schema for defining query validation configurations in app-interface. 
+  This includes details about the queries to validate, escalation policies, 
+  and associated resources.
 
 additionalProperties: false
 properties:
@@ -9,34 +14,45 @@ properties:
     type: string
     enum:
     - /app-interface/query-validation-1.yml
+    description: |
+      The schema reference for this query validation file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
-    description: unique name for query validation
+    description: |
+      A unique name for the query validation configuration.
   description:
     type: string
-    description: description of the queries included in the file
+    description: |
+      A description of the queries included in the file.
   escalationPolicy:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/escalation-policy-1.yml"
+    description: |
+      Reference to the escalation policy to be used if validation fails.
   queries:
     type: array
-    description: queries to validate
+    description: |
+      A list of queries to validate.
     items:
       type: object
       additionalProperties: false
       properties:
         path:
           "$ref": "/common-1.json#/definitions/resourceref"
-          description: path to resource query to be tested
+          description: |
+            The path to the resource query to be tested.
       required:
       - path
     minItems: 1
   resources:
     type: array
+    description: |
+      A list of resources associated with the query validation.
     items:
       "$ref": "/openshift/openshift-resource-1.yml"
+
 required:
 - "$schema"
 - labels
