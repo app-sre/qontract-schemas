@@ -404,6 +404,20 @@ properties:
     type: array
     description: |
       Deprecated object for Terraform resource exclusions by provisioner.
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        provisioner:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/aws/account-1.yml"
+        excludedProviders:
+           type: array
+           items:
+            type: string
+      required:
+        - provisioner
+        - excludedProviders
 required:
 - "$schema"
 - labels
