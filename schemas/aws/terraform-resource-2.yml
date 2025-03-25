@@ -64,6 +64,16 @@ properties:
         type: boolean
       switchover:
         type: boolean
+      switchover_timeout:
+        type: integer
+        minimum: 30
+        maximum: 3600
+        description: |
+          The amount of time, in seconds, for the switchover to complete.
+          If the switchover takes longer than the specified duration,
+          then any changes are rolled back, and no changes are made to the environments.
+          The default timeout period is 300 seconds (5 minutes).
+          This is the max allowed downtime, use it to plan maintenance window.
       delete:
         type: boolean
       target:
@@ -562,6 +572,8 @@ oneOf:
           type: boolean
         switchover:
           type: boolean
+        switchover_timeout:
+          type: integer
         delete:
           type: boolean
         target:

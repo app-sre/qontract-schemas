@@ -2176,6 +2176,7 @@ confs:
   fields:
   - { name: enabled, type: boolean }
   - { name: switchover, type: boolean }
+  - { name: switchover_timeout, type: int }
   - { name: delete, type: boolean }
   - { name: target, type: RDSBlueGreenDeploymentTarget_v1 }
 
