@@ -179,7 +179,6 @@ properties:
       storage:
         type: integer
         enum:
-        - 1
         - 100
         - 600
         - 1100
@@ -189,7 +188,17 @@ properties:
         - 3100
         - 3600
         - 4100
+        - 4600
+        - 5100
+        - 5600
+        - 6100
+        - 6600
         - 7100
+        - 7600
+        - 8100
+        - 8600
+        - 9100
+        - 9600
       load_balancers:
         type: integer
         enum:
