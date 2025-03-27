@@ -4211,7 +4211,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: projectId, type: string }
   - { name: description, type: string, isRequired: true }
-  - { name: app, type: App_v1 }
+  - { name: app, type: App_v1, isRequired: true }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
