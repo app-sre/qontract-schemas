@@ -1,0 +1,46 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/automated-action-argument-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  type:
+    type: string
+
+  # type=openshift related properties
+  namespace:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+  kind_pattern:
+    type: string
+    description: "The kind pattern to match."
+  name_pattern:
+    type: string
+    description: "The name pattern to match."
+
+oneOf:
+- properties:
+    type:
+      enum:
+      - openshift
+    namespace:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/namespace-1.yml"
+    kind_pattern:
+      type: string
+    name_pattern:
+      type: string
+  required:
+  - namespace
+  - name_pattern
+  - kind_pattern
+
+required:
+- type

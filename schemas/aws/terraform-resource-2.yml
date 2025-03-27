@@ -56,6 +56,48 @@ properties:
     "$ref": "/common-1.json#/definitions/resourceref"
   old_parameter_group:
     "$ref": "/common-1.json#/definitions/resourceref"
+  blue_green_deployment:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
+      switchover:
+        type: boolean
+      switchover_timeout:
+        type: integer
+        minimum: 30
+        maximum: 3600
+        description: |
+          The amount of time, in seconds, for the switchover to complete.
+          If the switchover takes longer than the specified duration,
+          then any changes are rolled back, and no changes are made to the environments.
+          The default timeout period is 300 seconds (5 minutes).
+          This is the max allowed downtime, use it to plan maintenance window.
+      delete:
+        type: boolean
+      target:
+        type: object
+        additionalProperties: false
+        properties:
+          parameter_group:
+            "$ref": "/common-1.json#/definitions/resourceref"
+          engine_version:
+            type: string
+          instance_class:
+            type: string
+          allocated_storage:
+            type: integer
+          storage_type:
+            type: string
+            enum:
+            - gp3
+            - io1
+            - io2
+          iops:
+            type: integer
+          storage_throughput:
+            type: integer
   region:
     "$ref": "/aws/regions-1.yml#/properties/region"
   overrides:
@@ -522,6 +564,40 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     old_parameter_group:
       "$ref": "/common-1.json#/definitions/resourceref"
+    blue_green_deployment:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        switchover:
+          type: boolean
+        switchover_timeout:
+          type: integer
+        delete:
+          type: boolean
+        target:
+          type: object
+          additionalProperties: false
+          properties:
+            parameter_group:
+              "$ref": "/common-1.json#/definitions/resourceref"
+            engine_version:
+              type: string
+            instance_class:
+              type: string
+            allocated_storage:
+              type: integer
+            storage_type:
+              type: string
+              enum:
+              - gp3
+              - io1
+              - io2
+            iops:
+              type: integer
+            storage_throughput:
+              type: integer
     database_access:
       type: array
       items:
@@ -1197,6 +1273,29 @@ oneOf:
               - HTTP1
               - HTTP2
               - GRPC
+          health_check:
+            type: object
+            additionalProperties: false
+            properties:
+              unhealthy_threshold:
+                type: number
+              timeout:
+                description: "In seconds"
+                type: number
+              interval:
+                description: "In seconds"
+                type: number
+              healthy_threshold:
+                type: number
+              port:
+                type: number
+              path:
+                type: string
+              protocol:
+                type: string
+                enum:
+                  - HTTPS
+                  - HTTP
         required:
         - name
         - default
