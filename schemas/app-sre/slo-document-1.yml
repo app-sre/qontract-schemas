@@ -54,6 +54,9 @@ properties:
           - url
       required:
       - namespace
+      dependencies:
+        SLONamespace:
+        - prometheusAccess
   slos:
     type: array
     items:
