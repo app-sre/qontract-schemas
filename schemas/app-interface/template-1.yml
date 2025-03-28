@@ -1,9 +1,12 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-
 type: object
-description: Template to be generated
+title: "App Interface Template"
+description: |
+  Schema for defining templates in app-interface. 
+  This includes details about the template, its target path, 
+  conditions, tests, and rendering options.
 
 additionalProperties: false
 
@@ -12,43 +15,70 @@ properties:
     type: string
     enum:
     - /app-interface/template-1.yml
+    description: |
+      The schema reference for this template file.
   name:
     type: string
+    description: |
+      A unique name for the template.
   autoApproved:
     type: boolean
+    description: |
+      Indicates whether the template is automatically approved.
   targetPath:
     type: string
+    description: |
+      The target path where the template will be applied.
   condition:
     type: string
+    description: |
+      A condition that must be met for the template to be applied.
   patch:
     type: object
+    description: |
+      A patch to be applied to the template.
     additionalProperties: false
     properties:
       path:
         type: string
+        description: |
+          The path within the template to which the patch applies.
       identifier:
         type: string
+        description: |
+          An identifier for the patch.
     required:
     - path
   template:
     type: string
+    description: |
+      The content of the template to be rendered.
   templateTest:
     type: array
-    description: list of tests
+    description: |
+      A list of tests to validate the template.
     minItems: 1
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/template-test-1.yml"
   templateRenderOptions:
     type: object
+    description: |
+      Options for rendering the template.
     additionalProperties: false
     properties:
       trimBlocks:
         type: boolean
+        description: |
+          Indicates whether to trim blocks during rendering.
       lstripBlocks:
         type: boolean
+        description: |
+          Indicates whether to strip leading whitespace from blocks.
       keepTrailingNewline:
         type: boolean
+        description: |
+          Indicates whether to keep trailing newlines in the rendered template.
 
 required:
 - "$schema"
