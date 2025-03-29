@@ -2,6 +2,10 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "App Interface Settings"
+description: |
+  Specifications for configuring an app-interface instance. 
+  Configuration includes repository configuration, credentials, integrations, and other operational parameters.
 
 additionalProperties: false
 properties:
@@ -13,84 +17,123 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      The name of the app-interface settings object.
   description:
     type: string
+    description: |
+      A brief description of the app-interface settings object.
   repoUrl:
     type: string
-    description: url of the app-interface git repository
+    description: |
+      URL of the app-interface Git repository.
     format: uri
   vault:
     type: boolean
+    description: |
+      If true, a Vault instance provides secrets for automation.
+      If false, a config file provides secrets for automation.
   kubeBinary:
     type: string
+    description: |
+      The Kubernetes CLI binary to use (e.g., kubectl or oc).
     enum:
     - kubectl
     - oc
   mergeRequestGateway:
     type: string
+    description: |
+      Determines the interface and destination for merge requests created with automation.
     enum:
     - gitlab
     - sqs
   saasDeployJobTemplate:
     type: string
+    description: |
+      Used with visual-qontract to generate pipeline names.
     enum:
     - openshift-saas-deploy
     - saas-deploy
   hashLength:
     type: integer
+    description: |
+      The length of the hash used in openshift-saas-deploy pipeline
     enum:
     - 7
   smtp:
     type: object
+    description: |
+      SMTP configuration for sending emails.
     additionalProperties: false
     properties:
       mailAddress:
         type: string
+        description: |
+          The email address used for sending emails.
       timeout:
         type: integer
+        description: |
+          Timeout value for SMTP connections.
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing SMTP credentials.
     required:
     - mailAddress
     - credentials
   imap:
     type: object
+    description: |
+      IMAP configuration for receiving emails.
     additionalProperties: false
     properties:
       timeout:
         type: integer
+        description: |
+          Timeout value for IMAP connections.
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing IMAP credentials.
     required:
     - credentials
   githubRepoInvites:
     type: object
+    description: |
+      Configuration for the github-repo-invites integration.
     additionalProperties: false
     properties:
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
-    description: |
-      Configuration for github-repo-invites integration.
-      Currently contains information for fetching the
-      token of the github app-sre bot for accepting
-      invitations to repositories.
+        description: |
+          Vault secret containing credentials for the machine user (app-sre-bot) that interacts with the GitHub API.
     required:
     - credentials
   ldap:
     type: object
+    description: |
+      LDAP configuration for authentication and directory services.
     additionalProperties: false
     properties:
       serverUrl:
         type: string
+        description: |
+          URL of the LDAP server.
       baseDn:
         type: string
+        description: |
+          Base DN for LDAP queries.
   dependencies:
     type: array
+    description: |
+      List of dependencies required by the app-interface instance.
     items:
       type: object
       properties:
         type:
           type: string
+          description: |
+            The type of dependency (e.g., OpenShift, AWS, GitHub).
           enum:
           - openshift
           - aws
@@ -102,6 +145,8 @@ properties:
           - kafka
         services:
           type: array
+          description: |
+            List of service references associated with the dependency.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/dependencies/dependency-1.yml"
@@ -110,75 +155,108 @@ properties:
       - services
   credentials:
     type: array
+    description: |
+      List of GraphQL client credential instantiations.
     items:
       type: object
       properties:
         name:
           type: string
+          description: |
+            The name of the credential.
         secret:
           "$ref": "/common-1.json#/definitions/vaultSecret"
+          description: |
+            Vault secret containing the credential.
       required:
       - name
       - secret
   sqlQuery:
     type: object
+    description: |
+      Configuration for SQL queries.
     additionalProperties: false
     properties:
       imageRepository:
         type: string
+        description: |
+          The repository for the SQL query image.
       pullSecret:
         "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
+        description: |
+          Vault secret for pulling the SQL query image.
     required:
     - imageRepository
     - pullSecret
   pushGatewayCluster:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/cluster-1.yml"
+    description: |
+      Reference to the cluster used for the push gateway.
   alertingServices:
     type: array
+    description: |
+      List of services authorized to send alerts.
     items:
       type: string
   endpointMonitoringBlackboxExporterModules:
     type: array
     description: |
-      the blackbox exporter modules that can be used for /dependencies/endpoint-monitoring-provider-1.yml#blackboxExporter.module
-      if none are listed, no restrictions apply
+      List of supported blackbox exporter modules for endpoint monitoring.
     items:
       type: string
   jiraWatcher:
     type: object
+    description: |
+      Configuration for the Jira watcher integration.
     additionalProperties: false
     properties:
       readTimeout:
         type: integer
+        description: |
+          Read timeout for Jira watcher.
       connectTimeout:
         type: integer
+        description: |
+          Connection timeout for Jira watcher.
     required:
     - readTimeout
     - connectTimeout
   cloudflareEmailDomainAllowList:
     type: array
-    description: Email domain allow list restricts user with specific email domain to get access to Cloudflare systems
+    description: |
+      List of email domains allowed for Cloudflare access.
     items:
       type: string
   cloudflareDNSZoneMaxRecords:
     type: integer
+    description: |
+      Maximum number of DNS records allowed per zone in Cloudflare.
   state:
     type: object
-    description: app-interface state settings
+    description: |
+      Configuration for app-interface state settings.
     oneOf:
     - additionalProperties: false
       properties:
         provider:
           type: string
+          description: |
+            The provider for state storage (e.g., S3).
           enum:
           - s3
         bucket:
           type: string
+          description: |
+            The bucket name for state storage.
         region:
           type: string
+          description: |
+            The region for state storage.
         credentials:
           "$ref": "/common-1.json#/definitions/vaultSecret"
+          description: |
+            Vault secret containing credentials for state storage.
       required:
       - provider
       - bucket
@@ -186,115 +264,146 @@ properties:
       - credentials
   ldapGroups:
     type: object
+    description: |
+      Configuration for LDAP groups.
     additionalProperties: false
     properties:
       contactList:
         type: string
+        description: |
+          Contact list for LDAP groups.
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing credentials for LDAP groups.
     required:
     - contactList
     - credentials
   deadMansSnitchSettings:
     type: object
-    description: this settings object is used by deadmanssnitch integration
+    description: |
+      Configuration for Dead Man's Snitch integration.
     additionalProperties: false
     properties:
       alertMailAddresses:
         type: array
-        description: email addresses used by deadmanssnitch to send alert in case no check in
+        description: |
+          Email addresses used for Dead Man's Snitch alerts.
         items:
           type: string
       notesLink:
-        description: the link to SOP in case endpoint is not checking in
         type: string
+        description: |
+          Link to the SOP for handling Dead Man's Snitch alerts.
       snitchesPath:
-        description: vault location to fetch snitch url secrets from
         type: string
+        description: |
+          Vault location for snitch URL secrets.
       tokenCreds:
-        description: credentials to interact with deadmanssnitch api
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing credentials for Dead Man's Snitch API.
       tags:
-        description: tags to filter relevant snitch data from deadmanssnitch
         type: array
+        description: |
+          Tags for filtering snitch data.
         items:
           type: string
       interval:
-        description: the time interval between snitch to check in
         type: string
+        description: |
+          Time interval between snitch check-ins.
       alertType:
-        description: the type of alert to be configured for snitch
-
-
+        type: string
+        description: |
+          Type of alert configured for the snitch.
   costReport:
     type: object
+    description: |
+      Configuration for cost reporting.
     additionalProperties: false
     properties:
       credentials:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing credentials for cost reporting.
     required:
     - credentials
   jiralert:
     type: object
+    description: |
+      Configuration for Jira alerting.
     additionalProperties: false
-    # we can't use enum here because the values are highly customisable per jira project/instance
     properties:
       defaultIssueType:
         type: string
+        description: |
+          Default issue type for Jira alerts.
       defaultPriority:
         type: string
+        description: |
+          Default priority for Jira alerts.
       defaultReopenState:
         type: string
+        description: |
+          Default reopen state for Jira alerts.
     required:
     - defaultIssueType
     - defaultPriority
     - defaultReopenState
   customMessages:
     type: array
-    description: custom messages to be used in integrations
+    description: |
+      Custom messages used in integrations.
     items:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-          description: unique id of the message
+          description: |
+            Unique ID of the custom message.
         content:
           type: string
-          description: content of the message
+          description: |
+            Content of the custom message.
       required:
       - id
       - content
   terraformResourcesProviderExclusions:
     type: array
     description: |
-      Object to hold provisioner exclusions by provider.
-      e.g: RDS is not managed by terraform-resources on app-sre-stage.
-      The use-case is the Erv2 resources migration
+      Exclusions for Terraform resources by provider.
     items:
       type: object
       additionalProperties: false
       properties:
         provider:
           type: string
+          description: |
+            The provider for the exclusion.
         excludeAllProvisioners:
           type: boolean
+          description: |
+            Whether to exclude all provisioners.
         excludeProvisioners:
           type: array
+          description: |
+            List of provisioners to exclude.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/aws/account-1.yml"
       required:
-        - provider
+      - provider
       oneOf:
       - required:
         - excludeAllProvisioners
       - required:
         - excludeProvisioners
-
   terraformResourcesProviderExclusionsByProvisioner:
     type: array
-    description: deprecated object. Just here to rollout new changes
+    description: |
+      Deprecated object for Terraform resource exclusions by provisioner.
     items:
       type: object
       additionalProperties: false
@@ -309,7 +418,6 @@ properties:
       required:
         - provisioner
         - excludedProviders
-
 required:
 - "$schema"
 - labels
