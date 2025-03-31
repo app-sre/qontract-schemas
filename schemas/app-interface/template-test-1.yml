@@ -41,7 +41,9 @@ properties:
   expectedToRender:
     type: boolean
     description: |
-      Indicates whether the template is expected to render successfully.
+      Determines if the template should render based on the condition.
+      If true, the template should render even if a required condition is not met.
+      If false, the template should not render if a required condition is not met.
 
 required:
 - "$schema"
