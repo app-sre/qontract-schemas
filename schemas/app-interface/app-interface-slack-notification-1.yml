@@ -2,6 +2,10 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "App Interface Slack Notification"
+description: |
+  Schema for defining a single Slack notification message. 
+  Notifications can be sent to specific channels or users.
 
 additionalProperties: false
 properties:
@@ -9,23 +13,37 @@ properties:
     type: string
     enum:
     - /app-interface/app-interface-slack-notification-1.yml
+    description: |
+      The schema reference for this Slack notification file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      The name of the Slack notification object.
   subject:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
+    description: |
+      The subject or title of the Slack notification message.
   channel:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
+    description: |
+      The Slack channel where the notification will be sent.
   to:
     type: object
+    description: |
+      Recipients of the Slack notification.
     properties:
       users:
         type: array
+        description: |
+          List of Slack users who will receive the notification.
         items:
           type: string
   body:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
+    description: |
+      The body content of the Slack notification message.
 required:
 - "$schema"
 - labels
