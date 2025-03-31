@@ -42,11 +42,17 @@ properties:
       path:
         type: string
         description: |
-          The path within the template to which the patch applies.
+          JSON path to the target field in the template to patch.
       identifier:
         type: string
         description: |
-          An identifier for the patch.
+          Unique identifier field to use with path results.
+          Can be a string (field name) or a JSON path.
+          Examples: 
+            path_results = [{'id': 1, 'name': 'a'}, {'id': 2, 'name': 'b'}]
+            identifier = 'id'
+            path_results = ['a', 'b']
+            identifier = '$.id'
     required:
     - path
   template:
