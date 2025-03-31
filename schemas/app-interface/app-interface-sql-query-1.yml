@@ -29,7 +29,7 @@ properties:
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
     description: |
-      A unique identifier for the SQL query.
+      The identifier for the RDS instance as defined in an app-interface namespace file.
   requestor:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/access/user-1.yml"
