@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "OIDC Permission"
+description: |
+  Schema for defining OIDC permissions in app-interface. 
+  This includes details about the service, associated policies, 
+  clusters, namespaces, and permission sets.
 
 additionalProperties: false
 properties:
@@ -13,39 +18,59 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      A unique name for the OIDC permission.
   service:
     type: string
+    description: |
+      The service for which the OIDC permission is defined. 
+      Supported services include `vault` and `acs`.
   description:
     type: string
+    description: |
+      A brief description of the OIDC permission.
   vault_policies:
     type: array
+    description: |
+      A list of Vault policies associated with the OIDC permission.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef":
         type: object
         properties:
-          '$schema':
+          "$schema":
             type: string
             enum:
             - /vault-config/policy-1.yml
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      The Vault instance associated with the OIDC permission.
   clusters:
     type: array
+    description: |
+      A list of OpenShift clusters associated with the OIDC permission.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/cluster-1.yml"
   namespaces:
     type: array
+    description: |
+      A list of OpenShift namespaces associated with the OIDC permission.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
   permission_set:
+    type: string
+    description: |
+      The permission set assigned to the OIDC permission. 
+      Supported values include `admin`, `analyst`, and `vuln-admin`.
     enum:
     - admin
     - analyst
     - vuln-admin
+
 oneOf:
 - properties:
     service:
@@ -53,18 +78,22 @@ oneOf:
       - vault
     vault_policies:
       type: array
+      description: |
+        A list of Vault policies required for the `vault` service.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef":
           type: object
           properties:
-            '$schema':
+            "$schema":
               type: string
               enum:
               - /vault-config/policy-1.yml
     instance:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/vault-config/instance-1.yml"
+      description: |
+        The Vault instance required for the `vault` service.
   required:
   - vault_policies
   - instance
@@ -74,15 +103,22 @@ oneOf:
       - acs
     clusters:
       type: array
+      description: |
+        A list of OpenShift clusters required for the `acs` service.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/cluster-1.yml"
     namespaces:
       type: array
+      description: |
+        A list of OpenShift namespaces required for the `acs` service.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/namespace-1.yml"
     permission_set:
+      type: string
+      description: |
+        The permission set required for the `acs` service.
       enum:
       - admin
       - analyst
@@ -94,6 +130,7 @@ oneOf:
   - required:
     - permission_set
     - namespaces
+
 required:
 - $schema
 - name
