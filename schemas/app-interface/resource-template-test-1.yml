@@ -1,9 +1,12 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-
 type: object
-description: a specification for a template test
+title: "App Interface Resource Template Test"
+description: |
+  Schema for defining resource template tests in app-interface. 
+  This includes details about the resource template to be tested, 
+  the expected result, and other metadata.
 
 additionalProperties: false
 properties:
@@ -15,14 +18,21 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      A unique name for the resource template test.
   description:
     type: string
+    description: |
+      A description of the resource template test.
   resourcePath:
     type: string
-    description: path to resource template to be tested
+    description: |
+      The path to the resource template to be tested.
   expectedResult:
     type: string
-    description: the exected result of the templating to compare to
+    description: |
+      The expected result of the templating process to compare against.
+
 required:
 - "$schema"
 - labels
