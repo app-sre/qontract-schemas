@@ -39,7 +39,7 @@ properties:
   expectedToRender:
     type: boolean
     description: |
-      Indicates if template is expected to render given the test condition.
+      Expected evaluation result of `$.condition` in `/app-interface/template-1.yml`.
 
 required:
 - "$schema"
