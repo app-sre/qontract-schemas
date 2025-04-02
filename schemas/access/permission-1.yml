@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Permission"
+description: |
+  Schema for defining permissions in app-interface. 
+  This includes details about services, roles, access levels, 
+  and associated resources such as clusters, namespaces, and 
+  external systems.
 
 additionalProperties: false
 properties:
@@ -13,30 +19,54 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      A unique name for the permission.
   description:
     type: string
+    description: |
+      A brief description of the permission.
   service:
     type: string
+    description: |
+      The service for which the permission is defined.
   org:
     type: string
+    description: |
+      The organization associated with the permission.
   team:
     type: string
+    description: |
+      The team associated with the permission.
   cluster:
     type: string
+    description: |
+      The OpenShift cluster associated with the permission.
   namespace:
     type: string
+    description: |
+      The OpenShift namespace associated with the permission.
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+    description: |
+      The Jenkins instance associated with the permission.
   quayOrg:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/quay-org-1.yml"
+    description: |
+      The Quay organization associated with the permission.
   role:
     type: string
+    description: |
+      The role assigned within the service or organization.
   group:
     type: string
+    description: |
+      The group associated with the permission.
   access:
     type: string
+    description: |
+      The access level granted by the permission.
     enum:
     - "owner"
     - "maintainer"
@@ -45,40 +75,62 @@ properties:
     - "guest"
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      The Vault secret token used for authentication.
   workspace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/slack-workspace-1.yml"
+    description: |
+      The Slack workspace associated with the permission.
   handle:
     type: string
+    description: |
+      The Slack handle associated with the permission.
   pagerduty:
     type: array
+    description: |
+      A list of PagerDuty targets associated with the permission.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/pagerduty-target-1.yml"
   ownersFromRepos:
     type: array
+    description: |
+      A list of repository URLs used to determine ownership.
     items:
       type: string
       format: uri
   channels:
     type: array
+    description: |
+      A list of Slack channels associated with the permission.
     items:
       type: string
   schedule:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/schedule-1.yml"
+    description: |
+      The schedule associated with the permission.
   skip:
     type: boolean
+    description: |
+      Indicates whether the permission should be skipped during processing.
   action:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/automated-action-1.yml"
+    description: |
+      The automated action associated with the permission.
   instances:
     type: array
+    description: |
+      A list of automated action instances associated with the permission.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
   arguments:
     type: array
+    description: |
+      A list of arguments for the automated action.
     items:
       oneOf:
       # inline
@@ -86,6 +138,7 @@ properties:
       # referenced
       - "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/automated-action-argument-1.yml"
+
 oneOf:
 - properties:
     service:
@@ -93,8 +146,12 @@ oneOf:
       - github-org
     org:
       type: string
+      description: |
+        The GitHub organization associated with the permission.
     role:
       type: string
+      description: |
+        The role assigned within the GitHub organization.
       enum:
       - owner
   required:
@@ -105,10 +162,16 @@ oneOf:
       - github-org-team
     org:
       type: string
+      description: |
+        The GitHub organization associated with the team.
     team:
       type: string
+      description: |
+        The GitHub team associated with the permission.
     role:
       type: string
+      description: |
+        The role assigned within the GitHub team.
       enum:
       - owner
   required:
@@ -120,8 +183,12 @@ oneOf:
       - gitlab-group-membership
     group:
       type: string
+      description: |
+        The GitLab group associated with the permission.
     access:
       type: string
+      description: |
+        The access level granted within the GitLab group.
       enum:
       - "owner"
       - "maintainer"
@@ -130,6 +197,8 @@ oneOf:
       - "guest"
     pagerduty:
       type: array
+      description: |
+        A list of PagerDuty targets associated with the GitLab group.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/pagerduty-target-1.yml"
@@ -143,8 +212,12 @@ oneOf:
     quayOrg:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/quay-org-1.yml"
+      description: |
+        The Quay organization associated with the membership.
     team:
       type: string
+      description: |
+        The team within the Quay organization.
   required:
   - quayOrg
   - team
@@ -155,8 +228,12 @@ oneOf:
     instance:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+      description: |
+        The Jenkins instance associated with the role.
     role:
       type: string
+      description: |
+        The role assigned within the Jenkins instance.
   required:
   - instance
   - role
@@ -166,32 +243,48 @@ oneOf:
       - slack-usergroup
     handle:
       type: string
+      description: |
+        The Slack handle associated with the user group.
     workspace:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/slack-workspace-1.yml"
+      description: |
+        The Slack workspace associated with the user group.
     pagerduty:
       type: array
+      description: |
+        A list of PagerDuty targets associated with the Slack user group.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/pagerduty-target-1.yml"
     ownersFromRepos:
       type: array
+      description: |
+        A list of repository URLs used to determine ownership for the Slack user group.
       items:
         type: string
         format: uri
     channels:
       type: array
+      description: |
+        A list of Slack channels associated with the user group.
       items:
         type: string
       minItems: 1
     schedule:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/schedule-1.yml"
+      description: |
+        The schedule associated with the Slack user group.
     description:
       type: string
+      description: |
+        A brief description of the Slack user group.
       maxLength: 140
     skip:
       type: boolean
+      description: |
+        Indicates whether the Slack user group should be skipped during processing.
   required:
   - handle
   - description
@@ -204,13 +297,19 @@ oneOf:
     action:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/automated-action-1.yml"
+      description: |
+        The automated action associated with the permission.
     instances:
       type: array
+      description: |
+        A list of automated action instances associated with the permission.
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
     arguments:
       type: array
+      description: |
+        A list of arguments for the automated action.
       items:
         oneOf:
         # inline
@@ -221,6 +320,7 @@ oneOf:
   required:
   - action
   - instances
+
 required:
 - $schema
 - labels
