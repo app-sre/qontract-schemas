@@ -184,6 +184,57 @@ properties:
             A list of data files associated with the self-service configuration.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef":
+              type: object
+              properties:
+                '$schema':
+                  type: string
+                  enum:
+                  - /app-sre/saas-file-2.yml
+                  - /app-sre/saas-file-target-1.yml
+                  - /dependencies/dns-zone-1.yml
+                  - /openshift/namespace-1.yml
+                  - /access/role-1.yml
+                  - /openshift/cluster-1.yml
+                  - /aws/account-1.yml
+                  - /aws/group-1.yml
+                  - /aws/policy-1.yml
+                  - /app-sre/app-1.yml
+                  - /app-sre/gabi-instance-1.yml
+                  - /app-sre/scorecard-2.yml
+                  - /openshift/shared-resources-1.yml
+                  - /access/user-1.yml
+                  - /app-sre/tekton-provider-defaults-1.yml
+                  - /openshift/openshift-cluster-manager-1.yml
+                  - /dependencies/jira-board-1.yml
+                  - /dependencies/glitchtip-project-1.yml
+                  - /dependencies/status-page-component-1.yml
+                  - /dependencies/jenkins-config-1.yml
+                  - /access/permission-1.yml
+                  - /app-sre/environment-1.yml
+                  - /app-sre/product-1.yml
+                  - /app-sre/schedule-1.yml
+                  - /app-sre/slo-document-1.yml
+                  - /app-sre/unleash-instance-1.yml
+                  - /dependencies/dns-zone-1.yml
+                  - /dependencies/quay-org-1.yml
+                  - /cloudflare/account-1.yml
+                  - /cloudflare/dns-zone-1.yml
+                  - /app-sre/escalation-policy-1.yml
+                  - /app-interface/query-validation-1.yml
+                  - /access/bot-1.yml
+                  - /dependencies/dynatrace-environment-1.yml
+                  - /app-sre/integration-1.yml
+                  - /app-sre/maintenance-1.yml
+                  - /dependencies/container-image-mirror-1.yml
+                  - /dependencies/slack-workspace-1.yml
+                  - /dependencies/gitlab-instance-1.yml
+                  - /app-interface/template-collection-1.yml
+                  - /app-interface/template-1.yml
+                  - /app-interface/template-test-1.yml
+                  - /vault-config/policy-1.yml
+                  - /app-sre/app-changelog-1.yml
+                  - /app-sre/sre-checkpoint-1.yml
   ldapGroup:
     type: object
     description: |
