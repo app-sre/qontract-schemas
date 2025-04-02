@@ -15,8 +15,6 @@ properties:
     type: string
     enum:
     - /app-interface/template-collection-1.yml
-    description: |
-      The schema reference for this template collection file.
   name:
     type: string
     description: |

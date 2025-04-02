@@ -14,8 +14,6 @@ properties:
     type: string
     enum:
     - /app-interface/resource-template-test-1.yml
-    description: |
-      The schema reference for this resource template test file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
