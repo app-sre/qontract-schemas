@@ -15,8 +15,6 @@ properties:
     type: string
     enum:
     - /app-interface/prometheus-rule-test-1.yml
-    description: |
-      The schema reference for this Prometheus rule test file.
 
   rule_files:
     type: array

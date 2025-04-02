@@ -14,8 +14,6 @@ properties:
     type: string
     enum:
     - /app-interface/deletion-approval-1.yml
-    description: |
-      The schema reference for this deletion approval file.
   expiration:
     type: string
     description: |

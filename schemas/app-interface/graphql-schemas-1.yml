@@ -14,8 +14,6 @@ properties:
     type: string
     enum:
     - /app-interface/graphql-schemas-1.yml
-    description: |
-      The schema reference for this GraphQL schemas file.
   confs:
     type: array
     description: |

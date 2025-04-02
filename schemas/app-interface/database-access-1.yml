@@ -13,8 +13,6 @@ properties:
     type: string
     enum:
     - /app-interface/database-access-1.yml
-    description: |
-      The schema reference for this database access file.
   name:
     type: string
     description: |
