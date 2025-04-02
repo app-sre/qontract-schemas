@@ -2,7 +2,7 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
-title: "Access Bot"
+title: "Bot"
 description: |
   Schema for defining bot access in app-interface. 
   This includes details about the bot's usernames, service accounts, 
