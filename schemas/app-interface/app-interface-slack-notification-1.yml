@@ -13,8 +13,6 @@ properties:
     type: string
     enum:
     - /app-interface/app-interface-slack-notification-1.yml
-    description: |
-      The schema reference for this Slack notification file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
