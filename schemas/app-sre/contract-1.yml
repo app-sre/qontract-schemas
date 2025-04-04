@@ -2,6 +2,10 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Contract"
+description: |
+  Schema for defining contracts.
+  Contracts are agreements between the platform operator and platform tenants.
 
 additionalProperties: false
 properties:
@@ -9,22 +13,24 @@ properties:
     type: string
     enum:
     - /app-sre/contract-1.yml
-
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-
   name:
-    description: "Name of the contract"
     type: string
-
+    description: |
+      The name of the contract. This should be a unique identifier that 
+      clearly represents the purpose or scope of the contract.
   description:
-    description: "Long description of the current contract"
     type: string
-
+    description: |
+      A detailed description of the contract, explaining its purpose, 
+      scope, and any relevant details.
   source:
-    description: "Location of the contract"
     type: string
     format: uri
+    description: |
+      The location of the contract. This should be a valid URI pointing 
+      to the source of the contract, such as a document or repository.
 
 required:
 - "$schema"
