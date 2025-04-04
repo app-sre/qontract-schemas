@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Automated Action"
+description: |
+  Schema for defining automated actions. Automated actions 
+  represent predefined operations that can be executed programmatically, 
+  with configurable retries, operation limits, and descriptions.
 
 additionalProperties: false
 properties:
@@ -13,15 +18,25 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   operationId:
     type: string
-    description: The automated action OpenApi operation id.
+    description: |
+      The unique identifier for the automated action. This corresponds to 
+      the OpenAPI operation ID for the action.
   description:
     type: string
+    description: |
+      A brief description of the automated action, explaining its purpose 
+      and functionality.
   retries:
     type: number
-    description: "Number of times to retry the action."
+    description: |
+      The number of times to retry the action in case of failure. This helps 
+      ensure the action completes successfully in transient failure scenarios.
   maxOps:
     type: number
-    description: "Maximum number of operations to perform per hour."
+    description: |
+      The maximum number of operations that can be performed per hour. This 
+      is used to limit the frequency of the automated action to prevent 
+      overloading systems or exceeding quotas.
 required:
 - "$schema"
 - operationId
