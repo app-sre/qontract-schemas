@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Policy"
+description: |
+  Schema for defining security policies in Red Hat Advanced Cluster Security (ACS). 
+  Policies are used to enforce security standards and best practices in Kubernetes 
+  clusters. This schema includes details about policy severity, categories, scope, 
+  integrations, and conditions.
 
 additionalProperties: false
 properties:
@@ -13,30 +19,43 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   description:
     type: string
+    description: |
+      A brief description of the policy, explaining its purpose and functionality.
   name:
     type: string
+    description: |
+      The name of the policy. This should be unique and descriptive.
   integrations:
     type: object
-    description: manage integrations for a policy
+    description: |
+      Configuration for integrations associated with the policy, such as 
+      notifiers for external systems.
     additionalProperties: false
     properties:
       notifiers:
         type: object
-        description: manage notifier integrations for a policy
+        description: |
+          Configuration for notifier integrations associated with the policy.
         additionalProperties: false
         properties:
           jira:
             type: object
-            description: manage notifier integration for a policy with jira
+            description: |
+              Configuration for integrating the policy with Jira for issue tracking.
             additionalProperties: false
             properties:
               escalationPolicy:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/app-sre/escalation-policy-1.yml"
+                description: |
+                  Reference to the escalation policy used for Jira integration.
             required:
             - escalationPolicy
   severity:
     type: string
+    description: |
+      The severity level of the policy. This indicates the importance of the 
+      policy and the potential impact of violations.
     enum:
     - low
     - medium
@@ -44,6 +63,9 @@ properties:
     - critical
   categories:
     type: array
+    description: |
+      A list of categories that the policy belongs to. Categories help organize 
+      policies based on their purpose or focus area.
     items:
       type: string
       enum:
@@ -55,20 +77,30 @@ properties:
       - vulnerability-management
   scope:
     type: object
+    description: |
+      The scope of the policy, defining the level (cluster or namespace) and 
+      the specific clusters or namespaces it applies to.
     additionalProperties: false
     properties:
       level:
         type: string
-        enum: 
+        description: |
+          The level at which the policy is applied. This can be either `cluster` 
+          or `namespace`.
+        enum:
         - cluster
         - namespace
       clusters:
         type: array
+        description: |
+          A list of clusters that the policy applies to when the level is `cluster`.
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
       namespaces:
         type: array
+        description: |
+          A list of namespaces that the policy applies to when the level is `namespace`.
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
@@ -99,8 +131,12 @@ properties:
             "$schemaRef": "/openshift/namespace-1.yml"
   conditions:
     type: array
+    description: |
+      A list of conditions that define the criteria for policy violations. 
+      Each condition specifies a rule that must be met for the policy to trigger.
     items:
       "$ref": "/acs/acs-policy-condition-1.yml"
+
 required:
 - "$schema"
 - name
