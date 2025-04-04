@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Policy Condition"
+description: |
+  Schema for defining conditions in Red Hat Advanced Cluster Security (ACS) policies. 
+  Conditions specify the criteria that must be met for a policy to trigger. 
+  This schema includes details about fields, comparisons, and thresholds 
+  used to evaluate policy violations.
 
 additionalProperties: false
 properties:
@@ -11,8 +17,15 @@ properties:
     - /acs/acs-policy-condition-1.yml
   policyField:
     type: string
-  comparison: 
+    description: |
+      The field in the policy that is being evaluated. Examples include 
+      `cvss`, `severity`, `cve`, `image_tag`, and `image_age`.
+  comparison:
     type: string
+    description: |
+      The comparison operator used to evaluate the policy condition. 
+      Supported operators include `gt` (greater than), `gte` (greater than or equal to), 
+      `eq` (equal to), `lt` (less than), and `lte` (less than or equal to).
     enum:
     - gt
     - gte
@@ -21,8 +34,13 @@ properties:
     - lte
   score:
     type: integer
+    description: |
+      The numerical score used for comparison when the `policyField` is `cvss`.
   level:
     type: string
+    description: |
+      The severity level used for comparison when the `policyField` is `severity`. 
+      Supported levels include `low`, `moderate`, `important`, and `critical`.
     enum:
     - low
     - moderate
@@ -30,23 +48,37 @@ properties:
     - critical
   fixable:
     type: boolean
+    description: |
+      Indicates whether the condition applies only to fixable issues. 
+      This is used when the `policyField` is `cve`.
   tags:
     type: array
-    items: 
+    description: |
+      A list of image tags used for evaluation when the `policyField` is `image_tag`.
+    items:
       type: string
   negate:
     type: boolean
+    description: |
+      Indicates whether the condition should negate the specified tags. 
+      This is used when the `policyField` is `image_tag`.
   days:
     type: integer
+    description: |
+      The number of days used for evaluation when the `policyField` is `image_age`.
 oneOf:
 - additionalProperties: false
   properties:
     policyField:
       type: string
+      description: |
+        Specifies that the condition applies to the CVSS score of vulnerabilities.
       enum:
       - cvss
-    comparison: 
+    comparison:
       type: string
+      description: |
+        The comparison operator used to evaluate the CVSS score.
       enum:
       - gt
       - gte
@@ -55,6 +87,8 @@ oneOf:
       - lte
     score:
       type: integer
+      description: |
+        The CVSS score threshold for the condition.
   required:
   - comparison
   - score
@@ -62,10 +96,14 @@ oneOf:
   properties:
     policyField:
       type: string
+      description: |
+        Specifies that the condition applies to the severity level of vulnerabilities.
       enum:
       - severity
-    comparison: 
+    comparison:
       type: string
+      description: |
+        The comparison operator used to evaluate the severity level.
       enum:
       - gt
       - gte
@@ -74,6 +112,8 @@ oneOf:
       - lte
     level:
       type: string
+      description: |
+        The severity level threshold for the condition.
       enum:
       - low
       - moderate
@@ -86,34 +126,48 @@ oneOf:
   properties:
     policyField:
       type: string
+      description: |
+        Specifies that the condition applies to whether vulnerabilities are fixable.
       enum:
       - cve
     fixable:
       type: boolean
+      description: |
+        Indicates whether the condition applies only to fixable vulnerabilities.
   required:
   - fixable
 - additionalProperties: false
   properties:
     policyField:
       type: string
+      description: |
+        Specifies that the condition applies to image tags.
       enum:
       - image_tag
     tags:
       type: array
-      items: 
+      description: |
+        A list of image tags used for evaluation.
+      items:
         type: string
     negate:
       type: boolean
+      description: |
+        Indicates whether the condition negates the specified tags.
   required:
   - tags
 - additionalProperties: false
   properties:
     policyField:
       type: string
+      description: |
+        Specifies that the condition applies to the age of container images.
       enum:
       - image_age
     days:
       type: integer
+      description: |
+        The number of days used to evaluate the age of container images.
   required:
   - days
 required:
