@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Application"
+description: |
+  Schema for defining applications managed by App SRE. This includes details 
+  about the application's metadata, dependencies, service owners, escalation 
+  policies, and other configurations.
 
 additionalProperties: false
 properties:
@@ -11,19 +16,24 @@ properties:
     - /app-sre/app-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
-
+    description: |
+      The unique name of the application.
   product:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/product-1.yml"
-
+    description: |
+      Reference to the product associated with the application.
   description:
     type: string
-
+    description: |
+      A brief description of the application.
   onboardingStatus:
     type: string
+    description: |
+      The current onboarding status of the application. This indicates the 
+      application's lifecycle stage in the App SRE onboarding process.
     enum:
     - Proposed         # The App is being proposed to be running by the App SRE team
     - InProgress       # The app is currently being on-boarded
@@ -35,8 +45,8 @@ properties:
   grafanaUrls:
     type: array
     description: |
-      List of links to Grafana Dashboard/Folders associated with the service. Please provide
-      a title together with the link.
+      A list of links to Grafana dashboards or folders associated with the 
+      application. Each link should include a title and a URL.
     items:
       type: object
       additionalProperties: false
@@ -46,81 +56,95 @@ properties:
       properties:
         title:
           type: string
+          description: |
+            The title of the Grafana dashboard or folder.
         url:
           type: string
           format: uri
+          description: |
+            The URL of the Grafana dashboard or folder.
       minItems: 1
-
   sopsUrl:
     type: string
     format: uri
     description: |
-      Link to the git repo path that contains the top-level for the service
-      SOPs.
+      The URL to the Git repository path containing the top-level SOPs for 
+      the application.
     pattern: "^https://(?!docs.google.com).*"
-
   architectureDocument:
     type: string
     format: uri
     description: |
-      The Architecture Document should be written with SREs as the target audience. Anyone
-      reading the Architecture Document should understand how the service works, even
-      without any prior background. This document will be the primary reference during
-      incidents. To ensure the Architecture Document is always accessible to SREs and its
-      changes properly reviewed and tracked, it must be written in markdown and stored in
-      a place where SREs can control its changes.
-
+      The URL to the architecture document for the application. This document 
+      should provide a detailed explanation of the application's architecture 
+      and be accessible to SREs.
   parentApp:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
-
+    description: |
+      Reference to the parent application, if applicable.
   serviceOwners:
-    description: Teams or individuals who is/are responsible for the running instance of the software.
     type: array
+    description: |
+      A list of teams or individuals responsible for the running instance of 
+      the application.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the service owner.
         email:
           type: string
           format: email
+          description: |
+            The email address of the service owner.
       required:
       - name
       - email
-
   serviceNotifications:
-    description: Teams or individuals who is/are should get notifications related to the service.
     type: array
+    description: |
+      A list of teams or individuals who should receive notifications related 
+      to the application.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the notification recipient.
         email:
           type: string
           format: email
+          description: |
+            The email address of the notification recipient.
       required:
       - name
       - email
-
   serviceDocs:
-    description: List of service docs
     type: array
+    description: |
+      A list of links to service documentation for the application.
     items:
-      description: Service document link
       type: string
-
+      description: |
+        The URL of a service document.
   dependencies:
     type: array
+    description: |
+      A list of dependencies required by the application.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/dependency-1.yml"
-
   gcrRepos:
     type: array
+    description: |
+      A list of Google Container Registry (GCR) repositories associated with 
+      the application.
     items:
       type: object
       additionalProperties: false
@@ -128,20 +152,32 @@ properties:
         project:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/gcp/project-1.yml"
+          description: |
+            Reference to the GCP project associated with the repository.
         items:
           type: array
+          description: |
+            A list of container images in the repository.
           items:
             type: object
             additionalProperties: false
             properties:
               name:
                 type: string
+                description: |
+                  The name of the container image.
               description:
                 type: string
+                description: |
+                  A brief description of the container image.
               public:
                 type: boolean
+                description: |
+                  Indicates whether the container image is public.
               mirror:
                 "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+                description: |
+                  Reference to the mirror configuration for the container image.
             required:
             - name
             - description
@@ -149,9 +185,10 @@ properties:
       required:
       - project
       - items
-
   quayRepos:
     type: array
+    description: |
+      A list of Quay repositories associated with the application.
     items:
       type: object
       additionalProperties: false
@@ -159,19 +196,27 @@ properties:
         org:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/quay-org-1.yml"
+          description: |
+            Reference to the Quay organization associated with the repository.
         teams:
           type: array
+          description: |
+            A list of teams with access to the repository.
           items:
             type: object
             additionalProperties: false
             properties:
               permissions:
                 type: array
+                description: |
+                  A list of permissions assigned to the team.
                 items:
                   "$ref": "/common-1.json#/definitions/crossref"
                   "$schemaRef": "/access/permission-1.yml"
               role:
                 type: string
+                description: |
+                  The role assigned to the team.
                 enum:
                 - read
             required:
@@ -179,16 +224,22 @@ properties:
             - role
         notifications:
           type: array
+          description: |
+            A list of notifications configured for the repository.
           items:
             type: object
             additionalProperties: false
             properties:
               event:
                 type: string
+                description: |
+                  The event that triggers the notification.
                 enum:
                 - vulnerability_found
               severity:
                 type: string
+                description: |
+                  The severity level of the event.
                 enum:
                 - Defcon 1
                 - Critical
@@ -199,36 +250,54 @@ properties:
                 - Unknown
               method:
                 type: string
+                description: |
+                  The method used to send the notification.
                 enum:
                 - email
               escalationPolicy:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/app-sre/escalation-policy-1.yml"
+                description: |
+                  Reference to the escalation policy for the notification.
               verificationMethod:
                 type: object
+                description: |
+                  The method used to verify the notification.
                 additionalProperties: false
                 properties:
                   jiraBoard:
                     "$ref": "/common-1.json#/definitions/crossref"
                     "$schemaRef": "/dependencies/jira-board-1.yml"
+                    description: |
+                      Reference to the Jira board used for verification.
             required:
             - event
             - method
             - escalationPolicy
         items:
           type: array
+          description: |
+            A list of container images in the repository.
           items:
             type: object
             additionalProperties: false
             properties:
               name:
                 type: string
+                description: |
+                  The name of the container image.
               description:
                 type: string
+                description: |
+                  A brief description of the container image.
               public:
                 type: boolean
+                description: |
+                  Indicates whether the container image is public.
               mirror:
                 "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+                description: |
+                  Reference to the mirror configuration for the container image.
             required:
             - name
             - description
@@ -236,21 +305,30 @@ properties:
       required:
       - org
       - items
-
   endPoints:
     type: array
+    description: |
+      A list of endpoints exposed by the application.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the endpoint.
         description:
           type: string
+          description: |
+            A brief description of the endpoint.
         url:
           type: string
+          description: |
+            The URL of the endpoint.
         monitoring:
           type: array
+          description: |
+            A list of monitoring configurations for the endpoint.
           items:
             type: object
             additionalProperties: false
@@ -258,30 +336,40 @@ properties:
               provider:
                 "$ref": "/common-1.json#/definitions/crossref"
                 "$schemaRef": "/dependencies/endpoint-monitoring-provider-1.yml"
-                description: Reference to a monitoring provider to use for this endpoint
+                description: |
+                  Reference to a monitoring provider for the endpoint.
             required:
             - provider
       required:
       - name
       - description
       - url
-
   escalationPolicy:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/escalation-policy-1.yml"
-
+    description: |
+      Reference to the escalation policy for the application.
   codeComponents:
     type: array
+    description: |
+      A list of code components associated with the application. Each component 
+      represents a repository or resource used by the application.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the code component.
         description:
           type: string
+          description: |
+            A brief description of the code component.
         resource:
           type: string
+          description: |
+            The type of resource represented by the code component.
           enum:
           - upstream
           - bundle
@@ -290,65 +378,108 @@ properties:
           - infrastructure
         showInReviewQueue:
           type: boolean
-          description: Include MRs from this repo in the AppSRE Review Queue
+          description: |
+            Indicates whether merge requests from this repository should be 
+            included in the App SRE Review Queue.
         url:
           type: string
           format: uri
-          pattern: "^https:\/\/.+(?<!\/)$"
+          description: |
+            The URL of the repository or resource.
         gitlabSync:
           type: object
+          description: |
+            Configuration for syncing GitLab projects.
           properties:
             sourceProject:
               type: object
+              description: |
+                The source project for the sync.
               properties:
                 name:
                   type: string
+                  description: |
+                    The name of the source project.
                 group:
                   type: string
+                  description: |
+                    The group of the source project.
                 branch:
                   type: string
+                  description: |
+                    The branch of the source project.
             destinationProject:
               type: object
+              description: |
+                The destination project for the sync.
               properties:
                 name:
                   type: string
+                  description: |
+                    The name of the destination project.
                 group:
                   type: string
+                  description: |
+                    The group of the destination project.
                 branch:
                   type: string
+                  description: |
+                    The branch of the destination project.
           required:
           - sourceProject
           - destinationProject
         gitlabRepoOwners:
           type: object
+          description: |
+            Configuration for managing repository owners in GitLab.
           properties:
             enabled:
               type: boolean
+              description: |
+                Indicates whether repository owners are enabled.
             persistentLgtm:
               type: boolean
+              description: |
+                Indicates whether persistent LGTM (Looks Good To Me) is enabled.
         gitlabHousekeeping:
           type: object
+          description: |
+            Configuration for housekeeping tasks in GitLab.
           properties:
             enabled:
               type: boolean
+              description: |
+                Indicates whether housekeeping tasks are enabled.
             rebase:
               type: boolean
+              description: |
+                Indicates whether rebasing is enabled.
             days_interval:
               type: integer
+              description: |
+                The interval in days for housekeeping tasks.
               not:
                 enum:
                 - 0
             limit:
               type: integer
+              description: |
+                The limit for housekeeping tasks.
               not:
                 enum:
                 - 0
             enable_closing:
               type: boolean
+              description: |
+                Indicates whether closing of merge requests is enabled.
             pipeline_timeout:
               type: integer
+              description: |
+                The timeout for pipelines in seconds.
             labels_allowed:
               type: array
+              description: |
+                A list of labels allowed for housekeeping tasks.
               items:
                 type: object
                 additionalProperties: false
@@ -356,50 +487,63 @@ properties:
                   role:
                     "$ref": "/common-1.json#/definitions/crossref"
                     "$schemaRef": "/access/role-1.yml"
+                    description: |
+                      Reference to a role associated with the label.
                 required:
                 - role
             must_pass:
               type: array
+              description: |
+                A list of tests that must pass before merging.
               items:
                 type: string
-                description: List of tests must pass before merging.
           required:
           - enabled
           - rebase
         jira:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-server-1.yml"
+          description: |
+            Reference to the Jira server associated with the code component.
         mirror:
           type: string
           format: uri
-          description: GitLab repo to mirror from
+          description: |
+            The GitLab repository to mirror from.
         imageBuildUrl:
           type: string
           format: uri
           pattern: "^https:\/\/.+(?<!\/)$"
-          description: URL for the component's image build job (jenkins job, rhtap pipeline page, etc.)
+          description: |
+            The URL for the component's image build job (e.g., Jenkins job or 
+            RHTAP pipeline page).
         managePermissions:
           type: boolean
-          description: should permissions be managed on the repository
+          description: |
+            Indicates whether permissions should be managed on the repository.
         blockedVersions:
           type: array
+          description: |
+            A list of commit SHAs that should not be promoted.
           items:
             type: string
-            description: commit sha of this repository that should not be promoted
             pattern: '^[0-9a-f]{40}$'
         hotfixVersions:
           type: array
+          description: |
+            A list of commit SHAs that should be promoted even without being 
+            published successfully to any subscribed channels.
           items:
             type: string
-            description: commit sha of this repository that should be promoted even without being published with success to any subscribed channels 
             pattern: '^[0-9a-f]{40}$'
       required:
       - name
       - resource
       - url
-
   glitchtipProjects:
     type: array
+    description: |
+      A list of GlitchTip projects associated with the application.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/glitchtip-project-1.yml"
