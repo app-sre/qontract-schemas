@@ -119,6 +119,32 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/dependency-1.yml"
 
+  artifactRegistryMirrors:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        project:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/gcp/project-1.yml"
+        items:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              imageURL:
+                type: string
+              mirror:
+                "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+            required:
+            - imageURL
+            - mirror
+      required:
+      - project
+      - items
+
   gcrRepos:
     type: array
     items:
