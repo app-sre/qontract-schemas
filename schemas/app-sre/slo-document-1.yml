@@ -142,6 +142,32 @@ properties:
       - expr
       - prometheusRules
       - dashboard
+  managedSLO:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        indicator_type:
+          type: string
+        runbook:
+          type: string
+        message:
+          type: string
+        dashboard:
+          type: string
+        link_url:
+          type: string
+        error_metric:
+          type: string
+        total_metric:
+          type: string
+        slo_target:
+          type: string
+        window:
+          type: string
 required:
 - "$schema"
 - labels
