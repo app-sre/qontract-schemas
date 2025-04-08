@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Application Changelog"
+description: |
+  Schema for defining changelogs for applications defined in app-interface. 
+  This includes details about the application, the dates of changes, 
+  and descriptions of the changes made.
 
 additionalProperties: false
 properties:
@@ -12,26 +17,41 @@ properties:
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application associated with the changelog.
   changelog:
     type: array
+    description: |
+      A list of changelog entries for the application. Each entry includes 
+      the date of the change and a list of changes made.
     items:
       type: object
       additionalProperties: false
       properties:
         date:
           $ref: /common-1.json#/definitions/date
+          description: |
+            The date when the changes were made, in ISO 8601 format.
         changes:
           type: array
+          description: |
+            A list of changes made on the specified date. Each change includes 
+            tags and a description.
           items:
             type: object
             additionalProperties: false
             properties:
               tags:
                 type: array
+                description: |
+                  A list of tags categorizing the change (e.g., `bugfix`, 
+                  `feature`, `improvement`).
                 items:
                   type: string
               description:
                 type: string
+                description: |
+                  A detailed description of the change made.
             required:
             - description
       required:
