@@ -88,6 +88,12 @@ properties:
             type: string
           allocated_storage:
             type: integer
+            description: |
+              The amount of storage in gibibytes (GiB) to allocate for the green DB instance.
+              You can choose to increase or decrease the allocated storage on the green DB instance.
+              Range from 20GiB to 16TiB (20-16384).
+            minimum: 20
+            maximum: 16384
           storage_type:
             type: string
             enum:
