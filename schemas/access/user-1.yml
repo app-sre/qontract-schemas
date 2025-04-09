@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "User"
+description: |
+  Schema for defining users in app-interface. 
+  This includes details about usernames across various platforms, 
+  roles, and additional metadata such as public keys and tagging preferences.
 
 additionalProperties: false
 properties:
@@ -13,33 +18,59 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      The name of the user.
   org_username:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The organization username associated with the user.
   github_username:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The GitHub username associated with the user.
   quay_username:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The Quay username associated with the user.
   slack_username:
     type: string
+    description: |
+      The Slack username associated with the user.
   pagerduty_username:
     type: string
+    description: |
+      The PagerDuty username associated with the user.
   aws_username:
     type: string
     pattern: "^[a-zA-Z_]+$"
+    description: |
+      The AWS username associated with the user. 
+      It must only contain letters and underscores.
   cloudflare_user:
     type: string
     format: email
+    description: |
+      The Cloudflare user email associated with the user.
   roles:
     type: array
+    description: |
+      A list of roles assigned to the user.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/role-1.yml"
   public_gpg_key:
     type: string
+    description: |
+      The public GPG key associated with the user.
   tag_on_merge_requests:
     type: boolean
+    description: |
+      Indicates whether the user should be tagged on merge requests.
   tag_on_cluster_updates:
     type: boolean
+    description: |
+      Indicates whether the user should be tagged on cluster updates.
+
 required:
   - $schema
   - labels
