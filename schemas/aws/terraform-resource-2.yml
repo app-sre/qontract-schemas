@@ -1227,7 +1227,7 @@ oneOf:
       - ELBSecurityPolicy-TLS13-1-2-Ext2-2021-06
       - ELBSecurityPolicy-TLS13-1-2-Ext1-2021-06
       - ELBSecurityPolicy-TLS13-1-1-2021-06
-      - ELBSecurityPolicy-TLS13-1-0-2021-06 # This will be the defaul value
+      - ELBSecurityPolicy-TLS13-1-0-2021-06 # This will be the default value
       - ELBSecurityPolicy-TLS-1-2-Ext-2018-06
       - ELBSecurityPolicy-TLS-1-2-2017-01
       - ELBSecurityPolicy-TLS-1-1-2017-01
