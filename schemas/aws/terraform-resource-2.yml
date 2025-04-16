@@ -1028,6 +1028,11 @@ oneOf:
     managed_by_erv2:
       type: boolean
       description: Manage the resource with erv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
   required:
   - identifier
   - defaults
