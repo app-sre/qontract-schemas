@@ -2379,6 +2379,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean}
 
 - name: NamespaceTerraformResourceKMS_v1
   interface: NamespaceTerraformResourceAWS_v1
