@@ -4384,6 +4384,20 @@ confs:
   - { name: app, type: App_v1, isRequired: true }
   - { name: namespaces, type: SLONamespaces_v1, isList: true, isRequired: true }
   - { name: slos, type: SLODocumentSLO_v1, isList: true }
+  - { name: managedSLO, type: ManagedSLODocument_v1, isList: true, isRequired: false }
+
+- name: ManagedSLODocument_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: indicator_type, type: string, isRequired: true } 
+  - { name: runbook, type: string, isRequired: true }
+  - { name: message, type: string, isRequired: true }
+  - { name: dashboard, type: string, isRequired: true }
+  - { name: link_url, type: string, isRequired: true }
+  - { name: error_metric, type: string, isRequired: true }
+  - { name: total_metric, type: string, isRequired: true }
+  - { name: slo_target, type: string, isRequired: true }
+  - { name: window, type: string, isRequired: true }
 
 - name: SLONamespaces_v1
   fields:
