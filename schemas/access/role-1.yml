@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Role"
+description: |
+  Schema for defining roles in app-interface. 
+  This includes details about permissions, OIDC permissions, 
+  access configurations, and associated resources such as 
+  AWS groups, user policies, and external systems.
 
 additionalProperties: false
 properties:
@@ -13,38 +19,63 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      A unique name for the role.
   description:
     type: string
+    description: |
+      A brief description of the role.
   expirationDate:
     type: string
+    description: |
+      The expiration date for the role in ISO 8601 format.
   permissions:
     type: array
+    description: |
+      A list of permissions associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/permission-1.yml"
   oidc_permissions:
     type: array
+    description: |
+      A list of OIDC permissions associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/oidc-permission-1.yml"
   tag_on_cluster_updates:
     type: boolean
+    description: |
+      Indicates whether to tag resources on cluster updates.
   access:
     type: array
+    description: |
+      A list of access configurations for the role, including 
+      namespaces, clusters, and roles.
     items:
       properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+          description: |
+            The OpenShift namespace associated with the access configuration.
         role:
           type: string
+          description: |
+            The role assigned within the namespace.
         cluster:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/cluster-1.yml"
+          description: |
+            The OpenShift cluster associated with the access configuration.
         group:
           type: string
+          description: |
+            The group associated with the access configuration.
         clusterRole:
           type: string
+          description: |
+            The cluster role associated with the access configuration.
       dependencies:
         role:
         - namespace
@@ -66,21 +97,29 @@ properties:
         - clusterRole
   aws_groups:
     type: array
+    description: |
+      A list of AWS groups associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/group-1.yml"
   user_policies:
     type: array
+    description: |
+      A list of AWS user policies associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/policy-1.yml"
   glitchtip_teams:
     type: array
+    description: |
+      A list of GlitchTip teams associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/glitchtip-team-1.yml"
   glitchtip_roles:
     type: array
+    description: |
+      A list of GlitchTip roles associated with the role.
     items:
       type: object
       additionalProperties: false
@@ -88,8 +127,12 @@ properties:
         organization:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/glitchtip-organization-1.yml"
+          description: |
+            The GlitchTip organization associated with the role.
         role:
           type: string
+          description: |
+            The role assigned within the GlitchTip organization.
           enum:
           - member
           - admin
@@ -100,31 +143,45 @@ properties:
       - role
   sendgrid_accounts:
     type: array
+    description: |
+      A list of SendGrid accounts associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/sendgrid-account-1.yml"
   cloudflare_access:
     type: array
+    description: |
+      A list of Cloudflare access configurations associated with the role.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/cloudflare/account-role-1.yml"
   self_service:
     type: array
+    description: |
+      A list of self-service configurations for the role.
     items:
       type: object
       additionalProperties: false
       properties:
         description:
           type: string
+          description: |
+            A description of the self-service configuration.
         change_type:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/app-interface/change-type-1.yml"
+          description: |
+            The change type associated with the self-service configuration.
         resources:
           type: array
+          description: |
+            A list of resources associated with the self-service configuration.
           items:
             "$ref": "/common-1.json#/definitions/resourceref"
         datafiles:
           type: array
+          description: |
+            A list of data files associated with the self-service configuration.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef":
@@ -180,28 +237,40 @@ properties:
                   - /app-sre/sre-checkpoint-1.yml
   ldapGroup:
     type: object
+    description: |
+      LDAP group configuration for the role.
     properties:
       name:
         "$ref": "/common-1.json#/definitions/ldapGroupName"
-        description: The name of the LDAP/Rover group
+        description: |
+          The name of the LDAP/Rover group.
       notes:
         type: string
-        description: Notes added to the LDAP/Rover group
+        description: |
+          Notes added to the LDAP/Rover group.
       membersAreOwners:
         type: boolean
-        description: Grant "owner" permission to all members of the LDAP/Rover group
+        description: |
+          Indicates whether all members of the LDAP/Rover group 
+          are granted "owner" permissions.
     required:
     - name
   memberSources:
     type: array
+    description: |
+      A list of membership sources for the role.
     items:
       type: object
       properties:
         provider:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/membership-provider-1.yml"
+          description: |
+            The membership provider associated with the role.
         group:
           type: string
+          description: |
+            The group associated with the membership provider.
 
 required:
 - $schema

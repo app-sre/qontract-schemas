@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "External User"
+description: |
+  Schema for defining external users in app-interface. 
+  This includes details about the user's GitHub username, 
+  sponsors, and other metadata.
 
 additionalProperties: false
 properties:
@@ -13,14 +18,22 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      The name of the external user.
   github_username:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The GitHub username of the external user.
   sponsors:
     type: array
+    description: |
+      A list of sponsors for the external user. 
+      Each sponsor must reference a valid user schema.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/user-1.yml"
     minItems: 2
+
 required:
 - $schema
 - labels

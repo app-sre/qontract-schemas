@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Membership Provider"
+description: |
+  Schema for defining membership providers in app-interface. 
+  Membership providers specify external systems or sources 
+  that manage user groups and roles. This schema includes 
+  details about the provider type, configuration, and compliance 
+  metadata such as audit trail availability.
 
 additionalProperties: false
 properties:
@@ -11,43 +18,75 @@ properties:
     - /access/membership-provider-1.yml
   name:
     type: string
+    description: |
+      A unique name for the membership provider.
   description:
     type: string
+    description: |
+      A brief description of the membership provider.
   hasAuditTrail:
     type: boolean
+    description: |
+      Indicates whether the membership provider maintains 
+      an audit trail for its memberships. Providers with 
+      an audit trail are considered production compliant.
   source:
     type: object
+    description: |
+      Configuration details for the membership provider, 
+      including the provider type and connection settings.
     properties:
       provider:
         type: string
+        description: |
+          The type of the membership provider. Supported 
+          values include `app-interface` and others.
         enum:
         - app-interface
       url:
         type: string
         format: uri
+        description: |
+          The URL of the external system or source used 
+          by the membership provider.
       username:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          The username credential for accessing the external system.
       password:
         "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          The password credential for accessing the external system.
     oneOf:
     - additionalProperties: false
       properties:
         provider:
           type: string
+          description: |
+            The type of the membership provider. Supported 
+            values include `app-interface` and others.
           enum:
           - app-interface
         url:
           type: string
           format: uri
+          description: |
+            The URL of the external system or source used 
+            by the membership provider.
         username:
           "$ref": "/common-1.json#/definitions/vaultSecret"
+          description: |
+            The username credential for accessing the external system.
         password:
           "$ref": "/common-1.json#/definitions/vaultSecret"
+          description: |
+            The password credential for accessing the external system.
       required:
       - provider
       - url
       - username
       - password
+
 required:
 - name
 - description
