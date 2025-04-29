@@ -19,7 +19,7 @@ properties:
     type: object
     additionalProperties: false
     patternProperties: {
-      "^[a-zA-Z0-9_-]{0,253}$": {
+      "^[a-zA-Z0-9_.-]{0,253}$": {
         "type": "string"
       }
     }
@@ -34,7 +34,7 @@ oneOf:
       type: object
       additionalProperties: false
       patternProperties: {
-        "^[a-zA-Z0-9_-]{0,253}$": {
+        "^[a-zA-Z0-9_.-]{0,253}$": {
           "type": "string"
         }
       }
