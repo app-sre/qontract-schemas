@@ -3521,6 +3521,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: github_username, type: string, isRequired: true }
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
+  - { name: roles, type: Role_v1, isList: true }
 
 - name: User_v1
   datafile: /access/user-1.yml
