@@ -3512,7 +3512,7 @@ confs:
       schema: /access/role-1.yml
       subAttr: permissions
 
-- name: 
+- name: ExternalUser_v1
   datafile: /access/external-user-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
