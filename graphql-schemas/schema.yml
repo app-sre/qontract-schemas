@@ -3629,6 +3629,13 @@ confs:
     synthetic:
       schema: /access/bot-1.yml
       subAttr: roles
+  - name: external_users
+    type: ExternalUser_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/external-user-1.yml
+      subAttr: roles
 
 - name: LdapGroup_v1
   fields:

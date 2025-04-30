@@ -23,6 +23,11 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/user-1.yml"
     minItems: 2
+  roles:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/role-1.yml"
 required:
 - $schema
 - labels
