@@ -15,15 +15,21 @@ properties:
     type: string
   github_username:
     "$ref": "/common-1.json#/definitions/identifier"
+  quay_username:
+    "$ref": "/common-1.json#/definitions/identifier"
   sponsors:
     type: array
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/user-1.yml"
     minItems: 2
+  roles:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/access/role-1.yml"
 required:
 - $schema
 - labels
 - name
-- github_username
 - sponsors

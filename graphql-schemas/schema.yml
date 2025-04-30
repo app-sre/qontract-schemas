@@ -2411,6 +2411,12 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
+- name: NamespaceTerraformResourceALBMutualAuthentication_v1
+  fields:
+  - { name: mode, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_name, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_key, type: string, isRequired: true }
+
 - name: NamespaceTerraformResourceALB_v1
   interface: NamespaceTerraformResourceAWS_v1
   fields:
@@ -2425,6 +2431,7 @@ confs:
   - { name: ip_address_type, type: string }
   - { name: access_logs, type: boolean }
   - { name: ssl_policy, type: string }
+  - { name: mutual_authentication, type: NamespaceTerraformResourceALBMutualAuthentication_v1 }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
@@ -3509,13 +3516,16 @@ confs:
       subAttr: permissions
 
 - name: ExternalUser_v1
+  datafile: /access/external-user-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
-  - { name: github_username, type: string, isRequired: true }
+  - { name: github_username, type: string }
+  - { name: quay_username, type: string }
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
+  - { name: roles, type: Role_v1, isList: true }
 
 - name: User_v1
   datafile: /access/user-1.yml
@@ -3624,6 +3634,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /access/bot-1.yml
+      subAttr: roles
+  - name: external_users
+    type: ExternalUser_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/external-user-1.yml
       subAttr: roles
 
 - name: LdapGroup_v1
