@@ -15,6 +15,8 @@ properties:
     type: string
   github_username:
     "$ref": "/common-1.json#/definitions/identifier"
+  quay_username:
+    "$ref": "/common-1.json#/definitions/identifier"
   sponsors:
     type: array
     items:
@@ -25,5 +27,4 @@ required:
 - $schema
 - labels
 - name
-- github_username
 - sponsors
