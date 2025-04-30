@@ -3513,13 +3513,16 @@ confs:
       subAttr: permissions
 
 - name: ExternalUser_v1
+  datafile: /access/external-user-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
-  - { name: github_username, type: string, isRequired: true }
+  - { name: github_username, type: string }
+  - { name: quay_username, type: string }
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
+  - { name: roles, type: Role_v1, isList: true }
 
 - name: User_v1
   datafile: /access/user-1.yml
@@ -3628,6 +3631,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /access/bot-1.yml
+      subAttr: roles
+  - name: external_users
+    type: ExternalUser_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/external-user-1.yml
       subAttr: roles
 
 - name: LdapGroup_v1
