@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Automated Action Argument"
+description: |
+  Schema for defining arguments for automated actions. 
+  Arguments specify the parameters required to execute an automated action, 
+  including type-specific configurations such as OpenShift namespace, 
+  kind patterns, and name patterns.
 
 additionalProperties: false
 properties:
@@ -13,30 +19,46 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   type:
     type: string
-
-  # type=openshift related properties
+    description: |
+      The type of the automated action argument. This determines the 
+      specific configuration required for the argument.
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
+    description: |
+      Reference to the OpenShift namespace associated with the argument. 
+      This is required when the type is `openshift`.
   kind_pattern:
     type: string
-    description: "The kind pattern to match."
+    description: |
+      The pattern used to match the kind of resources in OpenShift. 
+      This is required when the type is `openshift`.
   name_pattern:
     type: string
-    description: "The name pattern to match."
+    description: |
+      The pattern used to match the name of resources in OpenShift. 
+      This is required when the type is `openshift`.
 
 oneOf:
 - properties:
     type:
       enum:
       - openshift
+      description: |
+        Specifies that the argument is related to OpenShift resources.
     namespace:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
+      description: |
+        Reference to the OpenShift namespace associated with the argument.
     kind_pattern:
       type: string
+      description: |
+        The pattern used to match the kind of resources in OpenShift.
     name_pattern:
       type: string
+      description: |
+        The pattern used to match the name of resources in OpenShift.
   required:
   - namespace
   - name_pattern
