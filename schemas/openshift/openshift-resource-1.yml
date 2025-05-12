@@ -40,6 +40,8 @@ properties:
     type: integer
   tests:
     type: array
+  output_secret_name:
+    type: string
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -61,6 +63,27 @@ oneOf:
       description: indicates that this resource is using graphql query results
   required:
   - path
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - rhcs-cert
+    path:
+      "$ref": "/common-1.json#/definitions/vaultSecretPath"
+    name:
+      type: string
+    version:
+      type: integer
+    output_secret_name:
+      type: string
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - path
+  - name
+  - version
+  - output_secret_name
 - additionalProperties: false
   properties:
     provider:

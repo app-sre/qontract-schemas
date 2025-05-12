@@ -1707,6 +1707,7 @@ confs:
       vault-secret: NamespaceOpenshiftResourceVaultSecret_v1
       route: NamespaceOpenshiftResourceRoute_v1
       prometheus-rule: NamespaceOpenshiftResourcePrometheusRule_v1
+      rhcs-cert: NamespaceOpenshiftResourceRhcsCert_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1761,6 +1762,16 @@ confs:
   - { name: variables, type: json }
   - { name: enable_query_support, type: boolean }
   - { name: tests, type: string, isList: true, isResource: true }
+
+- name: NamespaceOpenshiftResourceRhcsCert_v1
+  interface: NamespaceOpenshiftResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: version, type: int, isRequired: true }
+  - { name: output_secret_name, type: string }
+  - { name: annotations, type: json }
 
 - name: NamespaceExternalResource_v1
   isInterface: true
