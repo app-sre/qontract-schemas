@@ -40,6 +40,10 @@ properties:
     type: integer
   tests:
     type: array
+  service_account_name:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+  service_account_password:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
   output_secret_name:
     type: string
 oneOf:
@@ -69,20 +73,17 @@ oneOf:
       type: string
       enum:
       - rhcs-cert
-    path:
-      "$ref": "/common-1.json#/definitions/vaultSecretPath"
-    name:
-      type: string
-    version:
-      type: integer
+    service_account_name:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
+    service_account_password:
+      "$ref": "/common-1.json#/definitions/vaultSecret"
     output_secret_name:
       type: string
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
-  - path
-  - name
-  - version
+  - service_account_name
+  - service_account_password
   - output_secret_name
 - additionalProperties: false
   properties:
