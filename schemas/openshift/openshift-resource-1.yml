@@ -41,7 +41,7 @@ properties:
   tests:
     type: array
   service_account_name:
-    "$ref": "/common-1.json#/definitions/vaultSecret"
+    type: string
   service_account_password:
     "$ref": "/common-1.json#/definitions/vaultSecret"
 oneOf:
@@ -74,7 +74,7 @@ oneOf:
     name:
       type: string
     service_account_name:
-      "$ref": "/common-1.json#/definitions/vaultSecret"
+      type: string
     service_account_password:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     annotations:
