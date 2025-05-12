@@ -1,9 +1,12 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-
 type: object
-description: Test for a template
+title: "App Interface Template Test"
+description: |
+  Schema for defining tests for templates in app-interface. 
+  This includes details about the variables, expected outputs, 
+  and conditions for validating template rendering.
 
 additionalProperties: false
 
@@ -14,23 +17,29 @@ properties:
     - /app-interface/template-test-1.yml
   name:
     type: string
+    description: |
+      A unique name for the template test.
   variables:
     type: object
-    description: variables to be used in the test
+    description: |
+      Variables to be used in the template test.
     additionalProperties: true
   current:
     type: string
-    description: the current content of the file to be templated
+    description: |
+      The current content of the file to be templated.
   expectedTargetPath:
     type: string
-    description: the exected result of target Path 
+    description: |
+      The expected result of the target path after rendering the template.
   expectedOutput:
     type: string
-    description: the expected result of the templating
+    description: |
+      The expected output of the template after rendering.
   expectedToRender:
     type: boolean
-    description: whether the template is expected to render or not
-
+    description: |
+      Expected evaluation result of `$.condition` in `/app-interface/template-1.yml`.
 
 required:
 - "$schema"

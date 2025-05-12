@@ -1,9 +1,12 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-
 type: object
-description: A collection of templates to be generated
+title: "App Interface Template Collection"
+description: |
+  Schema for defining a collection of templates in app-interface. 
+  This includes details about the templates, variables, and 
+  configurations for generating multiple templates.
 
 additionalProperties: false
 
@@ -14,52 +17,70 @@ properties:
     - /app-interface/template-collection-1.yml
   name:
     type: string
+    description: |
+      A unique name for the template collection.
   additionalMrLabels:
     type: array
+    description: |
+      Additional merge request labels to be applied to the templates.
     items:
       type: string
   description:
     type: string
+    description: |
+      A description of the template collection.
   enableAutoApproval:
     type: boolean
+    description: |
+      Indicates whether auto-approval is enabled for the template collection.
   forEach:
     type: object
+    description: |
+      Configuration for iterating over a list of items to generate templates.
     properties:
       items:
         type: array
-        description: object items on which to run this collection
+        description: |
+          A list of objects on which to run this template collection.
         items:
           type: object
   variables:
     type: object
-    description: variables to be used in the template
+    description: |
+      Variables to be used in the templates.
     additionalProperties: false
     properties:
-      static: 
+      static:
         type: object
-        description: static variables
+        description: |
+          Static variables to be used in the templates.
         additionalProperties: true
       dynamic:
         type: array
-        description: dynamic variables from GQL
+        description: |
+          Dynamic variables fetched from GraphQL queries.
         items:
           type: object
           additionalProperties: false
           properties:
             name:
               type: string
+              description: |
+                The name of the dynamic variable.
             query:
               type: string
+              description: |
+                The GraphQL query used to fetch the dynamic variable.
           required:
           - name
           - query
   templates:
     type: array
-    description: templates to be tested
+    description: |
+      A list of templates to be included in the collection.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-interface/template-1.yml"
-
 
 required:
 - "$schema"

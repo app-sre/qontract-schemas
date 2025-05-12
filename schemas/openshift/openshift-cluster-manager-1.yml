@@ -128,6 +128,13 @@ properties:
         name:
           description: sector name
           type: string
+        maxParallelUpgrades:
+          description: |
+            The maximum number of upgrades that can happen at any given time within that sector.
+            This string must contain an bare integer or percentage of the number of clusters in the sector.
+            Default is "100%", so any number of parallel upgrades is allowed.
+          type: string
+          pattern: '^([0-9]{1,2}|100)\%?$'
         dependencies:
           description: list of sectors this one is depending on
           type: array

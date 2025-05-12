@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "App Interface GraphQL Schemas"
+description: |
+  Schema for defining GraphQL configurations in app-interface. 
+  This includes details about GraphQL fields, interfaces, and 
+  strategies for resolving data.
 
 additionalProperties: false
 properties:
@@ -9,9 +14,10 @@ properties:
     type: string
     enum:
     - /app-interface/graphql-schemas-1.yml
-  
   confs:
     type: array
+    description: |
+      A list of GraphQL configurations.
     items:
       "$ref": "#/definitions/conf"
 
@@ -19,65 +25,118 @@ definitions:
   conf:
     type: object
     additionalProperties: false
+    description: |
+      A configuration for a GraphQL schema, including fields, 
+      data files, and interface resolution strategies.
     properties:
       name:
         type: string
+        description: |
+          The name of the GraphQL configuration.
       fields:
         type: array
+        description: |
+          A list of fields defined in the GraphQL configuration.
         items:
           "$ref": "#/definitions/field"
       datafile:
         type: string
+        description: |
+          The data file associated with the GraphQL configuration.
       isInterface:
         type: boolean
+        description: |
+          Indicates whether this configuration is an interface.
       interface:
         type: string
+        description: |
+          The name of the interface implemented by this configuration.
       interfaceResolve:
         type: object
+        description: |
+          The strategy for resolving interfaces in the GraphQL configuration.
         additionalProperties: false
         properties:
           strategy:
             type: string
+            description: |
+              The strategy used for interface resolution. 
+              Supported strategies include `fieldMap` and `schema`.
             enum:
             - "fieldMap"
             - "schema"
           field:
             type: string
+            description: |
+              The field used for interface resolution.
           fieldMap:
             type: object
+            description: |
+              A mapping of fields for interface resolution.
             properties:
               "/": {}
   field:
     type: object
     additionalProperties: false
+    description: |
+      A field definition in a GraphQL configuration, including 
+      its type, uniqueness, and other attributes.
     properties:
       name:
         type: string
+        description: |
+          The name of the field.
       type:
         type: string
+        description: |
+          The type of the field.
       isInterface:
         type: boolean
+        description: |
+          Indicates whether the field is part of an interface.
       isUnique:
         type: boolean
+        description: |
+          Indicates whether the field is unique.
       isContextUnique:
         type: boolean
+        description: |
+          Indicates whether the field is unique within a specific context.
       isRequired:
         type: boolean
+        description: |
+          Indicates whether the field is required.
       isSearchable:
         type: boolean
+        description: |
+          Indicates whether the field is searchable.
       isList:
         type: boolean
+        description: |
+          Indicates whether the field is a list.
       isResource:
         type: boolean
+        description: |
+          Indicates whether the field represents a resource.
       resolveResource:
         type: boolean
+        description: |
+          Indicates whether the field resolves a resource.
       synthetic:
         type: object
+        description: |
+          Synthetic field details, including schema and sub-attributes.
         additionalProperties: false
         properties:
           schema:
             type: string
+            description: |
+              The schema associated with the synthetic field.
           subAttr:
             type: string
+            description: |
+              The sub-attribute of the synthetic field.
       datafileSchema:
         type: string
+        description: |
+          The schema of the data file associated with the field.

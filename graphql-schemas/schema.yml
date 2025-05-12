@@ -438,7 +438,8 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: managedTeams, type: string, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1 }
-  - { name: pushCredentials, type: VaultSecret_v1 }
+  - { name: gcrPushCredentials, type: VaultSecret_v1 }
+  - { name: artifactPushCredentials, type: VaultSecret_v1, isRequired: true }
 
 - name: GrafanaDashboardUrls_v1
   fields:
@@ -1154,6 +1155,7 @@ confs:
 - name: OpenShiftClusterManagerSector_v1
   fields:
   - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: maxParallelUpgrades, type: string }
   - { name: dependencies, type: OpenShiftClusterManagerSectorDependencies_v1, isList: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyTemplate_v1
@@ -2378,6 +2380,9 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean}
+  - { name: delete, type: boolean}
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
 
 - name: NamespaceTerraformResourceKMS_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2407,6 +2412,12 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
+- name: NamespaceTerraformResourceALBMutualAuthentication_v1
+  fields:
+  - { name: mode, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_name, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_key, type: string, isRequired: true }
+
 - name: NamespaceTerraformResourceALB_v1
   interface: NamespaceTerraformResourceAWS_v1
   fields:
@@ -2421,6 +2432,7 @@ confs:
   - { name: ip_address_type, type: string }
   - { name: access_logs, type: boolean }
   - { name: ssl_policy, type: string }
+  - { name: mutual_authentication, type: NamespaceTerraformResourceALBMutualAuthentication_v1 }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
@@ -2767,6 +2779,16 @@ confs:
   - { name: public, type: boolean, isRequired: true }
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
+- name: AppArtifactRegistryMirrorsItems_v1
+  fields:
+  - { name: imageURL, type: string, isRequired: true }
+  - { name: mirror, type: ContainerImageMirror_v1, isRequired: true }
+
+- name: AppArtifactRegistryMirrors_v1
+  fields:
+  - { name: project, type: GcpProject_v1, isRequired: true }
+  - { name: items, type: AppArtifactRegistryMirrorsItems_v1, isRequired: true, isList: true }
+
 - name: ContainerImageMirror_v1
   datafile: /dependencies/container-image-mirror-1.yml
   fields:
@@ -2958,6 +2980,7 @@ confs:
   - { name: serviceNotifications, type: Owner_v1, isList: true }
   - { name: dependencies, type: Dependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
+  - { name: artifactRegistryMirrors, type: AppArtifactRegistryMirrors_v1, isList: true }
   - { name: quayRepos, type: AppQuayRepos_v1, isList: true }
   - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
@@ -3506,13 +3529,16 @@ confs:
       subAttr: permissions
 
 - name: ExternalUser_v1
+  datafile: /access/external-user-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
-  - { name: github_username, type: string, isRequired: true }
+  - { name: github_username, type: string }
+  - { name: quay_username, type: string }
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
+  - { name: roles, type: Role_v1, isList: true }
 
 - name: User_v1
   datafile: /access/user-1.yml
@@ -3621,6 +3647,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /access/bot-1.yml
+      subAttr: roles
+  - name: external_users
+    type: ExternalUser_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/external-user-1.yml
       subAttr: roles
 
 - name: LdapGroup_v1
@@ -4212,7 +4245,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: projectId, type: string }
   - { name: description, type: string, isRequired: true }
-  - { name: app, type: App_v1 }
+  - { name: app, type: App_v1, isRequired: true }
   - { name: platform, type: string, isRequired: true }
   - { name: teams, type: GlitchtipTeam_v1, isRequired: true, isList: true }
   - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }

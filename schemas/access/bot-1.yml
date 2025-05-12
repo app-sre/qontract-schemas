@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Bot"
+description: |
+  Schema for defining bot access in app-interface. 
+  This includes details about the bot's usernames, service accounts, 
+  and associated roles.
 
 additionalProperties: false
 properties:
@@ -13,22 +18,39 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      The name of the bot.
   description:
     type: string
+    description: |
+      A brief description of the bot.
   org_username:
     "$ref": "/common-1.json#/definitions/gitlabUsername"
+    description: |
+      The GitLab username associated with the bot.
   github_username:
     "$ref": "/common-1.json#/definitions/botIdentifier"
+    description: |
+      The GitHub username associated with the bot.
   openshift_serviceaccount:
     type: string
     pattern: '^.+\/.+$'
+    description: |
+      The OpenShift service account associated with the bot, 
+      in the format `<namespace>/<serviceaccount>`.
   quay_username:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The Quay username associated with the bot.
   owner:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/access/user-1.yml"
+    description: |
+      Reference to the owner of the bot.
   roles:
     type: array
+    description: |
+      A list of roles assigned to the bot.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/role-1.yml"

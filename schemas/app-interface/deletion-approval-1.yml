@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "App Interface Deletion Approval"
+description: |
+  Schema for defining deletion approvals in app-interface. 
+  This includes details about the resource being deleted, 
+  the type of resource, and the expiration of the approval.
 
 additionalProperties: false
 properties:
@@ -11,10 +16,18 @@ properties:
     - /app-interface/deletion-approval-1.yml
   expiration:
     type: string
+    description: |
+      The expiration date for the deletion approval. 
+      After this date, the approval is no longer valid.
   type:
     type: string
+    description: |
+      The type of resource for which deletion is being approved.
   name:
     type: string
+    description: |
+      The name of the resource for which deletion is being approved.
+
 required:
 - expiration
 - name
