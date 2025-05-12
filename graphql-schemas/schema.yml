@@ -1767,9 +1767,9 @@ confs:
   interface: NamespaceOpenshiftResource_v1
   fields:
   - { name: provider, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: service_account_name, type: VaultSecret_v1, isRequired: true }
   - { name: service_account_password, type: VaultSecret_v1, isRequired: true }
-  - { name: output_secret_name, type: string, isRequired: true, isContextUnique: true }
   - { name: annotations, type: json }
 
 - name: NamespaceExternalResource_v1

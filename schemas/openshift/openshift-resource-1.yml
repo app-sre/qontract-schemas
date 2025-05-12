@@ -44,8 +44,6 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   service_account_password:
     "$ref": "/common-1.json#/definitions/vaultSecret"
-  output_secret_name:
-    type: string
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -73,18 +71,18 @@ oneOf:
       type: string
       enum:
       - rhcs-cert
+    name:
+      type: string
     service_account_name:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     service_account_password:
       "$ref": "/common-1.json#/definitions/vaultSecret"
-    output_secret_name:
-      type: string
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
+  - name
   - service_account_name
   - service_account_password
-  - output_secret_name
 - additionalProperties: false
   properties:
     provider:
