@@ -141,6 +141,24 @@ properties:
       - namespace
       - serviceAccountName
 
+  rhcsCertificates:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        serviceAccountName:
+          type: string
+        serviceAccountPassword:
+          "$ref": "/common-1.json#/definitions/vaultSecret"
+        annotations:
+          "$ref": "/common-1.json#/definitions/annotations"
+      required:
+      - name
+      - serviceAccountName
+      - serviceAccountPassword
+
   glitchtipProjects:
     type: array
     items:

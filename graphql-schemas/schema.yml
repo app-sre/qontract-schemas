@@ -1707,7 +1707,6 @@ confs:
       vault-secret: NamespaceOpenshiftResourceVaultSecret_v1
       route: NamespaceOpenshiftResourceRoute_v1
       prometheus-rule: NamespaceOpenshiftResourcePrometheusRule_v1
-      rhcs-cert: NamespaceOpenshiftResourceRhcsCert_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1762,15 +1761,6 @@ confs:
   - { name: variables, type: json }
   - { name: enable_query_support, type: boolean }
   - { name: tests, type: string, isList: true, isResource: true }
-
-- name: NamespaceOpenshiftResourceRhcsCert_v1
-  interface: NamespaceOpenshiftResource_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true, isContextUnique: true }
-  - { name: service_account_name, type: string, isRequired: true }
-  - { name: service_account_password, type: VaultSecret_v1, isRequired: true }
-  - { name: annotations, type: json }
 
 - name: NamespaceExternalResource_v1
   isInterface: true
@@ -2693,6 +2683,13 @@ confs:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: serviceAccountName, type: string, isRequired: true }
 
+- name: RhcsCertificate_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: serviceAccountName, type: string, isRequired: true }
+  - { name: serviceAccountPassword, type: VaultSecret_v1, isRequired: true }
+  - { name: annotations, type: json }
+
 - name: SharedResources_v1
   datafile: /openshift/shared-resources-1.yml
   fields:
@@ -2703,6 +2700,7 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
+  - { name: rhcsCertificates, type: RhcsCertificate_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProject_v1, isList: true }
   - name: namespaces
     type: Namespace_v1
@@ -2739,6 +2737,7 @@ confs:
   - { name: managedExternalResources, type: boolean }
   - { name: externalResources, type: NamespaceExternalResource_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
+  - { name: rhcsCertificates, type: RhcsCertificate_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProject_v1, isList: true }
   - { name: kafkaCluster, type: KafkaCluster_v1 }
   - { name: skupperSite, type: NamespaceSkupperSiteConfig_v1 }
