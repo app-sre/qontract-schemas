@@ -2700,7 +2700,6 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: openshiftResources, type: NamespaceOpenshiftResource_v1, isList: true, isInterface: true, isRequired: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
-  - { name: rhcsCertificates, type: RhcsCertificate_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProject_v1, isList: true }
   - name: namespaces
     type: Namespace_v1
