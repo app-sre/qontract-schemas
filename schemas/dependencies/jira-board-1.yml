@@ -37,8 +37,6 @@ properties:
     type: string
   issueReopenState:
     type: string
-  issueSecurityId:
-    type: string
   wontFixResolution:
     type: string
   reopenDuration:
@@ -53,6 +51,21 @@ properties:
           type: string
           enum:
           - jira-permissions-validator
+  issueFields:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The Jira field name as shown in the UI
+        value:
+          type: string
+          description: The value to set the field to as a string as shown in the UI
+      required:
+      - name
+      - value
 required:
 - "$schema"
 - labels
