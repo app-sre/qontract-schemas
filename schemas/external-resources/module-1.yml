@@ -17,10 +17,6 @@ properties:
     type: string
   module_type:
     type: string
-  image:
-    type: string
-  version:
-    type: string
   reconcile_drift_interval_minutes:
     type: integer
   reconcile_timeout_minutes:
@@ -35,13 +31,30 @@ properties:
     description: Version of the outputs secret container to use
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
+  default_channel:
+    type: string
+  channels:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        version:
+          type: string
+      required:
+      - name
+      - image
+      - version
 required:
 - "$schema"
 - provision_provider
 - provider
 - module_type
-- image
-- version
 - reconcile_drift_interval_minutes
 - reconcile_timeout_minutes
 - outputs_secret_sync
+- channels
+- default_channel
