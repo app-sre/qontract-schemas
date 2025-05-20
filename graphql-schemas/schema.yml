@@ -577,10 +577,10 @@ confs:
   - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
-  - { name: issueSecurityId, type: string }
   - { name: wontFixResolution, type: string }
   - { name: reopenDuration, type: string }
   - { name: disable, type: DisableJiraBoardAutomations_v1 }
+  - { name: issueFields, type: JiraBoardIssueField_v1, isList: true }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
     isList: true
@@ -591,6 +591,11 @@ confs:
 - name: DisableJiraBoardAutomations_v1
   fields:
   - { name: integrations, type: string, isList: true }
+
+- name: JiraBoardIssueField_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: value, type: string, isRequired: true }
 
 - name: SendGridAccount_v1
   fields:
