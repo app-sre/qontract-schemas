@@ -1712,6 +1712,7 @@ confs:
       vault-secret: NamespaceOpenshiftResourceVaultSecret_v1
       route: NamespaceOpenshiftResourceRoute_v1
       prometheus-rule: NamespaceOpenshiftResourcePrometheusRule_v1
+      rhcs-cert: NamespaceOpenshiftResourceRhcsCert_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1748,6 +1749,15 @@ confs:
   - { name: type, type: string }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
+
+- name: NamespaceOpenshiftResourceRhcsCert_v1
+  interface: NamespaceOpenshiftResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: serviceAccountName, type: string, isRequired: true }
+  - { name: serviceAccountPassword, type: VaultSecret_v1, isRequired: true }
+  - { name: annotations, type: json }
 
 - name: NamespaceOpenshiftResourceRoute_v1
   interface: NamespaceOpenshiftResource_v1
