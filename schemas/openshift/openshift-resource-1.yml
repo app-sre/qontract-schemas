@@ -40,10 +40,12 @@ properties:
     type: integer
   tests:
     type: array
-  serviceAccountName:
+  service_account_name:
     type: string
-  serviceAccountPassword:
+  service_account_password:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  secret_name:
+    type: string
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -139,19 +141,19 @@ oneOf:
       type: string
       enum:
       - rhcs-cert
-    name:
+    secret_name:
       type: string
       description: identifier for cert secret created in Vault and OpenShift namespace
-    serviceAccountName:
+    service_account_name:
       type: string
       description: name of service account to utilize when requesting rhcsv2 certificate
-    serviceAccountPassword:
+    service_account_password:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     annotations:
       type: object
   required:
-  - name
-  - serviceAccountName
-  - serviceAccountPassword
+  - secret_name
+  - service_account_name
+  - service_account_password
 required:
 - provider
