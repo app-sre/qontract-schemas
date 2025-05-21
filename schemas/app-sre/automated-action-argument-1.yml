@@ -25,6 +25,14 @@ properties:
     type: string
     description: "The name pattern to match."
 
+  # type=action-list related properties
+  action_user:
+    type: string
+    description: "The user filter for the action list."
+  max_age_minutes:
+    type: integer
+    description: "The maximum age filter"
+
 oneOf:
 - properties:
     type:
@@ -41,6 +49,15 @@ oneOf:
   - namespace
   - name_pattern
   - kind_pattern
+
+- properties:
+    type:
+      enum:
+      - action-list
+    action_user:
+      type: string
+    max_age_minutes:
+      type: integer
 
 required:
 - type

@@ -4991,6 +4991,7 @@ confs:
     field: type
     fieldMap:
       openshift: AutomatedActionArgumentOpenshift_v1
+      action-list: AutomatedActionArgumentActionList_v1
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -5008,6 +5009,17 @@ confs:
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: kind_pattern, type: string, isRequired: true }
   - { name: name_pattern, type: string, isRequired: true }
+
+- name: AutomatedActionArgumentActionList_v1
+  datafile: /app-sre/automated-action-argument-1.yml
+  interface: AutomatedActionArgument_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: type, type: string, isRequired: true }
+  - { name: action_user, type: string }
+  - { name: max_age_minutes, type: string }
 
 - name: PermissionAutomatedActions_v1
   datafile: /access/permission-1.yml
