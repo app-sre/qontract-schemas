@@ -700,6 +700,16 @@ confs:
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
   - { name: authProvider, type: AcsInstanceAuthProvider_v1, isRequired: true }
 
+- name: RhcsCertProvider_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string, isRequired: true }
+  - { name: url, type: string, isRequired: true }
+  - { name: vault_base_path, type: string, isRequired: true }
+
 - name: AcsInstanceAuthProvider_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -4105,6 +4115,7 @@ confs:
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
   - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
+  - { name: rhcs_cert_provider_v1, type: RhcsCertProvider_v1, isList: true, datafileSchema: /dependencies/rhcs-cert-provider-1.yml }
   - { name: acs_policy_v1, type: AcsPolicy_v1, isList: true, datafileSchema: /acs/acs-policy-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
