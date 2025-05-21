@@ -1,0 +1,29 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/rhcs-cert-provider-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  url:
+    type: string
+  vault_base_path:
+    type: string
+    description: "Directory in Vault where openshift-rhcs-cert integration will store secrets"
+required:
+- "$schema"
+- labels
+- name
+- description
+- url
+- vault_base_path
