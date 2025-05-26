@@ -4957,58 +4957,6 @@ confs:
   - { name: tags, type: string, isList: true }
   - { name: description, type: string, isRequired: true }
 
-- name: AutomatedActionsInstance_v1
-  datafile: /app-sre/automated-actions-instance-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: deployment, type: Namespace_v1, isRequired: true }
-  - name: permissions
-    type: PermissionAutomatedActions_v1
-    isList: true
-    synthetic:
-      schema: /access/permission-1.yml
-      subAttr: instances
-
-- name: AutomatedAction_v1
-  datafile: /app-sre/automated-action-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: operationId, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: retries, type: int, isRequired: true }
-  - { name: maxOps, type: int, isRequired: true }
-
-- name: AutomatedActionArgument_v1
-  datafile: /app-sre/automated-action-argument-1.yml
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: type
-    fieldMap:
-      openshift: AutomatedActionArgumentOpenshift_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: type, type: string, isRequired: true }
-
-- name: AutomatedActionArgumentOpenshift_v1
-  datafile: /app-sre/automated-action-argument-1.yml
-  interface: AutomatedActionArgument_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: type, type: string, isRequired: true }
-  - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: kind_pattern, type: string, isRequired: true }
-  - { name: name_pattern, type: string, isRequired: true }
-
 - name: PermissionAutomatedActions_v1
   datafile: /access/permission-1.yml
   interface: Permission_v1
@@ -5019,12 +4967,120 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
-  - { name: action, type: AutomatedAction_v1, isRequired: true }
-  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
-  - { name: arguments, type: AutomatedActionArgument_v1, isList: true, isInterface: true }
+  - { name: actions, type: AutomatedAction_v1, isList: true, isRequired: true, isInterface: true }
   - name: roles
     type: Role_v1
     isList: true
     synthetic:
       schema: /access/role-1.yml
       subAttr: permissions
+
+- name: AutomatedActionsInstance_v1
+  datafile: /app-sre/automated-actions-instance-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: deployment, type: Namespace_v1, isRequired: true }
+  - name: actions
+    type: AutomatedAction_v1
+    isList: true
+    isInterface: true
+    synthetic:
+      schema: /app-sre/automated-action-1.yml
+      subAttr: instances
+
+- name: AutomatedAction_v1
+  datafile: /app-sre/automated-action-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: type
+    fieldMap:
+      action-list: AutomatedActionActionList_v1
+      create-token: AutomatedActionCreateToken_v1
+      openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: retries, type: int, isRequired: true }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionActionList_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: retries, type: int, isRequired: true }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionActionListArgument_v1, isList: true }
+
+- name: AutomatedActionActionListArgument_v1
+  fields:
+  - { name: action_user, type: string }
+  - { name: max_age_minutes, type: int }
+
+- name: AutomatedActionCreateToken_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: retries, type: int, isRequired: true }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionOpenshiftWorkloadRestart_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: retries, type: int, isRequired: true }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionOpenshiftWorkloadRestartArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionOpenshiftWorkloadRestartArgument_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: kind, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+
