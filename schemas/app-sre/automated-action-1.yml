@@ -33,11 +33,6 @@ properties:
       "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
     description: |
       A list of instances where the automated action can be executed.
-  retries:
-    type: number
-    description: |
-      The number of times to retry the action in case of failure. This helps
-      ensure the action completes successfully in transient failure scenarios.
   maxOps:
     type: number
     description: |
@@ -74,7 +69,6 @@ required:
 - "$schema"
 - type
 - instances
-- retries
 - maxOps
 
 # Keep in alphabetical order!!
