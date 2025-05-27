@@ -1313,6 +1313,11 @@ confs:
   - { name: accessLevel, type: string, isRequired: true }
   - { name: default, type: boolean }
 
+- name: ExternalResourcesAccountSettings_v1
+  fields:
+  - { name: channel, type: string}
+
+
 - name: ExternalResourcesProvisioner_v1
   isInterface: true
   interfaceResolve:
@@ -1358,6 +1363,7 @@ confs:
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
   - { name: organization, type: AWSOrganization_v1 }
   - { name: organizationAccountTags, type: json }
+  - { name: externalResources, type: ExternalResourcesAccountSettings_v1, isRequired: false}
   - name: account_requests
     type: AWSAccountRequest_v1
     isList: true
@@ -4883,6 +4889,12 @@ confs:
   - { name: outputs_secret_version, type: string, isRequired: true }
   - { name: module_default_resources, type: DeployResources_v1, isRequired: true }
 
+- name: ExternalResourcesChannel_v1
+  fields:
+  - { name: name, type: string, isRequired: true}
+  - { name: image, type: string, isRequired: true}
+  - { name: version, type: string, isRequired: true }
+
 - name: ExternalResourcesModule_v1
   datafile: /external-resources/module-1.yml
   fields:
@@ -4891,14 +4903,14 @@ confs:
   - { name: provision_provider, type: string, isRequired: true}
   - { name: provider, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: true}
-  - { name: image, type: string, isRequired: true}
-  - { name: version, type: string, isRequired: true}
   - { name: reconcile_drift_interval_minutes, type: int, isRequired: true}
   - { name: reconcile_timeout_minutes, type: int, isRequired: true}
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
   - { name: outputs_secret_image, type: string }
   - { name: outputs_secret_version, type: string }
   - { name: resources, type: DeployResources_v1}
+  - { name: default_channel, type: string, isRequired: true }
+  - { name: channels, type: ExternalResourcesChannel_v1, isList: true, isRequired: true }
 
 - name: ExternalResourcesModuleOverrides_v1
   datafile: /external-resources/module-overrides-1.yml
@@ -4906,6 +4918,7 @@ confs:
   - { name: schema, type: string, isRequired: true}
   - { name: path, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: false}
+  - { name: channel, type: string, isRequired: false }
   - { name: image, type: string, isRequired: false}
   - { name: version, type: string, isRequired: false}
   - { name: reconcile_timeout_minutes, type: int, isRequired: false}
