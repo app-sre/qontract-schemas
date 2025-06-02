@@ -97,6 +97,11 @@ oneOf:
 - properties:
     type:
       enum:
+      - no-op
+
+- properties:
+    type:
+      enum:
       - openshift-workload-restart
     arguments:
       type: array

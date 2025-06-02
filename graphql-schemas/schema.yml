@@ -5001,6 +5001,7 @@ confs:
     fieldMap:
       action-list: AutomatedActionActionList_v1
       create-token: AutomatedActionCreateToken_v1
+      no-op: AutomatedActionNoOp_v1
       openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5040,6 +5041,23 @@ confs:
   - { name: max_age_minutes, type: int }
 
 - name: AutomatedActionCreateToken_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionNoOp_v1
   datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
