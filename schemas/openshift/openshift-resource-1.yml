@@ -46,6 +46,8 @@ properties:
     "$ref": "/common-1.json#/definitions/vaultSecret"
   secret_name:
     type: string
+  auto_renew_threshold_days:
+    type: integer
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -150,7 +152,9 @@ oneOf:
     service_account_password:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     annotations:
-      type: object
+      "$ref": "/common-1.json#/definitions/annotations"
+    auto_renew_threshold_days:
+      type: integer
   required:
   - secret_name
   - service_account_name

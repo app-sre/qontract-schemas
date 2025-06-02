@@ -1767,6 +1767,7 @@ confs:
   - { name: secret_name, type: string, isRequired: true, isContextUnique: true }
   - { name: service_account_name, type: string, isRequired: true }
   - { name: service_account_password, type: VaultSecret_v1, isRequired: true }
+  - { name: auto_renew_threshold_days, type: int }
   - { name: annotations, type: json }
 
 - name: NamespaceOpenshiftResourceRoute_v1
