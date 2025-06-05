@@ -36,6 +36,7 @@ confs:
   - { name: costReport, type: CostReportSettings_v1 }
   - { name: terraformResourcesProviderExclusions, type: TerraformResourcesProviderExclusions_v1, isList: true}
   - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
+  - { name: rhcsProvider, type: RhcsProviderSettings_v1 }
 
 - name: TerraformResourcesProviderExclusions_v1
   fields:
@@ -119,6 +120,11 @@ confs:
   - { name: defaultIssueType, type: string, isRequired: true }
   - { name: defaultPriority, type: string, isRequired: true }
   - { name: defaultReopenState, type: string, isRequired: true }
+
+- name: RhcsProviderSettings_v1
+  fields:
+  - { name: url, type: string, isRequired: true }
+  - { name: vaultBasePath, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
@@ -699,16 +705,6 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1, isRequired: true }
   - { name: authProvider, type: AcsInstanceAuthProvider_v1, isRequired: true }
-
-- name: RhcsCertProvider_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string, isRequired: true }
-  - { name: url, type: string, isRequired: true }
-  - { name: vault_base_path, type: string, isRequired: true }
 
 - name: AcsInstanceAuthProvider_v1
   fields:
@@ -4116,7 +4112,6 @@ confs:
   - { name: githuborg_v1, type: GithubOrg_v1, isList: true, datafileSchema: /dependencies/github-org-1.yml }
   - { name: gitlabinstance_v1, type: GitlabInstance_v1, isList: true, datafileSchema: /dependencies/gitlab-instance-1.yml }
   - { name: acs_instance_v1, type: AcsInstance_v1, isList: true, datafileSchema: /dependencies/acs-instance-1.yml }
-  - { name: rhcs_cert_provider_v1, type: RhcsCertProvider_v1, isList: true, datafileSchema: /dependencies/rhcs-cert-provider-1.yml }
   - { name: acs_policy_v1, type: AcsPolicy_v1, isList: true, datafileSchema: /acs/acs-policy-1.yml }
   - { name: integrations_v1, type: Integration_v1, isList: true, datafileSchema: /app-sre/integration-1.yml}
   - { name: reports_v1, type: Report_v1, isList: true, datafileSchema: /app-sre/report-1.yml}
