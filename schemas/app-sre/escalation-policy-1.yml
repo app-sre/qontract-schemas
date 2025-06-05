@@ -42,9 +42,11 @@ properties:
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-board-1.yml"
-      jiraComponent:
-        type: string
-        description: component to set on jira tickets
+      jiraComponents:
+        type: array
+        description: components to set on jira tickets
+        items:
+          type: string
       jiraLabels:
         type: array
         description: labels to add on jira tickets
