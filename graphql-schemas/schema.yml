@@ -36,6 +36,7 @@ confs:
   - { name: costReport, type: CostReportSettings_v1 }
   - { name: terraformResourcesProviderExclusions, type: TerraformResourcesProviderExclusions_v1, isList: true}
   - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
+  - { name: rhcsProvider, type: RhcsProviderSettings_v1 }
 
 - name: TerraformResourcesProviderExclusions_v1
   fields:
@@ -119,6 +120,11 @@ confs:
   - { name: defaultIssueType, type: string, isRequired: true }
   - { name: defaultPriority, type: string, isRequired: true }
   - { name: defaultReopenState, type: string, isRequired: true }
+
+- name: RhcsProviderSettings_v1
+  fields:
+  - { name: url, type: string, isRequired: true }
+  - { name: vaultBasePath, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
@@ -1718,6 +1724,7 @@ confs:
       vault-secret: NamespaceOpenshiftResourceVaultSecret_v1
       route: NamespaceOpenshiftResourceRoute_v1
       prometheus-rule: NamespaceOpenshiftResourcePrometheusRule_v1
+      rhcs-cert: NamespaceOpenshiftResourceRhcsCert_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1754,6 +1761,16 @@ confs:
   - { name: type, type: string }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
+
+- name: NamespaceOpenshiftResourceRhcsCert_v1
+  interface: NamespaceOpenshiftResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: secret_name, type: string, isRequired: true, isContextUnique: true }
+  - { name: service_account_name, type: string, isRequired: true }
+  - { name: service_account_password, type: VaultSecret_v1, isRequired: true }
+  - { name: auto_renew_threshold_days, type: int }
+  - { name: annotations, type: json }
 
 - name: NamespaceOpenshiftResourceRoute_v1
   interface: NamespaceOpenshiftResource_v1
