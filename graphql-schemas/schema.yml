@@ -123,8 +123,9 @@ confs:
 
 - name: RhcsProviderSettings_v1
   fields:
-  - { name: url, type: string, isRequired: true }
+  - { name: issuerUrl, type: string, isRequired: true }
   - { name: vaultBasePath, type: string, isRequired: true }
+  - { name: caCertUrl, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
