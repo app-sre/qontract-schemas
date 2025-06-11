@@ -47,6 +47,10 @@ properties:
       type: object
       properties:
         # Note: Please keep action alphabetical order
+        # used by several actions
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
         # action-list specific arguments
         action_user:
           type: string
@@ -54,10 +58,11 @@ properties:
         max_age_minutes:
           type: integer
           description: The maximum age of actions to include in the list, in minutes.
+        # external-resource-rds-reboot specific arguments
+        identifier:
+          type: string
+          description: The RDS identifier regex pattern to match.
         # openshift-workload-restart specific arguments
-        namespace:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/openshift/namespace-1.yml"
         kind:
           type: string
           description: The kind regex pattern to match.
@@ -93,6 +98,28 @@ oneOf:
     type:
       enum:
       - create-token
+
+- properties:
+    type:
+      enum:
+      - external-resource-rds-reboot
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+            description: "The namespace where the RDS instance is located."
+          identifier:
+            type: string
+            description: "The RDS identifier regex pattern to match."
+        required:
+        - namespace
+        - identifier
+  required:
+  - arguments
 
 - properties:
     type:
