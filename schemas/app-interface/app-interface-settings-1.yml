@@ -357,7 +357,7 @@ properties:
       Configuration for RHCSv2 certificate generation and storing
     additionalProperties: false
     properties:
-      url:
+      issuerUrl:
         type: string
         description: |
           RHCS issuer web form endpoint
@@ -365,9 +365,14 @@ properties:
         type: string
         description: |
           Path in KV Vault mount where certificate secrets will be stored 
+      caCertUrl:
+        type: string
+        description: |
+          URL to obtain ceritifcate authority trust cert from
     required:
-    - url
+    - issuerUrl
     - vaultBasePath
+    - caCertUrl
   customMessages:
     type: array
     description: |
