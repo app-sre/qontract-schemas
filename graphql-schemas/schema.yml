@@ -2886,7 +2886,7 @@ confs:
   - { name: email, type: string, isList: true, isRequired: true }
   - { name: pagerduty, type: PagerDutyTarget_v1 }
   - { name: jiraBoard, type: JiraBoard_v1, isList: true, isRequired: true }
-  - { name: jiraComponent, type: string }
+  - { name: jiraComponents, type: string, isList: true }
   - { name: jiraLabels, type: string, isList: true }
   - { name: nextEscalationPolicy, type: AppEscalationPolicy_v1 }
 
