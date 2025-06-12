@@ -153,6 +153,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    labels:
+      "$ref": "/common-1.json#/definitions/labels"
     auto_renew_threshold_days:
       type: integer
   required:
