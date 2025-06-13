@@ -4,7 +4,7 @@ version: '1.0'
 type: object
 title: "App Interface SQL Query"
 description: |
-  Schema for defining SQL queries to be executed within the app-interface.
+  Schema for defining SQL queries for automated execution.
   Includes details about the query, its schedule, output, and overrides.
 
 additionalProperties: false
@@ -13,8 +13,6 @@ properties:
     type: string
     enum:
     - /app-interface/app-interface-sql-query-1.yml
-    description: |
-      The schema reference for this SQL query file.
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
@@ -29,7 +27,7 @@ properties:
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
     description: |
-      The identifier for the RDS instance as defined in an app-interface namespace file.
+      The identifier for the RDS instance as defined in a namespace instantiation.
   requestor:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/access/user-1.yml"
