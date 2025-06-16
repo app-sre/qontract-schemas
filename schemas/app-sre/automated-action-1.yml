@@ -58,10 +58,10 @@ properties:
         max_age_minutes:
           type: integer
           description: The maximum age of actions to include in the list, in minutes.
-        # external-resource-rds-reboot specific arguments
+        # external-resource-* specific arguments
         identifier:
           type: string
-          description: The RDS identifier regex pattern to match.
+          description: The external resource identifier regex pattern to match.
         # openshift-workload-restart specific arguments
         kind:
           type: string
@@ -98,6 +98,28 @@ oneOf:
     type:
       enum:
       - create-token
+
+- properties:
+    type:
+      enum:
+      - external-resource-flush-elasticache
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+            description: "The namespace where the Elasticache instance is located."
+          identifier:
+            type: string
+            description: "The Elasticache identifier regex pattern to match."
+        required:
+        - namespace
+        - identifier
+  required:
+  - arguments
 
 - properties:
     type:
