@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Maintenance"
+description: |
+  Schema for defining service maintenances. Maintenances represent planned
+  or ongoing service interruptions or changes, including their name, message,
+  affected services, scheduled time window, and announcement configuration.
+  This schema enables tenants to self-service maintenance announcements on
+  status pages and to communicate maintenance details to AppSRE and stakeholders.
 
 additionalProperties: false
 properties:
@@ -11,23 +18,40 @@ properties:
     - /app-sre/maintenance-1.yml
   name:
     type: string
-    description: the name of the maintenance
+    description: |
+      The unique name of the maintenance. Used to identify and reference
+      the maintenance event across the system.
   message:
     type: string
-    description: a message describing the maintenance
+    description: |
+      A message describing the maintenance, its purpose, or its expected
+      impact on services.
   affectedServices:
     type: array
+    description: |
+      A list of services affected by this maintenance. Each entry references
+      an application that will be impacted during the maintenance window.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/app-1.yml"
   scheduledStart:
     type: string
     format: date-time
+    description: |
+      The scheduled start time for the maintenance window, in ISO 8601
+      date-time format.
   scheduledEnd:
     type: string
     format: date-time
+    description: |
+      The scheduled end time for the maintenance window, in ISO 8601
+      date-time format.
   announcements:
     type: array
+    description: |
+      A list of announcement configurations for this maintenance. Each
+      announcement specifies a provider (such as statuspage), the page to
+      announce on, and notification options for subscribers.
     items:
       type: object
       additionalProperties: false
@@ -36,15 +60,29 @@ properties:
           type: string
           enum:
           - statuspage
+          description: |
+            The provider used for the maintenance announcement.
         page:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/status-page-1.yml"
+          description: |
+            Reference to the status page where the maintenance will be
+            announced.
         remindSubscribers:
           type: boolean
+          description: |
+            If true, subscribers will be reminded before the maintenance
+            starts.
         notifySubscribersOnStart:
           type: boolean
+          description: |
+            If true, subscribers will be notified when the maintenance
+            begins.
         notifySubscribersOnCompletion:
           type: boolean
+          description: |
+            If true, subscribers will be notified when the maintenance
+            is completed.
       required:
       - provider
     oneOf:
