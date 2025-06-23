@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "PGP Re-encrypt Settings"
+description: |
+  Schema for configuring PGP re-encryption settings. This schema defines
+  the keys and vault paths used for re-encrypting sensitive data, such as
+  AWS account passwords, with a central APP-SRE PGP key. It also allows
+  specifying AWS accounts to skip re-encryption and use an alternative
+  notification method. These settings help manage secure key rotation and
+  ensure users are notified of expiring or invalid keys.
 
 additionalProperties: false
 properties:
@@ -11,31 +19,38 @@ properties:
     - /app-sre/pgp-reencrypt-settings-1.yml
 
   public_gpg_key:
-    description: |
-      This PGP Public key will be used to encrypt the users, instead of the users keys.
-      It is owned by APP-SRE. The field name is not a type as it is consistent with access/user-1.yml schema.
     type: string
+    description: |
+      The PGP public key owned by APP-SRE, used to encrypt user data
+      instead of individual user keys. This enables centralized encryption
+      management and simplifies key rotation.
 
   private_pgp_key_vault_path:
-    description: |
-      This is the vault path to the private key used for reencryption.
     type: string
+    description: |
+      The vault path to the private PGP key used for decrypting and
+      re-encrypting data. This key must be kept secure and accessible
+      only to authorized integrations.
 
   reencrypt_vault_path:
-    description: |
-      Base path to read/write pgp encrypted entries from/to.
     type: string
+    description: |
+      The base vault path where PGP-encrypted entries are read from and
+      written to during the re-encryption process.
 
   aws_account_output_vault_path:
-    description: |
-      Path to write reencrypted AWS Account passwords to.
     type: string
+    description: |
+      The vault path where re-encrypted AWS account passwords are written.
+      This ensures that updated credentials are securely stored.
 
   skip_aws_accounts:
-    description: |
-      This is kind of a feature flipper. Access requests for AWS accounts listed here will be sent
-      using the SMTP mail send implementation in terraform-users integration.
     type: array
+    description: |
+      A list of AWS accounts to skip during the re-encryption process.
+      Access requests for these accounts will use the SMTP mail send
+      implementation in the terraform-users integration instead of PGP
+      re-encryption.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/account-1.yml"
