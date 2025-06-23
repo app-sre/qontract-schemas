@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Escalation Policy"
+description: |
+  Schema for defining escalation policies for services. Escalation policies 
+  specify how incidents or issues are escalated, including the channels 
+  and configurations for notifications, such as Slack, email, PagerDuty, 
+  and Jira.
 
 additionalProperties: false
 properties:
@@ -11,25 +17,35 @@ properties:
     - /app-sre/escalation-policy-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
-
+    description: |
+      The unique name of the escalation policy.
   description:
     type: string
-
+    description: |
+      A description of the escalation policy, explaining its purpose 
+      and scope.
   channels:
     type: object
+    description: |
+      The notification channels configured for the escalation policy. These 
+      channels specify how and where notifications are sent during an escalation.
     additionalProperties: false
     properties:
       slackUserGroup:
         type: array
+        description: |
+          A list of Slack user groups to notify during an escalation. Each 
+          user group is referenced by its permissions configuration.
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/permission-1.yml"
         minItems: 1
       email:
         type: array
+        description: |
+          A list of email addresses to notify during an escalation.
         items:
           type: string
           format: email
@@ -37,28 +53,38 @@ properties:
       pagerduty:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+        description: |
+          Reference to the PagerDuty target to notify during an escalation.
       jiraBoard:
         type: array
+        description: |
+          A list of Jira boards to use for tracking escalations.
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-board-1.yml"
       jiraComponents:
         type: array
-        description: components to set on jira tickets
+        description: |
+          components to set on jira tickets created when following the escalation policy
         items:
           type: string
       jiraLabels:
         type: array
-        description: labels to add on jira tickets
+        description: |
+          A list of labels to add to Jira tickets created during an escalation.
         items:
           type: string
       nextEscalationPolicy:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/escalation-policy-1.yml"
+        description: |
+          Reference to the next escalation policy to follow if the current 
+          policy does not resolve the issue.
     required:
     - slackUserGroup
     - email
     - jiraBoard
+
 required:
 - name
 - description
