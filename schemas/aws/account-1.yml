@@ -163,6 +163,13 @@ properties:
   organizationAccountTags:
     "$ref": "/common-1.json#/definitions/labels"
     description: "For payer accounts only! Apply these tags to all accounts in the organization. This is useful for tagging all accounts in the organization with the same tags."
+  externalResources:
+    type: object
+    description: "External resources settings for the account."
+    properties:
+      channel:
+        type: string
+        description: "The channel to use for external resource modules."
 dependencies:
   resetPasswords:
     properties:

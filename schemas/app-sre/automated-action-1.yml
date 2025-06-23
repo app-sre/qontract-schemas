@@ -4,8 +4,8 @@ version: '1.0'
 type: object
 title: "Automated Action"
 description: |
-  Schema for defining automated actions. Automated actions 
-  represent predefined operations that can be executed programmatically, 
+  Schema for defining automated actions. Automated actions
+  represent predefined operations that can be executed programmatically,
   with configurable retries, operation limits, and descriptions.
 
 additionalProperties: false
@@ -16,29 +16,159 @@ properties:
     - /app-sre/automated-action-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
-  operationId:
+  type:
     type: string
     description: |
-      The unique identifier for the automated action. This corresponds to 
-      the OpenAPI operation ID for the action.
+      The automated action type, which indicates the kind of operation
+      being performed.
   description:
     type: string
     description: |
-      A brief description of the automated action, explaining its purpose 
+      A brief description of the automated action, explaining its purpose
       and functionality.
-  retries:
-    type: number
+  instances:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
     description: |
-      The number of times to retry the action in case of failure. This helps 
-      ensure the action completes successfully in transient failure scenarios.
+      A list of instances where the automated action can be executed.
   maxOps:
     type: number
     description: |
-      The maximum number of operations that can be performed per hour. This 
-      is used to limit the frequency of the automated action to prevent 
+      The maximum number of operations that can be performed per hour. This
+      is used to limit the frequency of the automated action to prevent
       overloading systems or exceeding quotas.
+  arguments:
+    description: |
+      Action arguments that can be used to customize the behavior of the action.
+    type: array
+    items:
+      type: object
+      properties:
+        # Note: Please keep action alphabetical order
+        # used by several actions
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        # action-list specific arguments
+        action_user:
+          type: string
+          description: The user filter for the action list.
+        max_age_minutes:
+          type: integer
+          description: The maximum age of actions to include in the list, in minutes.
+        # external-resource-* specific arguments
+        identifier:
+          type: string
+          description: The external resource identifier regex pattern to match.
+        # openshift-workload-restart specific arguments
+        kind:
+          type: string
+          description: The kind regex pattern to match.
+        name:
+          type: string
+          description: The name regex pattern to match.
+
 required:
 - "$schema"
-- operationId
-- retries
+- type
+- instances
 - maxOps
+
+# Keep in alphabetical order!!
+oneOf:
+- properties:
+    type:
+      enum:
+      - action-list
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          action_user:
+            type: string
+            description: The user filter for the action list.
+          max_age_minutes:
+            type: integer
+            description: The maximum age of actions to include in the list, in minutes.
+
+- properties:
+    type:
+      enum:
+      - create-token
+
+- properties:
+    type:
+      enum:
+      - external-resource-flush-elasticache
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+            description: "The namespace where the Elasticache instance is located."
+          identifier:
+            type: string
+            description: "The Elasticache identifier regex pattern to match."
+        required:
+        - namespace
+        - identifier
+  required:
+  - arguments
+
+- properties:
+    type:
+      enum:
+      - external-resource-rds-reboot
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+            description: "The namespace where the RDS instance is located."
+          identifier:
+            type: string
+            description: "The RDS identifier regex pattern to match."
+        required:
+        - namespace
+        - identifier
+  required:
+  - arguments
+
+- properties:
+    type:
+      enum:
+      - no-op
+
+- properties:
+    type:
+      enum:
+      - openshift-workload-restart
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+          kind:
+            type: string
+            description: "The kind regex pattern to match."
+          name:
+            type: string
+            description: "The name regex pattern to match."
+        required:
+        - namespace
+        - name
+        - kind
+  required:
+  - arguments

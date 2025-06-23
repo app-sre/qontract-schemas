@@ -46,6 +46,7 @@ properties:
     - admin
     - analyst
     - vuln-admin
+    - vuln-report-creator
 oneOf:
 - properties:
     service:
@@ -87,6 +88,7 @@ oneOf:
       - admin
       - analyst
       - vuln-admin
+      - vuln-report-creator
   oneOf:
   - required:
     - permission_set

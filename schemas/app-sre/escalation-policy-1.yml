@@ -62,10 +62,12 @@ properties:
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/jira-board-1.yml"
-      jiraComponent:
-        type: string
+      jiraComponents:
+        type: array
         description: |
-          The Jira component to set on tickets created during an escalation.
+          components to set on jira tickets created when following the escalation policy
+        items:
+          type: string
       jiraLabels:
         type: array
         description: |

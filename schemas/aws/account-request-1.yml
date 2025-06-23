@@ -13,6 +13,11 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     type: string
+    description: |
+      Unique name for aws account, it will be added to account as an alias.
+      It must be a minimum length of 3 characters and maximum length of 63 characters,
+      contain only digits, lowercase letters, and hyphens (-), but cannot begin or end with a hyphen.
+    pattern: "^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$"
   description:
     type: string
   accountOwner:

@@ -36,6 +36,7 @@ confs:
   - { name: costReport, type: CostReportSettings_v1 }
   - { name: terraformResourcesProviderExclusions, type: TerraformResourcesProviderExclusions_v1, isList: true}
   - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
+  - { name: rhcsProvider, type: RhcsProviderSettings_v1 }
 
 - name: TerraformResourcesProviderExclusions_v1
   fields:
@@ -119,6 +120,12 @@ confs:
   - { name: defaultIssueType, type: string, isRequired: true }
   - { name: defaultPriority, type: string, isRequired: true }
   - { name: defaultReopenState, type: string, isRequired: true }
+
+- name: RhcsProviderSettings_v1
+  fields:
+  - { name: issuerUrl, type: string, isRequired: true }
+  - { name: vaultBasePath, type: string, isRequired: true }
+  - { name: caCertUrl, type: string, isRequired: true }
 
 - name: AppInterfaceDependencyMapping_v1
   fields:
@@ -438,7 +445,8 @@ confs:
   - { name: description, type: string, isRequired: true }
   - { name: managedTeams, type: string, isList: true, isRequired: true }
   - { name: automationToken, type: VaultSecret_v1 }
-  - { name: pushCredentials, type: VaultSecret_v1 }
+  - { name: gcrPushCredentials, type: VaultSecret_v1 }
+  - { name: artifactPushCredentials, type: VaultSecret_v1, isRequired: true }
 
 - name: GrafanaDashboardUrls_v1
   fields:
@@ -576,10 +584,10 @@ confs:
   - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
-  - { name: issueSecurityId, type: string }
   - { name: wontFixResolution, type: string }
   - { name: reopenDuration, type: string }
   - { name: disable, type: DisableJiraBoardAutomations_v1 }
+  - { name: issueFields, type: JiraBoardIssueField_v1, isList: true }
   - name: escalationPolicies
     type: AppEscalationPolicy_v1
     isList: true
@@ -590,6 +598,11 @@ confs:
 - name: DisableJiraBoardAutomations_v1
   fields:
   - { name: integrations, type: string, isList: true }
+
+- name: JiraBoardIssueField_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: value, type: string, isRequired: true }
 
 - name: SendGridAccount_v1
   fields:
@@ -1307,6 +1320,11 @@ confs:
   - { name: accessLevel, type: string, isRequired: true }
   - { name: default, type: boolean }
 
+- name: ExternalResourcesAccountSettings_v1
+  fields:
+  - { name: channel, type: string}
+
+
 - name: ExternalResourcesProvisioner_v1
   isInterface: true
   interfaceResolve:
@@ -1352,6 +1370,7 @@ confs:
   - { name: quotaLimits, type: AWSQuotaLimits_v1, isList: true }
   - { name: organization, type: AWSOrganization_v1 }
   - { name: organizationAccountTags, type: json }
+  - { name: externalResources, type: ExternalResourcesAccountSettings_v1, isRequired: false}
   - name: account_requests
     type: AWSAccountRequest_v1
     isList: true
@@ -1425,41 +1444,6 @@ confs:
   - { name: serviceCode, type: string, isRequired: true }
   - { name: quotaCode, type: string, isRequired: true }
   - { name: value, type: float, isRequired: true }
-
-- name: CNAExperimentalProvisioner_v1
-  interface: ExternalResourcesProvisioner_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
-  - { name: description, type: string }
-  - { name: ocm, type: OpenShiftClusterManager_v1, isRequired: true }
-
-- name: NamespaceCNAsset_v1
-  interface: NamespaceExternalResource_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: provisioner, type: CNAExperimentalProvisioner_v1, isRequired: true }
-  - { name: resources, type: CNAsset_v1, isRequired: true, isList: true, isInterface: true }
-
-- name: CNAsset_v1
-  datafile: /cna/asset-1.yml
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: provider
-    fieldMap:
-      null-asset: CNANullAsset_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-
-- name: CNANullAsset_v1
-  interface: CNAsset_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true, isUnique: true }
-  - { name: description, type: string }
-  - { name: addr_block, type: string }
 
 - name: CloudflareAccount_v1
   datafile: /cloudflare/account-1.yml
@@ -1706,6 +1690,7 @@ confs:
       vault-secret: NamespaceOpenshiftResourceVaultSecret_v1
       route: NamespaceOpenshiftResourceRoute_v1
       prometheus-rule: NamespaceOpenshiftResourcePrometheusRule_v1
+      rhcs-cert: NamespaceOpenshiftResourceRhcsCert_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -1743,6 +1728,16 @@ confs:
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
 
+- name: NamespaceOpenshiftResourceRhcsCert_v1
+  interface: NamespaceOpenshiftResource_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: secret_name, type: string, isRequired: true, isContextUnique: true }
+  - { name: service_account_name, type: string, isRequired: true }
+  - { name: service_account_password, type: VaultSecret_v1, isRequired: true }
+  - { name: auto_renew_threshold_days, type: int }
+  - { name: annotations, type: json }
+
 - name: NamespaceOpenshiftResourceRoute_v1
   interface: NamespaceOpenshiftResource_v1
   fields:
@@ -1770,7 +1765,6 @@ confs:
       aws: NamespaceTerraformProviderResourceAWS_v1
       cloudflare: NamespaceTerraformProviderResourceCloudflare_v1
       gcp-project: NamespaceTerraformProviderResourceGCPProject_v1
-      cna-experimental: NamespaceCNAsset_v1
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: provisioner, type: ExternalResourcesProvisioner_v1, isRequired: true, isInterface: true }
@@ -2379,6 +2373,9 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean}
+  - { name: delete, type: boolean}
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
 
 - name: NamespaceTerraformResourceKMS_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2408,6 +2405,12 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
 
+- name: NamespaceTerraformResourceALBMutualAuthentication_v1
+  fields:
+  - { name: mode, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_name, type: string, isRequired: true }
+  - { name: ca_cert_bundle_s3_bucket_key, type: string, isRequired: true }
+
 - name: NamespaceTerraformResourceALB_v1
   interface: NamespaceTerraformResourceAWS_v1
   fields:
@@ -2422,6 +2425,7 @@ confs:
   - { name: ip_address_type, type: string }
   - { name: access_logs, type: boolean }
   - { name: ssl_policy, type: string }
+  - { name: mutual_authentication, type: NamespaceTerraformResourceALBMutualAuthentication_v1 }
   - { name: targets, type: NamespaceTerraformResourceALBTargets_v1, isRequired: true, isList: true }
   - { name: rules, type: NamespaceTerraformResourceALBRules_v1, isRequired: true, isList: true }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
@@ -2768,6 +2772,16 @@ confs:
   - { name: public, type: boolean, isRequired: true }
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
 
+- name: AppArtifactRegistryMirrorsItems_v1
+  fields:
+  - { name: imageURL, type: string, isRequired: true }
+  - { name: mirror, type: ContainerImageMirror_v1, isRequired: true }
+
+- name: AppArtifactRegistryMirrors_v1
+  fields:
+  - { name: project, type: GcpProject_v1, isRequired: true }
+  - { name: items, type: AppArtifactRegistryMirrorsItems_v1, isRequired: true, isList: true }
+
 - name: ContainerImageMirror_v1
   datafile: /dependencies/container-image-mirror-1.yml
   fields:
@@ -2836,7 +2850,7 @@ confs:
   - { name: email, type: string, isList: true, isRequired: true }
   - { name: pagerduty, type: PagerDutyTarget_v1 }
   - { name: jiraBoard, type: JiraBoard_v1, isList: true, isRequired: true }
-  - { name: jiraComponent, type: string }
+  - { name: jiraComponents, type: string, isList: true }
   - { name: jiraLabels, type: string, isList: true }
   - { name: nextEscalationPolicy, type: AppEscalationPolicy_v1 }
 
@@ -2959,6 +2973,7 @@ confs:
   - { name: serviceNotifications, type: Owner_v1, isList: true }
   - { name: dependencies, type: Dependency_v1, isList: true }
   - { name: gcrRepos, type: AppGcrRepos_v1, isList: true }
+  - { name: artifactRegistryMirrors, type: AppArtifactRegistryMirrors_v1, isList: true }
   - { name: quayRepos, type: AppQuayRepos_v1, isList: true }
   - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
@@ -3113,6 +3128,7 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
   - { name: images, type: SaasResourceTemplateTargetImage_v1, isList: true }
+  - { name: slos, type: SLODocument_v1 ,isList: true, isRequired: false}
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
 
@@ -3506,13 +3522,16 @@ confs:
       subAttr: permissions
 
 - name: ExternalUser_v1
+  datafile: /access/external-user-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
-  - { name: github_username, type: string, isRequired: true }
+  - { name: github_username, type: string }
+  - { name: quay_username, type: string }
   - { name: sponsors, type: User_v1, isRequired: true, isList: true }
+  - { name: roles, type: Role_v1, isList: true }
 
 - name: User_v1
   datafile: /access/user-1.yml
@@ -3621,6 +3640,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /access/bot-1.yml
+      subAttr: roles
+  - name: external_users
+    type: ExternalUser_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/external-user-1.yml
       subAttr: roles
 
 - name: LdapGroup_v1
@@ -4029,7 +4055,6 @@ confs:
   - { name: awsvpcs_v1, type: AWSVPC_v1, isList: true, datafileSchema: /aws/vpc-1.yml }
   - { name: aws_vpc_request_v1, type: VPCRequest_v1, isList: true, datafileSchema: /aws/vpc-request-1.yml }
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
-  - { name: cna_experimental_provisioners_v1, type: CNAExperimentalProvisioner_v1, isList: true, datafileSchema: /cna/experimental-provisioner-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
   - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
@@ -4373,7 +4398,7 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: app, type: App_v1, isRequired: true }
   - { name: namespaces, type: SLONamespaces_v1, isList: true, isRequired: true }
   - { name: slos, type: SLODocumentSLO_v1, isList: true }
@@ -4845,6 +4870,12 @@ confs:
   - { name: outputs_secret_version, type: string, isRequired: true }
   - { name: module_default_resources, type: DeployResources_v1, isRequired: true }
 
+- name: ExternalResourcesChannel_v1
+  fields:
+  - { name: name, type: string, isRequired: true}
+  - { name: image, type: string, isRequired: true}
+  - { name: version, type: string, isRequired: true }
+
 - name: ExternalResourcesModule_v1
   datafile: /external-resources/module-1.yml
   fields:
@@ -4853,14 +4884,14 @@ confs:
   - { name: provision_provider, type: string, isRequired: true}
   - { name: provider, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: true}
-  - { name: image, type: string, isRequired: true}
-  - { name: version, type: string, isRequired: true}
   - { name: reconcile_drift_interval_minutes, type: int, isRequired: true}
   - { name: reconcile_timeout_minutes, type: int, isRequired: true}
   - { name: outputs_secret_sync, type: boolean, isRequired: true}
   - { name: outputs_secret_image, type: string }
   - { name: outputs_secret_version, type: string }
   - { name: resources, type: DeployResources_v1}
+  - { name: default_channel, type: string, isRequired: true }
+  - { name: channels, type: ExternalResourcesChannel_v1, isList: true, isRequired: true }
 
 - name: ExternalResourcesModuleOverrides_v1
   datafile: /external-resources/module-overrides-1.yml
@@ -4868,6 +4899,7 @@ confs:
   - { name: schema, type: string, isRequired: true}
   - { name: path, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: false}
+  - { name: channel, type: string, isRequired: false }
   - { name: image, type: string, isRequired: false}
   - { name: version, type: string, isRequired: false}
   - { name: reconcile_timeout_minutes, type: int, isRequired: false}
@@ -4919,58 +4951,6 @@ confs:
   - { name: tags, type: string, isList: true }
   - { name: description, type: string, isRequired: true }
 
-- name: AutomatedActionsInstance_v1
-  datafile: /app-sre/automated-actions-instance-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: deployment, type: Namespace_v1, isRequired: true }
-  - name: permissions
-    type: PermissionAutomatedActions_v1
-    isList: true
-    synthetic:
-      schema: /access/permission-1.yml
-      subAttr: instances
-
-- name: AutomatedAction_v1
-  datafile: /app-sre/automated-action-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: operationId, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: retries, type: int, isRequired: true }
-  - { name: maxOps, type: int, isRequired: true }
-
-- name: AutomatedActionArgument_v1
-  datafile: /app-sre/automated-action-argument-1.yml
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: type
-    fieldMap:
-      openshift: AutomatedActionArgumentOpenshift_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: type, type: string, isRequired: true }
-
-- name: AutomatedActionArgumentOpenshift_v1
-  datafile: /app-sre/automated-action-argument-1.yml
-  interface: AutomatedActionArgument_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: type, type: string, isRequired: true }
-  - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: kind_pattern, type: string, isRequired: true }
-  - { name: name_pattern, type: string, isRequired: true }
-
 - name: PermissionAutomatedActions_v1
   datafile: /access/permission-1.yml
   interface: Permission_v1
@@ -4981,12 +4961,176 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
-  - { name: action, type: AutomatedAction_v1, isRequired: true }
-  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
-  - { name: arguments, type: AutomatedActionArgument_v1, isList: true, isInterface: true }
+  - { name: actions, type: AutomatedAction_v1, isList: true, isRequired: true, isInterface: true }
   - name: roles
     type: Role_v1
     isList: true
     synthetic:
       schema: /access/role-1.yml
       subAttr: permissions
+
+- name: AutomatedActionsInstance_v1
+  datafile: /app-sre/automated-actions-instance-1.yml
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: deployment, type: Namespace_v1, isRequired: true }
+  - name: actions
+    type: AutomatedAction_v1
+    isList: true
+    isInterface: true
+    synthetic:
+      schema: /app-sre/automated-action-1.yml
+      subAttr: instances
+
+- name: AutomatedAction_v1
+  datafile: /app-sre/automated-action-1.yml
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: type
+    fieldMap:
+      action-list: AutomatedActionActionList_v1
+      create-token: AutomatedActionCreateToken_v1
+      external-resource-flush-elasticache: AutomatedActionExternalResourceFlushElastiCache_v1
+      external-resource-rds-reboot: AutomatedActionExternalResourceRdsReboot_v1
+      no-op: AutomatedActionNoOp_v1
+      openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionActionList_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionActionListArgument_v1, isList: true }
+
+- name: AutomatedActionActionListArgument_v1
+  fields:
+  - { name: action_user, type: string }
+  - { name: max_age_minutes, type: int }
+
+- name: AutomatedActionCreateToken_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionExternalResourceFlushElastiCache_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionExternalResourceRdsReboot_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionExternalResourceArgument_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+
+- name: AutomatedActionNoOp_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+
+- name: AutomatedActionOpenshiftWorkloadRestart_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionOpenshiftWorkloadRestartArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionOpenshiftWorkloadRestartArgument_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: kind, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }

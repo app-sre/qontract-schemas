@@ -69,23 +69,11 @@ properties:
     "$schemaRef": "/app-sre/schedule-1.yml"
   skip:
     type: boolean
-  action:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/app-sre/automated-action-1.yml"
-  instances:
+  actions:
     type: array
     items:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
-  arguments:
-    type: array
-    items:
-      oneOf:
-      # inline
-      - "$ref": "/app-sre/automated-action-argument-1.yml"
-      # referenced
-      - "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/app-sre/automated-action-argument-1.yml"
+      "$schemaRef": "/app-sre/automated-action-1.yml"
 oneOf:
 - properties:
     service:
@@ -201,26 +189,13 @@ oneOf:
     service:
       enum:
       - automated-actions
-    action:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/app-sre/automated-action-1.yml"
-    instances:
+    actions:
       type: array
       items:
         "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": "/app-sre/automated-actions-instance-1.yml"
-    arguments:
-      type: array
-      items:
-        oneOf:
-        # inline
-        - "$ref": "/app-sre/automated-action-argument-1.yml"
-        # referenced
-        - "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/app-sre/automated-action-argument-1.yml"
+        "$schemaRef": "/app-sre/automated-action-1.yml"
   required:
-  - action
-  - instances
+  - actions
 required:
 - $schema
 - labels
