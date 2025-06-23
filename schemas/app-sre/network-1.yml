@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Network"
+description: |
+  Schema for defining a network reservation. Networks represent CIDR blocks
+  that can be reserved for use by VPCs or other resources. This schema enables
+  tracking of network allocations, parent-child relationships between networks,
+  and the entity currently using the network. It supports automation and
+  visibility for network management in cloud environments.
 
 additionalProperties: false
 properties:
@@ -15,32 +22,50 @@ properties:
 
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
+    description: |
+      The unique name of the network. Used to identify the network reservation
+      across the system.
 
   description:
     type: string
+    description: |
+      A detailed description of the network, its intended use, or any
+      relevant context for the reservation.
 
   inUseBy:
-    description: "A reference to some entity that is able to, and has claimed this network. If this network is unclaimed, this will have a null value."
     type: object
+    description: |
+      Reference to the entity that has claimed this network. If the network
+      is unclaimed, this value will be null. Used to track which resource
+      or team is currently using the network.
     properties:
       vpc:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": /aws/vpc-request-1.yml
+        description: |
+          Reference to the VPC that is currently using this network.
     oneOf:
     - required:
       - vpc
+
   networkAddress:
-    description: "The network address in CIDR format"
     type: string
-    # Naive regeg; validate in code before use.
     pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\/\\d+$"
+    description: |
+      The network address in CIDR format (e.g., 10.0.200.0/24). This defines
+      the range of IP addresses covered by this network reservation.
+
   parentNetwork:
-    description: "A reference to this network's parent network. If this is a 'root' network, it will have no parent."
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/network-1.yml"
+    description: |
+      Reference to the parent network, if this network is a subdivision of
+      a larger block. If this is a root network, this property will be null.
+
   region:
-    description: "Region where this network resides"
     type: string
+    description: |
+      The cloud provider region where this network resides.
 
 required:
 - $schema
