@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Integration Spec"
+description: |
+  Schema for defining the deployment specification of an integration.
+  This includes configuration for command, resources, logging, environment
+  variables, storage, scheduling, and other runtime options. The spec is
+  used by the integrations manager to generate OpenShift resources and
+  control integration behavior.
 
 additionalProperties: false
 properties:
@@ -9,12 +16,15 @@ properties:
     type: string
     enum:
     - /app-sre/integration-spec-1.yml
+
   cache:
     type: boolean
-    description: integration requires cache
+    description: |
+      Indicates if the integration requires a cache to store intermediate
+      or persistent data during execution.
+
   command:
     type: string
-    description: command to run
     enum:
     - qontract-reconcile
     - app-interface-metrics-exporter
@@ -22,34 +32,55 @@ properties:
     - glitchtip-access-reporter
     - glitchtip-access-revalidation
     - saas-metrics-exporter
+    description: |
+      The command to run for this integration. This determines the main
+      entrypoint or executable for the integration container.
+
   disableUnleash:
     type: boolean
-    description: disable integration interaction with unleash instance
+    description: |
+      If true, disables the integration's interaction with the Unleash
+      instance for feature flag management.
+
   environmentAware:
     type: boolean
-    description: integration is aware of the environment it is running in
+    description: |
+      Indicates whether the integration is aware of the environment it is
+      running in. If true, environment-specific configuration may be used.
+
   extraArgs:
     type: string
-    description: additional arguments to pass to integration
+    description: |
+      Additional arguments to pass to the integration command at runtime.
+
   extraEnv:
     type: array
+    description: |
+      Additional environment variables to set for the integration. Each
+      entry can specify a static value or reference a secret.
     items:
       type: object
-      description: additional environment variables to set for the integration
+      description: |
+        Defines an environment variable for the integration, either by
+        referencing a secret or by specifying a name and value directly.
       additionalProperties: false
       properties:
         secretName:
           type: string
-          description: secret name to get environment variable from
+          description: |
+            The name of the secret to get the environment variable from.
         secretKey:
           type: string
-          description: secret key to get value from and to use as the environment variable name
+          description: |
+            The key within the secret to use as the environment variable value.
         name:
           type: string
-          description: environment variable name
+          description: |
+            The name of the environment variable to set.
         value:
           type: string
-          description: environment variable value
+          description: |
+            The value to assign to the environment variable.
       oneOf:
       - additionalProperties: false
         properties:
@@ -69,76 +100,119 @@ properties:
         required:
         - name
         - value
+
   imageRef:
     type: string
+    description: |
+      The image reference to use for the integration container.
+
   internalCertificates:
     type: boolean
-    description: integration requires internal certificates to execute
+    description: |
+      If true, the integration requires internal certificates to execute.
+
   logs:
     type: object
-    description: ship logs to providers (cloudwatch is enabled by default)
+    description: |
+      Configuration for shipping logs to external providers. By default,
+      logs are sent to CloudWatch. Additional providers can be enabled.
     additionalProperties: false
     properties:
       slack:
         type: boolean
-        description: ship logs to slack
+        description: |
+          If true, ship logs to Slack.
       googleChat:
         type: boolean
-        description: ship logs to google chat
+        description: |
+          If true, ship logs to Google Chat.
+
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
+    description: |
+      Resource requirements for the integration container, such as CPU
+      and memory requests and limits.
+
   fluentdResources:
     "$ref": "/openshift/deploy-resources-1.yml"
+    description: |
+      Resource requirements for the Fluentd sidecar, if used for log
+      forwarding.
+
   sleepDurationSecs:
     type: string
-    description: time to sleep in seconds between integration executions
+    description: |
+      Time to sleep, in seconds, between integration executions.
+
   state:
     type: boolean
-    description: integration is stateful
+    description: |
+      Indicates if the integration is stateful and maintains persistent
+      state between runs.
+
   storage:
     type: string
-    description: size of cache storage
+    description: |
+      The size of cache storage to allocate for the integration.
+
   storageClassName:
     type: string
-    description: kubernetes storage class name for the cache
     enum:
     - gp2
     - gp2-csi
     - gp3-csi
+    description: |
+      The Kubernetes storage class name to use for the cache volume.
+
   trigger:
     type: boolean
-    description: integration is an openshift-saas-deploy trigger
-  # cronjobs
+    description: |
+      If true, this integration acts as an openshift-saas-deploy integration trigger.
+
   cron:
     type: string
-    description: cron expression for integration execution
     pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+    description: |
+      Cron expression that defines the schedule for integration execution.
+
   dashdotdb:
     type: boolean
-    description: integration interacts with dashdotdb
+    description: |
+      If true, the integration interacts with dashdotdb.
+
   concurrencyPolicy:
     type: string
-    description: how to treat concurrent executions of the integration
     enum:
     - Allow
     - Forbid
     - Replace
+    description: |
+      Policy for handling concurrent executions of the integration.
+
   restartPolicy:
     type: string
-    description: restarts of the integration
     enum:
     - Always
     - OnFailure
     - Never
+    description: |
+      The restart policy for the integration container.
+
   successfulJobHistoryLimit:
     type: integer
-    description: number of history records reserved for successful integration executions
+    description: |
+      The number of successful job history records to retain.
+
   failedJobHistoryLimit:
     type: integer
-    description: number of history records reserved for failed integration executions
+    description: |
+      The number of failed job history records to retain.
+
   enablePushgateway:
     type: boolean
-    description: push metrics at the end of the run to the configured Pushgateway
+    description: |
+      If true, push metrics to the configured Pushgateway at the end of
+      each run.
 
 required:
 - resources
