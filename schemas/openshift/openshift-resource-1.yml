@@ -48,6 +48,8 @@ properties:
     type: string
   auto_renew_threshold_days:
     type: integer
+  promtool_version:
+    type: string
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -137,8 +139,8 @@ oneOf:
     promtool_version:
       type: string
       enum:
-       - 2.55.1
-       - 3.2.1
+       - "2.55.1"
+       - "3.2.1"
   required:
   - path
   - type
