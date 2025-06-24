@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "GABI Instance"
+description: |
+  Schema for defining a GABI (go-auditable-db-interface) instance. 
+  A GABI instance allows tenants to send SQL commands to their production 
+  databases for troubleshooting, with auditing via Splunk. This schema 
+  supports requesting a waiver for the read replica requirement, 
+  and tracks signoff managers, users, and deployment instances.
 
 additionalProperties: false
 properties:
@@ -13,33 +20,58 @@ properties:
     "$ref": "/common-1.json#/definitions/labels"
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
+    description: |
+      The unique name of the GABI instance. Used to identify the instance 
+      across the system.
   description:
     type: string
+    description: |
+      A detailed description of the GABI instance, including its purpose 
+      and any relevant context.
   readReplicasWaiverPledge:
     type: string
+    description: |
+      Text pledge provided by the tenant when requesting a waiver for the 
+      read replica requirement. This should outline the risks accepted by 
+      the tenant if the waiver is granted.
   signoffManagers:
     type: array
+    description: |
+      A list of users who have managerial authority to approve the waiver 
+      for the read replica requirement. Each entry references a user.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/user-1.yml"
   users:
     type: array
+    description: |
+      A list of users authorized to access this GABI instance. Each entry 
+      references a user.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/access/user-1.yml"
   instances:
     type: array
+    description: |
+      A list of deployment instances for this GABI configuration. Each 
+      instance specifies the AWS account, identifier, and namespace.
     items:
       type: object
       additionalProperties: false
       properties:
         account:
           "$ref": "/aws/tenant_accounts-1.yml#/properties/account"
+          description: |
+            Reference to the AWS account associated with this GABI instance deployment.
         identifier:
           "$ref": "/common-1.json#/definitions/longIdentifier"
+          description: |
+            A unique identifier for this deployment instance.
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+          description: |
+            Reference to the OpenShift namespace where this GABI instance is deployed.
       required:
       - account
       - identifier
@@ -47,6 +79,9 @@ properties:
   expirationDate:
     type: string
     pattern: "^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$"
+    description: |
+      The expiration date for GABI instance approval in YYYY-MM-DD format.
+
 required:
 - "$schema"
 - labels
