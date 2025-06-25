@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Account Request"
+description: |
+  Schema for requesting the creation of a new AWS account. This schema captures
+  all required information for AppSRE to automate AWS account creation, including
+  account name, owner, organization, quota limits, and additional features.
+  Account requests are processed by integrations to provision accounts, assign
+  organizational units, set tags, and configure initial quotas. This enables
+  GitOps-driven, auditable, and self-service AWS account management.
 
 additionalProperties: false
 properties:
@@ -9,56 +17,89 @@ properties:
     type: string
     enum:
     - /aws/account-request-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
     description: |
-      Unique name for aws account, it will be added to account as an alias.
-      It must be a minimum length of 3 characters and maximum length of 63 characters,
-      contain only digits, lowercase letters, and hyphens (-), but cannot begin or end with a hyphen.
+      Unique name for the AWS account. This will be used as the account alias
+      and must be between 3 and 63 characters, containing only digits, lowercase
+      letters, and hyphens (-). The name cannot begin or end with a hyphen.
     pattern: "^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$"
+
   description:
     type: string
+    description: |
+      A detailed description of the AWS account, its intended use, or any
+      relevant context for the request.
+
   accountOwner:
     type: object
-    description: "Account owner"
+    description: |
+      Information about the owner of the AWS account. The owner is responsible
+      for the account and will be the main point of contact.
     properties:
       name:
         type: string
+        description: |
+          The name of the account owner.
       email:
         type: string
         format: email
+        description: |
+          The email address of the account owner.
     required:
     - name
     - email
+
   organization:
     "$ref": "/aws/organization-1.yml"
+    description: |
+      Reference to the AWS organization where the account will be created.
+      Includes payer account, organizational unit, and tags.
+
   quotaLimits:
     type: array
+    description: |
+      A list of initial AWS quota limits to set for this account. Each entry
+      references a quota limits object, specifying service and quota codes.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/quota-limits-1.yml"
-      description: "Initial AWS quota limits for this account"
+
   resourcesDefaultRegion:
     type: string
+    description: |
+      The default AWS region for resources created in this account.
+
   supportedDeploymentRegions:
     type: array
+    description: |
+      A list of AWS regions where deployments are supported for this account.
     items:
       type: string
+
   uid:
     type: string
     description: |
-      Specifying an account UID will takeover an existing account instead of creating a new one.
-      Please make sure you specify the current account owner and the current organization.
+      The AWS account UID. If specified, this request will take over an existing
+      account instead of creating a new one. Ensure the current owner and
+      organization are specified.
+
   additionalFeatures:
     type: object
     description: |
-      Enable/disable additional features for this account. See account template for all available feature options.
+      Enable or disable additional features for this account. Refer to the
+      account template for all available feature options.
+
   accountFileTargetPath:
     type: string
     description: |
-      Specifying the target path for the new account file. Default: `/aws/<account_name>/account.yml`
+      The target path for the new account file in app-interface. Defaults to
+      `/aws/<account_name>/account.yml` if not specified.
+
 required:
 - "$schema"
 - labels
