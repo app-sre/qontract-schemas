@@ -2,6 +2,15 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Scorecard"
+description: |
+  Schema for defining a self-service scorecard for limited-scope service engagements.
+  The scorecard helps service owners assess their maturity and reliability
+  based on well-defined acceptance criteria established by AppSRE for
+  production services. Each scorecard is a self-assessment, to be filled
+  in and maintained by service owners, and is intended to be visible to
+  all stakeholders. The scorecard enables AppSRE to raise awareness and
+  provide recommendations for improving service maturity.
 
 additionalProperties: false
 
@@ -10,25 +19,40 @@ properties:
     type: string
     enum:
     - /app-sre/scorecard-2.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application this scorecard is associated with.
+      Links the scorecard to its parent app for context and traceability.
+
   date:
     type: string
     pattern: "^2[0-9]{3}-[01][0-9]-[0123][0-9]$"
-    description: 'YYYY-mm-dd (year, month, day)'
+    description: |
+      The date the scorecard was completed or updated, in YYYY-MM-DD format.
+
   acceptanceCriteria:
     type: array
-    description: acceptance criteria items
+    description: |
+      A list of acceptance criteria items representing the maturity and
+      reliability checks for the service. Each item corresponds to a
+      well-defined criterion, its current status, and an optional comment.
+      All 37 criteria must be included for a complete assessment.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
-          description: name of acceptance criteria item
+          description: |
+            The unique identifier for the acceptance criterion, such as
+            CONTINUITY-0001 or INCIDENT-MGMT-0001. Each criterion maps to
+            a specific requirement for production readiness.
           enum:
           - CONTINUITY-0001
           - CONTINUITY-0002
@@ -73,13 +97,21 @@ properties:
           - green
           - yellow
           - red
+          description: |
+            The current status of the acceptance criterion. Use 'green' for
+            fully met, 'yellow' for partially met or in progress, and 'red'
+            for not met.
         comment:
           type: string
+          description: |
+            Optional comment providing additional context, explanation, or
+            justification for the status of this criterion.
       required:
       - name
       - status
     minItems: 37
     maxItems: 37
+
 required:
 - "$schema"
 - labels
