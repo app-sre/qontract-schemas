@@ -2,6 +2,12 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Pipelines Provider"
+description: |
+  Schema for defining a pipelines provider. Pipelines providers declare
+  configuration for an automated pipeline service used for specific tenant
+  services. This schema allows specifying provider type, defaults, namespace,
+  retention policy, task and pipeline templates, and deployment resources.
 
 additionalProperties: false
 
@@ -10,50 +16,93 @@ properties:
     type: string
     enum:
     - /app-sre/pipelines-provider-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the pipelines provider. Used to identify the provider
+      across the system.
+
   description:
     type: string
+    description: |
+      A detailed description of the pipelines provider, including its purpose
+      and any relevant context.
+
   provider:
     type: string
     enum:
     - tekton
+    description: |
+      The type of pipelines provider. Currently, only 'tekton' is supported.
+
   defaults:
-    description: "Pipeline provider defaults"
+    description: |
+      Reference to the default configuration for this pipelines provider.
+      This typically includes default settings for pipeline execution.
     "$ref": "/common-1.json#/definitions/crossref"
+
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
+    description: |
+      Reference to the OpenShift namespace where the pipelines provider
+      resources will be deployed.
+
   retention:
-    description: "Describes the amount of builds that will be kept"
+    description: |
+      Describes the retention policy for builds. Specifies how many builds
+      are kept, both by time (days) and by minimum/maximum count.
     additionalProperties: false
     properties:
       days:
-        description: "Maximum retention expressed in days"
+        description: |
+          Maximum retention expressed in days. Builds older than this will
+          be deleted, unless protected by minimum or maximum settings.
         type: integer
       minimum:
-        description: "Minimum amount of builds that will be kept no matter what 'days' says"
+        description: |
+          Minimum number of builds that will always be kept, regardless of
+          the 'days' setting.
         type: integer
       maximum:
-        description: "Maximum amount of builds that will be kept no matter what 'days' says"
+        description: |
+          Maximum number of builds that will be kept, even if within the
+          retention period.
         type: integer
     required:
     - days
+
   taskTemplates:
     type: array
+    description: |
+      A list of Tekton Task jinja2 templates that will be used to create
+      the corresponding objects in the provider namespace.
     items:
       "$ref": "/app-sre/tekton-task-template-1.yml"
+
   pipelineTemplates:
+    description: |
+      Tekton Pipeline templates that will be used to create the
+      corresponding objects in the provider namespace. This object defines
+      the pipeline templates that are supported by the provider.
     additionalProperties: false
     properties:
       openshiftSaasDeploy:
         "$ref": "/app-sre/tekton-pipeline-template-1.yml"
     required:
     - openshiftSaasDeploy
+
   deployResources:
+    description: |
+      CPU and memory resources used by the openshift-saas-deploy step of the
+      openshift-saas-deploy tasks created by the openshift-tekton-resources
+      integration.
     "$ref": "/openshift/deploy-resources-1.yml"
+
 oneOf:
 - properties:
     provider:
@@ -87,7 +136,7 @@ oneOf:
     taskTemplates:
       description: |
         Tekton Task jinja2 templates that will be used to create the corresponding
-        objects in the provider namespace
+        objects in the provider namespace.
       type: array
       items:
         "$ref": "/app-sre/tekton-task-template-1.yml"
@@ -106,13 +155,15 @@ oneOf:
       required:
       - openshiftSaasDeploy
     deployResources:
-      description:
+      description: |
         CPU and memory resources used by the openshift-saas-deploy step of the
-        openshift-saas-deploy tasks created by the openshit-tekton-resources integration
+        openshift-saas-deploy tasks created by the openshift-tekton-resources
+        integration.
       "$ref": "/openshift/deploy-resources-1.yml"
   required:
   - namespace
   - defaults
+
 required:
 - $schema
 - labels
