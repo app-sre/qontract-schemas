@@ -1,8 +1,15 @@
 ---
 "$schema": /metaschema-1.json
 version: '1.0'
-
 type: object
+title: "SLO Document"
+description: |
+  Schema for documenting Service Level Objectives (SLOs) for an application or
+  component. This schema enables teams to transparently define, track, and
+  communicate SLOs, including SLI definitions, targets, time windows, and
+  justifications. SLO documents help drive reliability, set user expectations,
+  and support automated alerting and reporting.
+
 additionalProperties: false
 
 properties:
@@ -10,15 +17,28 @@ properties:
     type: string
     enum:
     - /app-sre/slo-document-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The unique name of the SLO document. Used to identify this document
+      across the system.
+
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application this SLO document applies to.
+
   namespaces:
     type: array
+    description: |
+      A list of namespaces where this SLO document applies. Each entry
+      specifies the target namespace, optional SLO namespace for alerting,
+      and Prometheus access configuration.
     items:
       type: object
       additionalProperties: false
@@ -26,30 +46,35 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
-        SLONamespace:
           description: |
-            This field is used to determine in which namespace PrometheusRule
-            object that contain the alerts generated from the expressions of
-            this SLO document is going to be created. Those alerts are being
-            used in the slo-to-status-board flow:
-            https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/docs/status-board/statusboard-alertmanager-receiver.md
-
-            If omitted, the rules will be generated in the namespace
-            observabilityNamespace of the cluster to which the `namespace` of
-            this SLO document belongs to.
+            Reference to the OpenShift namespace where the SLO applies.
+        SLONamespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+          description: |
+            Namespace where PrometheusRule objects for SLO alerts will be created.
+            Used with the slo-to-status-board flow, which depends on the status-board service.
+            If omitted, defaults to the observability namespace of the cluster.
         prometheusAccess:
           type: object
+          description: |
+            Configuration for accessing Prometheus target specified in SLONamespace, including
+            URL and credentials.
           additionalProperties: false
           properties:
             url: 
               type: string
               format: uri
+              description: |
+                The URL of the Prometheus instance.
             username:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Vault secret for the Prometheus username.
             password:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Vault secret for the Prometheus password.
           required:
           - url
       required:
@@ -57,14 +82,21 @@ properties:
       dependencies:
         SLONamespace:
         - prometheusAccess
+
   slos:
     type: array
+    description: |
+      A list of SLO definitions for this service or component. Each SLO
+      specifies the SLI type, specification, target, time window, and
+      supporting details such as Prometheus expressions and dashboards.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the SLO, typically the service or metric being measured.
         SLIType:
           type: string
           enum:
@@ -77,21 +109,25 @@ properties:
           - correcteness
           - throughput
           - durability
-          description: SLI type. See https://sre.google/workbook/implementing-slos/ for details
+          description: |
+            The type of Service Level Indicator (SLI) being measured, such as
+            latency, availability, or correctness.
         SLISpecification:
           type: string
           description: |
-            SLI specification, e.g 'The proportion of valid requests served successfully'
+            A clear description of the SLI metric being measured, e.g.,
+            "The proportion of valid requests served successfully."
         SLODetails:
           type: string
           format: uri
           description: |
-            Thorough description of this SLO. Do not use a Google doc for this. It must contain
-              * SLI description - What do we want to measure
-              * SLI rationale -  Why do we want to measure it
-              * Implementation details - How do we want to measure it
-              * SLO rationale - Why we have chosen the targets
-              * Alerting: How we are doing it on top of our SLIs/SLOs
+            A thorough description of this SLO, including:
+              * SLI description: What is being measured
+              * SLI rationale: Why it is measured
+              * Implementation details: How it is measured
+              * SLO rationale: Why the targets were chosen
+              * Alerting: How alerting is implemented
+            Must be a URL to a GitHub or GitLab document.
           pattern: "^https?://(github.com|gitlab.cee.redhat.com)/"
         SLOTargetUnit:
           type: string
@@ -99,16 +135,21 @@ properties:
           - percent_0_1
           - percent_0_100
           description: |
-            Unit in which the 'expr' and 'SLOTarget' will be expressed:
-              * Use 'percentage_0_1' if the your PromQL query is going to return values for 0 to 1
-              * Use 'percentage_0_100' if the your PromQL query is going to return values for 0 to 100
+            The unit for the SLO target and Prometheus expression:
+              * Use 'percent_0_1' for values between 0 and 1
+              * Use 'percent_0_100' for values between 0 and 100
         SLOParameters:
           type: object
           additionalProperties: false
+          description: |
+            Parameters for the SLO, such as the time window over which it is
+            measured (e.g., "28d" for 28 days).
           properties:
             window:
               type: string
               pattern: "^[0-9]+d"
+              description: |
+                The time window for measuring the SLO, in days (e.g., "28d").
           required:
           - window
         expr:
@@ -116,24 +157,28 @@ properties:
           - type: string
           - type: integer
           description: |
-            Prometheus expression to calculate the SLO. It should be expressed
-            in the units of the 'SLOTargetUnit'. It will be processed with jinja,
-            with the SLOParameters as input.
+            The Prometheus expression used to calculate the SLO. Should be
+            expressed in the units of 'SLOTargetUnit'. This expression is
+            processed with Jinja using the SLOParameters as input.
         SLOTarget:
           type: number
-          description: SLO target. It should be expressed by means of the 'SLOTargetUnit' field
+          description: |
+            The numeric goal for the SLO, expressed in the unit specified by
+            'SLOTargetUnit' (e.g., 99.9 for percent_0_100).
         prometheusRules:
           type: string
           description: |
-            Location of the prometheus rules associated to this SLO definition
-            (currently only a path in app-interface)
+            File reference to Prometheus rules associated with this SLO
+            definition.
         prometheusRulesTests:
           type: string
-          description: Location of the prometheus rules tests for the prometheus rules
+          description: |
+            The location of the Prometheus rules tests for the associated rules.
         dashboard:
           type: string
           format: uri
-          description: Related grafana dashboard
+          description: |
+            The URL of the Grafana dashboard for visualizing this SLO.
       required:
       - name
       - SLIType
@@ -145,6 +190,7 @@ properties:
       - expr
       - prometheusRules
       - dashboard
+
 required:
 - "$schema"
 - labels
