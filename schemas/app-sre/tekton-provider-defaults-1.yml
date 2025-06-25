@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Tekton Provider Defaults"
+description: |
+  Schema for defining default configuration values for Tekton pipeline providers.
+  These defaults ensure that all required fields for a Tekton provider are present,
+  reducing duplication and simplifying provider definitions. Providers can override
+  any field as needed, but will always inherit a complete set of defaults for
+  retention, task and pipeline templates, and deployment resources.
 
 additionalProperties: false
 
@@ -10,34 +17,71 @@ properties:
     type: string
     enum:
     - /app-sre/tekton-provider-defaults-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the Tekton provider defaults configuration. Used to
+      identify and reference this set of defaults.
+
   description:
     type: string
+    description: |
+      A detailed description of the defaults configuration, including its
+      intended use and any relevant context.
+
   retention:
     additionalProperties: false
+    description: |
+      The retention policy for builds managed by the provider. Specifies how
+      many builds are kept, both by time (days) and by minimum count.
     properties:
       days:
         type: integer
+        description: |
+          Maximum retention expressed in days. Builds older than this will
+          be deleted, unless protected by the minimum setting.
       minimum:
         type: integer
+        description: |
+          Minimum number of builds that will always be kept, regardless of
+          the 'days' setting.
     required:
     - days
+
   taskTemplates:
     type: array
+    description: |
+      A list of Tekton Task jinja2 templates that will be used to create
+      the corresponding objects in the provider namespace.
     items:
       "$ref": "/app-sre/tekton-task-template-1.yml"
+
   pipelineTemplates:
     additionalProperties: false
+    description: |
+      Tekton Pipeline jinja2 templates that will be used to create the
+      corresponding objects in the provider namespace. This object defines
+      the types of pipeline templates that are supported. Properties of this
+      object will be the different pipelines supported in qontract-reconcile.
     properties:
       openshiftSaasDeploy:
         "$ref": "/app-sre/tekton-pipeline-template-1.yml"
+        description: |
+          Reference to the pipeline template for OpenShift SaaS deploy tasks.
     required:
     - openshiftSaasDeploy
+
   deployResources:
     "$ref": "/openshift/deploy-resources-1.yml"
+    description: |
+      CPU and memory resources used by the openshift-saas-deploy step of the
+      openshift-saas-deploy tasks created by the openshift-tekton-resources
+      integration.
+
 required:
 - $schema
 - labels
