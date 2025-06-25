@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Unleash Instance"
+description: |
+  Schema for defining an Unleash instance. Unleash instances represent
+  feature toggle servers managed via app-interface, enabling teams to
+  declaratively manage feature toggles, tokens, and notification settings.
+  This schema supports integration with Slack for notifications, secure
+  token management, and configuration of feature toggle management policies.
 
 additionalProperties: false
 properties:
@@ -9,42 +16,85 @@ properties:
     type: string
     enum:
     - /app-sre/unleash-instance-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
+    description: |
+      The unique name of the Unleash instance. Used to identify the instance
+      across the system.
+
   description:
     type: string
+    description: |
+      A detailed description of the Unleash instance, including its purpose,
+      environment, or any relevant context.
+
   url:
     type: string
     format: uri
+    description: |
+      The URL of the Unleash server. This is used by integrations and
+      clients to connect to the Unleash API.
+
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to a Vault secret containing the API token for accessing
+      the Unleash instance.
+
   adminToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to a Vault secret containing the admin API token for
+      managing the Unleash instance.
+
   allowUnmanagedFeatureToggles:
     type: boolean
-    description: Set to true to allow unmanaged/manually created feature toggles
+    description: |
+      Set to true to allow unmanaged or manually created feature toggles
+      in this Unleash instance. If false, only toggles defined in
+      app-interface are permitted.
+
   notifications:
     type: object
+    description: |
+      Notification configuration for this Unleash instance. Allows
+      specifying Slack channels and workspaces to receive notifications
+      about feature toggle changes or events.
     properties:
       slack:
         type: array
+        description: |
+          A list of Slack notification configurations. Each entry specifies
+          the workspace, channel, and optional message formatting for
+          notifications.
         items:
           type: object
           properties:
             workspace:
               "$ref": "/common-1.json#/definitions/crossref"
               "$schemaRef": "/dependencies/slack-workspace-1.yml"
+              description: |
+                Reference to the Slack workspace for notifications.
             channel:
               type: string
+              description: |
+                The Slack channel to send notifications to.
             icon_emoji:
               type: string
+              description: |
+                The emoji icon to use for Slack notifications.
             username:
               type: string
+              description: |
+                The username to display for Slack notifications.
           required:
           - workspace
           - channel
+
 required:
 - "$schema"
 - labels
