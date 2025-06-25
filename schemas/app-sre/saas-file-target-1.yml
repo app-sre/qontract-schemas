@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "SaaS File Target"
+description: |
+  Schema for defining a deployment target within a SaaS file. Each target
+  specifies where and how a resource template should be deployed, including
+  the namespace, git reference, promotion configuration, parameters, and
+  upstream build or image dependencies. Targets can be static or dynamically
+  selected using namespace selectors, supporting advanced deployment and
+  promotion workflows.
 
 additionalProperties: false
 properties:
@@ -9,65 +17,114 @@ properties:
     type: string
     enum:
     - /app-sre/saas-file-target-1.yml
+
   name:
     type: string
+    description: |
+      The unique name of the deployment target. Used to identify this target
+      within the SaaS file and for referencing in promotion workflows.
+
   provider:
     type: string
     enum:
     - static
     - dynamic
+    description: |
+      The type of target provider. Use 'static' for a fixed namespace or
+      'dynamic' to select namespaces based on selectors.
+
   namespace:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
+    description: |
+      Reference to the OpenShift namespace where resources will be deployed.
+      Used for static targeting of a specific namespace.
+
   namespaceSelector:
-    jsonPathSelectors:
-      type: object
-      additionalProperties: false
-      properties:
-        include:
-          type: array
-          items:
-            type: string
-          minItems: 1
-        exclude:
-          type: array
-          items:
-            type: string
-      required:
-      - include
+    description: |
+      Selects namespace targets dynamically based on JSON path selectors.
+      This enables targeting multiple namespaces that match specific criteria.
+      Used when provider is 'dynamic'.
+    properties:
+      jsonPathSelectors:
+        type: object
+        additionalProperties: false
+        properties:
+          include:
+            type: array
+            items:
+              type: string
+            minItems: 1
+            description: |
+              A list of JSON path selectors to include namespaces.
+          exclude:
+            type: array
+            items:
+              type: string
+            description: |
+              A list of JSON path selectors to exclude namespaces.
+        required:
+        - include
+
   ref:
     type: string
     pattern: '^([0-9a-f]{40}|master|main|internal|stable|release-4\.\d+)$'
+    description: |
+      The git reference (commit SHA or branch name) to deploy. For production
+      deployments, always use a commit SHA to ensure reproducibility.
+
   promotion:
     type: object
+    description: |
+      Promotion configuration for this target. Defines auto-promotion,
+      gating, publishing, and scheduling for progressive delivery. Allows
+      advanced deployment strategies such as soak days and scheduled windows.
     additionalProperties: false
     properties:
       auto:
         type: boolean
-      redeployOnPublisherConfigChange:
         description: |
-          Whether to redeploy if a config change happened in a publisher. This will set
-          target_config_hash in promotion_data. This is mainly intended for test jobs.
+          If true, enables automated promotion for this target. The system
+          will automatically update the ref when promotion criteria are met.
+      redeployOnPublisherConfigChange:
         type: boolean
+        description: |
+          If true, redeploys this target if a configuration change occurs
+          in a publisher. Useful for test jobs and validation workflows.
       publish:
         type: array
         items:
           type: string
         minItems: 1
+        description: |
+          A list of channels to publish successful deployments to. Other
+          targets can subscribe to these channels for gated promotions.
       subscribe:
         type: array
         items:
           type: string
         minItems: 1
+        description: |
+          A list of channels to subscribe to for gating this deployment.
+          Deployment will only proceed if all subscribed channels have
+          published a successful deployment for the same ref.
       soakDays:
         type: integer
-        description: number of days to wait for promotion
+        description: |
+          The number of accumulated days a ref must have been running across
+          all publishers before promotion. Used for progressive rollouts.
       schedule:
         type: string
-        description: Same as AUS schedule - crontab expression to optionally restrict deployment windows
         pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+        description: |
+          Cron expression to restrict deployment windows for auto promotions.
+          Defines when auto-promotion merge requests can be opened.
       promotion_data:
         type: array
+        description: |
+          Data managed by integrations, relative to what triggered a promotion.
+          Used to track configuration hashes and other metadata for advanced
+          promotion workflows.
         items:
           type: object
           properties:
@@ -81,33 +138,52 @@ properties:
                   type:
                     type: string
                 additionalProperties: true
-    dependencies:
-      auto:
-      - subscribe
+
   parameters:
     type: object
     patternProperties:
       "^[A-Za-z][A-Za-z0-9_]*$": {}
+    description: |
+      A list of parameters that are applied to the target
+      resource template.
+
   secretParameters:
     type: array
-    description: target level parameters from vault secrets
+    description: |
+      A list of secret parameters, injected from Vault, that are applied to the target
+      resource template.
     items:
       "$ref": "/app-sre/vault-secret-parameter-1.yml"
+
   upstream:
     type: object
+    description: |
+      Upstream build configuration. Used when a deployment depends on a
+      Jenkins job. Blocks automated deployment until successful completion
+      of the dependent job.
     additionalProperties: false
     properties:
       instance:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+        description: |
+          Reference to the Jenkins instance where the upstream job exists.
       name:
         type: string
+        description: |
+          The name of the gating Jenkins job.
     required:
     - instance
     - name
+
   images:
     type: array
-    description: wait for all images to exist before triggering a deployment
+    description: |
+      A list of container images that must exist in a container registry before 
+      triggering a deployment. Required for targets that build with Konflux or 
+      any build system that disconnects code merges from container builds.
+      Each entry specifies the Quay org and repository name, ensuring
+      required images are available before rollout.
     items:
       type: object
       additionalProperties: false
@@ -115,22 +191,37 @@ properties:
         org:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/dependencies/quay-org-1.yml"
+          description: |
+            Reference to the Quay organization for the image.
         name:
           type: string
-          description: image repository name
+          description: |
+            The name of the image repository.
       required:
       - org
       - name
+
   slos:
     type: array
-    description: list of file path of slo documents to be evaluated before promoting changes
+    description: |
+      A list of file paths to SLO documents to be evaluated before
+      promoting changes to this target. Enables SLO-based promotion gates.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/app-sre/slo-document-1.yml" 
+      "$schemaRef": "/app-sre/slo-document-1.yml"
+
   disable:
     type: boolean
+    description: |
+      If true, this target will be skipped during deployment. Use to
+      temporarily disable deployments to this target.
+
   delete:
     type: boolean
+    description: |
+      If true, resources specified by this target are marked for deletion. Use
+      for cleanup or decommissioning scenarios.
+
 required:
 - ref
 oneOf:
