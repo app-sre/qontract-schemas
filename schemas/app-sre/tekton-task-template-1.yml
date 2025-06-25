@@ -2,27 +2,51 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Tekton Task Template"
+description: |
+  Schema for defining a Tekton task template. Tekton task templates are reusable
+  definitions for CI/CD tasks that can be deployed in Tekton pipeline provider
+  namespaces. This schema allows specifying the template's name, type, file path,
+  and variables for parameterization. It supports both per-SaaS file and per-namespace
+  task templates, with naming constraints to ensure compatibility with Tekton object
+  limits.
 
 additionalProperties: false
-description: |
-  Properties of tekton task templates deployed in tekton pipelines providers
-  namespaces
+
 properties:
   "$schema":
     type: string
     enum:
     - /app-sre/tekton-task-template-1.yml
+
   name:
     type: string
+    description: |
+      The unique name of the Tekton task template. Naming constraints apply based
+      on the template type to ensure compatibility with Tekton object name length
+      limits.
+
   type:
     type: string
     enum:
     - onePerSaasFile
     - onePerNamespace
+    description: |
+      The type of task template. Use 'onePerSaasFile' for templates that are unique
+      per SaaS file, or 'onePerNamespace' for templates that are unique per namespace.
+
   path:
     type: string
+    description: |
+      The file path to the task template definition. This should be a relative path
+      within the repository where the template is stored.
+
   variables:
     type: object
+    description: |
+      A mapping of variable names to values for parameterizing the task template.
+      Variables can be used to customize task behavior for different deployments.
+
 oneOf:
 - properties:
     name:
@@ -30,7 +54,7 @@ oneOf:
       maxLength: 61
       description: |
         One per namespace file Template name. It is limited in size as the tekton
-        task name is limited to 63 characters
+        task name is limited to 63 characters.
     type:
       type: string
       enum:
@@ -42,11 +66,12 @@ oneOf:
       description: |
         One per saas file Template name. It is very limited in size as the tekton
         object final name will also contain the saas file and the total size is
-        limited to 63 characters
+        limited to 63 characters.
     type:
       type: string
       enum:
       - onePerSaasFile
+
 required:
 - name
 - type
