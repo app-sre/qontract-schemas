@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "SRE Checkpoint"
+description: |
+  Schema for documenting an SRE checkpoint for a service. SRE checkpoints are
+  periodic reviews performed by AppSRE to assess service reliability, adherence
+  to best practices, and operational readiness. The process includes verifying
+  metadata, SLOs, SOPs, and reliability, and tracking improvements via JIRA.
+  This schema enables traceability of checkpoint events, responsible engineers,
+  and contract versions.
 
 additionalProperties: false
 
@@ -10,25 +18,43 @@ properties:
     type: string
     enum:
     - /app-sre/sre-checkpoint-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application that is the subject of this SRE checkpoint.
+      Links the checkpoint to its parent app for context and traceability.
+
   sre:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/access/user-1.yml"
+    description: |
+      Reference to the AppSRE engineer responsible for conducting this checkpoint.
+
   date:
     type: string
     pattern: "^2[0-9]{3}-[01][0-9]-[0123][0-9]$"
-    description: 'YYYY-mm-dd (year, month, day)'
+    description: |
+      The date the SRE checkpoint was performed, in YYYY-MM-DD format.
+
   issue:
     type: string
     pattern: "^APPSRE-\\d+$"
+    description: |
+      The JIRA issue key tracking this SRE checkpoint (e.g., APPSRE-12345).
+
   contractVersion:
-    description: "Contract version"
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/contract-version-1.yml"
+    description: |
+      Reference to the contract version in effect at the time of the checkpoint.
+      This links the checkpoint to the set of requirements and expectations
+      evaluated during the review.
+
 required:
 - "$schema"
 - labels
