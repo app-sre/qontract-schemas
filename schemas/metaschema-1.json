@@ -23,6 +23,10 @@
     "description": {
       "type": "string"
     },
+    "externalDocumentation": {
+      "type": "string",
+      "description": "Link(s) to external documentation for this schema"
+    },
     "additionalProperties": {
       "type": "boolean",
       "enum": [
