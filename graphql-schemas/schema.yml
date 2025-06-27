@@ -150,6 +150,7 @@ confs:
 - name: SqlQuerySettings_v1
   fields:
   - { name: imageRepository, type: string, isRequired: true }
+  - { name: jobImage, type: string }
   - { name: pullSecret, type: NamespaceOpenshiftResourceVaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceEmail_v1
