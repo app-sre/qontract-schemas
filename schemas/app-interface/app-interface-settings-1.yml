@@ -181,6 +181,10 @@ properties:
         type: string
         description: |
           The repository for the SQL query image.
+      jobImage:
+        type: string
+        description: |
+          The image for the SQL query job.
       pullSecret:
         "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
         description: |
