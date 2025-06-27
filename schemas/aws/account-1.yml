@@ -142,7 +142,7 @@ properties:
   enableDeletion:
     type: boolean
     description: |
-      If true, allows deletion of resources in this account.
+      If true, allows deletion of resources in this account without an explicit entry in 'deletionApprovals'.
 
   deletionApprovals:
     type: array
