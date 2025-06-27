@@ -10,6 +10,8 @@ description: |
   Account requests are processed by integrations to provision accounts, assign
   organizational units, set tags, and configure initial quotas. This enables
   GitOps-driven, auditable, and self-service AWS account management.
+  After successful account creation, automation deletes the
+  `account-request-1.yml` file and adds `account-1.yml` file.
 
 additionalProperties: false
 properties:
