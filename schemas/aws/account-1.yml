@@ -71,8 +71,6 @@ properties:
       awsAccountManager:
         type: string
         description: "The AWS account manager IAM role name in the payer account"
-  garbageCollection:
-    type: boolean
   enableDeletion:
     type: boolean
   deletionApprovals:

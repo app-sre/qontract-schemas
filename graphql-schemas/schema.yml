@@ -1352,7 +1352,6 @@ confs:
   - { name: securityContact, type: AWSContact_v1 }
   - { name: automationToken, type: VaultSecret_v1, isRequired: true }
   - { name: automationRole, type: AWSAutomationRole_v1 }
-  - { name: garbageCollection, type: boolean }
   - { name: enableDeletion, type: boolean }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
   - { name: disable, type: DisableClusterAutomations_v1 }
