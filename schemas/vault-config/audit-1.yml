@@ -101,8 +101,8 @@ properties:
           - "json"
           - "jsonx"
           description: |
-            The output format for audit logs. 'json' produces standard JSON,
-            while 'jsonx' includes additional metadata.
+            The output format for audit logs. 'json' selects JSON format,
+            and 'jsonx' selects XML format.
         prefix:
           type: string
           description: |
