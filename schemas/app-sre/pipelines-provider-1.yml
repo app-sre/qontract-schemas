@@ -5,9 +5,9 @@ type: object
 title: "Pipelines Provider"
 description: |
   Schema for defining a pipelines provider. Pipelines providers declare
-  configuration for an automated pipeline service used for specific tenant
-  services. This schema allows specifying provider type, defaults, namespace,
-  retention policy, task and pipeline templates, and deployment resources.
+  configuration for an automated deployment pipeline service used for specific tenant
+  services and can be used to define different types of providers depending on the
+  specific technology used.
 
 additionalProperties: false
 
