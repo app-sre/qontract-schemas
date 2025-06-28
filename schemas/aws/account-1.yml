@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "AWS Account"
+description: |
+  Schema for defining an AWS account. This schema captures all metadata,
+  configuration, and ownership information required to manage AWS accounts
+  in app-interface. It supports integration with automation, billing,
+  security, and resource management systems, and enables self-service
+  account management, tagging, and compliance tracking.
 
 additionalProperties: false
 properties:
@@ -9,83 +16,152 @@ properties:
     type: string
     enum:
     - /aws/account-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the AWS account. Used to identify the account
+      across the system.
+
   description:
     type: string
+    description: |
+      A detailed description of the AWS account, including its intended
+      use, environment, or any relevant context.
+
   consoleUrl:
     type: string
     format: uri
+    description: |
+      The URL to access the AWS console for this account.
+
   uid:
     type: string
+    description: |
+      The unique identifier (UID) for the AWS account.
+
   resourcesDefaultRegion:
     type: string
+    description: |
+      The default AWS region for resources created in this account.
+
   supportedDeploymentRegions:
     type: array
     items:
       type: string
-      description: "The regions where the account is enabled and can be used."
+      description: |
+        The regions where the account is enabled and can be used for
+        deployments.
+    description: |
+      A list of AWS regions where deployments are supported for this account.
+
   providerVersion:
     type: string
+    description: |
+      The version of the AWS provider used for managing this account.
+
   terraformUsername:
     type: string
+    description: |
+      The username used by Terraform to manage resources in this account.
+
   accountOwners:
     type: array
+    description: |
+      A list of individuals or teams responsible for this AWS account.
+      Each entry must include a name and email address for contact.
     items:
       type: object
       properties:
         name:
           type: string
+          description: |
+            The name of the account owner.
         email:
           type: string
           format: email
+          description: |
+            The email address of the account owner.
       required:
       - name
       - email
+
   securityContact:
     type: object
+    description: |
+      Contact information for the security point of contact for this account.
+      Used for incident response and compliance notifications.
     properties:
       name:
         type: string
-        description: "The name of the security contact."
+        description: |
+          The name of the security contact.
       title:
         type: string
-        description: "The title of the security contact. Default use the name."
+        description: |
+          The title of the security contact. Defaults to the name if not set.
       email:
         type: string
         format: email
+        description: |
+          The email address of the security contact.
       phoneNumber:
         "$ref": "/common-1.json#/definitions/phoneNumber"
+        description: |
+          The phone number of the security contact.
     required:
     - name
     - email
     - phoneNumber
+
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the automation token for
+      this account. Used by integrations for automated access.
+
   automationRole:
     type: object
-    description: "Role per integration or use-case to assume in the account"
+    description: |
+      IAM role per integration or use-case to assume in the account. Used to
+      delegate permissions for automation and management.
     properties:
       awsAccountManager:
         type: string
-        description: "The AWS account manager IAM role name in the payer account"
+        description: |
+          The AWS account manager IAM role name in the payer account.
+
   garbageCollection:
     type: boolean
+    description: |
+      If true, enables garbage collection of unused resources in this account.
+
   enableDeletion:
     type: boolean
+    description: |
+      If true, allows deletion of resources in this account without an explicit entry in 'deletionApprovals'.
+
   deletionApprovals:
     type: array
+    description: |
+      A list of deletion approvals required for this account. Each entry
+      references a deletion approval object.
     items:
       "$ref": "/app-interface/deletion-approval-1.yml"
+
   disable:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for disabling specific integrations for this AWS account.
     properties:
       integrations:
         type: array
-        description: integrations to disable for the aws account
+        description: |
+          Integrations to disable for the AWS account.
         items:
           type: string
           enum:
@@ -100,76 +176,128 @@ properties:
           - aws-saml-roles
           - aws-account-manager
           - terraform-init
+
   deleteKeys:
     type: array
+    description: |
+      A list of keys to delete from the account configuration.
     items:
       type: string
+
   resetPasswords:
     type: array
+    description: |
+      A list of password reset requests for users in this account.
     items:
       additionalProperties: false
       properties:
         user:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/user-1.yml"
+          description: |
+            Reference to the user whose password should be reset.
         requestId:
           type: string
           pattern: ^[^\s]*$
+          description: |
+            The unique request ID for the password reset.
       required:
       - user
       - requestId
+
   premiumSupport:
     type: boolean
+    description: |
+      If true, this account has AWS Premium Support enabled.
+
   partition:
     type: string
-    description: the partition used in ARNs in the account (arn:aws:...)
+    description: |
+      The partition used in ARNs in the account (e.g., arn:aws:...).
     enum:
     - aws
     - aws-us-gov
+
   sharing:
     type: array
+    description: |
+      A list of sharing options for this account. Each entry references a
+      sharing option object.
     items:
       "$ref": "/aws/sharing-option-1.yml"
+
   cleanup:
     type: array
+    description: |
+      A list of cleanup options for this account. Each entry references a
+      cleanup option object.
     items:
       "$ref": "/aws/cleanup-option-1.yml"
+
   terraformState:
-    description: key information for a terraform's state location and integration
+    description: |
+      Key information for a Terraform state location and integration.
+      References the Terraform state object for this account.
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/terraform-state-1.yml"
+
   rosa:
-    description: "Rosa related attributes in the aws account."
+    description: |
+      ROSA-related attributes in the AWS account. References the ROSA OCM
+      object for this account.
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/rosa-ocm-1.yml"
+
   billingAccount:
-    description: AWS account to be used as the Billing account for ROSA HCP cluster provisioning
+    description: |
+      AWS account to be used as the billing account for ROSA HCP cluster
+      provisioning. References another AWS account.
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+
   sso:
     type: boolean
-    description: "Enable single sign on for the account. Default is enabled."
+    description: |
+      Enable single sign-on for the account. Default is enabled.
+
   organization:
     "$ref": "/aws/organization-1.yml"
+    description: |
+      Reference to the AWS organization this account belongs to.
+
   alias:
     type: string
-    description: "The alias for the account. This is the name that appears in the AWS SSO page. If not set, the account name will be used."
+    description: |
+      The alias for the account. This is the name that appears in the AWS SSO
+      page. If not set, the account name will be used.
+
   quotaLimits:
     type: array
+    description: |
+      AWS quota limits for this account. Each entry references a quota limits
+      object.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/quota-limits-1.yml"
-      description: "AWS quota limits for this account"
+
   organizationAccountTags:
     "$ref": "/common-1.json#/definitions/labels"
-    description: "For payer accounts only! Apply these tags to all accounts in the organization. This is useful for tagging all accounts in the organization with the same tags."
+    description: |
+      For payer accounts only! Apply these tags to all accounts in the
+      organization. Useful for tagging all accounts in the organization
+      with the same tags.
+
   externalResources:
     type: object
-    description: "External resources settings for the account."
+    description: |
+      External resources settings for the account, such as external modules
+      or integrations.
     properties:
       channel:
         type: string
-        description: "The channel to use for external resource modules."
+        description: |
+          The channel to use for external resource modules.
+
 dependencies:
   resetPasswords:
     properties:
@@ -183,6 +311,7 @@ dependencies:
       organization:
         enum:
         - null
+
 required:
 - "$schema"
 - labels
