@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Account"
+description: |
+  Schema for defining a Cloudflare account managed via app-interface.
+  This schema captures all metadata, configuration, credentials, and
+  ownership information required to manage Cloudflare accounts in a
+  declarative and automated way. It supports integration with Terraform,
+  secure credential management, and compliance requirements such as
+  two-factor enforcement and deletion approvals.
 
 additionalProperties: false
 properties:
@@ -9,42 +17,87 @@ properties:
     type: string
     enum:
     - /cloudflare/account-1.yml
+
   name:
     type: string
+    description: |
+      The unique name of the Cloudflare account. Used to identify the
+      account across the system and in automation.
+
   description:
     type: string
+    description: |
+      A human-readable description of the Cloudflare account, its
+      intended use, or any relevant context.
+
   providerVersion:
     type: string
+    description: |
+      The version of the Cloudflare provider used for managing this
+      account. This is important for ensuring compatibility with
+      automation tools such as Terraform.
+
   accountOwners:
     type: array
+    description: |
+      A list of individuals or teams responsible for this Cloudflare
+      account. Each entry must include a name and email address for
+      contact and accountability.
     items:
       type: object
       properties:
         name:
           type: string
+          description: |
+            The name of the account owner.
         email:
           type: string
           format: email
+          description: |
+            The email address of the account owner.
       required:
       - name
       - email
+
   apiCredentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the API credentials for
+      this Cloudflare account. Used by automation and integrations to
+      securely access the Cloudflare API.
+
   enforceTwofactor:
     type: boolean
+    description: |
+      If true, enforces two-factor authentication for all users in this
+      Cloudflare account to meet security and compliance requirements.
+
   type:
     type: string
     enum:
     - standard
     - enterprise
+    description: |
+      The type of Cloudflare account. Use 'standard' for regular accounts
+      or 'enterprise' for accounts with enterprise features and support.
+
   terraformStateAccount:
-    description: AWS Account to use for state in S3
+    description: |
+      Reference to the AWS account used for storing Terraform state in S3.
+      This enables stateful infrastructure management for Cloudflare
+      resources.
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+
   deletionApprovals:
     type: array
+    description: |
+      A list of deletion approvals required for this Cloudflare account.
+      Each entry references a deletion approval object, ensuring that
+      destructive actions are reviewed and authorized.
     items:
       "$ref": "/app-interface/deletion-approval-1.yml"
+
 required:
 - "$schema"
 - name
