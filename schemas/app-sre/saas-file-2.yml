@@ -4,7 +4,7 @@ version: '1.0'
 type: object
 title: "SaaS File"
 description: |
-  Schema for SaaS files, which describe continuous delivery
+  Schema for SaaS files, which describe Continuous Delivery
   pipelines for services in app-interface. SaaS files specify resource
   templates, deployment targets, notifications, registry authentication,
   secret injection, and more. They enable service owners to declaratively manage
