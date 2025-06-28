@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "ACS Instance"
+description: |
+  Schema for referencing an Advanced Cluster Security (ACS) instance as a dependency.
+  This schema enables app-interface to reference ACS instances for integration and
+  configuration purposes. It does not provision or manage the lifecycle of the ACS
+  instance itself. Use this schema to declare connection details, credentials, and
+  authentication provider configuration for ACS integrations.
 
 additionalProperties: false
 properties:
@@ -9,26 +16,54 @@ properties:
     type: string
     enum:
     - /dependencies/acs-instance-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the ACS instance. Used to identify and reference
+      this instance in app-interface and related integrations.
+
   description:
     type: string
+    description: |
+      A human-readable description of the ACS instance, its environment,
+      or any relevant operational context.
+
   url:
     type: string
+    description: |
+      The URL of the ACS API endpoint. Used by integrations and automation
+      to connect to the ACS instance.
+
   credentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the credentials required to
+      authenticate to this ACS instance.
+
   authProvider:
     type: object
+    description: |
+      Configuration for the authentication provider used by this ACS instance.
+      Supports OIDC and other provider types for integration and access control.
     properties:
       name:
         type: string
+        description: |
+          The name of the authentication provider configured for this ACS instance.
       id:
         type: string
+        description: |
+          The unique identifier of the authentication provider.
       kind:
         enum:
         - oidc
+        description: |
+          The kind of authentication provider. Currently supports 'oidc'.
+
 required:
 - "$schema"
 - labels
