@@ -1346,7 +1346,6 @@ confs:
   - { name: resourcesDefaultRegion, type: string, isRequired: true }
   - { name: supportedDeploymentRegions, type: string, isList: true }
   - { name: providerVersion, type: string, isRequired: true }
-  - { name: qontractReconcileVersion, type: string }
   - { name: terraformUsername, type: string }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: securityContact, type: AWSContact_v1 }
@@ -1454,7 +1453,6 @@ confs:
   - { name: description, type: string }
   - { name: providerVersion, type: string, isRequired: true }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
-  - { name: enableDeletion, type: boolean }
   - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
   - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
@@ -4328,7 +4326,6 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: domain_name, type: string }
   - { name: description, type: string, isRequired: true }
-  - { name: provider, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: vpc, type: AWSVPC_v1 }
   - { name: allowed_vault_secret_paths, type: string, isList: true }
