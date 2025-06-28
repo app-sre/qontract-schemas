@@ -4,7 +4,7 @@ version: '1.0'
 type: object
 title: "Application"
 description: |
-  Schema for defining applications managed by App SRE. This includes details 
+  Schema for defining applications defined in app-interface. This includes details 
   about the application's metadata, dependencies, service owners, escalation 
   policies, and other configurations.
 
