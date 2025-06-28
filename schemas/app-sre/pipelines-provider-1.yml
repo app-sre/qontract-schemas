@@ -42,7 +42,8 @@ properties:
   defaults:
     description: |
       Reference to the default configuration for this pipelines provider.
-      This typically includes default settings for pipeline execution.
+      This declares the default settings for the pipeline execution,
+      which can be overridden in the current pipelines provider.      
     "$ref": "/common-1.json#/definitions/crossref"
 
   namespace:
