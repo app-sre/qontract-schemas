@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Replication"
+description: |
+  Schema for defining Vault replication configuration. Replication enables
+  secrets and data to be synchronized between multiple Vault instances,
+  supporting high availability, disaster recovery, and multi-region
+  deployments. This schema allows specifying the source and destination
+  authentication, the Vault instance, and the paths to replicate.
 
 additionalProperties: false
 properties:
@@ -9,17 +16,34 @@ properties:
     type: string
     enum:
     - /vault-config/replication-1.yml
+
   vaultInstance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      Reference to the Vault instance participating in replication.
+      This is the target instance where replicated data will be managed.
+
   destAuth:
     "$ref": "/vault-config/instance-auth-1.yml"
+    description: |
+      Authentication configuration for the destination Vault instance.
+      Specifies how to authenticate when writing replicated data.
+
   sourceAuth:
-    "ref": "/vault-config/instance-auth-1.yml"
+    "$ref": "/vault-config/instance-auth-1.yml"
+    description: |
+      Authentication configuration for the source Vault instance.
+      Specifies how to authenticate when reading data to replicate.
+
   paths:
     type: array
+    description: |
+      A list of paths to replicate between Vault instances. Each entry
+      specifies a path and its replication configuration.
     items:
       "$ref": "/vault-config/replication-paths-1.yml"
+
 required:
 - vaultInstance
 - destAuth
