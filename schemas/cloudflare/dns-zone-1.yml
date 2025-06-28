@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "DNS Zone"
+description: |
+  Schema for defining a Cloudflare DNS zone managed via app-interface.
+  This schema enables declarative management of DNS zones, including
+  zone metadata, plan type, account association, and DNS records.
+  It supports automation, compliance, and integration with Cloudflare
+  APIs, and allows for advanced configuration such as partial zones,
+  record limits, and zone deletion.
 
 additionalProperties: false
 properties:
@@ -9,33 +17,66 @@ properties:
     type: string
     enum:
     - /cloudflare/dns-zone-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+    description: |
+      The unique identifier for this DNS zone. Used to reference and
+      manage the zone within app-interface and automation.
+
   zone:
     type: string
+    description: |
+      The DNS zone name (e.g., 'example.com'). This is the root domain
+      managed by Cloudflare.
+
   plan:
     type: string
     enum:
     - free
     - enterprise
+    description: |
+      The Cloudflare plan type for this zone. Use 'free' for standard
+      zones or 'enterprise' for zones with enterprise features and support.
+
   type:
     enum:
     - full
     - partial
+    description: |
+      The type of DNS zone. 'full' zones are fully managed by Cloudflare,
+      while 'partial' zones are partially delegated.
+
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/cloudflare/account-1.yml"
+    description: |
+      Reference to the Cloudflare account that owns this DNS zone.
+
   records:
     type: array
     maxItems: 1500
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
+    description: |
+      A list of DNS records to manage within this zone. Supports all
+      standard record types and advanced DNSSEC options.
+
   max_records:
     type: integer
+    description: |
+      The maximum number of DNS records allowed in this zone. Used to
+      enforce record limits and prevent accidental over-provisioning.
+
   delete:
     type: boolean
+    description: |
+      If true, marks this DNS zone for deletion. Used to automate
+      cleanup and deprovisioning of zones in Cloudflare.
+
 required:
 - "$schema"
-- zone 
+- zone
