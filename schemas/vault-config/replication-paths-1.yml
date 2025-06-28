@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Replication Paths"
+description: |
+  Schema for defining replication paths for Vault replication. Replication
+  paths specify which secrets or data should be synchronized between Vault
+  instances, and how access is managed for each path. This schema supports
+  integration with Jenkins instances and Vault policies, enabling fine-grained
+  control over which secrets are replicated and under what conditions.
 
 additionalProperties: false
 properties:
@@ -9,14 +16,28 @@ properties:
     type: string
     enum:
     - /vault-config/replication-paths-1.yml
+
   provider:
     type: string
+    description: |
+      The provider type for this replication path. Supported values are
+      'jenkins' for Jenkins integration and 'policy' for policy-based
+      replication.
+
   jenkinsInstance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/dependencies/jenkins-instance-1.yml"
+    description: |
+      Reference to the Jenkins instance associated with this replication
+      path. Required when the provider is 'jenkins'.
+
   policy:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/policy-1.yml"
+    description: |
+      Reference to the Vault policy that governs access to this replication
+      path. Required for both 'jenkins' and 'policy' providers.
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -45,5 +66,6 @@ oneOf:
   required:
     - provider
     - policy
+
 required:
 - provider
