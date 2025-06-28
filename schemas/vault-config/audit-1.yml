@@ -3,58 +3,111 @@
 version: '1.0'
 
 type: object
+title: "Audit"
+description: |
+  Schema for configuring a Vault audit device. Vault audit devices record
+  all requests and responses to Vault, providing a detailed audit trail for
+  security and compliance. This schema supports configuration of file, syslog,
+  and socket audit backends, allowing teams to specify device type, options,
+  and integration with Vault instances. Use this schema to ensure all Vault
+  operations are logged according to organizational and regulatory requirements.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/audit-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   _path:
     type: string
     pattern: '.+\/$'
+    description: |
+      The mount path for the audit device in Vault. Must end with a slash.
+      This determines where the audit device is enabled and how logs are
+      referenced in Vault.
+
   type:
     type: string
     enum:
     - file
     - syslog
     - socket
+    description: |
+      The type of audit device to enable. Supported types are 'file' for
+      writing logs to disk, 'syslog' for sending logs to the system logger,
+      and 'socket' for streaming logs to a network socket.
+
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      Reference to the Vault instance where this audit device will be enabled.
+
   description:
     type: string
+    description: |
+      A human-readable description of the audit device configuration, its
+      purpose, or any relevant operational context.
+
   options:
     type: object
+    description: |
+      Configuration options specific to the audit device type. These options
+      control how and where audit logs are written, their format, and other
+      backend-specific settings. Refer to the Vault audit device documentation
+      for details on each option.
     oneOf:
     - properties:
         _type:
           type: string
           enum:
           - file
+          description: |
+            The backend type for this audit device. Must be 'file' for file-based audit logging.
         file_path:
           type: string
+          description: |
+            The path to the file where audit logs will be written. Ensure the
+            Vault process has write permissions to this file.
         log_raw:
           type: string
           enum:
           - 'true'
           - 'false'
+          description: |
+            If 'true', logs the raw request and response data. If 'false',
+            sensitive information is redacted.
         hmac_accessor:
           type: string
           enum:
           - 'true'
           - 'false'
+          description: |
+            If 'true', includes the accessor in the HMAC of sensitive values
+            for easier correlation.
         mode:
           type: string
           pattern: '^\d+$'
+          description: |
+            The file mode (permissions) to set on the audit log file, specified
+            as an octal string (e.g., '0640').
         format:
           type: string
           enum:
           - "json"
           - "jsonx"
+          description: |
+            The output format for audit logs. 'json' selects JSON format,
+            and 'jsonx' selects XML format.
         prefix:
           type: string
+          description: |
+            A string to prefix to each log line, useful for log filtering or
+            identification.
       required:
       - file_path
       - log_raw
@@ -64,6 +117,7 @@ properties:
       - prefix
     required:
     - _type
+
 required:
 - "$schema"
 - labels
