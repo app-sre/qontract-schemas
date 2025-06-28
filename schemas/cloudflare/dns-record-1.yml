@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "DNS Record"
+description: |
+  Schema for defining a DNS record in a Cloudflare-managed zone.
+  This schema supports all standard DNS record types, including
+  A, AAAA, CNAME, TXT, NS, MX, CAA, DS, and DNSKEY. It enables
+  declarative management of DNS records, including advanced DNSSEC
+  and proxying options, for automation and compliance in
+  app-interface-managed Cloudflare zones.
 
 additionalProperties: false
 properties:
@@ -9,10 +17,19 @@ properties:
     type: string
     enum:
     - /cloudflare/dns-record-1.yml
+
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+    description: |
+      The unique identifier for this DNS record. Used to reference
+      and manage the record within app-interface and automation.
+
   name:
     type: string
+    description: |
+      The DNS name for this record (e.g., 'www.example.com').
+      This is the hostname or subdomain to which the record applies.
+
   'type':
     type: string
     enum:
@@ -23,38 +40,81 @@ properties:
     - TXT
     - NS
     - MX
-    - DS # The record used to identify the DNSSEC signing key of a delegated zone
-    - DNSKEY # The key record used in DNSSEC. Uses the same format as the KEY record.
+    - DS
+    - DNSKEY
+    description: |
+      The DNS record type. Supported types include A, AAAA, CAA,
+      CNAME, TXT, NS, MX, DS (for DNSSEC signing key), and DNSKEY
+      (for DNSSEC key records).
+
   ttl:
     type: integer
+    description: |
+      The time-to-live (TTL) for this DNS record, in seconds.
+      Determines how long the record is cached by resolvers.
+
   value:
     type: string
+    description: |
+      The value for this DNS record. For most record types, this
+      is the target hostname, IP address, or record data.
+
   data:
     type: object
     additionalProperties: false
+    description: |
+      Additional data for advanced DNS record types, such as DS
+      and DNSKEY records for DNSSEC. Includes algorithm, key tag,
+      flags, protocol, public key, digest type, digest, tag, and value.
     properties:
       algorithm:
         "$ref": "/common-1.json#/definitions/dsDNSRecordAlgro"
+        description: |
+          The algorithm used for DNSSEC records (DS/DNSKEY).
       key_tag:
         "$ref": "/common-1.json#/definitions/dsDNSRecordKeyTag"
+        description: |
+          The key tag for DNSSEC records.
       flags:
         "$ref": "/common-1.json#/definitions/dsDNSRecordKeyTag"
+        description: |
+          The flags field for DNSKEY records.
       protocol:
         type: integer
+        description: |
+          The protocol field for DNSKEY records.
       public_key:
         type: string
+        description: |
+          The public key for DNSKEY records.
       digest_type:
         type: integer
+        description: |
+          The digest type for DS records.
       digest:
         type: string
+        description: |
+          The digest value for DS records.
       tag:
         type: string
+        description: |
+          The tag for CAA records.
       value:
         type: string
+        description: |
+          The value for CAA records.
+
   proxied:
     type: boolean
+    description: |
+      If true, enables Cloudflare proxying for this DNS record.
+      Only applicable to certain record types (e.g., A, AAAA, CNAME).
+
   priority:
     "$ref": "/common-1.json#/definitions/DNSRecordPriority"
+    description: |
+      The priority for MX records. Lower values indicate higher priority.
+
 required:
   - name
   - type
