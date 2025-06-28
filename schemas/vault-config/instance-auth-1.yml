@@ -3,27 +3,62 @@
 version: '1.0'
 
 type: object
+title: "Vault Instance Auth"
+description: |
+  Schema for defining authentication configuration for a Vault instance.
+  This schema supports multiple authentication providers, such as AppRole
+  and token-based authentication, and allows specifying the secret engine
+  version and required credentials. Use this schema to securely configure
+  how vault-manager and integrations authenticate to each Vault cluster.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/instance-auth-1.yml
+
   provider:
     type: string
+    description: |
+      The authentication provider to use for this Vault instance.
+      Supported values are 'approle' for AppRole-based authentication
+      and 'token' for token-based authentication.
+
   kubeRoleName:
     type: string
+    description: |
+      The name of the Kubernetes role to use for authentication, if
+      applicable. Used when integrating Vault with Kubernetes service
+      accounts.
+
   secretEngine:
     type: string
     enum:
     - kv_v1
     - kv_v2
+    description: |
+      The version of the Vault KV secret engine to use for storing and
+      retrieving secrets. Must be either 'kv_v1' or 'kv_v2'.
+
   roleID:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the AppRole RoleID.
+      Required when using the 'approle' provider.
+
   secretID:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the AppRole SecretID.
+      Required when using the 'approle' provider.
+
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the authentication token.
+      Required when using the 'token' provider.
+
 oneOf:
 - properties:
     provider:
@@ -46,6 +81,7 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
   required:
   - token
+
 required:
 - provider
 - secretEngine
