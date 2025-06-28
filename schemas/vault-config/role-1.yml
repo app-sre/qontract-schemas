@@ -3,39 +3,81 @@
 version: '1.0'
 
 type: object
+title: "Role"
+description: |
+  Schema for defining a Vault role. Vault roles are used to configure
+  authentication and authorization for users, applications, or services
+  accessing secrets in Vault. This schema supports multiple auth backends
+  (AppRole, OIDC, Kubernetes), allows specifying policies, token settings,
+  and advanced options for fine-grained access control. Roles are associated
+  with a specific Vault instance and mount, and can be customized for
+  different use cases and security requirements.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/role-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the Vault role. Used to identify and reference
+      this role within the Vault instance and app-interface.
+
   mount:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/auth-1.yml"
+    description: |
+      Reference to the Vault auth mount where this role is defined.
+      Specifies the authentication backend (e.g., approle, oidc, kubernetes).
+
   type:
     type: string
+    description: |
+      The type of Vault role. Indicates the authentication backend
+      (e.g., approle, oidc, kubernetes) this role is associated with.
+
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      Reference to the Vault instance where this role will be created.
+      Enables management of roles across multiple Vault clusters.
+
   output_path:
     type: string
+    description: |
+      The output path for generated credentials or tokens, if applicable.
+      Used for integrations that need to consume credentials from Vault.
+
   options:
     type: object
+    description: |
+      Configuration options specific to the role type and authentication
+      backend. Includes policy assignments, token settings, and advanced
+      options for AppRole, OIDC, and Kubernetes roles. Refer to the Vault
+      documentation for details on each backend's role configuration.
     properties:
       policies:
         type: array
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/vault-config/policy-1.yml"
+        description: |
+          A list of Vault policies to attach to this role. Policies define
+          the permissions granted to tokens issued for this role.
       token_policies:
         type: array
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/vault-config/policy-1.yml"
+        description: |
+          Additional policies to attach to tokens issued by this role.
     oneOf:
     - properties:
         _type:
@@ -47,54 +89,84 @@ properties:
           enum:
           - 'true'
           - 'false'
+          description: |
+            If 'true', a SecretID must be presented when logging in with this role.
         local_secret_ids:
           type: string
           enum:
           - 'true'
           - 'false'
+          description: |
+            If 'true', SecretIDs are scoped to the local cluster only.
         token_period:
           type: string
           pattern: '^\d+$'
+          description: |
+            The period, in seconds, for which the issued token is valid.
         secret_id_num_uses:
           type: string
           pattern: '^\d+$'
+          description: |
+            The number of times a SecretID can be used before it is invalidated.
         secret_id_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The time-to-live (TTL) for SecretIDs, in seconds.
         token_explicit_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The explicit maximum TTL for tokens issued by this role.
         token_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The maximum TTL for tokens issued by this role.
         token_no_default_policy:
           type: boolean
+          description: |
+            If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
           pattern: '^\d+$'
+          description: |
+            The number of times a token can be used before it is revoked.
         token_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The default TTL for tokens issued by this role.
         token_type:
           type: string
+          description: |
+            The type of token to issue (e.g., service, batch).
         token_policies:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/vault-config/policy-1.yml"
+          description: |
+            Additional policies to attach to tokens issued by this role.
         policies:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/vault-config/policy-1.yml"
+          description: |
+            Policies to attach to this role.
         secret_id_bound_cidrs:
           type: array
           items:
             type: string
+          description: |
+            A list of CIDR blocks that SecretIDs must originate from.
         token_bound_cidrs:
           type: array
           items:
             type: string
+          description: |
+            A list of CIDR blocks that tokens must originate from.
       required:
       - bind_secret_id
       - local_secret_ids
@@ -120,73 +192,121 @@ properties:
           type: array
           items:
             type: string
+          description: |
+            A list of allowed redirect URIs for OIDC authentication.
         bound_audiences:
           type: array
           items:
             type: string
+          description: |
+            A list of audiences that tokens must be bound to.
         bound_claims:
           type: object
+          description: |
+            Claims that must be present in the OIDC token.
         bound_claims_type:
           type: string
+          description: |
+            The type of claim matching to use.
         bound_subject:
           type: string
+          description: |
+            The subject that tokens must be bound to.
         claim_mappings:
           type: object
+          description: |
+            Mappings from OIDC claims to Vault identity attributes.
         clock_skew_leeway:
           type: string
           pattern: '^\d+$'
+          description: |
+            The allowed clock skew, in seconds, for validating tokens.
         expiration_leeway:
           type: string
           pattern: '^\d+$'
+          description: |
+            The allowed expiration leeway, in seconds, for validating tokens.
         groups_claim:
           type: string
+          description: |
+            The claim in the OIDC token that contains group information.
         max_age:
           type: string
           pattern: '^\d+$'
+          description: |
+            The maximum age of the token, in seconds.
         not_before_leeway:
           type: string
           pattern: '^\d+$'
+          description: |
+            The allowed not-before leeway, in seconds, for validating tokens.
         oidc_scopes:
           type: array
           items:
             type: string
+          description: |
+            A list of OIDC scopes to request.
         role_type:
           type: string
           enum:
           - oidc
           - jwt
+          description: |
+            The type of role for OIDC/JWT authentication.
         token_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The default TTL for tokens issued by this role.
         token_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The maximum TTL for tokens issued by this role.
         token_explicit_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The explicit maximum TTL for tokens issued by this role.
         token_type:
           type: string
+          description: |
+            The type of token to issue (e.g., service, batch).
         token_period:
           type: string
           pattern: '^\d+$'
+          description: |
+            The period, in seconds, for which the issued token is valid.
         token_policies:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/vault-config/policy-1.yml"
+          description: |
+            Additional policies to attach to tokens issued by this role.
         token_bound_cidrs:
           type: array
           items:
             type: string
+          description: |
+            A list of CIDR blocks that tokens must originate from.
         token_no_default_policy:
           type: boolean
+          description: |
+            If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
           pattern: '^\d+$'
+          description: |
+            The number of times a token can be used before it is revoked.
         user_claim:
           type: string
+          description: |
+            The claim in the OIDC token that identifies the user.
         verbose_oidc_logging:
           type: boolean
+          description: |
+            If true, enables verbose logging for OIDC authentication.
       required:
       - allowed_redirect_uris
       - role_type
@@ -207,44 +327,70 @@ properties:
           - kubernetes
         alias_name_source:
           type: string
+          description: |
+            The source for alias names in Kubernetes authentication.
         audience:
           type: string
+          description: |
+            The audience to use for Kubernetes service account tokens.
         bound_service_account_names:
           type: array
           items:
             type: string
+          description: |
+            A list of Kubernetes service account names that can use this role.
         bound_service_account_namespaces:
           type: array
           items:
             type: string
+          description: |
+            A list of Kubernetes namespaces for the bound service accounts.
         token_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The default TTL for tokens issued by this role.
         token_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The maximum TTL for tokens issued by this role.
         token_explicit_max_ttl:
           type: string
           pattern: '^\d+$'
+          description: |
+            The explicit maximum TTL for tokens issued by this role.
         token_type:
           type: string
+          description: |
+            The type of token to issue (e.g., service, batch).
         token_period:
           type: string
           pattern: '^\d+$'
+          description: |
+            The period, in seconds, for which the issued token is valid.
         token_policies:
           type: array
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/vault-config/policy-1.yml"
+          description: |
+            Additional policies to attach to tokens issued by this role.
         token_bound_cidrs:
           type: array
           items:
             type: string
+          description: |
+            A list of CIDR blocks that tokens must originate from.
         token_no_default_policy:
           type: boolean
+          description: |
+            If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
           pattern: '^\d+$'
+          description: |
+            The number of times a token can be used before it is revoked.
       required:
       - alias_name_source
       - bound_service_account_names
@@ -260,6 +406,7 @@ properties:
       - token_num_uses
     required:
     - _type
+
 required:
 - "$schema"
 - labels
