@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Integration Sharding"
+description: |
+  Schema for defining sharding strategies for integrations. Sharding allows
+  integrations to parallelize work across resources such as AWS accounts,
+  Cloudflare DNS zones, OpenShift clusters, or OCM organizations. This schema
+  supports both static and key-based sharding, as well as sub-sharding for
+  advanced deployment scenarios.
 
 additionalProperties: false
 properties:
@@ -18,12 +25,23 @@ properties:
       - per-openshift-cluster
       - per-ocm-organization
       - static
+    description: |
+      The sharding strategy to use for the integration. Determines how work
+      is distributed, such as by AWS account, DNS zone, OpenShift cluster,
+      OCM organization, or using a static number of shards.
   # Static Sharding
-  shards:   # Static sharding
+  shards:
     type: integer
+    description: |
+      The number of static shards to use when the 'static' strategy is
+      selected. Each shard will run as a separate instance.
   # Key Based Sharding
   shardSpecOverrides:
     type: array
+    description: |
+      A list of overrides for specific shards. Each override allows
+      customizing the image, resources, or sub-sharding for a particular
+      resource, such as a cluster or account.
     items:
       type: object
       additionalProperties: false
@@ -40,24 +58,39 @@ properties:
                 - /openshift/openshift-cluster-manager-1.yml
                 - /aws/account-1.yml
                 - /cloudflare/dns-zone-1.yml
+          description: |
+            Reference to the resource this override applies to, such as a
+            specific cluster, account, or DNS zone.
         imageRef:
           type: string
-          description: Image ref used by the shard.
+          description: |
+            The image reference to use for this shard override.
         resources:
           "$ref": "/openshift/deploy-resources-1.yml"
+          description: |
+            Resource requirements (CPU, memory, etc.) for this shard.
         disabled:
           type: boolean
+          description: |
+            If true, disables this shard override.
         subSharding:
           type: object
-          description: Sub-sharding strategy used by a shard.
+          description: |
+            Sub-sharding strategy used by this shard. Allows further
+            splitting of work within the shard, such as static sub-shards.
           additionalProperties: false
           properties:
             strategy:
               type: string
               enum:
               - static
+              description: |
+                The sub-sharding strategy to use. Currently only 'static'
+                is supported for sub-sharding.
             shards:
               type: integer
+              description: |
+                The number of sub-shards to use for this shard.
 
 required:
   - strategy
