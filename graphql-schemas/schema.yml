@@ -4996,6 +4996,7 @@ confs:
       create-token: AutomatedActionCreateToken_v1
       external-resource-flush-elasticache: AutomatedActionExternalResourceFlushElastiCache_v1
       external-resource-rds-reboot: AutomatedActionExternalResourceRdsReboot_v1
+      external-resource-rds-snapshot: AutomatedActionExternalResourceRdsSnapshot_v1
       no-op: AutomatedActionNoOp_v1
       openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
   fields:
