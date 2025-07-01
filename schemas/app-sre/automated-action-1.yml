@@ -146,6 +146,28 @@ oneOf:
 - properties:
     type:
       enum:
+      - external-resource-rds-snapshot
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+            description: "The namespace where the RDS instance is located."
+          identifier:
+            type: string
+            description: "The RDS identifier regex pattern to match."
+        required:
+        - namespace
+        - identifier
+  required:
+  - arguments
+
+- properties:
+    type:
+      enum:
       - no-op
 
 - properties:
