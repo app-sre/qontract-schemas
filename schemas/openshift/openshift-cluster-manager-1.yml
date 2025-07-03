@@ -20,6 +20,11 @@ properties:
     description: |
       The internal OCM organization ID that can be found via
       ocm whoami | jq .organization.id
+  externalOrgId:
+    type: string
+    description: |
+      The external OCM organization ID that can be found via
+      ocm whoami | jq .organization.external_id
   environment:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/openshift-cluster-manager-environment-1.yml"
