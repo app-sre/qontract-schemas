@@ -56,10 +56,6 @@
         "description": {
             "type": "string"
         },
-        "externalDocumentation": {
-            "type": "string",
-            "description": "Link(s) to external documentation specific to this property"
-        },
         "default": {},
         "examples": {
             "type": "array",
