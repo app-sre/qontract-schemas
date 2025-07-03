@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Dynatrace Environment"
+description: |
+  Schema for referencing a Dynatrace environment as a dependency in app-interface.
+  This schema enables teams to declare Dynatrace environments for integration,
+  monitoring, and automation purposes. It does not provision or manage the lifecycle
+  of the Dynatrace environment itself. Use this schema to specify environment metadata,
+  tenant ID, API endpoints, bootstrap tokens, environment type, region, and AWS regions
+  associated with the Dynatrace environment.
 
 additionalProperties: false
 properties:
@@ -9,34 +17,62 @@ properties:
     type: string
     enum:
     - /dependencies/dynatrace-environment-1.yml
+
   name:
     type: string
+    description: |
+      The unique name of the Dynatrace environment. Used to identify and reference
+      this environment in app-interface and related integrations.
+
   description:
     type: string
+    description: |
+      A human-readable description of the Dynatrace environment, its purpose,
+      or any relevant operational context.
+
   environmentID:
-    description: Dynatrace tenant ID.
     type: string
+    description: |
+      The Dynatrace tenant ID. This uniquely identifies the Dynatrace environment
+      (tenant) within the Dynatrace platform.
+
   environmentUrl:
-    description: The URL to a specific Dynatrace entity called environment, which is also known as tenant.
     type: string
+    description: |
+      The URL to the Dynatrace environment (tenant). Used by integrations and
+      automation to connect to the Dynatrace API for this environment.
+
   bootstrapToken:
-    description: Dynatrace API token dedicated for generating new API tokens for Hypershift.
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing the Dynatrace API token dedicated
+      for generating new API tokens for Hypershift or other integrations.
+
   environment:
-    description: Which of integration, stage or production are the data coming from.
     type: string
     enum:
     - integration
     - stage
     - production
+    description: |
+      The environment of the input data source for the Dynatrace environment. Indicates whether the
+      data source environment is integration, stage, or production.
+
   dynatraceRegion:
-    description: https://gitlab.cee.redhat.com/service/app-interface/-/blame/9f303046645ebbb48e87ccf5d89778521a2d8345/data/services/osd-operators/cicd/saas/saas-dynatrace-operator.yaml#L356-433
     type: string
+    description: |
+      The Dynatrace region associated with this environment. Used for regional
+      configuration and integration. See operator documentation for details.
+      https://gitlab.cee.redhat.com/service/app-interface/-/blame/9f303046645ebbb48e87ccf5d89778521a2d8345/data/services/osd-operators/cicd/saas/saas-dynatrace-operator.yaml#L356-433
+
   awsRegion:
-    description: A list of HCP AWS regions.
     type: array
+    description: |
+      A list of HCP AWS regions associated with this Dynatrace environment.
+      Each entry references a valid AWS region.
     items:
       "$ref": "/aws/regions-1.yml#/properties/region"
+
 required:
 - "$schema"
 - name
