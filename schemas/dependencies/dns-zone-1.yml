@@ -2,6 +2,15 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "DNS Zone"
+description: |
+  Schema for configuring an AWS Route53 DNS Zone in app-interface.
+  This schema enables teams to declare DNS zones for integration,
+  documentation, and automation purposes. Use this schema to
+  specify zone metadata, AWS account and VPC associations, allowed
+  Vault secret paths for DCV, and DNS records managed within the zone.
+externalDocumentation: |
+  https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html
 
 additionalProperties: false
 properties:
@@ -9,29 +18,59 @@ properties:
     type: string
     enum:
     - /dependencies/dns-zone-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the DNS zone. Used to identify and reference
+      this zone in app-interface and related integrations.
+
   domain_name:
     type: string
+    description: |
+      The domain name for this DNS zone (e.g., 'example.com').
+      This is the root domain managed by the zone.
+
   description:
     type: string
+    description: |
+      A human-readable description of the DNS zone, its purpose,
+      or any relevant operational context.
+
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
+    description: |
+      Reference to the AWS account associated with this DNS zone.
+      Used for integration with AWS Route53 and related resources.
+
   vpc:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/vpc-1.yml"
+    description: |
+      Reference to the AWS VPC associated with this DNS zone.
+      Used for private zones or VPC-scoped DNS management.
+
   allowed_vault_secret_paths:
-    description: List of paths used to limit the secrets that can be accessed for creating DNS records, the primary use case being domain control validation (DCV)
     type: array
+    description: |
+      List of Vault secret paths allowed for this DNS zone. Used to
+      limit the secrets that can be accessed for creating DNS records,
+      with the primary use case being domain control validation (DCV).
     items:
       type: string
+
   records:
     type: array
+    description: |
+      A list of DNS records managed within this zone. Each entry
+      references a DNS record dependency object.
     items:
       "$ref": "/dependencies/dns-record-1.yml"
+
 required:
 - "$schema"
 - name
