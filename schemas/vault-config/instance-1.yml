@@ -3,26 +3,58 @@
 version: '1.0'
 
 type: object
+title: "Vault Instance"
+description: |
+  Schema for defining a Vault instance managed by app-interface and vault-manager.
+  This schema enables configuration of multiple Vault clusters, supporting
+  environments with more than one Vault deployment. Each instance specifies
+  connection details, authentication, and operational metadata, allowing
+  vault-manager to manage audit devices, auth methods, policies, and secrets
+  for each Vault instance independently.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/instance-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the Vault instance. Used to reference this instance
+      from other Vault configuration objects.
+
   description:
     type: string
+    description: |
+      A human-readable description of the Vault instance, its environment,
+      or any relevant operational context.
+
   address:
     type: string
+    description: |
+      The base URL or address of the Vault API endpoint for this instance.
+      Used by vault-manager and integrations to connect to the Vault cluster.
+
   auth:
     "$ref": "/vault-config/instance-auth-1.yml"
+    description: |
+      Reference to the authentication configuration for this Vault instance.
+      Specifies how vault-manager and integrations authenticate to this Vault
+      cluster, such as using a token or AppRole credentials.
+
   replication:
     type: array
     items:
       "$ref": "/vault-config/replication-1.yml"
+    description: |
+      A list of replication configurations for this Vault instance. Used to
+      define replication relationships (such as primary/secondary) between
+      Vault clusters for high availability and disaster recovery.
 
 required:
 - "$schema"

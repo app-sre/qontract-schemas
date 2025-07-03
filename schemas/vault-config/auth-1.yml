@@ -3,17 +3,34 @@
 version: '1.0'
 
 type: object
+title: "Auth"
+description: |
+  Schema for configuring a Vault authentication method. Vault auth methods
+  enable users, applications, and systems to authenticate and obtain tokens
+  for accessing secrets and APIs. This schema supports configuration of
+  multiple auth backends, including AppRole, GitHub, OIDC, and Kubernetes,
+  and allows specifying backend-specific settings, policy mappings, and
+  integration with Vault instances. Use this schema to ensure secure,
+  auditable, and flexible authentication to Vault in accordance with
+  organizational and regulatory requirements.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/auth-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   _path:
     type: string
     pattern: '.+\/$'
+    description: |
+      The mount path for the auth method in Vault. Must end with a slash.
+      Determines where the auth backend is enabled and how it is referenced.
+
   type:
     type: string
     enum:
@@ -21,14 +38,33 @@ properties:
     - github
     - oidc
     - kubernetes
+    description: |
+      The type of Vault auth method to enable. Supported types include:
+        - 'approle': Machine-to-machine authentication using AppRole IDs and secrets.
+        - 'github': User authentication via GitHub organizations and teams.
+        - 'oidc': User authentication via OpenID Connect providers.
+        - 'kubernetes': Service account authentication from Kubernetes clusters.
+
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      Reference to the Vault instance where this auth method will be enabled.
+
   description:
     type: string
+    description: |
+      A human-readable description of the auth method configuration, its
+      purpose, or any relevant operational context.
+
   settings:
     type: object
     additionalProperties: false
+    description: |
+      Backend-specific configuration for the auth method. Each auth type
+      supports different settings, such as OIDC discovery URLs, GitHub
+      organizations, or Kubernetes API endpoints. Refer to the Vault
+      documentation for details on each backend's configuration options.
     properties:
       config:
         type: object
@@ -40,15 +76,23 @@ properties:
               - kubernetes
             kubernetes_host:
               type: string
+              description: |
+                The host URL of the Kubernetes API server to authenticate against.
             kubernetes_ca_cert:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Reference to the Vault secret containing the Kubernetes CA certificate.
             kubernetes_ca_cert_kv_version:
               type: string
               enum:
               - kv_v1
               - kv_v2
+              description: |
+                The Vault KV version for the CA certificate secret.
             disable_local_ca_jwt:
               type: boolean
+              description: |
+                If true, disables using the local CA JWT for authentication.
           required:
           - kubernetes_host
         - properties:
@@ -58,14 +102,22 @@ properties:
               - github
             organization:
               type: string
+              description: |
+                The GitHub organization to use for authentication.
             base_url:
               type: string
+              description: |
+                The base URL for GitHub Enterprise, or leave blank for github.com.
             max_ttl:
               type: string
               pattern: '^(\d+(h|m|s))+$'
+              description: |
+                The maximum TTL for tokens issued by this auth method.
             ttl:
               type: string
               pattern: '^(\d+(h|m|s))+$'
+              description: |
+                The default TTL for tokens issued by this auth method.
           required:
           - organization
           - base_url
@@ -78,25 +130,42 @@ properties:
               - oidc
             default_role:
               type: string
+              description: |
+                The default role to use for OIDC authentication.
             oidc_discovery_url:
               type: string
+              description: |
+                The OIDC discovery URL for the identity provider.
             oidc_client_id:
               type: string
+              description: |
+                The client ID for OIDC authentication.
             oidc_client_secret:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Reference to the Vault secret containing the OIDC client secret.
             oidc_client_secret_kv_version:
               type: string
               enum:
               - kv_v1
               - kv_v2
+              description: |
+                The Vault KV version for the OIDC client secret.
           required:
           - default_role
           - oidc_discovery_url
           - oidc_client_id
           - oidc_client_secret
           - oidc_client_secret_kv_version
+
   policy_mappings:
     type: array
+    description: |
+      A list of mappings from external identity groups (such as GitHub teams)
+      to Vault policies. Each mapping specifies the external group and the
+      Vault policies to assign upon successful authentication. This enables
+      fine-grained access control and policy assignment based on identity
+      provider attributes.
     items:
       type: object
       additionalProperties: false
@@ -114,8 +183,13 @@ properties:
                 type: string
                 enum:
                 - github-org-team
+          description: |
+            Reference to the GitHub team used for mapping to Vault policies.
         policies:
           type: array
+          description: |
+            A list of Vault policies to assign to users authenticated via this
+            external group.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef":
@@ -128,6 +202,7 @@ properties:
       required:
       - github_team
       - policies
+
 required:
 - "$schema"
 - labels

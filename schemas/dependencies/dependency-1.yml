@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Dependency"
+description: |
+  Schema for referencing an external or internal dependency in app-interface.
+  This schema enables teams to declare dependencies for integration, monitoring,
+  and documentation purposes. It does not provision or manage the lifecycle of
+  the dependency itself. Use this schema to describe the dependency's name,
+  operational model, statefulness, SLA, monitoring, and failure impact.
 
 additionalProperties: false
 properties:
@@ -9,29 +16,57 @@ properties:
     type: string
     enum:
     - /dependencies/dependency-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the dependency. Used to identify and reference
+      this dependency in app-interface and related integrations.
+
   description:
     type: string
+    description: |
+      A human-readable description of the dependency, its purpose,
+      or any relevant operational context.
+
   statefulness:
     type: string
     enum:
     - Durable
     - Cache
     - Stateless
+    description: |
+      The statefulness classification of the dependency. 'Durable' indicates
+      persistent state, 'Cache' indicates ephemeral state, and 'Stateless'
+      indicates no state is maintained.
+
   opsModel:
     type: string
     enum:
     - Hosted
     - External
     - Internal
+    description: |
+      The operational model for the dependency. 'Hosted' means managed by a
+      third party, 'External' means outside the organization, and 'Internal'
+      means managed within the organization.
+
   statusPage:
     type: string
     format: uri
+    description: |
+      The URL of the status page for this dependency, if available. Used for
+      monitoring uptime and incident reporting.
+
   SLA:
     "$ref": "/common-1.json#/definitions/serviceLevel"
+    description: |
+      The service level agreement (SLA) for this dependency. Defines the
+      expected reliability, uptime, and support commitments.
+
   dependencyFailureImpact:
     type: string
     enum:
@@ -39,27 +74,46 @@ properties:
     - Partial Outage
     - Major Outage
     - Complete Outage
+    description: |
+      The impact on your service if this dependency fails. Used for risk
+      assessment and incident response planning.
+
   monitoring:
     type: object
+    description: |
+      Monitoring configuration for this dependency. Supports specifying a
+      direct monitoring URL or referencing an OpenShift namespace and
+      resource for monitoring integration.
     properties:
       url:
         type: string
         format: url
+        description: |
+          The direct URL to the monitoring dashboard or endpoint for this dependency.
       namespace:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/namespace-1.yml"
+        description: |
+          Reference to the OpenShift namespace where monitoring resources for
+          this dependency are located.
       provider:
         type: string
         enum:
         - resource
         - resource-template
+        description: |
+          The provider type for monitoring. 'resource' for direct resource
+          monitoring, 'resource-template' for template-based monitoring.
       path:
         type: string
+        description: |
+          The path to the monitoring resource or template.
     anyOf:
     - required:
       - url
     - required:
       - namespace
+
 required:
 - $schema
 - labels
