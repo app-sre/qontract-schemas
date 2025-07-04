@@ -1249,7 +1249,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: orgId, type: string, isRequired: true, isUnique: true }
-  - { name: externalOrgId, type: string, isUnique: true }
+  - { name: externalOrgId, type: string }
   - { name: environment, type: OpenShiftClusterManagerEnvironment_v1, isRequired: true }
   - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
