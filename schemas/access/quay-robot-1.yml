@@ -1,0 +1,67 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+title: "Quay Robot Account"
+description: |
+  Schema for defining Quay robot account in app-interface.
+  This includes details about the robot account's usernames
+  and associated teams and repositories.
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /access/quay-robot-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+    description: |
+      The name of the robot account.
+  description:
+    type: string
+    description: |
+      A brief description of the robot account.
+  quay_username:
+    "$ref": "/common-1.json#/definitions/identifier"
+    description: |
+      The Quay robot account name.
+      In Quay will be shown as org_name+quay_username.
+  quay_org:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/quay-org-1.yml"
+    description: |
+      Reference to the Quay organization that the robot account belongs to.
+  repositories:
+    type: array
+    description: |
+      A list of repositories that the robot account has access to.
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: |
+            The name of the repository.
+        permission:
+          type: string
+          enum:
+          - read
+          - write
+          - admin
+          description: |
+            The permission level for the repository.
+  teams:
+    type: array
+    description: |
+      A list of teams that the robot account has access to.
+    items:
+      type: string
+      description: |
+        The name of the team.
+required:
+- $schema
+- labels
+- name
