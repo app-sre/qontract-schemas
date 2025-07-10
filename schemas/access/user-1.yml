@@ -19,8 +19,6 @@ properties:
     "$ref": "/common-1.json#/definitions/identifier"
   quay_username:
     "$ref": "/common-1.json#/definitions/identifier"
-  slack_username:
-    type: string
   pagerduty_username:
     type: string
   aws_username:
