@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Terraform Resource"
+description: |
+  Schema for defining a Cloudflare Terraform resource managed via app-interface.
+  This schema enables declarative management of Cloudflare resources such as
+  zones, worker scripts, logpush jobs, and SSL certificates. It supports
+  integration with GitHub for content sourcing, secure secret management,
+  and advanced configuration for caching, certificates, and log delivery.
 
 additionalProperties: false
 properties:
@@ -9,196 +16,340 @@ properties:
     type: string
     enum:
     - /cloudflare/terraform-resource-1.yml
+
   provider:
     type: string
+    description: |
+      The type of Cloudflare Terraform resource to manage. Supported values
+      include 'zone', 'worker_script', 'logpush_job', 'logpush_ownership_challenge',
+      and 'logpull_retention'.
+
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+    description: |
+      The unique identifier for this Terraform resource. Used to reference
+      and manage the resource within app-interface and automation.
+
   name:
     type: string
+    description: |
+      The name of the resource. For worker scripts, this is the script name;
+      for other resources, it is a descriptive name.
+
   content_from_github:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for sourcing resource content from a GitHub repository.
+      Used for worker scripts and other resources that require external content.
     properties:
       repo:
         type: string
+        description: |
+          The GitHub repository containing the resource content.
       path:
         type: string
+        description: |
+          The file path within the repository to the resource content.
       ref:
         type: string
         pattern: '^([0-9a-f]{40})$'
+        description: |
+          The commit SHA to use for sourcing the content.
     required:
     - repo
     - path
     - ref
+
   vars:
     type: array
+    description: |
+      A list of variables to pass to the resource. Each variable includes
+      a name and value, supporting parameterization of worker scripts and
+      other resources.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            The name of the variable.
         text:
           type: string
+          description: |
+            The value of the variable.
       required:
       - name
       - text
+
   zone:
     type: string
+    description: |
+      The DNS zone name associated with this resource (e.g., 'example.com').
+      Used for zone resources and logpush jobs.
+
   plan:
     enum:
     - enterprise
     - free
+    description: |
+      The Cloudflare plan type for this resource. Use 'free' for standard
+      resources or 'enterprise' for resources with enterprise features.
+
   type:
     enum:
     - full
     - partial
+    description: |
+      The type of Cloudflare resource. 'full' resources are fully managed
+      by Cloudflare, while 'partial' resources are partially delegated.
+
   settings:
     type: object
+    description: |
+      Additional settings for the resource. Used for advanced configuration
+      of zones and other resource types.
+
   argo:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for Argo features, such as tiered caching and smart routing.
     properties:
       tiered_caching:
         type: boolean
+        description: |
+          If true, enables tiered caching for the zone.
       smart_routing:
         type: boolean
+        description: |
+          If true, enables smart routing for the zone.
+
   tiered_cache:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for tiered cache settings. Specify the cache type as
+      'generic' or 'smart' for advanced caching strategies.
     properties:
       cache_type:
         type: string
         enum:
           - generic
           - smart
+        description: |
+          The type of tiered cache to use.
     required:
       - cache_type
+
   cache_reserve:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for enabling or disabling cache reserve for the zone.
     properties:
       enabled:
         type: boolean
+        description: |
+          If true, enables cache reserve.
+
   records:
     type: array
+    description: |
+      A list of DNS records to manage within this resource. Supports all
+      standard record types and advanced DNSSEC options.
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
+
   workers:
     type: array
+    description: |
+      A list of worker script configurations for this resource. Each entry
+      specifies the identifier, pattern, and script name.
     items:
       type: object
       additionalProperties: false
       properties:
         identifier:
           type: string
+          description: |
+            The unique identifier for the worker script.
         pattern:
           type: string
+          description: |
+            The route pattern for the worker script.
         script_name:
           type: string
+          description: |
+            The name of the worker script.
       required:
       - identifier
       - pattern
       - script_name
+
   certificates:
     type: array
+    description: |
+      A list of advanced certificates to manage for this resource. Each entry
+      specifies the identifier, type, hosts, validation method, validity, and
+      certificate authority.
     items:
       type: object
       additionalProperties: false
       properties:
         identifier:
           type: string
+          description: |
+            The unique identifier for the certificate.
         type:
           type: string
           enum:
             - advanced
+          description: |
+            The type of certificate.
         hosts:
           type: array
           items:
             type: string
+          description: |
+            The list of hostnames covered by the certificate.
         validation_method:
           type: string
           enum:
             - txt
+          description: |
+            The validation method for the certificate.
         validity_days:
           type: integer
           enum:
             - 90
+          description: |
+            The number of days the certificate is valid.
         certificate_authority:
           type: string
           enum:
             - lets_encrypt
+          description: |
+            The certificate authority to use.
         cloudflare_branding:
           type: boolean
+          description: |
+            If true, enables Cloudflare branding on the certificate.
         wait_for_active_status:
           type: boolean
-    required:
-      - identifier
-      - type
-      - hosts
-      - validation_method
-      - validity_days
-      - certificate_authority
-  # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
+          description: |
+            If true, waits for the certificate to become active before proceeding.
+      required:
+        - identifier
+        - type
+        - hosts
+        - validation_method
+        - validity_days
+        - certificate_authority
+
   custom_ssl_certificates:
     type: array
+    description: |
+      A list of custom SSL certificates to manage for this resource. Each entry
+      specifies the identifier, type, bundle method, geo restrictions, and
+      certificate secrets.
     items:
       type: object
       additionalProperties: false
       properties:
         identifier:
           type: string
+          description: |
+            The unique identifier for the custom SSL certificate.
         type:
           type: string
           enum:
             - legacy_custom
             - sni_custom
+          description: |
+            The type of custom SSL certificate.
         bundle_method:
           type: string
           enum:
             - ubiquitous
             - optimal
             - force
+          description: |
+            The bundle method for the certificate.
         geo_restrictions:
           type: string
           enum:
             - us
             - eu
             - highest_security
+          description: |
+            The geographic restrictions for the certificate.
         certificate_secret:
           type: object
           additionalProperties: false
+          description: |
+            References to Vault secrets containing the certificate and key.
           properties:
             certificate:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Reference to the Vault secret containing the certificate.
             key:
               "$ref": "/common-1.json#/definitions/vaultSecret"
+              description: |
+                Reference to the Vault secret containing the private key.
           required:
             - certificate
             - key
-    required:
-      - identifier
-      - type
-      - bundle_method
-      - certificate_secret
+      required:
+        - identifier
+        - type
+        - bundle_method
+        - certificate_secret
+
   destination_conf:
     type: string
     pattern: 's3:\/\/.+$'
+    description: |
+      The S3 destination configuration for logpush jobs and ownership challenges.
+      Specifies the S3 bucket and path for log delivery.
+
   enabled:
     type: boolean
+    description: |
+      If true, enables the resource (e.g., logpush job or logpull retention).
+
   logpull_options:
     type: string
+    description: |
+      Additional options for logpull jobs.
+
   ownership_challenge:
     type: string
+    description: |
+      The ownership challenge string for logpush ownership verification.
+
   dataset:
     type: string
+    description: |
+      The dataset name for logpush jobs.
+
   frequency:
     type: string
+    description: |
+      The frequency for logpush jobs.
+
   filter:
     type: string
+    description: |
+      The filter expression for logpush jobs.
+
   kind:
     type: string
-  
+    description: |
+      The kind of logpush job.
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -345,7 +496,6 @@ oneOf:
         - validation_method
         - validity_days
         - certificate_authority
-    # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
     custom_ssl_certificates:
       type: array
       items:
