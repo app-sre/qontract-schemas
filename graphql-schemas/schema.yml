@@ -3753,6 +3753,13 @@ confs:
     synthetic:
       schema: /access/external-user-1.yml
       subAttr: roles
+  - name: quay_robots
+    type: QuayRobot_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/quay-robot-1.yml
+      subAttr: roles
 
 - name: LdapGroup_v1
   fields:
