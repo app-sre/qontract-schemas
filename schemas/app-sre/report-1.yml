@@ -2,6 +2,11 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Report"
+description: |
+  [DEPRECATED] Schema for defining a report. This schema is not actively
+  used. There are no current plans for use, but it may be referenced
+  for legacy data or future platform enhancements.
 
 additionalProperties: false
 
@@ -10,20 +15,42 @@ properties:
     type: string
     enum:
     - /app-sre/report-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application this report is associated with. This
+      links the report to its parent app for context and traceability.
+
   name:
     type: string
+    description: |
+      The unique name of the report. Used to identify the report within
+      the context of the application.
+
   date:
     type: string
+    description: |
+      The date the report was generated or is relevant for, in ISO 8601
+      format (YYYY-MM-DD).
+
   contentFormatVersion:
     type: string
     pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    description: |
+      The version of the report content format, following semantic versioning
+      (e.g., 1.0.0). This helps consumers interpret the structure of the content.
+
   content:
     type: string
+    description: |
+      The main content of the report. This may be plain text, markdown, or
+      another format as defined by the content format version.
+
 required:
 - "$schema"
 - labels
