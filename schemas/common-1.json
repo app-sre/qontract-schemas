@@ -235,11 +235,6 @@
       "pattern": "^\\/[a-zA-Z0-9_ -\\/]+[^\\/]$",
       "description": "A path is a string that starts with a forward slash and contains only alphanumeric characters, hyphens, spaces, and underscores. It does not end with a slash."
     },
-    "phoneNumber": {
-      "type": "string",
-      "pattern": "^\\+[1-9][0-9]{7,14}$",
-      "description": "A phone number is a string that starts with a plus sign followed by a country code and a phone number."
-    },
     "unleash-environments": {
       "type": "object",
       "additionalProperties": {
