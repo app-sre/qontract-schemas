@@ -57,7 +57,11 @@ properties:
         type: string
         format: email
       phoneNumber:
-        "$ref": "/common-1.json#/definitions/phoneNumber"
+        type: string
+        pattern: "^[\\s0-9()+-]{1,25}$"
+        description: |
+          The phone number associated with this alternate contact.
+          https://docs.aws.amazon.com/accounts/latest/reference/API_AlternateContact.html
     required:
     - name
     - email
