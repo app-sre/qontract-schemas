@@ -179,6 +179,10 @@ properties:
           format: uri
           description: |
             The URL of the Grafana dashboard for visualizing this SLO.
+        generateAlerts:
+          type: boolean
+          description: |
+            Generates multi-window multi-burnrate prometheus rule alerts for the SLO.
       required:
       - name
       - SLIType
