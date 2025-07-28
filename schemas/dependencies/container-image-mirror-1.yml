@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Container Image Mirror"
+description: |
+  Schema for referencing a container image mirror as a dependency.
+  This schema allows app-interface to declare external container image
+  mirrors for use in automation and deployment workflows. It does not
+  provision or manage the lifecycle of the mirror itself. Use this schema
+  to specify the mirror URL, credentials, and tag filtering for integration.
 
 additionalProperties: false
 properties:
@@ -9,18 +16,36 @@ properties:
     type: string
     enum:
     - /dependencies/container-image-mirror-1.yml
+
   url:
     type: string
+    description: |
+      The URL of the container image mirror. This is the registry or
+      repository endpoint from which images can be pulled.
+
   pullCredentials:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to the Vault secret containing credentials required to
+      pull images from this mirror. Used for authentication to private
+      or restricted mirrors.
+
   tags:
     type: array
     items:
       type: string
+    description: |
+      A list of image tags to include from this mirror. Only images
+      matching these tags will be considered for use.
+
   tagsExclude:
     type: array
     items:
       type: string
+    description: |
+      A list of image tags to exclude from this mirror. Images matching
+      these tags will be ignored, even if included by the 'tags' field.
+
 required:
 - "$schema"
 - url

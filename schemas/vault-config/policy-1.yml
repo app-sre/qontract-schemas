@@ -3,21 +3,46 @@
 version: '1.0'
 
 type: object
+title: "Policy"
+description: |
+  Schema for defining a Vault policy. Vault policies specify access control
+  rules for secrets, paths, and operations within a Vault instance. This
+  schema enables teams to manage policies declaratively, associating them
+  with specific Vault instances and providing fine-grained permissions for
+  users, applications, and integrations. Policies are written in HCL and
+  control what actions are allowed or denied within Vault.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /vault-config/policy-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the Vault policy. Used to identify and reference
+      this policy within the Vault instance and app-interface.
+
   instance:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/vault-config/instance-1.yml"
+    description: |
+      Reference to the Vault instance where this policy will be applied.
+      This enables management of policies across multiple Vault clusters.
+
   rules:
     type: string
+    description: |
+      The policy rules written in HCL (HashiCorp Configuration Language).
+      These rules define the allowed and denied actions for paths and
+      operations in Vault. Refer to the Vault documentation for policy
+      syntax and examples.
+
 required:
 - "$schema"
 - labels

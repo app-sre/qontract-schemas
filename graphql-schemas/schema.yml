@@ -150,6 +150,7 @@ confs:
 - name: SqlQuerySettings_v1
   fields:
   - { name: imageRepository, type: string, isRequired: true }
+  - { name: jobImage, type: string }
   - { name: pullSecret, type: NamespaceOpenshiftResourceVaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceEmail_v1
@@ -1249,6 +1250,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
   - { name: orgId, type: string, isRequired: true, isUnique: true }
+  - { name: externalOrgId, type: string }
   - { name: environment, type: OpenShiftClusterManagerEnvironment_v1, isRequired: true }
   - { name: accessTokenClientId, type: string }
   - { name: accessTokenUrl, type: string }
@@ -1754,7 +1756,8 @@ confs:
   - { name: variables, type: json }
   - { name: enable_query_support, type: boolean }
   - { name: tests, type: string, isList: true, isResource: true }
-
+  - { name: promtool_version, type: string }
+  
 - name: NamespaceExternalResource_v1
   isInterface: true
   interfaceResolve:
@@ -4190,7 +4193,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: quantity, type: int, isRequired: true }
   - { name: timespanMinutes, type: int, isRequired: true }
@@ -4995,6 +4998,7 @@ confs:
       create-token: AutomatedActionCreateToken_v1
       external-resource-flush-elasticache: AutomatedActionExternalResourceFlushElastiCache_v1
       external-resource-rds-reboot: AutomatedActionExternalResourceRdsReboot_v1
+      external-resource-rds-snapshot: AutomatedActionExternalResourceRdsSnapshot_v1
       no-op: AutomatedActionNoOp_v1
       openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
   fields:
@@ -5070,6 +5074,24 @@ confs:
   - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
 
 - name: AutomatedActionExternalResourceRdsReboot_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionExternalResourceRdsSnapshot_v1
   datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:

@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "Endpoint Monitoring Provider"
+description: |
+  Schema for referencing an endpoint monitoring provider as a dependency in app-interface.
+  This schema enables teams to declare monitoring providers for endpoints, supporting
+  integration with blackbox-exporter and signalfx. Use this schema to specify provider type,
+  check intervals, timeouts, metric labels, and provider-specific configuration for
+  endpoint monitoring automation and observability.
 
 additionalProperties: false
 
@@ -10,69 +17,106 @@ properties:
     type: string
     enum:
     - /dependencies/endpoint-monitoring-provider-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the endpoint monitoring provider. Used to identify and
+      reference this provider in app-interface and related integrations.
+
   description:
     type: string
+    description: |
+      A human-readable description of the endpoint monitoring provider, its
+      purpose, or any relevant operational context.
+
   provider:
     type: string
     enum:
     - blackbox-exporter
     - signalfx
-    description: The provider defines which monitoring implementation will be used for endpoints
+    description: |
+      The provider defines which monitoring implementation will be used for endpoints.
+      Supported values are 'blackbox-exporter' and 'signalfx'.
+
   timeout:
     type: string
-    description: Timeout for the monitoring check, e.g. 10s
     pattern: "^\\d+[smhd]$"
+    description: |
+      Timeout for the monitoring check (e.g., '10s', '5m'). Specifies how long
+      to wait for a check to complete before considering it failed.
+
   checkInterval:
     type: string
-    description: Interval between endpoint checks, e.g. 10s
     pattern: "^\\d+[smhd]$"
+    description: |
+      Interval between endpoint checks (e.g., '10s', '1m'). Determines how
+      frequently the monitoring provider will check the endpoint.
+
   metricLabels:
     "$ref": "/common-1.json#/definitions/prometheusLabels"
-    description: Labels to be added to the resulting Prometheus metrics
+    description: |
+      Labels to be added to the resulting Prometheus metrics. Used for
+      categorization and filtering of metrics in observability systems.
+
   blackboxExporter:
     type: object
-    description: blackbox-exporter specific configuration options
+    description: |
+      Configuration options specific to the blackbox-exporter provider.
+      Used when 'provider' is set to 'blackbox-exporter'.
     additionalProperties: false
     properties:
       module:
         type: string
-        description: the blackbox exporter module to use for the endpoint check, e.g. http_2xx
+        description: |
+          The blackbox exporter module to use for the endpoint check (e.g., 'http_2xx').
+          Modules define the type of probe and protocol to use.
       namespace:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/namespace-1.yml"
-        description: the namespace where the prometheus Probe CR will be created
+        description: |
+          Reference to the namespace where the Prometheus Probe CR will be created.
       exporterUrl:
         type: string
         format: uri
-        description: the blackbox-exporter URL to use, must be a full scrape URL
+        description: |
+          The blackbox-exporter URL to use. Must be a full scrape URL accessible
+          by the monitoring system.
     required:
     - module
     - namespace
     - exporterUrl
+
   signalFx:
     type: object
-    description: signalfx exporter specific configuration options
+    description: |
+      Configuration options specific to the signalfx provider.
+      Used when 'provider' is set to 'signalfx'.
     additionalProperties: false
     properties:
       namespace:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/namespace-1.yml"
-        description: the namespace where the prometheus Probe CR will be created
+        description: |
+          Reference to the namespace where the Prometheus Probe CR will be created.
       exporterUrl:
         type: string
         format: uri
-        description: the signalfx-prometheus-exporter URL to use, must be a full scrape URL
+        description: |
+          The signalfx-prometheus-exporter URL to use. Must be a full scrape URL
+          accessible by the monitoring system.
       targetFilterLabel:
         type: string
-        description: the signalfx label that holds the target value to be filtered on
+        description: |
+          The signalfx label that holds the target value to be filtered on.
     required:
     - namespace
     - exporterUrl
     - targetFilterLabel
+
 oneOf:
 - properties:
     provider:
@@ -118,6 +162,7 @@ oneOf:
       - targetFilterLabel
   required:
   - signalFx
+
 required:
 - "$schema"
 - labels

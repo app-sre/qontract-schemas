@@ -2,39 +2,79 @@
 "$schema": /metaschema-1.json
 version: '1.0'
 type: object
+title: "ASG Defaults"
+description: |
+  Schema for defining default configuration values for AWS Auto Scaling Groups (ASGs).
+  This schema enables teams to specify baseline settings for scaling, instance types,
+  networking, security, and lifecycle management. These defaults are used to ensure
+  consistent and reliable ASG deployments across environments.
+
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /aws/asg-defaults-1.yml
+
   max_size:
     type: integer
+    description: |
+      The maximum number of instances allowed in the Auto Scaling Group.
+
   min_size:
     type: integer
+    description: |
+      The minimum number of instances to maintain in the Auto Scaling Group.
+
   iam_role_name:
     type: string
+    description: |
+      The name of the IAM role to associate with instances in the ASG.
+
   instance_types:
     type: array
     items:
       type: string
+    description: |
+      A list of EC2 instance types that can be launched by the ASG.
+
   vpc_zone_identifier:
     type: array
     items:
       type: string
+    description: |
+      A list of subnet IDs for the ASG. Instances will be launched in these subnets.
+
   capacity_rebalance:
     type: boolean
+    description: |
+      If true, enables capacity rebalancing to proactively replace instances
+      at risk of interruption (for Spot Instances).
+
   max_instance_lifetime:
     type: integer
+    description: |
+      The maximum lifetime (in seconds) for instances in the ASG. Instances
+      exceeding this age will be terminated and replaced.
+
   protect_from_scale_in:
     type: boolean
+    description: |
+      If true, protects instances from being terminated during scale-in events.
+
   enabled_metrics:
     type: array
     items:
       type: string
+    description: |
+      A list of metrics to enable for the ASG. Metrics are reported to CloudWatch.
+
   instances_distribution:
     type: object
     additionalProperties: false
+    description: |
+      Configuration for distributing instances between On-Demand and Spot capacity.
+      Controls allocation strategies and pool sizes for cost optimization.
     properties:
       spot_allocation_strategy:
         type: string
@@ -43,26 +83,48 @@ properties:
         - price-capacity-optimized
         - capacity-optimized
         - capacity-optimized-prioritized
+        description: |
+          The strategy for allocating Spot Instances in the ASG.
       on_demand_base_capacity:
         type: integer
+        description: |
+          The minimum amount of the group's capacity that must be fulfilled by On-Demand Instances.
       on_demand_percentage_above_base_capacity:
         type: integer
+        description: |
+          The percentage of additional capacity above the base that should be On-Demand.
       spot_instance_pools:
         type: integer
+        description: |
+          The number of Spot Instance pools to use for diversification.
+
   instance_refresh_preferences:
     type: object
     additionalProperties: false
+    description: |
+      Preferences for instance refresh operations, such as rolling updates.
     properties:
       instance_warmup:
         type: integer
+        description: |
+          The time (in seconds) to wait after launching a new instance before it is considered healthy.
       min_healthy_percentage:
         type: integer
+        description: |
+          The minimum percentage of healthy instances required during a refresh.
+
   vpc_security_group_ids:
     type: array
     items:
       type: string
+    description: |
+      A list of security group IDs to associate with the ASG instances.
+
   update_default_version:
     type: boolean
+    description: |
+      If true, updates the default launch template version for the ASG.
+
   block_device_mappings:
     type: array
     items:
@@ -71,12 +133,16 @@ properties:
       properties:
         device_name:
           type: string
+          description: |
+            The device name exposed to the instance (e.g., /dev/xvda).
         ebs:
           type: object
           additionalProperties: false
           properties:
             volume_size:
               type: integer
+              description: |
+                The size of the EBS volume (in GiB).
             volume_type:
               type: string
               enum:
@@ -87,11 +153,22 @@ properties:
               - io2
               - sc1
               - st1
+              description: |
+                The type of EBS volume to attach.
             encrypted:
               type: boolean
+              description: |
+                If true, the EBS volume will be encrypted.
+    description: |
+      A list of block device mappings for the ASG instances, specifying
+      device names and EBS volume configurations.
+
   instance_requirements:
     type: object
     additionalProperties: false
+    description: |
+      Requirements for EC2 instance selection, such as vCPU and memory limits,
+      and excluded instance types.
     properties:
       vcpu_count:
         type: object
@@ -99,17 +176,28 @@ properties:
         properties:
           min:
             type: integer
+            description: |
+              The minimum number of vCPUs required.
           max:
             type: integer
+            description: |
+              The maximum number of vCPUs allowed.
       memory_mib:
         min:
           type: integer
+          description: |
+            The minimum memory (in MiB) required.
         max:
           type: integer
+          description: |
+            The maximum memory (in MiB) allowed.
       excluded_instance_types:
         type: array
         items:
           type: string
+        description: |
+          A list of EC2 instance types to exclude from selection.
+
 required:
 - "$schema"
 - max_size
