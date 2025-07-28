@@ -59,6 +59,9 @@ properties:
         - namespace
         - role
       - required:
+        - namespace
+        - clusterRole
+      - required:
         - cluster
         - group
       - required:
