@@ -5002,6 +5002,7 @@ confs:
       external-resource-rds-reboot: AutomatedActionExternalResourceRdsReboot_v1
       external-resource-rds-snapshot: AutomatedActionExternalResourceRdsSnapshot_v1
       no-op: AutomatedActionNoOp_v1
+      openshift-workload-delete: AutomatedActionOpenshiftWorkloadDelete_v1
       openshift-workload-restart: AutomatedActionOpenshiftWorkloadRestart_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5132,6 +5133,31 @@ confs:
     synthetic:
       schema: /access/permission-1.yml
       subAttr: actions
+
+- name: AutomatedActionOpenshiftWorkloadDelete_v1
+  datafile: /app-sre/automated-action-1.yml
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionOpenshiftWorkloadDeleteArgument_v1, isList: true, isRequired: true }
+
+- name: AutomatedActionOpenshiftWorkloadDeleteArgument_v1
+  fields:
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: api_version, type: string }
+  - { name: kind, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
 
 - name: AutomatedActionOpenshiftWorkloadRestart_v1
   datafile: /app-sre/automated-action-1.yml
