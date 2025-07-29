@@ -4781,6 +4781,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: autoApproved, type: boolean, isRequired: false }
+  - { name: overwrite, type: boolean }
   - { name: patch, type: TemplatePatch_v1 }
   - { name: condition, type: string }
   - { name: targetPath, type: string, isRequired: true }
