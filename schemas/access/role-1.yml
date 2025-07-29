@@ -48,11 +48,7 @@ properties:
       dependencies:
         role:
         - namespace
-        namespace:
-        - role
         group:
-        - cluster
-        clusterRole:
         - cluster
       oneOf:
       - required:
