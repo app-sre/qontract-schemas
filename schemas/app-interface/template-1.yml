@@ -31,6 +31,10 @@ properties:
     type: string
     description: |
       A condition that must be met for the template to be applied.
+  overwrite:
+    type: boolean
+    description: |
+      whether to overwrite if file in target path or identifier in patch already exist.
   patch:
     type: object
     description: |
