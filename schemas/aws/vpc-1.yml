@@ -24,6 +24,8 @@ properties:
     type: string
   region:
     type: string
+  vpc_tags:
+    type: object
   subnets:
     type: array
     items:
@@ -36,6 +38,10 @@ properties:
           type: string
       required:
       - id
+  private_subnet_tags:
+    type: object
+  public_subnet_tags:
+    type: object
 required:
 - "$schema"
 - labels
