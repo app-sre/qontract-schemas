@@ -24,7 +24,7 @@ properties:
     type: string
   region:
     type: string
-  tags:
+  vpc_tags:
     type: object
   subnets:
     type: array

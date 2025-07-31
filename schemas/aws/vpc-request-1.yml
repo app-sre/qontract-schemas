@@ -51,7 +51,7 @@ properties:
       public_subnet_tags:
         description: Public subnets tags.
         type: object
-  vpc_additional_tags:
+  vpc_tags:
     description: Additional tags for the VPC.
     type: object
 

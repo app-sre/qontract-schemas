@@ -1599,7 +1599,7 @@ confs:
   - { name: cidr_block, type: Network_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: subnets, type: VPCRequestSubnetsLists_v1 }
-  - { name: vpc_additional_tags, type: json }
+  - { name: vpc_tags, type: json }
 
 - name: AWSSubnet_v1
   fields:
