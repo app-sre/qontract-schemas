@@ -36,10 +36,12 @@ properties:
           type: string
         privacy:
           type: string
-        tags:
-          type: object
       required:
       - id
+  private_subnet_tags:
+    type: object
+  public_subnet_tags:
+    type: object
 required:
 - "$schema"
 - labels
