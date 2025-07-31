@@ -24,6 +24,8 @@ properties:
     type: string
   region:
     type: string
+  tags:
+    type: object
   subnets:
     type: array
     items:
@@ -34,6 +36,8 @@ properties:
           type: string
         privacy:
           type: string
+        tags:
+          type: object
       required:
       - id
 required:

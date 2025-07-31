@@ -45,6 +45,16 @@ properties:
         type: array
         items:
           type: string
+      private_subnet_tags:
+        description: Private subnets tags.
+        type: object
+      public_subnet_tags:
+        description: Public subnets tags.
+        type: object
+  vpc_additional_tags:
+    description: Additional tags for the VPC.
+    type: object
+
 required:
 - "$schema"
 - identifier

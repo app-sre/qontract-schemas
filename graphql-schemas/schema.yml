@@ -1583,6 +1583,8 @@ confs:
   - { name: private, type: string, isList: true }
   - { name: public, type: string, isList: true }
   - { name: availability_zones, type: string, isList: true }
+  - { name: private_subnet_tags, type: json }
+  - { name: public_subnet_tags, type: json }
 
 - name: VPCRequest_v1
   datafile: /aws/vpc-request-1.yml
@@ -1597,6 +1599,7 @@ confs:
   - { name: cidr_block, type: Network_v1, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: subnets, type: VPCRequestSubnetsLists_v1 }
+  - { name: vpc_additional_tags, type: json }
 
 - name: AWSSubnet_v1
   fields:
