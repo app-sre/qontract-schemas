@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.5-1741850109@sha256:bafd57451de2daa71ed301b277d49bd120b474ed438367f087eac0b885a668dc as prod
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.6-1754000177@sha256:0d7cfb0704f6d389942150a01a20cb182dc8ca872004ebf19010e2b622818926 as prod
 
 WORKDIR /schemas
 
