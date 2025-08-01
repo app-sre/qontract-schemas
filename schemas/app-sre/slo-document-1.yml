@@ -179,6 +179,18 @@ properties:
           format: uri
           description: |
             The URL of the Grafana dashboard for visualizing this SLO.
+        SLIErrorQuery:
+          type: string
+          description: |
+            Prometheus expression for querying error portion of metric utilized for measuring SLO. 
+            By defining this and SLITotalQuery, multi-window multi-burnrate prometheus rules will
+            be generated for the SLO.
+        SLITotalQuery:
+          type: string
+          description: |
+            Prometheus expression for querying total samples of metric utilized for measuring SLO. 
+            By defining this and SLIErrorQuery, multi-window multi-burnrate prometheus rules will
+            be generated for the SLO.
       required:
       - name
       - SLIType
