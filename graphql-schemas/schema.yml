@@ -2522,6 +2522,7 @@ confs:
       host-header: NamespaceTerraformResourceALBConditionHostHeader_v1
       http-request-method: NamespaceTerraformResourceALBConditionHTTPRequestMethod_v1
       path-pattern: NamespaceTerraformResourceALBConditionPathPattern_v1
+      query-string: NamespaceTerraformResourceALBConditionQueryString_v1
       source-ip: NamespaceTerraformResourceALBConditionSourceIP_v1
   fields:
   - { name: type, type: string, isRequired: true }
@@ -2543,6 +2544,17 @@ confs:
   fields:
   - { name: type, type: string, isRequired: true }
   - { name: path_pattern, type: string, isList: true, isRequired: true }
+
+- name: NamespaceTerraformResourceALBConditionQueryStringKeyValue_v1
+  fields:
+  - { name: key, type: string, isRequired: true }
+  - { name: value, type: string, isRequired: true }
+
+- name: NamespaceTerraformResourceALBConditionQueryString_v1
+  interface: NamespaceTerraformResourceALBCondition_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: query_string, type: NamespaceTerraformResourceALBConditionQueryStringKeyValue_v1, isList: true, isRequired: true }
 
 - name: NamespaceTerraformResourceALBConditionSourceIP_v1
   interface: NamespaceTerraformResourceALBCondition_v1

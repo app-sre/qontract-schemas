@@ -1370,6 +1370,7 @@ oneOf:
                   - host-header
                   - http-request-method
                   - path-pattern
+                  - query-string
                   - source-ip
               oneOf:
               - additionalProperties: false
@@ -1419,6 +1420,30 @@ oneOf:
                       type: string
                 required:
                 - path_pattern
+              - additionalProperties: false
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - query-string
+                  query_string:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        key:
+                          type: string
+                          description: Query string parameter key
+                        value:
+                          type: string
+                          description: Query string parameter value
+                      required:
+                      - key
+                      - value
+                required:
+                - query_string
               - additionalProperties: false
                 properties:
                   type:
