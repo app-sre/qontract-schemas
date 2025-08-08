@@ -2547,7 +2547,7 @@ confs:
 
 - name: NamespaceTerraformResourceALBConditionQueryStringKeyValue_v1
   fields:
-  - { name: key, type: string, isRequired: true }
+  - { name: key, type: string }
   - { name: value, type: string, isRequired: true }
 
 - name: NamespaceTerraformResourceALBConditionQueryString_v1
