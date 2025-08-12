@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-    - /openshift/cluster-1.yml
+    - /openshift/cluster-integrations-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
@@ -51,3 +51,8 @@ properties:
       - cluster-auth-rhidp
       - endpoints-discovery
       - automated-actions
+required:
+- "$schema"
+- labels
+- name
+- integrations
