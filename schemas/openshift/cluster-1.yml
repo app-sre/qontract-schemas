@@ -549,47 +549,12 @@ properties:
     type: boolean
     description: the cluster is attached to the transit gateway to the VPN, only private cluster can be internal
   disable:
-    type: object
-    additionalProperties: false
-    properties:
-      integrations:
-        type: array
-        items:
-          type: string
-          enum:
-          - openshift-groups
-          - openshift-namespaces
-          - openshift-namespace-labels
-          - openshift-resources
-          - openshift-rolebindings
-          - openshift-clusterrolebindings
-          - openshift-users
-          - openshift-vault-secrets
-          - openshift-routes
-          - openshift-network-policies
-          - openshift-resourcequotas
-          - openshift-limitranges
-          - openshift-serviceaccount-tokens
-          - openshift-prometheus-rules
-          - terraform-resources
-          - ocm-additional-routers
-          - ocm-addons
-          - ocm-aws-infrastructure-access
-          - ocm-external-configuration-labels
-          - ocm-clusters
-          - ocm-github-idp
-          - ocm-oidc-idp
-          - ocm-groups
-          - ocm-machine-pools
-          - ocm-upgrade-scheduler
-          - slack-usergroups
-          - skupper-network
-          - glitchtip-project-dsn
-          - aws-ami-cleanup
-          - gabi-authorized-users
-          - cluster-auth-rhidp
-          - endpoints-discovery
-          - automated-actions
+    oneOf:
+    # inline
+    - "$ref": "/openshift/cluster-integrations-1.yml"
+    # referenced
+    - "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-integrations-1.yml"
   awsInfrastructureAccess:
     type: array
     items:

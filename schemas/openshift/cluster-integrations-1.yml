@@ -1,0 +1,55 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/cluster-integrations-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  integrations:
+    type: array
+    items:
+      type: string
+      enum:
+      - openshift-groups
+      - openshift-namespaces
+      - openshift-namespace-labels
+      - openshift-resources
+      - openshift-rolebindings
+      - openshift-clusterrolebindings
+      - openshift-users
+      - openshift-vault-secrets
+      - openshift-routes
+      - openshift-network-policies
+      - openshift-resourcequotas
+      - openshift-limitranges
+      - openshift-serviceaccount-tokens
+      - openshift-prometheus-rules
+      - terraform-resources
+      - ocm-additional-routers
+      - ocm-addons
+      - ocm-aws-infrastructure-access
+      - ocm-external-configuration-labels
+      - ocm-clusters
+      - ocm-github-idp
+      - ocm-oidc-idp
+      - ocm-groups
+      - ocm-machine-pools
+      - ocm-upgrade-scheduler
+      - slack-usergroups
+      - skupper-network
+      - glitchtip-project-dsn
+      - aws-ami-cleanup
+      - gabi-authorized-users
+      - cluster-auth-rhidp
+      - endpoints-discovery
+      - automated-actions
+required:
+- integrations
