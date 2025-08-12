@@ -52,7 +52,4 @@ properties:
       - endpoints-discovery
       - automated-actions
 required:
-- "$schema"
-- labels
-- name
 - integrations
