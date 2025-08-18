@@ -42,6 +42,10 @@ properties:
     type: object
   public_subnet_tags:
     type: object
+  availability_zones:
+    type: array
+    items:
+      type: string
 required:
 - "$schema"
 - labels
