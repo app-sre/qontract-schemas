@@ -4227,7 +4227,7 @@ confs:
 - name: GlitchtipRole_v1
   fields:
   - { name: role, type: string, isRequired: true }
-  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
 
 - name: GlitchtipProjectAlert_v1
   datafile: /dependencies/glitchtip-project-alert-1.yml
