@@ -26,6 +26,7 @@ properties:
         - standard
         - gp2
         - io1
+        - gp3
     required:
     - ebs_enabled
   encrypt_at_rest:
