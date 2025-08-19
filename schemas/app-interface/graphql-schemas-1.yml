@@ -74,11 +74,12 @@ definitions:
           field:
             type: string
             description: |
-              The field used for interface resolution.
+              The field used for interface resolution with fieldMap strategy.
           fieldMap:
             type: object
             description: |
               A mapping of fields for interface resolution.
+              Key is the field value from datafile, value is GraphQL type.
             properties:
               "/": {}
         required:
@@ -108,11 +109,17 @@ definitions:
       isUnique:
         type: boolean
         description: |
-          Indicates whether the field is unique.
+          Indicates whether the field is global unique.
+          When multiple fields marked as unique, each field is checked individually,
+          no duplicate values are allowed for each field.
+          This is like unique constraint per field in database.
       isContextUnique:
         type: boolean
         description: |
-          Indicates whether the field is unique within a specific context.
+          Indicates whether the field is unique within an object array.
+          When multiple fields marked as context unique, all fields are grouped together to determine uniqueness,
+          partial fields duplicate are allowed.
+          This is like unique constraint for multiple fields combo in database.
       isRequired:
         type: boolean
         description: |
