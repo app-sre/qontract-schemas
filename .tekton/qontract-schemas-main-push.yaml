@@ -29,12 +29,6 @@ spec:
     value: .
   - name: target-stage
     value: prod
-  - name: github-user-id
-    # https://pipelinesascode.com/docs/guide/authoringprs/
-    value: |-
-      {{sender}}
-  - name: sqs-pr-type
-    value: promote_qontract_schemas
   pipelineRef:
     params:
     - name: url
