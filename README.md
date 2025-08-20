@@ -89,3 +89,4 @@ datafiles:
 ```
 
 With this definition, `qontract-validator` will validate that the `$schema` attribute of every entry in the list is defined within the enum.
+

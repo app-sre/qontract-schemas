@@ -48,16 +48,15 @@ properties:
       dependencies:
         role:
         - namespace
-        namespace:
-        - role
         group:
-        - cluster
-        clusterRole:
         - cluster
       oneOf:
       - required:
         - namespace
         - role
+      - required:
+        - namespace
+        - clusterRole
       - required:
         - cluster
         - group
