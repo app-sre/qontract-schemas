@@ -4408,6 +4408,8 @@ confs:
   - { name: prometheusRules, type: string, isRequired: true }
   - { name: prometheusRulesTests, type: string }
   - { name: dashboard, type: string, isRequired: true }
+  - { name: SLIErrorQuery, type: string }
+  - { name: SLITotalQuery, type: string }
 
 - name: SLODocument_v1
   datafile: /app-sre/slo-document-1.yml
