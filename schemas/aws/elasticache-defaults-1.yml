@@ -132,7 +132,7 @@ properties:
     description: "Enable or disable automatic service updates for the ElastiCache cluster. Default: true"
   service_updates_types:
     type: array
-    description: "A list of the service update types that will be applied automatically for the replication group."
+    description: "A list of the service update types that will be applied automatically for the replication group. Default: ['security-update', 'engine-update']"
     items:
       type: string
   service_updates_severities:
