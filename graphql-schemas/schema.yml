@@ -4089,7 +4089,7 @@ confs:
 
 - name: AcceptanceCriteriaItem_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: status, type: string, isRequired: true }
   - { name: comment, type: string }
 
