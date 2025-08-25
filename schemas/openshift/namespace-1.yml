@@ -147,10 +147,6 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/glitchtip-project-1.yml"
 
-  kafkaCluster:
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/kafka/cluster-1.yml"
-
 dependencies:
   externalResources:
     properties:
