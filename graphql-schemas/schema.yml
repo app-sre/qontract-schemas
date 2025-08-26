@@ -1184,7 +1184,7 @@ confs:
 
 - name: OpenShiftClusterManagerUpgradePolicyDefault_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: matchLabels, type: json, isRequired: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
   - { name: upgradePolicyTemplate, type: OpenShiftClusterManagerUpgradePolicyTemplate_v1 }
@@ -1197,21 +1197,21 @@ confs:
 
 - name: FleetLabelDefault_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: matchSubscriptionLabels, type: json, isRequired: true }
   - { name: subscriptionLabelTemplate, type: FleetSubscriptionLabelTemplate_v1, isRequired: true }
 
 - name: FleetCluster_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: serverUrl, type: string, isRequired: true, isUnique: true }
-  - { name: clusterId, type: string, isRequired: true, isUnique: true }
-  - { name: subscriptionId, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: serverUrl, type: string, isRequired: true, isContextUnique: true }
+  - { name: clusterId, type: string, isRequired: true, isContextUnique: true }
+  - { name: subscriptionId, type: string, isRequired: true, isContextUnique: true }
   - { name: subscriptionLabels, type: json, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: serverUrl, type: string }
   - { name: spec, type: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1 }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
