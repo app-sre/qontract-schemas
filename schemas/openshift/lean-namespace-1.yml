@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 description: a lean definition of a namespace in a cluster with an automation token and some context in the form of an environment

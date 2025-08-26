@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 additionalProperties: false
 properties:
@@ -42,7 +42,11 @@ properties:
         name:
           type: string
         value:
-          type: [string, integer, number, boolean]
+          type:
+          - string
+          - integer
+          - number
+          - boolean
         apply_method:
           type: string
           enum:

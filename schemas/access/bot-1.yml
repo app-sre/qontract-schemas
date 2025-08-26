@@ -4,8 +4,8 @@ version: "1.0"
 type: object
 title: "Bot"
 description: |
-  Schema for defining bot access in app-interface. 
-  This includes details about the bot's usernames, service accounts, 
+  Schema for defining bot access in app-interface.
+  This includes details about the bot's usernames, service accounts,
   and associated roles.
 
 additionalProperties: false
@@ -34,9 +34,10 @@ properties:
       The GitHub username associated with the bot.
   openshift_serviceaccount:
     type: string
+    # yamllint disable-line rule:quoted-strings
     pattern: '^.+\/.+$'
     description: |
-      The OpenShift service account associated with the bot, 
+      The OpenShift service account associated with the bot,
       in the format `<namespace>/<serviceaccount>`.
   quay_username:
     "$ref": "/common-1.json#/definitions/identifier"

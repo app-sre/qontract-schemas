@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Prometheus Rule Test"
 description: |
-  Schema for defining Prometheus rule tests in app-interface. 
-  This includes configurations for rule files, evaluation intervals, 
+  Schema for defining Prometheus rule tests in app-interface.
+  This includes configurations for rule files, evaluation intervals,
   test cases, and expected outputs.
 
 additionalProperties: false

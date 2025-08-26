@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Change Type"
 description: |
-  Schema for defining change types in app-interface. 
-  Change types influence how merge requests are processed and provide 
+  Schema for defining change types in app-interface.
+  Change types influence how merge requests are processed and provide
   context for changes, including priority, restrictions, and inheritance.
 
 additionalProperties: false
@@ -27,7 +27,7 @@ properties:
   priority:
     type: string
     description: |
-      The priority of the change type, which influences the order 
+      The priority of the change type, which influences the order
       in which merge requests are processed.
     enum:
     - critical
@@ -47,19 +47,19 @@ properties:
   disabled:
     type: boolean
     description: |
-      Indicates whether the change type is disabled. 
-      A disabled change type does not have any effect but will still 
+      Indicates whether the change type is disabled.
+      A disabled change type does not have any effect but will still
       log into the pull request check logs.
   restrictive:
     type: boolean
     description: |
-      Indicates whether the change type is restrictive. 
-      Entities protected with a restrictive change type can only be 
+      Indicates whether the change type is restrictive.
+      Entities protected with a restrictive change type can only be
       changed by the team assigned to the change type.
   inherit:
     type: array
     description: |
-      A list of additional change types whose changes are inherited 
+      A list of additional change types whose changes are inherited
       by this change type.
     items:
       "$ref": "/common-1.json#/definitions/crossref"
@@ -67,7 +67,7 @@ properties:
   changes:
     type: array
     description: |
-      A list of changes associated with the change type. Each change 
+      A list of changes associated with the change type. Each change
       specifies a provider, schema, and additional context.
     minItems: 1
     items:
@@ -77,7 +77,7 @@ properties:
         provider:
           type: string
           description: |
-            The provider for the change. Supported providers include 
+            The provider for the change. Supported providers include
             `jsonPath` and `change-type`.
           enum:
           - jsonPath
@@ -112,14 +112,14 @@ properties:
             where:
               type: string
               description: |
-                Specifies where the context applies. Supported values 
+                Specifies where the context applies. Supported values
                 include `backrefs`.
               enum:
               - backrefs
             when:
               type: string
               description: |
-                Specifies when the context applies. Supported values 
+                Specifies when the context applies. Supported values
                 include `added` and `removed`.
               enum:
               - added
@@ -192,7 +192,7 @@ properties:
   implicitOwnership:
     type: array
     description: |
-      A list of implicit ownership rules for the change type. 
+      A list of implicit ownership rules for the change type.
       These rules define ownership based on JSONPath selectors.
     items:
       oneOf:
@@ -202,7 +202,7 @@ properties:
           provider:
             type: string
             description: |
-              The provider for the implicit ownership rule. 
+              The provider for the implicit ownership rule.
               Supported provider is `jsonPath`.
             enum:
             - jsonPath

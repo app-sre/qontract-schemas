@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -37,6 +37,7 @@ properties:
       - include
   ref:
     type: string
+    # yamllint disable-line rule:quoted-strings
     pattern: '^([0-9a-f]{40}|master|main|internal|stable|release-4\.\d+)$'
   promotion:
     type: object
@@ -65,6 +66,7 @@ properties:
       schedule:
         type: string
         description: Same as AUS schedule - crontab expression to optionally restrict deployment windows
+        # yamllint disable-line rule:quoted-strings
         pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
       promotion_data:
         type: array
@@ -126,7 +128,7 @@ properties:
     description: list of file path of slo documents to be evaluated before promoting changes
     items:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/app-sre/slo-document-1.yml" 
+      "$schemaRef": "/app-sre/slo-document-1.yml"
   disable:
     type: boolean
   delete:

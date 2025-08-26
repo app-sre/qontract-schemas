@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface GraphQL Schemas"
 description: |
-  Schema for defining GraphQL configurations in app-interface. 
-  This includes details about GraphQL fields, interfaces, and 
+  Schema for defining GraphQL configurations in app-interface.
+  This includes details about GraphQL fields, interfaces, and
   strategies for resolving data.
 
 additionalProperties: false
@@ -26,7 +26,7 @@ definitions:
     type: object
     additionalProperties: false
     description: |
-      A configuration for a GraphQL schema, including fields, 
+      A configuration for a GraphQL schema, including fields,
       data files, and interface resolution strategies.
     properties:
       name:
@@ -60,7 +60,7 @@ definitions:
           strategy:
             type: string
             description: |
-              The strategy used for interface resolution. 
+              The strategy used for interface resolution.
               Supported strategies include `fieldMap` and `schema`.
             enum:
             - "fieldMap"
@@ -79,7 +79,7 @@ definitions:
     type: object
     additionalProperties: false
     description: |
-      A field definition in a GraphQL configuration, including 
+      A field definition in a GraphQL configuration, including
       its type, uniqueness, and other attributes.
     properties:
       name:

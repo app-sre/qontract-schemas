@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Automated Actions Instance"
 description: |
-  Schema for defining instances of automated actions. 
-  Each instance represents a deployment of automated actions with 
+  Schema for defining instances of automated actions.
+  Each instance represents a deployment of automated actions with
   associated metadata, such as name, description, and deployment details.
 
 additionalProperties: false
@@ -19,19 +19,19 @@ properties:
   name:
     "$ref": "/common-1.json#/definitions/extendedIdentifier"
     description: |
-      The unique name of the automated actions instance. This name is used 
+      The unique name of the automated actions instance. This name is used
       to identify the instance across the system.
   description:
     type: string
     description: |
-      A brief description of the automated actions instance, explaining its 
+      A brief description of the automated actions instance, explaining its
       purpose and functionality.
   deployment:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/namespace-1.yml"
     description: |
-      Reference to the OpenShift namespace where the automated actions 
-      instance is deployed. This will be replaced by proper URL and token 
+      Reference to the OpenShift namespace where the automated actions
+      instance is deployed. This will be replaced by proper URL and token
       references in the future.
 
 required:

@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -97,6 +97,7 @@ properties:
           format: uri
         path:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\/.*'
         provider:
           type: string
@@ -154,6 +155,7 @@ properties:
       # - registry.connect.redhat.com
       # - ECR
       # - dynatrace.com
+      # yamllint disable-line rule:quoted-strings
       pattern: '^(quay\.io|registry\.redhat\.io|registry\.connect\.redhat\.com||registry\.access\.redhat\.com|[^.]+\.dkr\.ecr\.[^.]+\.amazonaws\.com|[^.]+\.live\.dynatrace\.com).*$'
   use_channel_in_image_tag:
     type: boolean

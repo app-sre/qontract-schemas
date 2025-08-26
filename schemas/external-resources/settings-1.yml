@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -46,7 +46,6 @@ properties:
 
   module_default_resources:
     "$ref": "/openshift/deploy-resources-1.yml"
-
 
 required:
 - "$schema"

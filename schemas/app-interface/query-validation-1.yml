@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Query Validation"
 description: |
-  Schema for defining query validation configurations in app-interface. 
-  This includes details about the queries to validate, escalation policies, 
+  Schema for defining query validation configurations in app-interface.
+  This includes details about the queries to validate, escalation policies,
   and associated resources.
 
 additionalProperties: false

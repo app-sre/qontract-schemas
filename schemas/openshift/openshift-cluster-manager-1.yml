@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -79,9 +79,9 @@ properties:
           description: Channel version can be found, stable if not set
           type: string
       required:
-        - recommendedVersion
-        - initialVersion
-        - workload
+      - recommendedVersion
+      - initialVersion
+      - workload
   recommendedVersionWeight:
     type: object
     additionalProperties: false
@@ -139,6 +139,7 @@ properties:
             This string must contain an bare integer or percentage of the number of clusters in the sector.
             Default is "100%", so any number of parallel upgrades is allowed.
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^([0-9]{1,2}|100)\%?$'
         dependencies:
           description: list of sectors this one is depending on

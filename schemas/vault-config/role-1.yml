@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 
 type: object
 title: "Role"
@@ -87,39 +87,44 @@ properties:
         bind_secret_id:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', a SecretID must be presented when logging in with this role.
         local_secret_ids:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', SecretIDs are scoped to the local cluster only.
         token_period:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The period, in seconds, for which the issued token is valid.
         secret_id_num_uses:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The number of times a SecretID can be used before it is invalidated.
         secret_id_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The time-to-live (TTL) for SecretIDs, in seconds.
         token_explicit_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The explicit maximum TTL for tokens issued by this role.
         token_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The maximum TTL for tokens issued by this role.
@@ -129,11 +134,13 @@ properties:
             If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The number of times a token can be used before it is revoked.
         token_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The default TTL for tokens issued by this role.
@@ -218,11 +225,13 @@ properties:
             Mappings from OIDC claims to Vault identity attributes.
         clock_skew_leeway:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The allowed clock skew, in seconds, for validating tokens.
         expiration_leeway:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The allowed expiration leeway, in seconds, for validating tokens.
@@ -232,11 +241,13 @@ properties:
             The claim in the OIDC token that contains group information.
         max_age:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The maximum age of the token, in seconds.
         not_before_leeway:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The allowed not-before leeway, in seconds, for validating tokens.
@@ -255,16 +266,19 @@ properties:
             The type of role for OIDC/JWT authentication.
         token_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The default TTL for tokens issued by this role.
         token_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The maximum TTL for tokens issued by this role.
         token_explicit_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The explicit maximum TTL for tokens issued by this role.
@@ -274,6 +288,7 @@ properties:
             The type of token to issue (e.g., service, batch).
         token_period:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The period, in seconds, for which the issued token is valid.
@@ -296,6 +311,7 @@ properties:
             If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The number of times a token can be used before it is revoked.
@@ -347,16 +363,19 @@ properties:
             A list of Kubernetes namespaces for the bound service accounts.
         token_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The default TTL for tokens issued by this role.
         token_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The maximum TTL for tokens issued by this role.
         token_explicit_max_ttl:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The explicit maximum TTL for tokens issued by this role.
@@ -366,6 +385,7 @@ properties:
             The type of token to issue (e.g., service, batch).
         token_period:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The period, in seconds, for which the issued token is valid.
@@ -388,6 +408,7 @@ properties:
             If true, tokens will not have the default policy attached.
         token_num_uses:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The number of times a token can be used before it is revoked.

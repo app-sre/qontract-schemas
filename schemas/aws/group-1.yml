@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Group"
 description: |
-  Schema for defining AWS groups. Groups represent collections of users 
-  or entities within an AWS account, along with associated policies 
+  Schema for defining AWS groups. Groups represent collections of users
+  or entities within an AWS account, along with associated policies
   and metadata.
 
 additionalProperties: false
@@ -20,12 +20,12 @@ properties:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/aws/account-1.yml"
     description: |
-      Reference to the AWS account associated with the group. This links 
+      Reference to the AWS account associated with the group. This links
       the group to its parent account.
   name:
     type: string
     description: |
-      The unique name of the group. This name is used to identify the group 
+      The unique name of the group. This name is used to identify the group
       within the AWS account.
   description:
     type: string
@@ -34,7 +34,7 @@ properties:
   policies:
     type: array
     description: |
-      A list of policies associated with the group. Each policy defines 
+      A list of policies associated with the group. Each policy defines
       permissions and access controls for the group.
     items:
       type: string

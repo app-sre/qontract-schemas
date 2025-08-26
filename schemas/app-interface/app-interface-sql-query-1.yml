@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface SQL Query"
 description: |
@@ -53,9 +53,9 @@ properties:
   output:
     type: string
     enum:
-      - stdout
-      - filesystem
-      - encrypted
+    - stdout
+    - filesystem
+    - encrypted
     description: |
       The output method for the SQL query results. Options include:
       - `stdout`: Print results to standard output.
@@ -63,6 +63,7 @@ properties:
       - `encrypted`: Save results in an encrypted format.
   schedule:
     type: string
+    # yamllint disable-line rule:quoted-strings
     pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
     description: |
       The schedule for executing the SQL query, defined in cron format.
@@ -88,7 +89,7 @@ required:
 - identifier
 - output
 oneOf:
-  - required:
-    - query
-  - required:
-    - queries
+- required:
+  - query
+- required:
+  - queries

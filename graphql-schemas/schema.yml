@@ -40,9 +40,9 @@ confs:
 
 - name: TerraformResourcesProviderExclusions_v1
   fields:
-    - { name: provider, type: string, isRequired: true}
-    - { name: excludeProvisioners, type: ExternalResourcesProvisioner_v1 , isList: true, isInterface: true}
-    - { name: excludeAllProvisioners, type: boolean}
+  - { name: provider, type: string, isRequired: true}
+  - { name: excludeProvisioners, type: ExternalResourcesProvisioner_v1, isList: true, isInterface: true}
+  - { name: excludeAllProvisioners, type: boolean}
 
 - name: TerraformResourcesProviderExclusionsByProvisioner_v1
   fields:
@@ -67,10 +67,10 @@ confs:
 - name: AppInterfaceStateConfigurationS3_v1
   interface: AppInterfaceStateConfiguration_v1
   fields:
-  - { name: provider, type: string, isRequired: true  }
-  - { name: bucket, type: string, isRequired: true  }
-  - { name: region, type: string, isRequired: true  }
-  - { name: credentials, type: VaultSecret_v1, isRequired: true  }
+  - { name: provider, type: string, isRequired: true }
+  - { name: bucket, type: string, isRequired: true }
+  - { name: region, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1, isRequired: true }
 
 - name: SmtpSettings_v1
   fields:
@@ -947,7 +947,6 @@ confs:
   - { name: availability_zones, type: string, isList: True}
   - { name: oidc_endpoint_url, type: string }
 
-
 - name: ClusterSpecAutoScale_v1
   fields:
   - { name: min_replicas, type: int, isRequired: true }
@@ -971,7 +970,7 @@ confs:
 
 - name: ClusterUpgradePolicy_v1
   fields:
-  - { name: schedule_type, type: string } # deprecated
+  - { name: schedule_type, type: string }  # deprecated
   - { name: schedule, type: string, isRequired: true }
   - { name: workloads, type: string, isList: true, isRequired: true }
   - { name: versionGateApprovals, type: string, isList: true }
@@ -1325,7 +1324,6 @@ confs:
 - name: ExternalResourcesAccountSettings_v1
   fields:
   - { name: channel, type: string}
-
 
 - name: ExternalResourcesProvisioner_v1
   isInterface: true
@@ -1835,7 +1833,6 @@ confs:
   - { name: zone, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true}
   - { name: enabled, type: boolean, isRequired: true }
-
 
 - name: NamespaceTerraformResourceCloudflareZone_v1
   interface: NamespaceTerraformResourceCloudflare_v1
@@ -2911,8 +2908,8 @@ confs:
 
 - name: CodeComponentGitlabOwners_v1
   fields:
-    - { name: enabled, type: boolean, isRequired: true }
-    - { name: persistentLgtm, type: boolean }
+  - { name: enabled, type: boolean, isRequired: true }
+  - { name: persistentLgtm, type: boolean }
 
 - name: CodeComponentGitlabHousekeeping_v1
   fields:
@@ -3175,7 +3172,7 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: upstream, type: SaasResourceTemplateTargetUpstream_v1 }
   - { name: images, type: SaasResourceTemplateTargetImage_v1, isList: true }
-  - { name: slos, type: SLODocument_v1 ,isList: true, isRequired: false}
+  - { name: slos, type: SLODocument_v1, isList: true, isRequired: false}
   - { name: disable, type: boolean }
   - { name: delete, type: boolean }
 
@@ -3240,7 +3237,6 @@ confs:
   - { name: type, type: string, isRequired: true }
   - { name: parent_saas, type: string }
   - { name: target_config_hash, type: string }
-
 
 - name: PipelinesProvider_v1
   isInterface: true
@@ -3829,66 +3825,66 @@ confs:
 - name: StaticSharding_v1
   interface: IntegrationSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shards, type: int, isRequired: true }
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shards, type: int, isRequired: true }
 
 - name: StaticShardingSecOverride_v1
   fields:
-    - { name: name, type: string, isRequired: true }
-    - { name: imageRef, type: string, isRequired: false }
+  - { name: name, type: string, isRequired: true }
+  - { name: imageRef, type: string, isRequired: false }
 
 - name: CloudflareDNSZoneSharding_v1
   interface: IntegrationSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shardSpecOverrides, type: CloudflareDNSZoneShardSpecOverride_v1, isList: true }
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shardSpecOverrides, type: CloudflareDNSZoneShardSpecOverride_v1, isList: true }
 
 - name: CloudflareDNSZoneShardSpecOverride_v1
   fields:
-    - { name: shard, type: CloudflareDnsZone_v1, isRequired: true}
-    - { name: imageRef, type: string, isRequired: false }
-    - { name: resources, type: DeployResources_v1, isRequired: false }
-    - { name: disabled, type: boolean, isRequired: false}
+  - { name: shard, type: CloudflareDnsZone_v1, isRequired: true}
+  - { name: imageRef, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false }
+  - { name: disabled, type: boolean, isRequired: false}
 
 - name: OpenshiftClusterSharding_v1
   interface: IntegrationSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shardSpecOverrides, type: OpenshiftClusterShardSpecOverride_v1, isList: true}
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shardSpecOverrides, type: OpenshiftClusterShardSpecOverride_v1, isList: true}
 
 - name: OpenshiftClusterShardSpecOverride_v1
   fields:
-    - { name: shard, type: Cluster_v1, isRequired: true}
-    - { name: imageRef, type: string, isRequired: false }
-    - { name: resources, type: DeployResources_v1, isRequired: false }
-    - { name: disabled, type: boolean, isRequired: false}
-    - { name: subSharding, type: SubSharding_v1, isRequired: false, isInterface: true}
+  - { name: shard, type: Cluster_v1, isRequired: true}
+  - { name: imageRef, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false }
+  - { name: disabled, type: boolean, isRequired: false}
+  - { name: subSharding, type: SubSharding_v1, isRequired: false, isInterface: true}
 
 - name: OCMOrganizationSharding_v1
   interface: IntegrationSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shardSpecOverrides, type: OCMOrganizationShardSpecOverride_v1, isList: true}
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shardSpecOverrides, type: OCMOrganizationShardSpecOverride_v1, isList: true}
 
 - name: OCMOrganizationShardSpecOverride_v1
   fields:
-    - { name: shard, type: OpenShiftClusterManager_v1, isRequired: true}
-    - { name: imageRef, type: string, isRequired: false }
-    - { name: resources, type: DeployResources_v1, isRequired: false }
-    - { name: disabled, type: boolean, isRequired: false}
+  - { name: shard, type: OpenShiftClusterManager_v1, isRequired: true}
+  - { name: imageRef, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false }
+  - { name: disabled, type: boolean, isRequired: false}
 
 - name: AWSAccountSharding_v1
   interface: IntegrationSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shardSpecOverrides, type: AWSAccountShardSpecOverride_v1, isList: true}
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shardSpecOverrides, type: AWSAccountShardSpecOverride_v1, isList: true}
 
 - name: AWSAccountShardSpecOverride_v1
   fields:
-    - { name: shard, type: AWSAccount_v1, isRequired: true}
-    - { name: imageRef, type: string, isRequired: false }
-    - { name: resources, type: DeployResources_v1, isRequired: false }
-    - { name: disabled, type: boolean, isRequired: false}
+  - { name: shard, type: AWSAccount_v1, isRequired: true}
+  - { name: imageRef, type: string, isRequired: false }
+  - { name: resources, type: DeployResources_v1, isRequired: false }
+  - { name: disabled, type: boolean, isRequired: false}
 
 - name: SubSharding_v1
   isInterface: true
@@ -3898,13 +3894,13 @@ confs:
     fieldMap:
       static: StaticSubSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true}
+  - { name: strategy, type: string, isRequired: true}
 
 - name: StaticSubSharding_v1
   interface: SubSharding_v1
   fields:
-    - { name: strategy, type: string, isRequired: true }
-    - { name: shards, type: int, isRequired: true}
+  - { name: strategy, type: string, isRequired: true }
+  - { name: shards, type: int, isRequired: true}
 
 - name: Report_v1
   datafile: /app-sre/report-1.yml
@@ -4320,10 +4316,10 @@ confs:
 
 - name: DnsRecordFromVault_v1
   fields:
-    - { name: path, type: string, isRequired: true }
-    - { name: field, type: string, isRequired: true }
-    - { name: key, type: string }
-    - { name: version, type: int }
+  - { name: path, type: string, isRequired: true }
+  - { name: field, type: string, isRequired: true }
+  - { name: key, type: string }
+  - { name: version, type: int }
 
 - name: DnsRecordHealthcheck_v1
   fields:
@@ -4404,7 +4400,6 @@ confs:
   - { name: data, type: CloudflareDnsRecordDataSettings_v1 }
   - { name: proxied, type: boolean }
   - { name: priority, type: int }
-
 
 - name: CloudflareDnsZone_v1
   datafile: /cloudflare/dns-zone-1.yml
@@ -4676,8 +4671,8 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string, isRequired: true }
   - { name: priority, type: string, isRequired: true }
-  - { name: contextType, type: string, isRequired: true } # datafile or resource
-  - { name: contextSchema, type: string } # schema of a datafile or resource
+  - { name: contextType, type: string, isRequired: true }  # datafile or resource
+  - { name: contextSchema, type: string }  # schema of a datafile or resource
   - { name: disabled, type: boolean }
   - { name: inherit, type: ChangeType_v1, isList: true }
   - { name: restrictive, type: boolean }
@@ -4965,10 +4960,10 @@ confs:
 - name: DynatraceTokenProviderTokenSpec_v1
   fields:
   - { name: schema, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true , isUnique: true }
+  - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
   - { name: ocm_org_ids, type: string, isList: true, isRequired: true }
-  - { name: secrets , type: DynatraceTokenProviderTokenSecret_v1, isList: true, isRequired: true }
+  - { name: secrets, type: DynatraceTokenProviderTokenSecret_v1, isList: true, isRequired: true }
 
 - name: DynatraceTokenProviderTokenSecret_v1
   fields:

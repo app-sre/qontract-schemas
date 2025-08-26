@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 additionalProperties: false
 properties:
@@ -123,8 +123,8 @@ properties:
         type: string
       indices.query.bool.max_clause_count:
         type: string
-# TODO: @fishi0x01 remove this section after migration finished APPSRE-3409
-##### START: TO REMOVE ####
+  # TODO: @fishi0x01 remove this section after migration finished APPSRE-3409
+  ##### START: TO REMOVE ####
   advanced_security_options:
     type: object
     additionalProperties: false
@@ -155,7 +155,7 @@ properties:
         - master_user_secret
     required:
     - enabled
-##### END: TO REMOVE ####
+  ##### END: TO REMOVE ####
   auth:
     type: object
     additionalProperties: false
@@ -207,4 +207,4 @@ properties:
 required:
 - "$schema"
 # TODO: @fishi0x01 enforce auth required once migration finished APPSRE-3409
-#- auth
+# - auth

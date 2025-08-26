@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 
 type: object
 title: "Audit"
@@ -24,6 +24,7 @@ properties:
 
   _path:
     type: string
+    # yamllint disable-line rule:quoted-strings
     pattern: '.+\/$'
     description: |
       The mount path for the audit device in Vault. Must end with a slash.
@@ -76,21 +77,22 @@ properties:
         log_raw:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', logs the raw request and response data. If 'false',
             sensitive information is redacted.
         hmac_accessor:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', includes the accessor in the HMAC of sensitive values
             for easier correlation.
         mode:
           type: string
+          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The file mode (permissions) to set on the audit log file, specified

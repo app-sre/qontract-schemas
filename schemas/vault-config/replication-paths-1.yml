@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Replication Paths"
 description: |
@@ -52,8 +52,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/vault-config/policy-1.yml"
   required:
-    - provider
-    - jenkinsInstance
+  - provider
+  - jenkinsInstance
 - additionalProperties: false
   properties:
     provider:
@@ -64,8 +64,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/vault-config/policy-1.yml"
   required:
-    - provider
-    - policy
+  - provider
+  - policy
 
 required:
 - provider
