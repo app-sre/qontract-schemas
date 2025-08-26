@@ -50,6 +50,8 @@ properties:
     "$ref": "/common-1.json#/definitions/longIdentifier"
   output_format:
     "$ref": "/openshift/terraform-output-format-1.yml"
+  tags:
+    "$ref": "/common-1.json#/definitions/labels"
   defaults:
     type: string
   parameter_group:
@@ -416,6 +418,8 @@ oneOf:
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     allow_object_tagging:
@@ -447,6 +451,8 @@ oneOf:
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     aws_infrastructure_access:
@@ -482,6 +488,8 @@ oneOf:
       type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -537,6 +545,8 @@ oneOf:
       type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -759,6 +769,8 @@ oneOf:
           type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     output_resource_db_name:
@@ -857,6 +869,8 @@ oneOf:
           type: integer
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -884,6 +898,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -924,6 +940,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     fifo_topic:
@@ -959,6 +977,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -997,6 +1017,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     mirror:
@@ -1021,6 +1043,8 @@ oneOf:
       type: string
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
@@ -1066,6 +1090,8 @@ oneOf:
           type: boolean
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1093,6 +1119,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
@@ -1135,6 +1163,8 @@ oneOf:
         - domain_name
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1162,6 +1192,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/resourceref"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1183,6 +1215,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1200,6 +1234,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     region:
@@ -1575,6 +1611,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/vaultSecret"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1681,6 +1719,8 @@ oneOf:
           - value
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1708,6 +1748,8 @@ oneOf:
         "$ref": "/dependencies/dns-record-1.yml"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
@@ -1761,6 +1803,8 @@ oneOf:
       "$ref": "/aws/regions-1.yml#/properties/region"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
@@ -1788,6 +1832,8 @@ oneOf:
       "$ref": "/openshift/terraform-output-format-1.yml"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     region:
       type: string
     subnet_ids:
@@ -1813,6 +1859,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:
@@ -1854,6 +1902,8 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
     output_format:
       "$ref": "/openshift/terraform-output-format-1.yml"
     defaults:

@@ -1967,7 +1967,7 @@ confs:
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceAWS_v1
-  datafile: /aws/terraform-resources-1.yml
+  datafile: /aws/terraform-resources-2.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -2006,6 +2006,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceOutputFormat_v1
   isInterface: true
@@ -2044,6 +2045,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: CloudinitConfig_v1
   fields:
@@ -2089,6 +2091,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceS3CloudFrontPublicKey_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2100,6 +2103,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceACM_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2112,6 +2116,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceElasticSearch_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2124,6 +2129,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: publish_log_types, type: string, isList: true }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceMsk_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2139,6 +2145,7 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
 
 - name: MskSecretParameters_v1
   fields:
@@ -2172,6 +2179,7 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
 
 - name: RDSBlueGreenDeployment_v1
   fields:
@@ -2208,6 +2216,7 @@ confs:
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
   - { name: managed_by_erv2, type: boolean}
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceServiceAccountAWSInfrastructureAccess_v1
   fields:
@@ -2227,6 +2236,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: aws_infrastructure_access, type: NamespaceTerraformResourceServiceAccountAWSInfrastructureAccess_v1 }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: AssumeRole_v1
   fields:
@@ -2243,6 +2253,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceRole_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2261,6 +2272,7 @@ confs:
   - { name: lifecycle, type: NamespaceTerraformResourceLifecycle_v1 }
   - { name: managed_by_erv2, type: boolean}
   - { name: max_session_duration, type: int}
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceElastiCache_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2277,6 +2289,7 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
 
 - name: SQSQueuesSpecs_v1
   fields:
@@ -2293,6 +2306,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: specs, type: SQSQueuesSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceSNSSubscription_v1
   fields:
@@ -2312,6 +2326,7 @@ confs:
   - { name: inline_policy, type: json }
   - { name: annotations, type: json }
   - { name: subscriptions, type: NamespaceTerraformResourceSNSSubscription_v1, isList: true}
+  - { name: tags, type: json }
 
 - name: DynamoDBTableSpecs_v1
   fields:
@@ -2328,6 +2343,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: specs, type: DynamoDBTableSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceECR_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2340,7 +2356,7 @@ confs:
   - { name: mirror, type: ContainerImageMirror_v1, isRequired: false }
   - { name: public, type: boolean }
   - { name: annotations, type: json }
-
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceS3CloudFront_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2353,6 +2369,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceS3SQS_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2366,6 +2383,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceCloudWatch_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2382,6 +2400,7 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceKMS_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2397,6 +2416,7 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceKinesis_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2410,6 +2430,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceALBMutualAuthentication_v1
   fields:
@@ -2438,6 +2459,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceRoute53Zone_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2450,6 +2472,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceRosaAuthenticator_V1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2474,6 +2497,7 @@ confs:
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceRosaAuthenticatorVPCE_V1
   interface: NamespaceTerraformResourceAWS_v1
@@ -2487,6 +2511,7 @@ confs:
   - { name: region, type: string, isContextUnique: true }
   - { name: subnet_ids, type: string, isList: true, isRequired: true }
   - { name: vpc_id, type: string, isRequired: true }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceALBTargets_v1
   fields:
@@ -2629,6 +2654,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: module, type: NamespaceTerraformResourceModulePoCSpec_v1, isRequired: true }
+  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceModulePoCSpec_v1
   fields:
@@ -2965,6 +2991,7 @@ confs:
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: dependsOn, type: Environment_v1 }
+  - { name: servicePhase, type: string, isRequired: true }
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -2996,6 +3023,8 @@ confs:
   - { name: escalationPolicy, type: AppEscalationPolicy_v1, isRequired: true }
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
+  - { name: appCode, type: string, isRequired: true }
+  - { name: costCenter, type: string, isRequired: true }
   - name: statusPageComponents
     type: StatusPageComponent_v1
     isList: true

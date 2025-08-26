@@ -430,6 +430,16 @@ properties:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/glitchtip-project-1.yml"
 
+  appCode:
+    type: string
+    description: |
+      The CMDB Application ID of the application or workload.
+
+  costCenter:
+    type: string
+    description: |
+      The 3-digit code identifying the Cost Center funding the application resources.
+
 required:
 - "$schema"
 - labels
@@ -441,3 +451,5 @@ required:
 - sopsUrl
 - architectureDocument
 - grafanaUrls
+- appCode
+- costCenter
