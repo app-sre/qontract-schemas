@@ -24,7 +24,6 @@ properties:
   ref:
     description: commit SHA, not a branch like main or master
     type: string
-    # yamllint disable-line rule:quoted-strings
     pattern: '^([0-9a-f]{40})$'
   projectPath:
     description: path in the repo where the terraform files are located

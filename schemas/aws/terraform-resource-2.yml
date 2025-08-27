@@ -506,7 +506,6 @@ oneOf:
     identifier:
       type: string
       # Maximum 64 characters. Use alphanumeric and '+=,.@-_' characters.
-      # yamllint disable-line rule:quoted-strings
       pattern: '^[a-zA-Z0-9+=,.@_-]{1,64}$'
     assume_role:
       type: object
@@ -1683,7 +1682,6 @@ oneOf:
             ref:
               description: commit or branch name
               type: string
-              # yamllint disable-line rule:quoted-strings
               pattern: '^([0-9a-f]{40}|master|main)$'
             upstream:
               description: jenkins instance and job to wait for

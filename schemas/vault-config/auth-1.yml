@@ -26,7 +26,6 @@ properties:
 
   _path:
     type: string
-    # yamllint disable-line rule:quoted-strings
     pattern: '.+\/$'
     description: |
       The mount path for the auth method in Vault. Must end with a slash.
@@ -111,13 +110,11 @@ properties:
                 The base URL for GitHub Enterprise, or leave blank for github.com.
             max_ttl:
               type: string
-              # yamllint disable-line rule:quoted-strings
               pattern: '^(\d+(h|m|s))+$'
               description: |
                 The maximum TTL for tokens issued by this auth method.
             ttl:
               type: string
-              # yamllint disable-line rule:quoted-strings
               pattern: '^(\d+(h|m|s))+$'
               description: |
                 The default TTL for tokens issued by this auth method.

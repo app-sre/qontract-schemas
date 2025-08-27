@@ -25,7 +25,6 @@ properties:
         type: string
       ref:
         type: string
-        # yamllint disable-line rule:quoted-strings
         pattern: '^([0-9a-f]{40})$'
     required:
     - repo
@@ -184,7 +183,6 @@ properties:
     - certificate_secret
   destination_conf:
     type: string
-    # yamllint disable-line rule:quoted-strings
     pattern: 's3:\/\/.+$'
   enabled:
     type: boolean
@@ -222,7 +220,6 @@ oneOf:
           type: string
         ref:
           type: string
-          # yamllint disable-line rule:quoted-strings
           pattern: '^([0-9a-f]{40})$'
       required:
       - repo
@@ -405,7 +402,6 @@ oneOf:
       type: string
     destination_conf:
       type: string
-      # yamllint disable-line rule:quoted-strings
       pattern: 's3:\/\/.+$'
   required:
   - destination_conf
@@ -422,7 +418,6 @@ oneOf:
       type: string
     destination_conf:
       type: string
-      # yamllint disable-line rule:quoted-strings
       pattern: 's3:\/\/.+$'
     enabled:
       type: boolean

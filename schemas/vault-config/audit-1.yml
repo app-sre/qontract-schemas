@@ -24,7 +24,6 @@ properties:
 
   _path:
     type: string
-    # yamllint disable-line rule:quoted-strings
     pattern: '.+\/$'
     description: |
       The mount path for the audit device in Vault. Must end with a slash.
@@ -92,7 +91,6 @@ properties:
             for easier correlation.
         mode:
           type: string
-          # yamllint disable-line rule:quoted-strings
           pattern: '^\d+$'
           description: |
             The file mode (permissions) to set on the audit log file, specified

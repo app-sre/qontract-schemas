@@ -34,7 +34,6 @@ properties:
       The GitHub username associated with the bot.
   openshift_serviceaccount:
     type: string
-    # yamllint disable-line rule:quoted-strings
     pattern: '^.+\/.+$'
     description: |
       The OpenShift service account associated with the bot,

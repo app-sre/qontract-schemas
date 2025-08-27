@@ -41,6 +41,6 @@ rules:
   key-duplicates: {}
   new-line-at-end-of-file: {}
   quoted-strings:
-    quote-type: double
+    quote-type: any
     required: false
   trailing-spaces: {}

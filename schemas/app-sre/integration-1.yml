@@ -28,7 +28,6 @@ properties:
     type: array
     items:
       type: string
-      # yamllint disable-line rule:quoted-strings
       pattern: '^\/.+$'
     allOf:
     - contains:
