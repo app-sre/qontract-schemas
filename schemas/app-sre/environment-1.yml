@@ -47,6 +47,14 @@ properties:
     description: |
       Reference to another environment that this environment depends on. 
       This is used to define dependencies between environments.
+  servicePhase:
+    type: string
+    description: |
+      The phase of the service lifecycle that this environment represents.
+    enum:
+    - dev
+    - stage
+    - prod
 
 required:
 - "$schema"
@@ -54,3 +62,4 @@ required:
 - name
 - description
 - product
+- servicePhase
