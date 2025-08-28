@@ -878,12 +878,6 @@ confs:
   - { name: status, type: string }
   - { name: issuer, type: string }
 
-- name: KafkaClusterSpec_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: region, type: string, isRequired: true }
-  - { name: multi_az, type: boolean, isRequired: true }
-
 - name: ClusterSpec_v1
   isInterface: true
   interfaceResolve:
@@ -1138,22 +1132,6 @@ confs:
     synthetic:
       schema: /openshift/namespace-1.yml
       subAttr: cluster
-
-- name: KafkaCluster_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: ocm, type: OpenShiftClusterManager_v1 }
-  - { name: spec, type: KafkaClusterSpec_v1 }
-  - name: namespaces
-    type: Namespace_v1
-    isList: true
-    synthetic:
-      schema: /openshift/namespace-1.yml
-      subAttr: kafkaCluster
 
 - name: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1
   fields:
@@ -2765,7 +2743,6 @@ confs:
   - { name: externalResources, type: NamespaceExternalResource_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProject_v1, isList: true }
-  - { name: kafkaCluster, type: KafkaCluster_v1 }
   - { name: skupperSite, type: NamespaceSkupperSiteConfig_v1 }
   - name: gabi_instances
     type: GabiInstance_v1
@@ -4100,7 +4077,6 @@ confs:
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
-  - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
   - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
   - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
   - { name: quay_orgs_v1, type: QuayOrg_v1, isList: true, datafileSchema: /dependencies/quay-org-1.yml }
