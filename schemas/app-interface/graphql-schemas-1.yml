@@ -42,7 +42,13 @@ definitions:
       datafile:
         type: string
         description: |
-          The data file associated with the GraphQL configuration.
+          The data file schema associated with the GraphQL configuration.
+          This is used in bundle and validation for one-to-one mapping between
+          GraphQL configuration (type) and datafile schema.
+          If GraphQL type is an interface and all subtypes share the same schema,
+          only set this for interface type, not needed for subtypes.
+          This is needed for standalone datafile used as crossref `$ref: path_to_data_file`.
+          Note this field requires `schema` and `path` in `fields`.
       isInterface:
         type: boolean
         description: |
@@ -75,6 +81,11 @@ definitions:
               A mapping of fields for interface resolution.
             properties:
               "/": {}
+        required:
+        - strategy
+    required:
+    - name
+    - fields
   field:
     type: object
     additionalProperties: false
@@ -140,3 +151,7 @@ definitions:
         type: string
         description: |
           The schema of the data file associated with the field.
+          Only used in `Query` fields.
+    required:
+    - name
+    - type
