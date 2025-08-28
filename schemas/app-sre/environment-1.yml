@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Environment"
 description: |
-  Schema for defining environments in an app-interface instance. 
-  Environments represent logical groupings of resources and configurations for applications, 
+  Schema for defining environments in an app-interface instance.
+  Environments represent logical groupings of resources and configurations for applications,
   including their name, description, product association, parameters, and dependencies.
 
 additionalProperties: false
@@ -23,29 +23,29 @@ properties:
   description:
     type: string
     description: |
-      A detailed description of the environment, explaining its purpose 
+      A detailed description of the environment, explaining its purpose
       and scope.
   product:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/product-1.yml"
     description: |
-      Reference to the product associated with the environment. 
+      Reference to the product associated with the environment.
   parameters:
     type: object
     description: |
-      A set of key-value pairs representing environment-level parameters. 
+      A set of key-value pairs representing environment-level parameters.
       These parameters are used to configure the environment.
   secretParameters:
     type: array
     description: |
-      A list of environment-level parameters sourced from vault secrets. 
+      A list of environment-level parameters sourced from vault secrets.
     items:
       "$ref": "/app-sre/vault-secret-parameter-1.yml"
   dependsOn:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/environment-1.yml"
     description: |
-      Reference to another environment that this environment depends on. 
+      Reference to another environment that this environment depends on.
       This is used to define dependencies between environments.
   servicePhase:
     type: string

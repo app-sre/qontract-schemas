@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Pipelines Provider"
 description: |
@@ -43,7 +43,7 @@ properties:
     description: |
       Reference to the default configuration for this pipelines provider.
       This declares the default settings for the pipeline execution,
-      which can be overridden in the current pipelines provider.      
+      which can be overridden in the current pipelines provider.
     "$ref": "/common-1.json#/definitions/crossref"
 
   namespace:

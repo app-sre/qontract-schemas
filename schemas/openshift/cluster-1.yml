@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -317,16 +317,16 @@ properties:
             max_replicas:
               type: integer
           required:
-            - min_replicas
-            - max_replicas
+          - min_replicas
+          - max_replicas
       required:
-        - id
-        - instance_type
+      - id
+      - instance_type
       oneOf:
-        - required:
-          - replicas
-        - required:
-          - autoscale
+      - required:
+        - replicas
+      - required:
+        - autoscale
   peering:
     type: object
     additionalProperties: false

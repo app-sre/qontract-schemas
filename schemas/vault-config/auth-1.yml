@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 
 type: object
 title: "Auth"
@@ -126,7 +126,7 @@ properties:
         - properties:
             _type:
               type: string
-              enum: 
+              enum:
               - oidc
             default_role:
               type: string

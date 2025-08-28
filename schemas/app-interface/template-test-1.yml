@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Template Test"
 description: |
-  Schema for defining tests for templates in app-interface. 
-  This includes details about the variables, expected outputs, 
+  Schema for defining tests for templates in app-interface.
+  This includes details about the variables, expected outputs,
   and conditions for validating template rendering.
 
 additionalProperties: false

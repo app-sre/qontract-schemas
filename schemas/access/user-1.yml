@@ -8,7 +8,7 @@ properties:
   "$schema":
     type: string
     enum:
-      - /access/user-1.yml
+    - /access/user-1.yml
   labels:
     "$ref": "/common-1.json#/definitions/labels"
   name:
@@ -39,8 +39,8 @@ properties:
   tag_on_cluster_updates:
     type: boolean
 required:
-  - $schema
-  - labels
-  - name
-  - org_username
-  - github_username
+- $schema
+- labels
+- name
+- org_username
+- github_username

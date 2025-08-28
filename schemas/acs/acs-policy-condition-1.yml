@@ -1,12 +1,12 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Policy Condition"
 description: |
-  Schema for defining conditions in Red Hat Advanced Cluster Security (ACS) policies. 
-  Conditions specify the criteria that must be met for a policy to trigger. 
-  This schema includes details about fields, comparisons, and thresholds 
+  Schema for defining conditions in Red Hat Advanced Cluster Security (ACS) policies.
+  Conditions specify the criteria that must be met for a policy to trigger.
+  This schema includes details about fields, comparisons, and thresholds
   used to evaluate policy violations.
 
 additionalProperties: false
@@ -18,13 +18,13 @@ properties:
   policyField:
     type: string
     description: |
-      The field in the policy that is being evaluated. Examples include 
+      The field in the policy that is being evaluated. Examples include
       `cvss`, `severity`, `cve`, `image_tag`, and `image_age`.
   comparison:
     type: string
     description: |
-      The comparison operator used to evaluate the policy condition. 
-      Supported operators include `gt` (greater than), `gte` (greater than or equal to), 
+      The comparison operator used to evaluate the policy condition.
+      Supported operators include `gt` (greater than), `gte` (greater than or equal to),
       `eq` (equal to), `lt` (less than), and `lte` (less than or equal to).
     enum:
     - gt
@@ -39,7 +39,7 @@ properties:
   level:
     type: string
     description: |
-      The severity level used for comparison when the `policyField` is `severity`. 
+      The severity level used for comparison when the `policyField` is `severity`.
       Supported levels include `low`, `moderate`, `important`, and `critical`.
     enum:
     - low
@@ -49,7 +49,7 @@ properties:
   fixable:
     type: boolean
     description: |
-      Indicates whether the condition applies only to fixable issues. 
+      Indicates whether the condition applies only to fixable issues.
       This is used when the `policyField` is `cve`.
   tags:
     type: array
@@ -60,7 +60,7 @@ properties:
   negate:
     type: boolean
     description: |
-      Indicates whether the condition should negate the specified tags. 
+      Indicates whether the condition should negate the specified tags.
       This is used when the `policyField` is `image_tag`.
   days:
     type: integer

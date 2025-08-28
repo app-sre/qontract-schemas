@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "SLO Document"
 description: |
@@ -62,7 +62,7 @@ properties:
             URL and credentials.
           additionalProperties: false
           properties:
-            url: 
+            url:
               type: string
               format: uri
               description: |
@@ -182,13 +182,13 @@ properties:
         SLIErrorQuery:
           type: string
           description: |
-            Prometheus expression for querying error portion of metric utilized for measuring SLO. 
+            Prometheus expression for querying error portion of metric utilized for measuring SLO.
             By defining this and SLITotalQuery, multi-window multi-burnrate prometheus rules will
             be generated for the SLO.
         SLITotalQuery:
           type: string
           description: |
-            Prometheus expression for querying total samples of metric utilized for measuring SLO. 
+            Prometheus expression for querying total samples of metric utilized for measuring SLO.
             By defining this and SLIErrorQuery, multi-window multi-burnrate prometheus rules will
             be generated for the SLO.
       required:

@@ -1,10 +1,10 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "app-interface-email"
 description: |
-  Specification for a single automated email message. 
+  Specification for a single automated email message.
   Recipients can be static or dynamic based on service, cluster, namespace, aws account, role, or user relations.
 
 additionalProperties: false

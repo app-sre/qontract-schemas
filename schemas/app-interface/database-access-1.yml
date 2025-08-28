@@ -1,10 +1,10 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Database Access"
 description: |
-  Schema for defining database access in app-interface. 
+  Schema for defining database access in app-interface.
   This includes details about the user, database, and access permissions.
 
 additionalProperties: false

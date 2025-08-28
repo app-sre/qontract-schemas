@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -47,7 +47,7 @@ properties:
                 items:
                   type: string
                   # https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication
-                  description: official Dynatrace API Token scopes 
+                  description: official Dynatrace API Token scopes
                   enum:
                   - metrics.ingest
                   - logs.ingest

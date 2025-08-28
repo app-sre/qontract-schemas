@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -27,7 +27,7 @@ properties:
     enum:
     - Proposed         # The App is being proposed to be running by the App SRE team
     - InProgress       # The app is currently being on-boarded
-    - TransitionPeriod # The app is proving SLI/SLOs for a determined period of time
+    - TransitionPeriod  # The app is proving SLI/SLOs for a determined period of time
     - OnBoarded        # The app is fully on-boarded, App SRE are carrying the pager
     - OffBoarding      # The app is being off-boarded
     - BestEffort       # The app is supported on a best effort basis
@@ -417,7 +417,7 @@ properties:
           type: array
           items:
             type: string
-            description: commit sha of this repository that should be promoted even without being published with success to any subscribed channels 
+            description: commit sha of this repository that should be promoted even without being published with success to any subscribed channels
             pattern: '^[0-9a-f]{40}$'
       required:
       - name

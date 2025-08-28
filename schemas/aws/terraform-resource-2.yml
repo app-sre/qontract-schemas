@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -412,8 +412,8 @@ oneOf:
             - glacier
             - deep_archive
         required:
-          - rule_name
-          - destination_bucket_identifier
+        - rule_name
+        - destination_bucket_identifier
     bucket_policy:
       type: object
     output_resource_name:
@@ -1160,7 +1160,7 @@ oneOf:
           items:
             type: string
       required:
-        - domain_name
+      - domain_name
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     tags:
@@ -1273,7 +1273,7 @@ oneOf:
       - ELBSecurityPolicy-TLS13-1-2-Ext2-2021-06
       - ELBSecurityPolicy-TLS13-1-2-Ext1-2021-06
       - ELBSecurityPolicy-TLS13-1-1-2021-06
-      - ELBSecurityPolicy-TLS13-1-0-2021-06 # This will be the default value
+      - ELBSecurityPolicy-TLS13-1-0-2021-06  # This will be the default value
       - ELBSecurityPolicy-TLS-1-2-Ext-2018-06
       - ELBSecurityPolicy-TLS-1-2-2017-01
       - ELBSecurityPolicy-TLS-1-1-2017-01
@@ -1309,24 +1309,24 @@ oneOf:
           mode:
             type: string
             enum:
-              - "off"
-              - passthrough
+            - "off"
+            - passthrough
         required:
-          - mode
+        - mode
       - additionalProperties: false
         properties:
           mode:
             type: string
             enum:
-              - verify
+            - verify
           ca_cert_bundle_s3_bucket_name:
             type: string
           ca_cert_bundle_s3_bucket_key:
             type: string
         required:
-          - mode
-          - ca_cert_bundle_s3_bucket_name
-          - ca_cert_bundle_s3_bucket_key
+        - mode
+        - ca_cert_bundle_s3_bucket_name
+        - ca_cert_bundle_s3_bucket_key
     targets:
       type: array
       items:
@@ -1346,18 +1346,18 @@ oneOf:
           protocol:
             type: string
             enum:
-              - HTTP
-              - HTTPS
-              - TCP
-              - TLS
-              - UDP
-              - TCP_UDP
+            - HTTP
+            - HTTPS
+            - TCP
+            - TLS
+            - UDP
+            - TCP_UDP
           protocol_version:
             type: string
             enum:
-              - HTTP1
-              - HTTP2
-              - GRPC
+            - HTTP1
+            - HTTP2
+            - GRPC
           health_check:
             type: object
             additionalProperties: false
@@ -1379,8 +1379,8 @@ oneOf:
               protocol:
                 type: string
                 enum:
-                  - HTTPS
-                  - HTTP
+                - HTTPS
+                - HTTP
         required:
         - name
         - default
@@ -1762,7 +1762,7 @@ oneOf:
     provider:
       type: string
       enum:
-        - rosa-authenticator
+      - rosa-authenticator
     identifier:
       type: string
     api_proxy_uri:
@@ -1808,14 +1808,14 @@ oneOf:
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
   required:
-    - identifier
-    - api_proxy_uri
-    - cognito_callback_bucket_name
-    - certificate_arn
-    - domain_name
-    - vpc_id
-    - subnet_ids
-    - defaults
+  - identifier
+  - api_proxy_uri
+  - cognito_callback_bucket_name
+  - certificate_arn
+  - domain_name
+  - vpc_id
+  - subnet_ids
+  - defaults
 - additionalProperties: false
   properties:
     provider:
@@ -1843,10 +1843,10 @@ oneOf:
     vpc_id:
       type: string
   required:
-    - defaults
-    - identifier
-    - vpc_id
-    - subnet_ids
+  - defaults
+  - identifier
+  - vpc_id
+  - subnet_ids
 - additionalProperties: false
   properties:
     provider:

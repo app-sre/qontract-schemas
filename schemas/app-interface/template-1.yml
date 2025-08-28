@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Template"
 description: |
-  Schema for defining templates in app-interface. 
-  This includes details about the template, its target path, 
+  Schema for defining templates in app-interface.
+  This includes details about the template, its target path,
   conditions, tests, and rendering options.
 
 additionalProperties: false
@@ -50,7 +50,7 @@ properties:
         description: |
           Unique identifier field to use with path results.
           Can be a string (field name) or a JSON path.
-          Examples: 
+          Examples:
             path_results = [{'id': 1, 'name': 'a'}, {'id': 2, 'name': 'b'}]
             identifier = 'id'
             path_results = ['a', 'b']

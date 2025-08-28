@@ -1,12 +1,12 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Escalation Policy"
 description: |
-  Schema for defining escalation policies for services. Escalation policies 
-  specify how incidents or issues are escalated, including the channels 
-  and configurations for notifications, such as Slack, email, PagerDuty, 
+  Schema for defining escalation policies for services. Escalation policies
+  specify how incidents or issues are escalated, including the channels
+  and configurations for notifications, such as Slack, email, PagerDuty,
   and Jira.
 
 additionalProperties: false
@@ -24,19 +24,19 @@ properties:
   description:
     type: string
     description: |
-      A description of the escalation policy, explaining its purpose 
+      A description of the escalation policy, explaining its purpose
       and scope.
   channels:
     type: object
     description: |
-      The notification channels configured for the escalation policy. These 
+      The notification channels configured for the escalation policy. These
       channels specify how and where notifications are sent during an escalation.
     additionalProperties: false
     properties:
       slackUserGroup:
         type: array
         description: |
-          A list of Slack user groups to notify during an escalation. Each 
+          A list of Slack user groups to notify during an escalation. Each
           user group is referenced by its permissions configuration.
         items:
           "$ref": "/common-1.json#/definitions/crossref"
@@ -78,7 +78,7 @@ properties:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/app-sre/escalation-policy-1.yml"
         description: |
-          Reference to the next escalation policy to follow if the current 
+          Reference to the next escalation policy to follow if the current
           policy does not resolve the issue.
     required:
     - slackUserGroup

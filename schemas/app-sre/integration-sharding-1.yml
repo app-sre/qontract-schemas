@@ -13,11 +13,11 @@ properties:
   strategy:
     type: string
     enum:
-      - per-aws-account
-      - per-cloudflare-dns-zone
-      - per-openshift-cluster
-      - per-ocm-organization
-      - static
+    - per-aws-account
+    - per-cloudflare-dns-zone
+    - per-openshift-cluster
+    - per-ocm-organization
+    - static
   # Static Sharding
   shards:   # Static sharding
     type: integer
@@ -60,4 +60,4 @@ properties:
               type: integer
 
 required:
-  - strategy
+- strategy

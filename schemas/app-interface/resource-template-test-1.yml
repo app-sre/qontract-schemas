@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Resource Template Test"
 description: |
-  Schema for defining resource template tests in app-interface. 
-  This includes details about the resource template to be tested, 
+  Schema for defining resource template tests in app-interface.
+  This includes details about the resource template to be tested,
   the expected result, and other metadata.
 
 additionalProperties: false

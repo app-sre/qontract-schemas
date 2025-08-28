@@ -1,10 +1,10 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "App Interface Settings"
 description: |
-  Specifications for configuring an app-interface instance. 
+  Specifications for configuring an app-interface instance.
   Configuration includes repository configuration, credentials, integrations, and other operational parameters.
 
 additionalProperties: false
@@ -368,7 +368,7 @@ properties:
       vaultBasePath:
         type: string
         description: |
-          Path in KV Vault mount where certificate secrets will be stored 
+          Path in KV Vault mount where certificate secrets will be stored
       caCertUrl:
         type: string
         description: |
@@ -438,12 +438,12 @@ properties:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/aws/account-1.yml"
         excludedProviders:
-           type: array
-           items:
+          type: array
+          items:
             type: string
       required:
-        - provisioner
-        - excludedProviders
+      - provisioner
+      - excludedProviders
 required:
 - "$schema"
 - labels

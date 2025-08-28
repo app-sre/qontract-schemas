@@ -1,11 +1,11 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Contract Version"
 description: |
-  Schema for defining a contract-1.yml schema version. 
-  Each version represents a specific iteration of a contract, including its name, 
+  Schema for defining a contract-1.yml schema version.
+  Each version represents a specific iteration of a contract, including its name,
   description, associated contract, and source location.
 
 additionalProperties: false
@@ -19,24 +19,24 @@ properties:
   name:
     type: string
     description: |
-      The name of the contract version. This should uniquely identify the 
+      The name of the contract version. This should uniquely identify the
       version and indicate its purpose or scope.
   description:
     type: string
     description: |
-      A detailed description of the contract version, explaining its purpose, 
+      A detailed description of the contract version, explaining its purpose,
       scope, and any relevant details.
   contract:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/contract-1.yml"
     description: |
-      Reference to the contract that this version is associated with. This 
+      Reference to the contract that this version is associated with. This
       links the version to its parent contract.
   source:
     type: string
     format: uri
     description: |
-      The location of the contract version. This should be a valid URI pointing 
+      The location of the contract version. This should be a valid URI pointing
       to the source of the version, such as a document or repository.
 
 required:

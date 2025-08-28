@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -126,7 +126,7 @@ properties:
     description: list of file path of slo documents to be evaluated before promoting changes
     items:
       "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/app-sre/slo-document-1.yml" 
+      "$schemaRef": "/app-sre/slo-document-1.yml"
   disable:
     type: boolean
   delete:

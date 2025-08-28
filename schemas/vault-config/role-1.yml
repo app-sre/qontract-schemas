@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 
 type: object
 title: "Role"
@@ -87,15 +87,15 @@ properties:
         bind_secret_id:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', a SecretID must be presented when logging in with this role.
         local_secret_ids:
           type: string
           enum:
-          - 'true'
-          - 'false'
+          - "true"
+          - "false"
           description: |
             If 'true', SecretIDs are scoped to the local cluster only.
         token_period:

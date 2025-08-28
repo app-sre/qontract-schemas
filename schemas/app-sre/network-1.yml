@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Network"
 description: |
@@ -14,8 +14,8 @@ additionalProperties: false
 properties:
   "$schema":
     type: string
-    enum: 
-      - /app-sre/network-1.yml
+    enum:
+    - /app-sre/network-1.yml
 
   labels:
     "$ref": "/common-1.json#/definitions/labels"
@@ -41,7 +41,7 @@ properties:
     properties:
       vpc:
         "$ref": "/common-1.json#/definitions/crossref"
-        "$schemaRef": /aws/vpc-request-1.yml
+        "$schemaRef": "/aws/vpc-request-1.yml"
         description: |
           Reference to the VPC that is currently using this network.
     oneOf:

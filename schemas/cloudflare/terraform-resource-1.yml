@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 
 additionalProperties: false
@@ -70,10 +70,10 @@ properties:
       cache_type:
         type: string
         enum:
-          - generic
-          - smart
+        - generic
+        - smart
     required:
-      - cache_type
+    - cache_type
   cache_reserve:
     type: object
     additionalProperties: false
@@ -111,7 +111,7 @@ properties:
         type:
           type: string
           enum:
-            - advanced
+          - advanced
         hosts:
           type: array
           items:
@@ -119,26 +119,26 @@ properties:
         validation_method:
           type: string
           enum:
-            - txt
+          - txt
         validity_days:
           type: integer
           enum:
-            - 90
+          - 90
         certificate_authority:
           type: string
           enum:
-            - lets_encrypt
+          - lets_encrypt
         cloudflare_branding:
           type: boolean
         wait_for_active_status:
           type: boolean
     required:
-      - identifier
-      - type
-      - hosts
-      - validation_method
-      - validity_days
-      - certificate_authority
+    - identifier
+    - type
+    - hosts
+    - validation_method
+    - validity_days
+    - certificate_authority
   # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
   custom_ssl_certificates:
     type: array
@@ -151,20 +151,20 @@ properties:
         type:
           type: string
           enum:
-            - legacy_custom
-            - sni_custom
+          - legacy_custom
+          - sni_custom
         bundle_method:
           type: string
           enum:
-            - ubiquitous
-            - optimal
-            - force
+          - ubiquitous
+          - optimal
+          - force
         geo_restrictions:
           type: string
           enum:
-            - us
-            - eu
-            - highest_security
+          - us
+          - eu
+          - highest_security
         certificate_secret:
           type: object
           additionalProperties: false
@@ -174,13 +174,13 @@ properties:
             key:
               "$ref": "/common-1.json#/definitions/vaultSecret"
           required:
-            - certificate
-            - key
+          - certificate
+          - key
     required:
-      - identifier
-      - type
-      - bundle_method
-      - certificate_secret
+    - identifier
+    - type
+    - bundle_method
+    - certificate_secret
   destination_conf:
     type: string
     pattern: 's3:\/\/.+$'
@@ -198,7 +198,7 @@ properties:
     type: string
   kind:
     type: string
-  
+
 oneOf:
 - additionalProperties: false
   properties:
@@ -276,10 +276,10 @@ oneOf:
         cache_type:
           type: string
           enum:
-            - generic
-            - smart
+          - generic
+          - smart
       required:
-        - cache_type
+      - cache_type
     cache_reserve:
       type: object
       additionalProperties: false
@@ -317,7 +317,7 @@ oneOf:
           type:
             type: string
             enum:
-              - advanced
+            - advanced
           hosts:
             type: array
             items:
@@ -325,26 +325,26 @@ oneOf:
           validation_method:
             type: string
             enum:
-              - txt
+            - txt
           validity_days:
             type: integer
             enum:
-              - 90
+            - 90
           certificate_authority:
             type: string
             enum:
-              - lets_encrypt
+            - lets_encrypt
           cloudflare_branding:
             type: boolean
           wait_for_active_status:
             type: boolean
       required:
-        - identifier
-        - type
-        - hosts
-        - validation_method
-        - validity_days
-        - certificate_authority
+      - identifier
+      - type
+      - hosts
+      - validation_method
+      - validity_days
+      - certificate_authority
     # https://registry.terraform.io/providers/cloudflare/cloudflare/3.32.0/docs/resources/custom_ssl
     custom_ssl_certificates:
       type: array
@@ -357,20 +357,20 @@ oneOf:
           type:
             type: string
             enum:
-              - legacy_custom
-              - sni_custom
+            - legacy_custom
+            - sni_custom
           bundle_method:
             type: string
             enum:
-              - ubiquitous
-              - optimal
-              - force
+            - ubiquitous
+            - optimal
+            - force
           geo_restrictions:
             type: string
             enum:
-              - us
-              - eu
-              - highest_security
+            - us
+            - eu
+            - highest_security
           certificate_secret:
             type: object
             additionalProperties: false
@@ -380,13 +380,13 @@ oneOf:
               key:
                 "$ref": "/common-1.json#/definitions/vaultSecret"
             required:
-              - certificate
-              - key
+            - certificate
+            - key
       required:
-        - identifier
-        - type
-        - bundle_method
-        - certificate_secret
+      - identifier
+      - type
+      - bundle_method
+      - certificate_secret
   required:
   - identifier
   - zone
@@ -427,7 +427,7 @@ oneOf:
       type: string
     dataset:
       type: string
-    frequency: 
+    frequency:
       type: string
     filter:
       type: string

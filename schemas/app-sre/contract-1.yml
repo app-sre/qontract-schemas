@@ -1,6 +1,6 @@
 ---
 "$schema": /metaschema-1.json
-version: '1.0'
+version: "1.0"
 type: object
 title: "Contract"
 description: |
@@ -18,18 +18,18 @@ properties:
   name:
     type: string
     description: |
-      The name of the contract. This should be a unique identifier that 
+      The name of the contract. This should be a unique identifier that
       clearly represents the purpose or scope of the contract.
   description:
     type: string
     description: |
-      A detailed description of the contract, explaining its purpose, 
+      A detailed description of the contract, explaining its purpose,
       scope, and any relevant details.
   source:
     type: string
     format: uri
     description: |
-      The location of the contract. This should be a valid URI pointing 
+      The location of the contract. This should be a valid URI pointing
       to the source of the contract, such as a document or repository.
 
 required:
