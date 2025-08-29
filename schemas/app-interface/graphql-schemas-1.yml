@@ -42,7 +42,13 @@ definitions:
       datafile:
         type: string
         description: |
-          The data file associated with the GraphQL configuration.
+          The data file schema associated with the GraphQL configuration.
+          This is used in bundle and validation for one-to-one mapping between
+          GraphQL configuration (type) and datafile schema.
+          If GraphQL type is an interface and all subtypes share the same schema,
+          only set this for interface type, not needed for subtypes.
+          This is needed for standalone datafile used as crossref `$ref: path_to_data_file`.
+          Note this field requires `schema` and `path` in `fields`.
       isInterface:
         type: boolean
         description: |
@@ -68,13 +74,19 @@ definitions:
           field:
             type: string
             description: |
-              The field used for interface resolution.
+              The field used for interface resolution with fieldMap strategy.
           fieldMap:
             type: object
             description: |
               A mapping of fields for interface resolution.
+              Key is the field value from datafile, value is GraphQL type.
             properties:
               "/": {}
+        required:
+        - strategy
+    required:
+    - name
+    - fields
   field:
     type: object
     additionalProperties: false
@@ -97,11 +109,17 @@ definitions:
       isUnique:
         type: boolean
         description: |
-          Indicates whether the field is unique.
+          Indicates whether the field is global unique.
+          When multiple fields marked as unique, each field is checked individually,
+          no duplicate values are allowed for each field.
+          This is like unique constraint per field in database.
       isContextUnique:
         type: boolean
         description: |
-          Indicates whether the field is unique within a specific context.
+          Indicates whether the field is unique within an object array.
+          When multiple fields marked as context unique, all fields are grouped together to determine uniqueness,
+          partial fields duplicate are allowed.
+          This is like unique constraint for multiple fields combo in database.
       isRequired:
         type: boolean
         description: |
@@ -140,3 +158,7 @@ definitions:
         type: string
         description: |
           The schema of the data file associated with the field.
+          Only used in `Query` fields.
+    required:
+    - name
+    - type
