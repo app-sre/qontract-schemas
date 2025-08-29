@@ -1694,7 +1694,6 @@ confs:
   - { name: alternate_names, type: string, isList: true }
 
 - name: NamespaceOpenshiftResource_v1
-  datafile: /openshift/openshift-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1800,7 +1799,6 @@ confs:
   - { name: resources, type: NamespaceTerraformResourceCloudflare_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: NamespaceTerraformResourceCloudflare_v1
-  datafile: /cloudflare/terraform-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1956,7 +1954,6 @@ confs:
   - { name: resources, type: NamespaceTerraformResourceGCP_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: NamespaceTerraformResourceGCP_v1
-  datafile: /gcp/terraform-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1979,7 +1976,6 @@ confs:
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceAWS_v1
-  datafile: /aws/terraform-resources-2.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -2021,7 +2017,6 @@ confs:
   - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceOutputFormat_v1
-  datafile: /openshift/terraform-output-format-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -3341,7 +3336,6 @@ confs:
   - { name: paths, type: VaultReplicationPaths_v1, isInterface: true, isList: true}
 
 - name: VaultReplicationPaths_v1
-  datafile: /vault-config/replication-paths-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -3406,6 +3400,7 @@ confs:
       acs: OidcPermissionAcs_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -3415,6 +3410,7 @@ confs:
   interface: OidcPermission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -3426,6 +3422,7 @@ confs:
   interface: OidcPermission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -4977,10 +4974,7 @@ confs:
   - { name: channels, type: ExternalResourcesChannel_v1, isList: true, isRequired: true }
 
 - name: ExternalResourcesModuleOverrides_v1
-  datafile: /external-resources/module-overrides-1.yml
   fields:
-  - { name: schema, type: string, isRequired: true}
-  - { name: path, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: false}
   - { name: channel, type: string, isRequired: false }
   - { name: image, type: string, isRequired: false}
@@ -4999,6 +4993,7 @@ confs:
 - name: DynatraceTokenProviderTokenSpec_v1
   datafile: /dynatrace/dynatrace-token-provider-token-spec-1.yml
   fields:
+  - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
