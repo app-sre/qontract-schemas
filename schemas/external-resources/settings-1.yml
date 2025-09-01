@@ -47,6 +47,11 @@ properties:
   module_default_resources:
     "$ref": "/openshift/deploy-resources-1.yml"
 
+  default_tags:
+    "$ref": "/common-1.json#/definitions/labels"
+    description: |
+      Default tags to apply to all managed external resources.
+
 required:
 - "$schema"
 - state_dynamodb_account
@@ -58,3 +63,4 @@ required:
 - outputs_secret_image
 - outputs_secret_version
 - module_default_resources
+- default_tags

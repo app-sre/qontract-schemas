@@ -4949,6 +4949,7 @@ confs:
   - { name: outputs_secret_image, type: string, isRequired: true }
   - { name: outputs_secret_version, type: string, isRequired: true }
   - { name: module_default_resources, type: DeployResources_v1, isRequired: true }
+  - { name: default_tags, type: json, isRequired: true }
 
 - name: ExternalResourcesChannel_v1
   fields:
