@@ -2749,6 +2749,13 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: sharedResources
 
+- name: SplunkLoggingConfig_v1
+  fields:
+  - { name: endpoint, type: string, isRequired: true }
+  - { name: index, type: string, isRequired: true }
+  - { name: secret, type: string, isRequired: true }
+  - { name: key, type: string, isRequired: true }
+
 - name: Namespace_v1
   datafile: /openshift/namespace-1.yml
   fields:
@@ -2758,6 +2765,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: delete, type: boolean }
   - { name: enableDynatraceLogging, type: boolean }
+  - { name: splunkLoggingConfig, type: SplunkLoggingConfig_v1 }
   - { name: description, type: string, isRequired: true }
   - { name: grafanaUrl, type: string }
   - { name: cluster, type: Cluster_v1, isRequired: true }

@@ -25,6 +25,30 @@ properties:
   enableDynatraceLogging:
     type: boolean
 
+  splunkLoggingConfig:
+    type: object
+    description: splunk logging configuration
+    additionalProperties: false
+    properties:
+      endpoint:
+        type: string
+        format: uri
+        description: splunk endpoint url
+      index:
+        type: string
+        description: splunk index name
+      secret:
+        type: string
+        description: secret containing splunk token
+      key:
+        type: string
+        description: key is secret containing splunk token
+    required:
+    - endpoint
+    - index
+    - secret
+    - key
+
   grafanaUrl:
     type: string
     format: uri
