@@ -3,6 +3,7 @@ $schema: /app-interface/graphql-schemas-1.yml
 
 confs:
 - name: AppInterfaceSettings_v1
+  datafile: /app-interface/app-interface-settings-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -138,6 +139,7 @@ confs:
   - { name: secret, type: VaultSecret_v1, isRequired: true }
 
 - name: CredentialsRequest_v1
+  datafile: /app-interface/credentials-request-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -154,6 +156,7 @@ confs:
   - { name: pullSecret, type: NamespaceOpenshiftResourceVaultSecret_v1, isRequired: true }
 
 - name: AppInterfaceEmail_v1
+  datafile: /app-interface/app-interface-email-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -174,6 +177,7 @@ confs:
   - { name: users, type: User_v1, isList: true }
 
 - name: AppInterfaceSlackNotification_v1
+  datafile: /app-interface/app-interface-slack-notification-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -210,7 +214,10 @@ confs:
   - { name: prefix, type: string, isRequired: true }
 
 - name: VaultAudit_v1
+  datafile: /vault-config/audit-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: instance, type: VaultInstance_v1, isRequired: true }
@@ -278,7 +285,10 @@ confs:
   - { name: version, type: string, isRequired: true }
 
 - name: VaultSecretEngine_v1
+  datafile: /vault-config/secret-engine-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
@@ -365,7 +375,10 @@ confs:
   - { name: token_num_uses, type: string, isRequired: true }
 
 - name: VaultRole_v1
+  datafile: /vault-config/role-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: mount, type: VaultAuth_v1, isRequired: true }
@@ -418,7 +431,10 @@ confs:
   - { name: value, type: string, isRequired: true }
 
 - name: ClusterJumpHost_v1
+  datafile: /openshift/jump-host-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: hostname, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: knownHosts, type: string, isRequired: true, isResource: true }
   - { name: user, type: string, isRequired: true }
@@ -437,6 +453,7 @@ confs:
   - { name: integrations, type: string, isList: true }
 
 - name: GcpProject_v1
+  datafile: /gcp/project-1.yml
   interface: ExternalResourcesProvisioner_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -478,6 +495,7 @@ confs:
   - { name: tagsExclude, type: string, isList: true }
 
 - name: QuayInstance_v1
+  datafile: /dependencies/quay-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -517,6 +535,7 @@ confs:
   - { name: alwaysReconnect, type: boolean }
 
 - name: JenkinsInstance_v1
+  datafile: /dependencies/jenkins-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -547,6 +566,7 @@ confs:
   - { name: config_path, type: string, isResource: true, resolveResource: true }
 
 - name: JiraServer_v1
+  datafile: /dependencies/jira-server-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -563,6 +583,7 @@ confs:
   - { name: priority, type: string, isRequired: true }
 
 - name: JiraSeverityPriorityMappings_v1
+  datafile: /dependencies/jira-severity-priority-mappings-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -606,6 +627,7 @@ confs:
   - { name: value, type: string, isRequired: true }
 
 - name: SendGridAccount_v1
+  datafile: /dependencies/sendgrid-account-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -665,6 +687,7 @@ confs:
   - { name: awsRegion, type: string, isList: true}
 
 - name: GithubOrg_v1
+  datafile: /dependencies/github-org-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -698,6 +721,7 @@ confs:
   - { name: sslVerify, type: boolean }
 
 - name: AcsInstance_v1
+  datafile: /dependencies/acs-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -716,8 +740,10 @@ confs:
   - { name: kind, type: string, isRequired: true }
 
 - name: AcsPolicy_v1
+  datafile: /acs/acs-policy-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string }
@@ -810,6 +836,7 @@ confs:
   - { name: days, type: int, isRequired: true }
 
 - name: PagerDutyInstance_v1
+  datafile: /dependencies/pagerduty-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -819,6 +846,7 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: PagerDutyTarget_v1
+  datafile: /dependencies/pagerduty-target-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -877,12 +905,6 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: status, type: string }
   - { name: issuer, type: string }
-
-- name: KafkaClusterSpec_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: region, type: string, isRequired: true }
-  - { name: multi_az, type: boolean, isRequired: true }
 
 - name: ClusterSpec_v1
   isInterface: true
@@ -1139,22 +1161,6 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: cluster
 
-- name: KafkaCluster_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: ocm, type: OpenShiftClusterManager_v1 }
-  - { name: spec, type: KafkaClusterSpec_v1 }
-  - name: namespaces
-    type: Namespace_v1
-    isList: true
-    synthetic:
-      schema: /openshift/namespace-1.yml
-      subAttr: kafkaCluster
-
 - name: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1
   fields:
   - { name: id, type: string, isRequired: true }
@@ -1178,7 +1184,7 @@ confs:
 
 - name: OpenShiftClusterManagerUpgradePolicyDefault_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: matchLabels, type: json, isRequired: true }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1 }
   - { name: upgradePolicyTemplate, type: OpenShiftClusterManagerUpgradePolicyTemplate_v1 }
@@ -1191,21 +1197,21 @@ confs:
 
 - name: FleetLabelDefault_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: matchSubscriptionLabels, type: json, isRequired: true }
   - { name: subscriptionLabelTemplate, type: FleetSubscriptionLabelTemplate_v1, isRequired: true }
 
 - name: FleetCluster_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: serverUrl, type: string, isRequired: true, isUnique: true }
-  - { name: clusterId, type: string, isRequired: true, isUnique: true }
-  - { name: subscriptionId, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: serverUrl, type: string, isRequired: true, isContextUnique: true }
+  - { name: clusterId, type: string, isRequired: true, isContextUnique: true }
+  - { name: subscriptionId, type: string, isRequired: true, isContextUnique: true }
   - { name: subscriptionLabels, type: json, isRequired: true }
 
 - name: OpenShiftClusterManagerUpgradePolicyCluster_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: serverUrl, type: string }
   - { name: spec, type: OpenShiftClusterManagerUpgradePolicyClusterSpec_v1 }
   - { name: upgradePolicy, type: ClusterUpgradePolicy_v1, isRequired: true }
@@ -1297,6 +1303,7 @@ confs:
   - { name: name, type: string, isRequired: true }
 
 - name: ClusterAddon_v1
+  datafile: /openshift/cluster-addon-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -1463,6 +1470,7 @@ confs:
   - { name: type, type: string }
 
 - name: CloudflareAccountRole_v1
+  datafile: /cloudflare/account-role-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -1665,8 +1673,11 @@ confs:
   - { name: provider, type: string, isRequired: false }
 
 - name: TerraformStateAWS_v1
+  datafile: /dependencies/terraform-state-1.yml
   interface: TerraformState_v1
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: provider, type: string, isRequired: true}
   - { name: bucket, type: string, isRequired: true }
   - { name: region, type: string, isRequired: true }
@@ -1683,7 +1694,6 @@ confs:
   - { name: alternate_names, type: string, isList: true }
 
 - name: NamespaceOpenshiftResource_v1
-  datafile: /openshift/openshift-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1789,7 +1799,6 @@ confs:
   - { name: resources, type: NamespaceTerraformResourceCloudflare_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: NamespaceTerraformResourceCloudflare_v1
-  datafile: /cloudflare/terraform-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1916,7 +1925,10 @@ confs:
   - { name: text, type: string, isRequired: true }
 
 - name: TerraformRepo_v1
+  datafile: /aws/terraform-repo-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: account, type: AWSAccount_v1, isRequired: true }
   - { name: app, type: App_v1 }
   - { name: name, type: string, isRequired: true, isUnique: true }
@@ -1942,7 +1954,6 @@ confs:
   - { name: resources, type: NamespaceTerraformResourceGCP_v1, isRequired: true, isList: true, isInterface: true }
 
 - name: NamespaceTerraformResourceGCP_v1
-  datafile: /gcp/terraform-resource-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -1965,7 +1976,6 @@ confs:
   - { name: annotations, type: json }
 
 - name: NamespaceTerraformResourceAWS_v1
-  datafile: /aws/terraform-resources-2.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -2675,8 +2685,10 @@ confs:
   - { name: type, type: string }
 
 - name: LimitRange_v1
+  datafile: /openshift/limitrange-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
@@ -2765,7 +2777,6 @@ confs:
   - { name: externalResources, type: NamespaceExternalResource_v1, isList: true, isInterface: true }
   - { name: openshiftServiceAccountTokens, type: ServiceAccountTokenSpec_v1, isList: true }
   - { name: glitchtipProjects, type: GlitchtipProject_v1, isList: true }
-  - { name: kafkaCluster, type: KafkaCluster_v1 }
   - { name: skupperSite, type: NamespaceSkupperSiteConfig_v1 }
   - name: gabi_instances
     type: GabiInstance_v1
@@ -2787,6 +2798,7 @@ confs:
   - { name: phoneNumber, type: string, isRequired: true }
 
 - name: Dependency_v1
+  datafile: /dependencies/dependency-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3145,7 +3157,10 @@ confs:
   - { name: notifications, type: SlackOutputNotifications_v1 }
 
 - name: SaasFileAuthentication_v1
+  datafile: /app-sre/saas-file-authentication-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: code, type: VaultSecret_v1 }
   - { name: image, type: VaultSecret_v1 }
 
@@ -3240,6 +3255,7 @@ confs:
   - { name: target_config_hash, type: string }
 
 - name: PipelinesProvider_v1
+  datafile: /app-sre/pipelines-provider-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -3301,8 +3317,10 @@ confs:
   - { name: deployResources, type: DeployResources_v1 }
 
 - name: VaultInstance_v1
+  datafile: /vault-config/instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
@@ -3318,7 +3336,6 @@ confs:
   - { name: paths, type: VaultReplicationPaths_v1, isInterface: true, isList: true}
 
 - name: VaultReplicationPaths_v1
-  datafile: /vault-config/replication-paths-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -3373,6 +3390,7 @@ confs:
   - { name: kubeRoleName, type: string }
 
 - name: OidcPermission_v1
+  datafile: /access/oidc-permission-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -3382,6 +3400,7 @@ confs:
       acs: OidcPermissionAcs_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -3391,6 +3410,7 @@ confs:
   interface: OidcPermission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -3402,6 +3422,7 @@ confs:
   interface: OidcPermission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
@@ -3433,7 +3454,6 @@ confs:
   - { name: service, type: string, isRequired: true }
 
 - name: PermissionGithubOrg_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3446,7 +3466,6 @@ confs:
   - { name: role, type: string }
 
 - name: PermissionGithubOrgTeam_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3460,7 +3479,6 @@ confs:
   - { name: role, type: string }
 
 - name: PermissionJenkinsRole_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3474,7 +3492,6 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
 
 - name: PermissionGitlabGroupMembership_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3494,7 +3511,6 @@ confs:
       subAttr: permissions
 
 - name: PermissionSlackUsergroup_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -3538,7 +3554,10 @@ confs:
   - { name: policies, type: VaultPolicy_v1, isList: true, isRequired: true }
 
 - name: VaultAuth_v1
+  datafile: /vault-config/auth-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: _path, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
@@ -3626,6 +3645,7 @@ confs:
       subAttr: schedule.users
 
 - name: Bot_v1
+  datafile: /access/bot-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -3926,6 +3946,7 @@ confs:
   - { name: issue, type: string, isRequired: true }
 
 - name: AppInterfaceSqlQuery_v1
+  datafile: /app-interface/app-interface-sql-query-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4053,6 +4074,7 @@ confs:
   - { name: expirationDate, type: string, isRequired: true }
 
 - name: ResourceTemplateTest_v1
+  datafile: /app-interface/resource-template-test-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4064,7 +4086,7 @@ confs:
 
 - name: AcceptanceCriteriaItem_v1
   fields:
-  - { name: name, type: string, isRequired: true, isUnique: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: status, type: string, isRequired: true }
   - { name: comment, type: string }
 
@@ -4100,7 +4122,6 @@ confs:
   - { name: cloudflare_accounts_v1, type: CloudflareAccount_v1, isList: true, datafileSchema: /cloudflare/account-1.yml }
   - { name: clusters_v1, type: Cluster_v1, isList: true, datafileSchema: /openshift/cluster-1.yml }
   - { name: jumphosts_v1, type: ClusterJumpHost_v1, isList: true, datafileSchema: /openshift/jump-host-1.yml }
-  - { name: kafka_clusters_v1, type: KafkaCluster_v1, isList: true, datafileSchema: /kafka/cluster-1.yml }
   - { name: namespaces_v1, type: Namespace_v1, isList: true, datafileSchema: /openshift/namespace-1.yml }
   - { name: gcp_projects_v1, type: GcpProject_v1, isList: true, datafileSchema: /gcp/project-1.yml }
   - { name: quay_orgs_v1, type: QuayOrg_v1, isList: true, datafileSchema: /dependencies/quay-org-1.yml }
@@ -4171,8 +4192,10 @@ confs:
   - { name: fleet_labels_specs_v1, type: FleetLabelsSpec_v1, isList: true, datafileSchema: /openshift/fleet-labels-spec-1.yml }
 
 - name: GlitchtipInstance_v1
+  datafile: /dependencies/glitchtip-instance-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
@@ -4193,8 +4216,10 @@ confs:
       subAttr: instance
 
 - name: GlitchtipOrganization_v1
+  datafile: /dependencies/glitchtip-organization-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
@@ -4209,8 +4234,10 @@ confs:
       subAttr: glitchtip_roles.organization
 
 - name: GlitchtipTeam_v1
+  datafile: /dependencies/glitchtip-team-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
@@ -4227,7 +4254,7 @@ confs:
 - name: GlitchtipRole_v1
   fields:
   - { name: role, type: string, isRequired: true }
-  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true, isUnique: true }
+  - { name: organization, type: GlitchtipOrganization_v1, isRequired: true }
 
 - name: GlitchtipProjectAlert_v1
   datafile: /dependencies/glitchtip-project-alert-1.yml
@@ -4464,6 +4491,7 @@ confs:
   - { name: password, type: VaultSecret_v1 }
 
 - name: StatusPage_v1
+  datafile: /dependencies/status-page-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4504,7 +4532,7 @@ confs:
   - { name: status, type: StatusProvider_v1, isList: true, isInterface: true }
 
 - name: StatusBoard_v1
-  datafile: /dependencies/status-board-component-1.yml
+  datafile: /dependencies/status-board-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4561,6 +4589,7 @@ confs:
       subAttr: status.maintenance
 
 - name: EndpointMonitoringProvider_v1
+  datafile: /dependencies/endpoint-monitoring-provider-1.yml
   isInterface: true
   interfaceResolve:
     strategy: fieldMap
@@ -4665,6 +4694,7 @@ confs:
   - { name: until, type: string }
 
 - name: ChangeType_v1
+  datafile: /app-interface/change-type-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
@@ -4732,7 +4762,10 @@ confs:
   - { name: when, type: "string" }
 
 - name: RosaOcmSpec_v1
+  datafile: /dependencies/rosa-ocm-1.yml
   fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: ocm_environments, type: RosaOcmAwsSpec_v1, isList: true}
 
 - name: RosaOcmAwsSpec_v1
@@ -4745,8 +4778,10 @@ confs:
   - { name: worker_role_arn, type: string, isRequired: true}
 
 - name: PgpReencryptSettings_v1
+  datafile: /app-sre/pgp-reencrypt-settings-1.yml
   fields:
   - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
   - { name: public_gpg_key, type: string, isRequired: true }
   - { name: private_pgp_key_vault_path, type: string, isRequired: true }
   - { name: reencrypt_vault_path, type: string, isRequired: true }
@@ -4939,10 +4974,7 @@ confs:
   - { name: channels, type: ExternalResourcesChannel_v1, isList: true, isRequired: true }
 
 - name: ExternalResourcesModuleOverrides_v1
-  datafile: /external-resources/module-overrides-1.yml
   fields:
-  - { name: schema, type: string, isRequired: true}
-  - { name: path, type: string, isRequired: true}
   - { name: module_type, type: string, isRequired: false}
   - { name: channel, type: string, isRequired: false }
   - { name: image, type: string, isRequired: false}
@@ -4959,7 +4991,9 @@ confs:
   - { name: maintenance, type: Maintenance_v1, isRequired: true }
 
 - name: DynatraceTokenProviderTokenSpec_v1
+  datafile: /dynatrace/dynatrace-token-provider-token-spec-1.yml
   fields:
+  - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: description, type: string, isRequired: true }
@@ -4997,7 +5031,6 @@ confs:
   - { name: description, type: string, isRequired: true }
 
 - name: PermissionAutomatedActions_v1
-  datafile: /access/permission-1.yml
   interface: Permission_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5061,7 +5094,6 @@ confs:
       subAttr: actions
 
 - name: AutomatedActionActionList_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5084,7 +5116,6 @@ confs:
   - { name: max_age_minutes, type: int }
 
 - name: AutomatedActionCreateToken_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5101,7 +5132,6 @@ confs:
       subAttr: actions
 
 - name: AutomatedActionExternalResourceFlushElastiCache_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5119,7 +5149,6 @@ confs:
   - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
 
 - name: AutomatedActionExternalResourceRdsReboot_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5137,7 +5166,6 @@ confs:
   - { name: arguments, type: AutomatedActionExternalResourceArgument_v1, isList: true, isRequired: true }
 
 - name: AutomatedActionExternalResourceRdsSnapshot_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5160,7 +5188,6 @@ confs:
   - { name: identifier, type: string, isRequired: true }
 
 - name: AutomatedActionNoOp_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5177,7 +5204,6 @@ confs:
       subAttr: actions
 
 - name: AutomatedActionOpenshiftWorkloadDelete_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
@@ -5202,7 +5228,6 @@ confs:
   - { name: name, type: string, isRequired: true }
 
 - name: AutomatedActionOpenshiftWorkloadRestart_v1
-  datafile: /app-sre/automated-action-1.yml
   interface: AutomatedAction_v1
   fields:
   - { name: schema, type: string, isRequired: true }
