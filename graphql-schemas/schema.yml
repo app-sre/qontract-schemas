@@ -1363,7 +1363,6 @@ confs:
   - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
   - { name: disable, type: DisableClusterAutomations_v1 }
   - { name: deleteKeys, type: string, isList: true }
-  - { name: disableKeys, type: string, isList: true }
   - { name: resetPasswords, type: AWSAccountResetPassword_v1, isList: true }
   - { name: premiumSupport, type: boolean, isRequired: true }
   - { name: partition, type: string }
