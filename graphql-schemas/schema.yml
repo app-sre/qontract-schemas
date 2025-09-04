@@ -928,6 +928,7 @@ confs:
   - { name: provision_shard_id, type: string }
   - { name: disable_user_workload_monitoring, type: boolean }
   - { name: hypershift, type: boolean, isRequired: false}
+  - { name: fips, type: boolean, isRequired: false }
 
 - name: ClusterSpecOSD_v1
   interface: ClusterSpec_v1
@@ -947,6 +948,7 @@ confs:
   - { name: hypershift, type: boolean, isRequired: false}
   - { name: storage, type: int, isRequired: true }
   - { name: load_balancers, type: int, isRequired: true }
+  - { name: fips, type: boolean, isRequired: false }
 
 - name: ClusterSpecROSA_v1
   interface: ClusterSpec_v1
@@ -968,6 +970,7 @@ confs:
   - { name: subnet_ids, type: string, isList: True}
   - { name: availability_zones, type: string, isList: True}
   - { name: oidc_endpoint_url, type: string }
+  - { name: fips, type: boolean, isRequired: false }
 
 - name: ClusterSpecAutoScale_v1
   fields:

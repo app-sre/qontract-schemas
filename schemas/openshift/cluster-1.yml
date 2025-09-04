@@ -223,6 +223,8 @@ properties:
       oidc_endpoint_url:
         type: string
         format: uri
+      fips:
+        type: boolean
     required:
     - product
     - provider
