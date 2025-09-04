@@ -1,0 +1,55 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/app-quay-repos-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  org:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/quay-org-1.yml"
+  teams:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type: array
+          items:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/access/permission-1.yml"
+        role:
+          type: string
+          enum:
+          - read
+      required:
+      - permissions
+      - role
+  items:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        public:
+          type: boolean
+        mirror:
+          "$schemaRef": "/dependencies/container-image-mirror-1.yml"
+      required:
+      - name
+      - description
+      - public
+required:
+- org
+- items

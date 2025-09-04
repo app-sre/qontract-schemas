@@ -179,89 +179,12 @@ properties:
   quayRepos:
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        org:
-          "$ref": "/common-1.json#/definitions/crossref"
-          "$schemaRef": "/dependencies/quay-org-1.yml"
-        teams:
-          type: array
-          items:
-            type: object
-            additionalProperties: false
-            properties:
-              permissions:
-                type: array
-                items:
-                  "$ref": "/common-1.json#/definitions/crossref"
-                  "$schemaRef": "/access/permission-1.yml"
-              role:
-                type: string
-                enum:
-                - read
-            required:
-            - permissions
-            - role
-        notifications:
-          type: array
-          items:
-            type: object
-            additionalProperties: false
-            properties:
-              event:
-                type: string
-                enum:
-                - vulnerability_found
-              severity:
-                type: string
-                enum:
-                - Defcon 1
-                - Critical
-                - High
-                - Medium
-                - Low
-                - Negligible
-                - Unknown
-              method:
-                type: string
-                enum:
-                - email
-              escalationPolicy:
-                "$ref": "/common-1.json#/definitions/crossref"
-                "$schemaRef": "/app-sre/escalation-policy-1.yml"
-              verificationMethod:
-                type: object
-                additionalProperties: false
-                properties:
-                  jiraBoard:
-                    "$ref": "/common-1.json#/definitions/crossref"
-                    "$schemaRef": "/dependencies/jira-board-1.yml"
-            required:
-            - event
-            - method
-            - escalationPolicy
-        items:
-          type: array
-          items:
-            type: object
-            additionalProperties: false
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              public:
-                type: boolean
-              mirror:
-                "$schemaRef": "/dependencies/container-image-mirror-1.yml"
-            required:
-            - name
-            - description
-            - public
-      required:
-      - org
-      - items
+      oneOf:
+      # inline
+      - "$ref": "/app-sre/app-quay-repos-1.yml"
+      # referenced
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/app-sre/app-quay-repos-1.yml"
 
   endPoints:
     type: array

@@ -142,6 +142,7 @@ properties:
                   - /aws/group-1.yml
                   - /aws/policy-1.yml
                   - /app-sre/app-1.yml
+                  - /app-sre/app-quay-repos-1.yml
                   - /app-sre/gabi-instance-1.yml
                   - /app-sre/scorecard-2.yml
                   - /openshift/shared-resources-1.yml
