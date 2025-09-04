@@ -2875,6 +2875,7 @@ confs:
   - { name: verificationMethod, type: AppQuayReposNotificationVerificationMethod_v1 }
 
 - name: AppQuayRepos_v1
+  datafile: /app-sre/app-quay-repos-1.yml
   fields:
   - { name: org, type: QuayOrg_v1, isRequired: true }
   - { name: teams, type: AppQuayReposTeams_v1, isList: true }
