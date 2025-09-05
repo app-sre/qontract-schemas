@@ -1,5 +1,5 @@
 {
-  "$schema": "/json-schema-spec-draft-06.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "version": "1.0",
   "type": "object",
   "title": "metaschema",
