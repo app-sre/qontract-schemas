@@ -2102,6 +2102,7 @@ confs:
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
   - { name: tags, type: json }
+  - { name: secret_format, type: json }
 
 - name: NamespaceTerraformResourceS3CloudFrontPublicKey_v1
   interface: NamespaceTerraformResourceAWS_v1
