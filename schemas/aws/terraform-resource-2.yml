@@ -321,6 +321,11 @@ properties:
     type: integer
     minimum: 3600
     maximum: 43200
+  secret_format:
+    description: |
+      A jinja2 templated object to define the shape of the secret to be created in Secrets
+      Manager instead of copying the vault secret as is.
+    "$ref": "/common-1.json#/definitions/labels"
 
 oneOf:
 - additionalProperties: false
@@ -1617,6 +1622,11 @@ oneOf:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    secret_format:
+      description: |
+        A jinja2 templated object to define the shape of the secret to be created in Secrets
+        Manager instead of copying the vault secret as is.
+      "$ref": "/common-1.json#/definitions/labels"
   required:
   - identifier
   - secret
