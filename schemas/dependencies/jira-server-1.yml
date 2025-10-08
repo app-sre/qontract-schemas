@@ -20,6 +20,8 @@ properties:
     format: uri
   username:
     type: string
+  email:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
   token:
     "$ref": "/common-1.json#/definitions/vaultSecret"
 required:
