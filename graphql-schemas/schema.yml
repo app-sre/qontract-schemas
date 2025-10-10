@@ -175,6 +175,7 @@ confs:
   - { name: aws_accounts, type: AWSAccount_v1, isList: true }
   - { name: roles, type: Role_v1, isList: true }
   - { name: users, type: User_v1, isList: true }
+  - { name: emails, type: string, isList: true }
 
 - name: AppInterfaceSlackNotification_v1
   datafile: /app-interface/app-interface-slack-notification-1.yml

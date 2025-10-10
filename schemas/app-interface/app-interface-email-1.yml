@@ -79,6 +79,13 @@ properties:
         items:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/access/user-1.yml"
+      emails:
+        type: array
+        description: |
+          Explicit list of email addresses as strings.
+        items:
+          type: string
+          format: email
   body:
     "$ref": "/common-1.json#/definitions/nonEmptyString"
     description: |
