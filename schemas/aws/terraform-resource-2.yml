@@ -909,6 +909,11 @@ oneOf:
       "$ref": "/openshift/terraform-output-format-1.yml"
     annotations:
       "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
     specs:
       type: array
       items:
