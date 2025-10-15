@@ -1,0 +1,106 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/rds-proxy-defaults-1.yml
+  auth:
+    type: array
+    description: "Authentication configuration for the proxy. We currently only support auth via secret, hence the required fields."
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        auth_scheme:
+          type: string
+          description: "The type of authentication that the proxy uses for connections from the proxy to the underlying database"
+          enum:
+          - SECRETS
+        client_password_auth_type:
+          type: string
+          description: "The type of authentication the proxy uses for connections from clients"
+          enum:
+          - POSTGRES_SCRAM_SHA_256
+          - POSTGRES_MD5
+        description:
+          type: string
+          description: "A user-specified description about the authentication used by a proxy to log in as a specific database user"
+        iam_auth:
+          type: string
+          description: "Whether to require or allow AWS Identity and Access Management (IAM) authentication for connections to the proxy"
+          enum:
+          - DISABLED
+          - REQUIRED
+        secret_name:
+          type: string
+          description: "Secret name that the proxy uses to authenticate to the RDS DB instance or Aurora DB cluster"
+        username:
+          type: string
+          description: "The name of the database user to which the proxy connects"
+      required:
+      - auth_scheme
+      - secret_name
+  connection_borrow_timeout:
+    type: integer
+    description: "The number of seconds for a proxy to wait for a connection to become available in the connection pool. Terraform attribute: connection_borrow_timeout"
+  db_instance_identifier:
+    type: string
+    description: "DB instance identifier. The identifier of the RDS DB instance target"
+  debug_logging:
+    type: boolean
+    description: "Whether the proxy includes detailed information about SQL statements in its logs. Default: false"
+  engine_family:
+    type: string
+    description: "The kinds of databases that the proxy can connect to. This value determines which database network protocol the proxy recognizes when it interprets network traffic to and from the database"
+    enum:
+    - POSTGRESQL
+  iam_role_force_detach_policies:
+    type: boolean
+    description: "Specifies to force detaching any policies the IAM role has before destroying it. Default: true"
+  iam_role_max_session_duration:
+    type: integer
+    description: "The maximum session duration (in seconds) for the IAM role. Default: 43200"
+  idle_client_timeout:
+    type: integer
+    description: "The number of seconds that a connection to the proxy can be inactive before the proxy disconnects it. Default: 1800"
+  init_query:
+    type: string
+    description: "One or more SQL statements for the proxy to run when opening each new database connection"
+  log_group_retention_in_days:
+    type: integer
+    description: "Specifies the number of days you want to retain log events in the CloudWatch log group. Default: 30"
+  max_connections_percent:
+    type: integer
+    description: "The maximum size of the connection pool for each target in a target group. Default: 90"
+  max_idle_connections_percent:
+    type: integer
+    description: "Controls how actively the proxy closes idle database connections in the connection pool. Default: 50"
+  require_tls:
+    type: boolean
+    description: "A Boolean parameter that specifies whether Transport Layer Security (TLS) encryption is required for connections to the proxy. Default: true"
+  session_pinning_filters:
+    type: array
+    description: "Each item in the list represents a class of SQL operations that normally cause all later statements in a session using a proxy to be pinned to the same underlying database connection"
+    items:
+      type: string
+  vpc_security_group_ids:
+    type: array
+    description: "One or more VPC security group IDs to associate with the new proxy"
+    items:
+      type: string
+  vpc_subnet_ids:
+    type: array
+    description: "One or more VPC subnet IDs to associate with the new proxy"
+    items:
+      type: string
+required:
+- "$schema"
+- auth
+- db_instance_identifier
+- engine_family
+- vpc_security_group_ids
+- vpc_subnet_ids

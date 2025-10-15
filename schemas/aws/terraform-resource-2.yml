@@ -896,6 +896,72 @@ oneOf:
     provider:
       type: string
       enum:
+      - rds-proxy
+    identifier:
+      type: string
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    overrides:
+      type: object
+      properties:
+        connection_borrow_timeout:
+          type: integer
+        db_instance_identifier:
+          type: string
+        debug_logging:
+          type: boolean
+        engine_family:
+          type: string
+          enum:
+          - MYSQL
+          - POSTGRESQL
+          - SQLSERVER
+        iam_role_force_detach_policies:
+          type: boolean
+        iam_role_max_session_duration:
+          type: integer
+        idle_client_timeout:
+          type: integer
+        init_query:
+          type: string
+        log_group_retention_in_days:
+          type: integer
+        max_connections_percent:
+          type: integer
+        max_idle_connections_percent:
+          type: integer
+        require_tls:
+          type: boolean
+        session_pinning_filters:
+          type: array
+          items:
+            type: string
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with erv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
       - sqs
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
