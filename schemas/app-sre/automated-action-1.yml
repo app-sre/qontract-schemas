@@ -62,6 +62,10 @@ properties:
         identifier:
           type: string
           description: The external resource identifier regex pattern to match.
+        # openshift-trigger-cronjob specific arguments
+        cronjob:
+          type: string
+          description: The cronjob name regex pattern to match.
         # openshift-workload-restart and delete specific arguments
         api_version:
           type: string
@@ -172,6 +176,27 @@ oneOf:
     type:
       enum:
       - no-op
+
+- properties:
+    type:
+      enum:
+      - openshift-trigger-cronjob
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          namespace:
+            "$ref": "/common-1.json#/definitions/crossref"
+            "$schemaRef": "/openshift/namespace-1.yml"
+          cronjob:
+            type: string
+            description: "The cronjob name regex pattern to match."
+        required:
+        - namespace
+        - cronjob
+  required:
+  - arguments
 
 - properties:
     type:
