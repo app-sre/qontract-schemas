@@ -58,6 +58,14 @@ properties:
   clusterAdmin:
     type: boolean
 
+  managedByExternal:
+    type: boolean
+    description: |
+      Whether the namespace's lifecycle (creation and deletion) is managed by external,
+      such as cluster default projects (default, openshift-*, kube-*) or operator managed namespaces.
+      Set to true means this namespace will be excluded from namespace creation/deletion.
+      Default to false.
+
   managedRoles:
     type: boolean
 
