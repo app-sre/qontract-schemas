@@ -160,6 +160,11 @@ oneOf:
       "$ref": "/common-1.json#/definitions/annotations"
     auto_renew_threshold_days:
       type: integer
+    certificate_format:
+      type: string
+      enum:
+      - PEM
+      - PKCS12
   required:
   - secret_name
   - service_account_name
