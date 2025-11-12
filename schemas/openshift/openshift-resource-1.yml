@@ -48,6 +48,8 @@ properties:
     type: string
   auto_renew_threshold_days:
     type: integer
+  certificate_format:
+    type: string
   promtool_version:
     type: string
 oneOf:
