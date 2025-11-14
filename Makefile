@@ -29,10 +29,6 @@ build:
 	@docker build -t $(IMAGE_NAME):latest --target prod -f Dockerfile .
 	@docker tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
 
-push:
-	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):latest
-	@docker --config=$(DOCKER_CONF) push $(IMAGE_NAME):$(IMAGE_TAG)
-
 bundle: ## Use qontract-validator image to bundle schemas into $BUNDLE_FILENAME NOTE
 	mkdir -p $(OUTPUT_DIR) fake_data fake_resources
 	@$(CONTAINER_ENGINE) run --rm \
