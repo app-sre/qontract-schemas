@@ -48,6 +48,9 @@ properties:
     type: string
   auto_renew_threshold_days:
     type: integer
+  certificate_format:
+    type: string
+    description: output format for certificate. Defaults to PEM
   promtool_version:
     type: string
 oneOf:
@@ -160,6 +163,11 @@ oneOf:
       "$ref": "/common-1.json#/definitions/annotations"
     auto_renew_threshold_days:
       type: integer
+    certificate_format:
+      type: string
+      enum:
+      - PEM
+      - PKCS12
   required:
   - secret_name
   - service_account_name
