@@ -191,7 +191,8 @@ properties:
                           type: string
                           format: uri
                       required:
-                      - message
+                      - summary
+                      - description
                   required:
                   - alert
                   - expr
