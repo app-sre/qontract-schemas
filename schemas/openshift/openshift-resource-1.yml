@@ -50,6 +50,7 @@ properties:
     type: integer
   certificate_format:
     type: string
+    description: output format for certificate. Defaults to PEM
   promtool_version:
     type: string
 oneOf:
