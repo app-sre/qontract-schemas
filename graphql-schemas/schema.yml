@@ -3536,7 +3536,7 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
-  - { name: handle, type: string, isRequired: true }
+  - { name: handle, type: string, isRequired: true, isUnique: true }
   - { name: workspace, type: SlackWorkspace_v1, isRequired: true }
   - { name: pagerduty, type: PagerDutyTarget_v1, isList: true }
   - { name: channels, type: string, isList: true, isRequired: true }
