@@ -190,9 +190,12 @@ properties:
                         logs_url:
                           type: string
                           format: uri
-                      required:
-                      - summary
-                      - description
+                      oneOf:
+                      - required:
+                        - summary
+                        - description
+                      - required:
+                        - message
                   required:
                   - alert
                   - expr
