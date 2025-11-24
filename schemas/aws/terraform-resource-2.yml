@@ -1261,6 +1261,8 @@ oneOf:
       "$ref": "/aws/regions-1.yml#/properties/region"
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
+    policy:
+      type: object
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     tags:
