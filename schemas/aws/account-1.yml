@@ -102,6 +102,7 @@ properties:
           - aws-saml-roles
           - aws-account-manager
           - terraform-init
+          - terraform-vpc-resources
   deleteKeys:
     type: array
     items:
