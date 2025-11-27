@@ -1158,6 +1158,7 @@ confs:
   - { name: ocmSubscriptionLabels, type: json}
   - { name: enableDeadMansSnitch, type: boolean }
   - { name: enableCostReport, type: boolean }
+  - { name: allowedToBypassPublicPeeringRestriction, type: boolean }
   - name: namespaces
     type: Namespace_v1
     isList: true

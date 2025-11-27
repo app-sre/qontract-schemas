@@ -31,6 +31,14 @@ properties:
   elbFQDN:
     type: string
     format: uri
+  allowedToBypassPublicPeeringRestriction:
+    type: boolean
+    description: |
+      In normal operation, peering with a public cluster is not
+      allowed for security reasons. In very rare cases we need an
+      exception for the prohibition. Use this option with extreme
+      caution and after consulting the appropriate security
+      professionals.
   auth:
     type: array
     items:
