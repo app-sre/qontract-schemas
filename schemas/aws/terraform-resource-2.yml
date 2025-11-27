@@ -1261,6 +1261,9 @@ oneOf:
       "$ref": "/aws/regions-1.yml#/properties/region"
     defaults:
       "$ref": "/common-1.json#/definitions/resourceref"
+    policy:
+      type: object
+      description: Resource policy document that defines which AWS accounts or IAM principals can perform specific actions on the Kinesis data stream
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     tags:

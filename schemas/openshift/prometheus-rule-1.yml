@@ -102,6 +102,8 @@ properties:
                           type: string
                         component:
                           type: string
+                        controller:
+                          type: string
                         channel:
                           type: string
                         route:
