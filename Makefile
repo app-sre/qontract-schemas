@@ -1,4 +1,4 @@
-.PHONY: build-test test
+.PHONY: test
 
 IMAGE_TEST := qontract-schemas-test
 VALIDATOR_IMAGE := quay.io/redhat-services-prod/app-sre-tenant/qontract-validator-master/qontract-validator-master
