@@ -1,9 +1,6 @@
 ---
 locale: en_US.UTF-8
 
-ignore:
-- ".tox"
-
 rules:
   braces:
     min-spaces-inside: 0

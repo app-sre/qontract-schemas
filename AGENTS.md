@@ -19,14 +19,12 @@ This repository contains two different types of schemas:
 - `make gql_validate` - Run qontract-server to reveal GraphQL schema issues
 
 ### Testing
-- `tox` - Run all tests (Python 3.11 + linting)
-- `pytest -v` - Run just the tests
-- `tox -e lint` - Run only linting (yamllint)
+- `make test` - Run all tests (pytest + yamllint)
+- `uv run pytest -v` - Run just the tests
+- `uv run yamllint .` - Run only linting (yamllint)
 
 ### Docker Operations
-- `make build` - Build production Docker image
-- `make build-test` - Build test Docker image
-- `make test` - Build and run test image
+- `make test` - Build test image
 - `make clean` - Clean up build artifacts
 
 ## Architecture Overview
