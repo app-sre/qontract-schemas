@@ -6,7 +6,7 @@ COPY schemas schemas
 COPY graphql-schemas graphql-schemas
 COPY LICENSE /licenses/LICENSE
 
-FROM registry.access.redhat.com/ubi9/python-312-minimal:9.7-1764822634@sha256:41ef4fd16c9d5107112cd0a13fbc4358d6d036ee78074180703994d8836d2aa8 AS test
+FROM registry.access.redhat.com/ubi9/python-312-minimal:9.7-1766090328@sha256:64a3083a25d9f7573bb9b1a167e10be0464859a8e81421853d09947e873fe500 AS test
 
 WORKDIR /schemas
 
