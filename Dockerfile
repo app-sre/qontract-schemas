@@ -26,8 +26,12 @@ ENV \
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv lock --locked
-RUN uv sync --frozen
+# Update qontract-validator package to latest commit
+USER 0
+RUN uv lock --upgrade-package qontract-validator
+USER 1001
+RUN uv lock --locked && \
+    uv sync --frozen
 
 COPY --from=prod /schemas /schemas
 
