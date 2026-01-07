@@ -15,6 +15,14 @@ properties:
     "$ref": "/common-1.json#/definitions/longIdentifier"
   name:
     type: string
+  delete:
+    type: boolean
+    description: Flag a resource to be deleted
+  managed_by_erv2:
+    type: boolean
+    description: Manage the resource with erv2
+  module_overrides:
+    "$ref": "/external-resources/module-overrides-1.yml"
   content_from_github:
     type: object
     additionalProperties: false
@@ -80,10 +88,14 @@ properties:
     properties:
       enabled:
         type: boolean
-  records:
+  dns_records:
     type: array
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
+  rulesets:
+    type: array
+    items:
+      "$ref": "/cloudflare/ruleset-1.yml"
   workers:
     type: array
     items:
@@ -251,6 +263,12 @@ oneOf:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     zone:
       type: string
+    delete:
+      type: boolean
+    managed_by_erv2:
+      type: boolean
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
     plan:
       enum:
       - enterprise
@@ -286,10 +304,14 @@ oneOf:
       properties:
         enabled:
           type: boolean
-    records:
+    dns_records:
       type: array
       items:
         "$ref": "/cloudflare/dns-record-1.yml"
+    rulesets:
+      type: array
+      items:
+        "$ref": "/cloudflare/ruleset-1.yml"
     workers:
       type: array
       items:
