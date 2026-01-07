@@ -35,6 +35,8 @@ spec:
       {{sender}}
   - name: sqs-pr-type
     value: promote_qontract_schemas
+  - name: sqs-delay-seconds
+    value: "300"
   pipelineRef:
     params:
     - name: url

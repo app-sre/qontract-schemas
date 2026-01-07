@@ -1,0 +1,25 @@
+[project]
+name = "qontract-schemas"
+version = "0.1.0"
+description = "A repository containing schemas required for app-interface and qontract-reconcile."
+authors = [
+    { name = "Red Hat App-SRE Team", email = "sd-app-sre@redhat.com" },
+]
+license = { text = "Apache 2.0" }
+requires-python = "~= 3.12.5"
+dependencies = [
+    "pytest",
+    "jsonschema",
+    "PyYaml",
+    "anymarkup",
+    "yamllint",
+    "qontract-validator",
+]
+
+[project.urls]
+homepage = "https://github.com/app-sre/qontract-schemas"
+repository = "https://github.com/app-sre/qontract-schemas"
+documentation = "https://github.com/app-sre/qontract-schemas"
+
+[tool.uv.sources]
+qontract-validator = { url = "https://github.com/app-sre/qontract-validator/archive/refs/heads/master.zip" }

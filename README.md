@@ -18,7 +18,7 @@ make bundle-and-validate-schema
 
 However, usually you want to validate a schema change against real existing data in app-interface.
 During the development process it is encouraged to rely on test data in [app-sre/app-interface](https://github.com/app-sre/app-interface) instead.
-See [qcontract-server](https://github.com/app-sre/qontract-server) on how to bundle schema and app-interface data.
+See [qontract-server](https://github.com/app-sre/qontract-server) on how to bundle schema and app-interface data.
 
 ## About the schemas definition
 
