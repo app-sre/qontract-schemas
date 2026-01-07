@@ -1,0 +1,83 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+title: "Cloudflare Ruleset"
+description: |
+  A ruleset is an ordered set of rules that you can apply to traffic on the Cloudflare global network.
+  Rulesets belong to a phase and can only execute in the same phase.
+  Doc: https://developers.cloudflare.com/ruleset-engine/about/rulesets/
+  Schema based on https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/ruleset-1.yml
+
+  identifier:
+    "$ref": "/common-1.json#/definitions/longIdentifier"
+    description: |
+      The unique identifier for this ruleset.
+
+  name:
+    type: string
+    description: |
+      The human-readable name of the ruleset.
+
+  kind:
+    type: string
+    enum:
+    - managed
+    - custom
+    - root
+    - zone
+    description: |
+      The kind of the ruleset.
+
+  phase:
+    type: string
+    enum:
+    - ddos_l4
+    - ddos_l7
+    - http_config_settings
+    - http_custom_errors
+    - http_log_custom_fields
+    - http_ratelimit
+    - http_request_cache_settings
+    - http_request_dynamic_redirect
+    - http_request_firewall_custom
+    - http_request_firewall_managed
+    - http_request_late_transform
+    - http_request_origin
+    - http_request_redirect
+    - http_request_sanitize
+    - http_request_sbfm
+    - http_request_transform
+    - http_response_compression
+    - http_response_firewall_managed
+    - http_response_headers_transform
+    - magic_transit
+    - magic_transit_ids_managed
+    - magic_transit_managed
+    - magic_transit_ratelimit
+    description: |
+      The phase of the ruleset.
+
+  description:
+    type: string
+    description: |
+      An informative description of the ruleset.
+
+  rules:
+    type: array
+    items:
+      "$ref": "/cloudflare/rule-1.yml"
+    description: |
+      A list of rules to include in the ruleset.
+
+required:
+- identifier
+- name
+- kind
+- phase
