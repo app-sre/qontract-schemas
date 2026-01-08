@@ -55,6 +55,10 @@ properties:
     - dev
     - stage
     - prod
+  costCenter:
+    type: string
+    description: |
+      The 3-digit code identifying the Cost Center funding the application resources.
 
 required:
 - "$schema"
