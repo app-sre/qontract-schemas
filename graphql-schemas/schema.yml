@@ -3022,6 +3022,7 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: dependsOn, type: Environment_v1 }
   - { name: servicePhase, type: string, isRequired: true }
+  - { name: costCenter, type: string }
   - name: namespaces
     type: Namespace_v1
     isList: true
