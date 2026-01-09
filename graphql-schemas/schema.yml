@@ -3055,7 +3055,7 @@ confs:
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: appCode, type: string, isRequired: true }
-  - { name: costCenter, type: string, isRequired: true }
+  - { name: costCenter, type: string }
   - name: statusPageComponents
     type: StatusPageComponent_v1
     isList: true
