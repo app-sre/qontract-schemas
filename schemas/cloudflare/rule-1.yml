@@ -1,0 +1,68 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+title: "Cloudflare Rule"
+description: |
+  A rule defines a filter and an action to perform on the incoming requests that match the filter.
+  Doc: https://developers.cloudflare.com/ruleset-engine/about/rules/
+  Schema based on https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset#nestedatt--rules
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/rule-1.yml
+
+  action:
+    type: string
+    enum:
+    - block
+    - challenge
+    - compress_response
+    - ddos_dynamic
+    - execute
+    - force_connection_close
+    - js_challenge
+    - log
+    - log_custom_field
+    - managed_challenge
+    - redirect
+    - rewrite
+    - route
+    - score
+    - serve_error
+    - set_cache_settings
+    - set_config
+    - skip
+    description: |
+      The action to perform when the rule matches.
+
+  expression:
+    type: string
+    description: |
+      The expression defining which traffic will match the rule.
+
+  description:
+    type: string
+    description: |
+      An informative description of the rule.
+
+  enabled:
+    type: boolean
+    description: |
+      Whether the rule should be executed.
+
+  ref:
+    type: string
+    description: |
+      The reference of the rule (the rule's ID by default).
+
+  action_parameters:
+    type: object
+    description: |
+      The parameters configuring the rule's action.
+
+required:
+- action
+- expression
