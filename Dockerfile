@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.6-1760515502@sha256:34880b64c07f28f64d95737f82f891516de9a3b43583f39970f7bf8e4cfa48b7 AS prod
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7-1764794109@sha256:6fc28bcb6776e387d7a35a2056d9d2b985dc4e26031e98a2bd35a7137cd6fd71 AS prod
 
 WORKDIR /schemas
 
@@ -6,17 +6,34 @@ COPY schemas schemas
 COPY graphql-schemas graphql-schemas
 COPY LICENSE /licenses/LICENSE
 
-FROM prod AS test
+FROM registry.access.redhat.com/ubi9/python-312-minimal:9.7-1766090328@sha256:64a3083a25d9f7573bb9b1a167e10be0464859a8e81421853d09947e873fe500 AS test
 
-RUN microdnf upgrade -y && \
-    microdnf install -y python3.11 && \
-    microdnf clean all && \
-    update-alternatives --install /usr/bin/python3 python /usr/bin/python3.11 1 && \
-    ln -snf /usr/bin/python3.11 /usr/bin/python && \
-    python3 -m ensurepip
+WORKDIR /schemas
 
-RUN python3 -m pip install --no-cache-dir --upgrade pip tox
+USER 0
+RUN microdnf -y install make && microdnf -y clean all
+USER 1001
 
-COPY tox.ini test .yamllint /schemas/
+COPY --from=ghcr.io/astral-sh/uv:0.9.24@sha256:816fdce3387ed2142e37d2e56e1b1b97ccc1ea87731ba199dc8a25c04e4997c5 /uv /bin/uv
 
-CMD ["tox"]
+ENV \
+    # use venv from ubi image
+    UV_PROJECT_ENVIRONMENT="/opt/app-root" \
+    # compile bytecode for faster startup
+    UV_COMPILE_BYTECODE="true" \
+    # disable uv cache. it doesn't make sense in a container
+    UV_NO_CACHE=true
+
+COPY pyproject.toml uv.lock ./
+
+# Update qontract-validator package to latest commit
+USER 0
+RUN uv lock --upgrade-package qontract-validator
+USER 1001
+RUN uv lock --locked && \
+    uv sync --frozen
+
+COPY --from=prod /schemas /schemas
+
+COPY test .yamllint Makefile ./
+RUN make _test

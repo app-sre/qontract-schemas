@@ -1,5 +1,6 @@
 data.json
-.tox
+.venv
+.pytest_cache
 test/__pycache__/
 .DS_Store
 schemas/.DS_Store

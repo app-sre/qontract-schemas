@@ -1158,6 +1158,7 @@ confs:
   - { name: ocmSubscriptionLabels, type: json}
   - { name: enableDeadMansSnitch, type: boolean }
   - { name: enableCostReport, type: boolean }
+  - { name: allowedToBypassPublicPeeringRestriction, type: boolean }
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -2400,6 +2401,7 @@ confs:
   - { name: storage_class, type: string }
   - { name: annotations, type: json }
   - { name: tags, type: json }
+  - { name: bucket_policy, type: json }
 
 - name: NamespaceTerraformResourceS3SQS_v1
   interface: NamespaceTerraformResourceAWS_v1
@@ -3020,6 +3022,7 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: dependsOn, type: Environment_v1 }
   - { name: servicePhase, type: string, isRequired: true }
+  - { name: costCenter, type: string }
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -3052,7 +3055,7 @@ confs:
   - { name: endPoints, type: AppEndPoints_v1, isList: true }
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: appCode, type: string, isRequired: true }
-  - { name: costCenter, type: string, isRequired: true }
+  - { name: costCenter, type: string }
   - name: statusPageComponents
     type: StatusPageComponent_v1
     isList: true
