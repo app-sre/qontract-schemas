@@ -177,10 +177,6 @@ properties:
       Configuration for SQL queries.
     additionalProperties: false
     properties:
-      imageRepository:
-        type: string
-        description: |
-          The repository for the SQL query image.
       jobImage:
         type: string
         description: |
@@ -190,7 +186,6 @@ properties:
         description: |
           Vault secret for pulling the SQL query image.
     required:
-    - imageRepository
     - pullSecret
   pushGatewayCluster:
     "$ref": "/common-1.json#/definitions/crossref"
