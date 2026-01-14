@@ -57,6 +57,12 @@ properties:
     type: string
     description: |
       The value for this DNS record. For most record types, this
+      is the target hostname, IP address, or record data. (deprecated)
+
+  content:
+    type: string
+    description: |
+      The content for this DNS record. For most record types, this
       is the target hostname, IP address, or record data.
 
   data:

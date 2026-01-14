@@ -13,6 +13,8 @@ properties:
     type: string
   identifier:
     "$ref": "/common-1.json#/definitions/longIdentifier"
+  defaults:
+    "$ref": "/common-1.json#/definitions/resourceref"
   name:
     type: string
   delete:
@@ -92,10 +94,6 @@ properties:
     type: array
     items:
       "$ref": "/cloudflare/dns-record-1.yml"
-  rulesets:
-    type: array
-    items:
-      "$ref": "/cloudflare/ruleset-1.yml"
   workers:
     type: array
     items:
@@ -261,6 +259,8 @@ oneOf:
       - zone
     identifier:
       "$ref": "/common-1.json#/definitions/longIdentifier"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
     zone:
       type: string
     delete:
@@ -308,10 +308,6 @@ oneOf:
       type: array
       items:
         "$ref": "/cloudflare/dns-record-1.yml"
-    rulesets:
-      type: array
-      items:
-        "$ref": "/cloudflare/ruleset-1.yml"
     workers:
       type: array
       items:
@@ -411,7 +407,7 @@ oneOf:
       - certificate_secret
   required:
   - identifier
-  - zone
+  - defaults
 - additionalProperties: false
   properties:
     provider:

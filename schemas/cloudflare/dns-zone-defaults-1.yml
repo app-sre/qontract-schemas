@@ -1,0 +1,39 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+additionalProperties: false
+title: "Cloudflare DNS Zone Defaults"
+description: |
+  Cloudflare DNS Zone default file, used as input for er-cloudflare-zone module.
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /cloudflare/dns-zone-defaults-1.yml
+  name:
+    type: string
+    description: "The domain name."
+  plan:
+    description: "The ID of the rate plan."
+    enum:
+    - enterprise
+    - free
+  type:
+    description: |
+      A full zone implies that DNS is hosted with Cloudflare.
+      A partial zone is typically a partner-hosted zone or a CNAME setup.
+    enum:
+    - full
+    - partial
+  dns_records:
+    type: array
+    items:
+      "$ref": "/cloudflare/dns-record-1.yml"
+  rulesets:
+    type: array
+    items:
+      "$ref": "/cloudflare/ruleset-1.yml"
+required:
+- "$schema"
+- name

@@ -1854,6 +1854,7 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: zone, type: string, isRequired: true }
   - { name: delete, type: boolean }
   - { name: managed_by_erv2, type: boolean }
@@ -1865,7 +1866,6 @@ confs:
   - { name: tiered_cache, type: CloudflareZoneTieredCache_v1 }
   - { name: cache_reserve, type: CloudflareZoneCacheReserve_v1 }
   - { name: dns_records, type: CloudflareDnsRecord_v1, isList: true }
-  - { name: rulesets, type: CloudflareRuleset_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
   - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
@@ -4453,24 +4453,6 @@ confs:
   - { name: data, type: CloudflareDnsRecordDataSettings_v1 }
   - { name: proxied, type: boolean }
   - { name: priority, type: int }
-
-- name: CloudflareRule_v1
-  fields:
-  - { name: action, type: string, isRequired: true }
-  - { name: expression, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: enabled, type: boolean }
-  - { name: ref, type: string }
-  - { name: action_parameters, type: json }
-
-- name: CloudflareRuleset_v1
-  fields:
-  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: kind, type: string, isRequired: true }
-  - { name: phase, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: rules, type: CloudflareRule_v1, isList: true }
 
 - name: CloudflareDnsZone_v1
   datafile: /cloudflare/dns-zone-1.yml
