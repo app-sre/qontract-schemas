@@ -444,6 +444,35 @@ properties:
       required:
       - provisioner
       - excludedProviders
+
+  imagePatternsBlock:
+    type: array
+    description: |
+      Configuration to block specific image patterns from being deployed to environments
+      matching the label selector. This allows blocking non-compliant images (e.g., 
+      redhat-user-workloads) from production environments.
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        environmentLabelSelector:
+          type: object
+          description: |
+            Key-value pairs to match environment labels. All specified labels must match
+            for the block to apply. Example: {type: production}
+          additionalProperties: true
+          patternProperties:
+            ".*":
+              type: string
+        imagePatterns:
+          type: array
+          description: List of image patterns to block (e.g., quay.io/redhat-user-workloads)
+          items:
+            type: string
+      required:
+        - environmentLabelSelector
+        - imagePatterns
+
 required:
 - "$schema"
 - labels
