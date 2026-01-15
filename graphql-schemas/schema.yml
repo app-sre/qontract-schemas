@@ -38,6 +38,7 @@ confs:
   - { name: terraformResourcesProviderExclusions, type: TerraformResourcesProviderExclusions_v1, isList: true}
   - { name: terraformResourcesProviderExclusionsByProvisioner, type: TerraformResourcesProviderExclusionsByProvisioner_v1, isList: true}
   - { name: rhcsProvider, type: RhcsProviderSettings_v1 }
+  - { name: imagePatternsBlock, type: ImagePatternsBlock_v1, isList: true}
 
 - name: TerraformResourcesProviderExclusions_v1
   fields:
@@ -49,6 +50,11 @@ confs:
   fields:
   - { name: provisioner, type: ExternalResourcesProvisioner_v1, isInterface: true, isRequired: True}
   - { name: excludedProviders, type: string, isList: true, isRequired: true}
+
+- name: ImagePatternsBlock_v1
+  fields:
+  - { name: environmentLabelSelector, type: json, isRequired: true}
+  - { name: imagePatterns, type: string, isList: true, isRequired: true}
 
 - name: AppInterfaceCustomMessage_v1
   fields:
