@@ -449,7 +449,7 @@ properties:
     type: array
     description: |
       Configuration to block specific image patterns from being deployed to environments
-      matching the label selector. This allows blocking non-compliant images (e.g., 
+      matching the label selector. This allows blocking non-compliant images (e.g.,
       redhat-user-workloads) from production environments.
     items:
       type: object
@@ -470,8 +470,8 @@ properties:
           items:
             type: string
       required:
-        - environmentLabelSelector
-        - imagePatterns
+      - environmentLabelSelector
+      - imagePatterns
 
 required:
 - "$schema"
