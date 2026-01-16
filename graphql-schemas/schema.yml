@@ -1854,14 +1854,18 @@ confs:
   fields:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
   - { name: zone, type: string, isRequired: true }
+  - { name: delete, type: boolean }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
   - { name: plan, type: string }
   - { name: type, type: string }
   - { name: settings, type: json }
   - { name: argo, type: CloudflareZoneArgo_v1 }
   - { name: tiered_cache, type: CloudflareZoneTieredCache_v1 }
   - { name: cache_reserve, type: CloudflareZoneCacheReserve_v1 }
-  - { name: records, type: CloudflareDnsRecord_v1, isList: true }
+  - { name: dns_records, type: CloudflareDnsRecord_v1, isList: true }
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
   - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
@@ -4441,7 +4445,7 @@ confs:
 
 - name: CloudflareDnsRecord_v1
   fields:
-  - { name: identifier, type: string, isRequired: true}
+  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: name, type: string, isRequired: true }
   - { name: type, type: string, isRequired: true}
   - { name: ttl, type: int, isRequired: true}
