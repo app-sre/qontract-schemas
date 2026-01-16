@@ -445,7 +445,7 @@ properties:
       - provisioner
       - excludedProviders
 
-  imagePatternsBlock:
+  imagePatternsBlockRules:
     type: array
     description: |
       Configuration to block specific image patterns from being deployed to environments
