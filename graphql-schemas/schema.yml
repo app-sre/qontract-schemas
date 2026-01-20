@@ -3669,6 +3669,23 @@ confs:
       schema: /app-sre/schedule-1.yml
       subAttr: schedule.users
 
+- name: QuayRepository_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: permission, type: string, isRequired: true }
+
+- name: QuayRobot_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: labels, type: json }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: quay_username, type: string }
+  - { name: quay_org, type: QuayOrg_v1 }
+  - { name: repositories, type: QuayRepository_v1, isList: true }
+  - { name: teams, type: string, isList: true }
+
 - name: Bot_v1
   datafile: /access/bot-1.yml
   fields:
@@ -3735,6 +3752,13 @@ confs:
     isRequired: true
     synthetic:
       schema: /access/external-user-1.yml
+      subAttr: roles
+  - name: quay_robots
+    type: QuayRobot_v1
+    isList: true
+    isRequired: true
+    synthetic:
+      schema: /access/quay-robot-1.yml
       subAttr: roles
 
 - name: LdapGroup_v1
@@ -4137,6 +4161,7 @@ confs:
   - { name: users_v1, type: User_v1, isList: true, datafileSchema: /access/user-1.yml }
   - { name: external_users_v1, type: ExternalUser_v1, isList: true, datafileSchema: /access/external-user-1.yml }
   - { name: bots_v1, type: Bot_v1, isList: true, datafileSchema: /access/bot-1.yml }
+  - { name: quay_robots_v1, type: QuayRobot_v1, isList: true, datafileSchema: /access/quay-robot-1.yml }
   - { name: roles_v1, type: Role_v1, isList: true, datafileSchema: /access/role-1.yml }
   - { name: permissions_v1, type: Permission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/permission-1.yml }
   - { name: oidc_permissions_v1, type: OidcPermission_v1, isList: true, isRequired: true, isInterface: true, datafileSchema: /access/oidc-permission-1.yml }
