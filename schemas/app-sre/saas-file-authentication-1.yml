@@ -2,16 +2,27 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "SaaS File Authentication"
+description: |
+  Schema for defining authentication credentials for SaaS file deployments.
+  This section specifies secrets for accessing private code repositories
+  and image registries. Credentials are sourced from Vault.
 
-description: saas file authentication section for image and/or code credentials
 additionalProperties: false
 properties:
   "$schema":
     type: string
     enum:
     - /app-sre/saas-file-authentication-1.yml
+
   code:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: |
+      Reference to a Vault secret containing credentials for accessing
+      private code repositories.
+
   image:
     "$ref": "/common-1.json#/definitions/vaultSecret"
-required: []
+    description: |
+      Reference to a Vault secret containing credentials for accessing
+      private image registries.
