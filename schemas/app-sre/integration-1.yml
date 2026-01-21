@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Integration"
+description: |
+  Schema for defining an integration in app-interface. Integrations represent
+  automated processes or services that interact with app-interface data and
+  external systems. This schema allows specifying integration metadata, upstream
+  source, supported schemas, PR check configuration, and managed deployment
+  targets.
 
 additionalProperties: false
 
@@ -16,16 +23,28 @@ properties:
 
   name:
     type: string
+    description: |
+      The unique name of the integration. This name is used to identify the
+      integration across the system.
 
   description:
     type: string
+    description: |
+      A detailed description of the integration, explaining its purpose,
+      functionality, and any relevant context.
 
   upstream:
     type: string
     format: uri-reference
+    description: |
+      The upstream source or repository for the integration. This is typically
+      a URL pointing to the integration's codebase or documentation.
 
   schemas:
     type: array
+    description: |
+      A list of schemas that this integration supports or interacts with.
+      Each entry must be a schema path starting with a slash.
     items:
       type: string
       pattern: '^\/.+$'
@@ -37,37 +56,65 @@ properties:
 
   pr_check:
     type: object
+    description: |
+      Configuration for pull request checks related to this integration.
+      This section defines how PR checks are executed, their state, and
+      additional options for validation and execution order.
     additionalProperties: false
     properties:
       cmd:
         type: string
+        description: |
+          The command to execute for the PR check.
       state:
         type: boolean
+        description: |
+          Indicates if the PR check is stateful.
       sqs:
         type: boolean
+        description: |
+          Whether to send PR check results to SQS.
       disabled:
         type: boolean
+        description: |
+          If true, disables this PR check.
       always_run:
         type: boolean
+        description: |
+          If true, always runs this PR check regardless of changes.
       no_validate_schemas:
         type: boolean
+        description: |
+          If true, disables schema validation for this PR check.
       run_for_valid_saas_file_changes:
         type: boolean
+        description: |
+          If true, runs the PR check for valid SaaS file changes.
       early_exit:
         type: boolean
+        description: |
+          If true, allows the PR check to exit early on failure.
       check_only_affected_shards:
         type: boolean
-        description: "defaults to false"
+        description: |
+          If true, only checks affected shards. Defaults to false.
       run_order:
         type: integer
+        description: |
+          The order in which to run this PR check relative to others.
       imageRef:
         type: string
-        description: image ref to be used
+        description: |
+          The image reference to use for running the PR check.
     required:
     - cmd
 
   managed:
     type: array
+    description: |
+      A list of deployment targets managed by this integration. Each entry
+      specifies the namespace, integration spec, and optional sharding
+      configuration for where and how the integration should be deployed.
     items:
       type: object
       additionalProperties: false
@@ -82,14 +129,22 @@ properties:
                 enum:
                 - /openshift/namespace-1.yml
                 - /openshift/lean-namespace-1.yml
+          description: |
+            Reference to the OpenShift namespace or lean namespace where
+            the integration should be deployed.
         spec:
           "$ref": "/app-sre/integration-spec-1.yml"
+          description: |
+            The specification for how the integration should be deployed,
+            including resources, logging, and other settings.
         sharding:
           "$ref": "/app-sre/integration-sharding-1.yml"
-
+          description: |
+            Optional sharding configuration for the integration deployment.
       required:
       - namespace
       - spec
+
 required:
 - "$schema"
 - labels
