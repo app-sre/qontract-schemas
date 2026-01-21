@@ -58,6 +58,13 @@ properties:
     oneOf:
     - required:
       - soakDays
+  fastPath:
+    oneOf:
+    # inline
+    - "$ref": "/openshift/cluster-upgrade-fast-path-1.yml"
+    # referenced
+    - "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-upgrade-fast-path-1.yml"
 required:
 - workloads
 - schedule
