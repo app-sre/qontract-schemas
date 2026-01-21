@@ -2,6 +2,14 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "SaaS File"
+description: |
+  Schema for SaaS files, which describe Continuous Delivery
+  pipelines for services in app-interface. SaaS files specify resource
+  templates, deployment targets, notifications, registry authentication,
+  secret injection, and more. They enable service owners to declaratively manage
+  their deployment flow, automate promotions, and integrate with CI/CD
+  systems such as Tekton, Jenkins, and Konflux.
 
 additionalProperties: false
 
@@ -10,27 +18,53 @@ properties:
     type: string
     enum:
     - /app-sre/saas-file-2.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
     maxLength: 39
+    description: |
+      The unique name of the SaaS file. This is a UID and is used to
+      identify the deployment configuration. Renaming requires a full
+      migration.
+
   displayName:
     type: string
+    description: |
+      A human-friendly name for the SaaS file, used in visualization
+      tooling. This can be changed freely for cosmetic reasons.
+
   description:
     type: string
+    description: |
+      A detailed description of what is being deployed by this SaaS file,
+      including its purpose and any relevant context.
+
   app:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/app-1.yml"
+    description: |
+      Reference to the application that this SaaS file is a part of.
+
   pipelinesProvider:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/pipelines-provider-1.yml"
-  # Setting skipSuccessfulDeployNotifications to true will cause successful
-  # deployments to not have a successful deployment notice sent.
+    description: |
+      Reference to the pipelines provider used for this SaaS file.
+
   skipSuccessfulDeployNotifications:
     type: boolean
+    description: |
+      If true, successful deployments will not send a notification.
+
   slack:
     type: object
+    description: |
+      Configuration for Slack notifications about deployment status.
+      Allows specifying the output type, workspace, channel, and
+      notification options.
     additionalProperties: false
     properties:
       output:
@@ -38,28 +72,49 @@ properties:
         enum:
         - events
         - publish
+        description: |
+          The type of Slack output to use: publish job results or send
+          event messages.
       workspace:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/slack-workspace-1.yml"
+        description: |
+          Reference to the Slack workspace for notifications.
       channel:
         type: string
+        description: |
+          The Slack channel to send notifications to.
       notifications:
         type: object
         additionalProperties: false
         properties:
           start:
             type: boolean
+            description: |
+              If true, send a Slack notification at the beginning of a deployment.
     required:
     - workspace
     - channel
+
   managedResourceTypes:
     type: array
     items:
       type: string
+    description: |
+      A list of OpenShift / kubernetes resources that are enabled for reconciliation.
+      Specified resource types will be reconciled during continuous deployment, and
+      unspecified types will be ignored.
+
   managedResourceNames:
     type: array
     items:
       "$ref": "/openshift/managed-resource-name-1.yml"
+    description: |
+      (Optional) A list of resource kind and names to manage, filtering out
+      other resources of the same kind. Used in specific cases, like
+      deploying to a protected namespace (i.e. openshift-* namespaces) while using
+      elevated permissions (cluster-admin role).
+
   authentication:
     oneOf:
     # inline
@@ -67,54 +122,94 @@ properties:
     # referenced
     - "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/saas-file-authentication-1.yml"
+    description: |
+      Authentication configuration for accessing code repositories or image
+      registries, either inline or by reference.
+
   parameters:
     type: object
+    description: |
+      Parameters to be used for all resource templates in this SaaS file,
+      such as for `oc process` or `helm template`.
+
   allowedSecretParameterPaths:
     type: array
     items:
       type: string
+    description: |
+      A list of allowed Vault paths for secret parameters.
+
   secretParameters:
     type: array
-    description: saas file level parameters from vault secrets
+    description: |
+      A list of secret template parameters, injected from Vault, that are applied to all resource templates
+      in this SaaS file.
     items:
       "$ref": "/app-sre/vault-secret-parameter-1.yml"
+
   validateTargetsInApp:
-    description: indicates a desire to validate that all targets belong to the same app as the saas file itself
     type: boolean
+    description: |
+      If true, validates that all deployment targets belong to the same
+      app as the SaaS file.
+
   validatePlannedData:
     type: boolean
-    description: enable skipping planned data validation, mostly for automated bootstrap pusrposes
+    description: |
+      If false, skips validation of planned data, such as dependent
+      resources (i.e. a Secret mounted by a Deployment). Useful for automated bootstrap purposes. 
+
   resourceTemplates:
     type: array
+    description: |
+      A list of resource templates to deploy. Each template specifies
+      its source, parameters, and deployment targets.
     items:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
+          description: |
+            A descriptive name for the deployed resources.
         url:
           type: string
           format: uri
+          description: |
+            The git repository URL containing the resource template.
         path:
           type: string
           pattern: '^\/.*'
+          description: |
+            The path to the file containing the resource template in the repository.
         provider:
           type: string
           enum:
           - openshift-template
           - directory
           - helm
+          description: |
+            The type of resource template: OpenShift template, directory of
+            manifests, or Helm chart.
         hash_length:
           type: integer
+          description: |
+            The length of the commit hash to use for image tags.
         parameters:
           type: object
+          description: |
+            Parameters to use when deploying this resource template.
         secretParameters:
           type: array
-          description: resource template level parameters from vault secrets
+          description: |
+            A list of secret template parameters, injected from Vault, that are applied to
+            the associated resource template targets.
           items:
             "$ref": "/app-sre/vault-secret-parameter-1.yml"
         targets:
           type: array
+          description: |
+            A list of deployment targets for this resource template.
           items:
             oneOf:
             # inline
@@ -127,23 +222,42 @@ properties:
       - url
       - path
       - targets
+
   takeover:
     type: boolean
+    description: |
+      If true, only resources declared in this SaaS file will be kept;
+      all others will be deleted. Use with caution.
+
   deprecated:
     type: boolean
-    description: prevent updates to a saas file
+    description: |
+      If true, prevents updates to this SaaS file.
+
   compare:
     type: boolean
+    description: |
+      If false, the job does not compare desired to current resources and
+      applies all resources even if they have not changed.
+
   timeout:
     "$ref": "/common-1.json#/definitions/dhmsDuration"
     description: |
-      Maximum time the deployment job is allowed to last. In Tekton it defaults to
-      60 minutes. We don't allow smaller times as Tekton implementation currently deletes
-      PipelineRun pods, hence destroying logs.
+      Maximum time the deployment job is allowed to last. Defaults to 60
+      minutes for Tekton. Shorter times are not allowed due to Tekton
+      implementation details.
+
   publishJobLogs:
     type: boolean
+    description: |
+      If true, publishes job logs as artifacts in the deployment job.
+
   clusterAdmin:
     type: boolean
+    description: |
+      If true, uses cluster-admin role when applying resources deployed by
+      this SaaS file. 
+
   imagePatterns:
     type: array
     items:
@@ -152,16 +266,24 @@ properties:
       # - quay.io
       # - registry.redhat.io
       # - registry.connect.redhat.com
-      # - ECR
-      # - dynatrace.com
+      # - registry.access.redhat.com
+      # - AWS ECR Private Registry: *.dkr.ecr.*.amazonaws.com
+      # - *.live.dynatrace.com
       pattern: '^(quay\.io|registry\.redhat\.io|registry\.connect\.redhat\.com||registry\.access\.redhat\.com|[^.]+\.dkr\.ecr\.[^.]+\.amazonaws\.com|[^.]+\.live\.dynatrace\.com).*$'
+    description: |
+      A list of allowed image patterns for deployments.
+
   use_channel_in_image_tag:
     type: boolean
+    description: |
+      If true, image tags will include the channel name.
+
   deployResources:
-    description:
-      CPU and memory resources used by the openshift-saas-deploy step of the
-      openshift-saas-deploy tasks created by the openshit-tekton-resources integration
     "$ref": "/openshift/deploy-resources-1.yml"
+    description: |
+      CPU and memory requests + limits used by the openshift-saas-deploy step of
+      the deployment pipeline.
+
 required:
 - "$schema"
 - labels
