@@ -2348,6 +2348,8 @@ confs:
   - { name: specs, type: SQSQueuesSpecs_v1, isRequired: true, isList: true }
   - { name: annotations, type: json }
   - { name: tags, type: json }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
 
 - name: NamespaceTerraformResourceSNSSubscription_v1
   fields:
