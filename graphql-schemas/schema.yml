@@ -1815,6 +1815,7 @@ confs:
     strategy: fieldMap
     field: provider
     fieldMap:
+      account: NamespaceTerraformResourceCloudflareAccount_v1
       zone: NamespaceTerraformResourceCloudflareZone_v1
       worker_script: NamespaceTerraformResourceCloudflareWorkerScript_v1
       logpush_ownership_challenge: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
@@ -1875,6 +1876,16 @@ confs:
   - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
   - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
   - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
+
+- name: NamespaceTerraformResourceCloudflareAccount_v1
+  interface: NamespaceTerraformResourceCloudflare_v1
+  fields:
+  - { name: provider, type: string, isRequired: true }
+  - { name: identifier, type: string, isRequired: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: delete, type: boolean }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
 
 - name: CloudflareZoneArgo_v1
   fields:
