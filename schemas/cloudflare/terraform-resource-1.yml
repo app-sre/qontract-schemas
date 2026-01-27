@@ -473,5 +473,24 @@ oneOf:
   - zone
   - identifier
   - enabled
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - account
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    delete:
+      type: boolean
+    managed_by_erv2:
+      type: boolean
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - defaults
 required:
 - provider
