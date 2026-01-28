@@ -30,13 +30,6 @@ properties:
       A human-readable description of the Cloudflare account, its
       intended use, or any relevant context.
 
-  providerVersion:
-    type: string
-    description: |
-      The version of the Cloudflare provider used for managing this
-      account. This is important for ensuring compatibility with
-      automation tools such as Terraform.
-
   accountOwners:
     type: array
     description: |
@@ -81,28 +74,9 @@ properties:
       The type of Cloudflare account. Use 'standard' for regular accounts
       or 'enterprise' for accounts with enterprise features and support.
 
-  terraformStateAccount:
-    description: |
-      Reference to the AWS account used for storing Terraform state in S3.
-      This enables stateful infrastructure management for Cloudflare
-      resources.
-    "$ref": "/common-1.json#/definitions/crossref"
-    "$schemaRef": "/aws/account-1.yml"
-
-  deletionApprovals:
-    type: array
-    description: |
-      A list of deletion approvals required for this Cloudflare account.
-      Each entry references a deletion approval object, ensuring that
-      destructive actions are reviewed and authorized.
-    items:
-      "$ref": "/app-interface/deletion-approval-1.yml"
-
 required:
 - "$schema"
 - name
 - description
-- providerVersion
 - apiCredentials
 - accountOwners
-- terraformStateAccount

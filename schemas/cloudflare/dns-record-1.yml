@@ -53,12 +53,6 @@ properties:
       The time-to-live (TTL) for this DNS record, in seconds.
       Determines how long the record is cached by resolvers.
 
-  value:
-    type: string
-    description: |
-      The value for this DNS record. For most record types, this
-      is the target hostname, IP address, or record data. (deprecated)
-
   content:
     type: string
     description: |
@@ -74,15 +68,21 @@ properties:
       flags, protocol, public key, digest type, digest, tag, and value.
     properties:
       algorithm:
-        "$ref": "/common-1.json#/definitions/dsDNSRecordAlgro"
+        type: integer
+        minimum: 0
+        maximum: 255
         description: |
           The algorithm used for DNSSEC records (DS/DNSKEY).
       key_tag:
-        "$ref": "/common-1.json#/definitions/dsDNSRecordKeyTag"
+        type: integer
+        minimum: 0
+        maximum: 65535
         description: |
           The key tag for DNSSEC records.
       flags:
-        "$ref": "/common-1.json#/definitions/dsDNSRecordKeyTag"
+        type: integer
+        minimum: 0
+        maximum: 65535
         description: |
           The flags field for DNSKEY records.
       protocol:
@@ -117,7 +117,9 @@ properties:
       Only applicable to certain record types (e.g., A, AAAA, CNAME).
 
   priority:
-    "$ref": "/common-1.json#/definitions/DNSRecordPriority"
+    type: number
+    minimal: 0
+    maximum: 65535
     description: |
       The priority for MX records. Lower values indicate higher priority.
 
