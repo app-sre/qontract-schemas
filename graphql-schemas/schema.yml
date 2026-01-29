@@ -27,8 +27,6 @@ confs:
   - { name: endpointMonitoringBlackboxExporterModules, type: string, isList: true }
   - { name: ldap, type: LdapSettings_v1, isRequired: false}
   - { name: jiraWatcher, type: JiraWatcherSettings_v1, isRequired: false}
-  - { name: cloudflareEmailDomainAllowList, type: string, isList: true }
-  - { name: cloudflareDNSZoneMaxRecords, type: int }
   - { name: state, type: AppInterfaceStateConfiguration_v1, isInterface: true }
   - { name: ldapGroups, type: LdapGroupsSettings_v1 }
   - { name: deadMansSnitchSettings, type: DeadMansSnitchSettings_v1}
@@ -1470,12 +1468,8 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true, isSearchable: true }
   - { name: description, type: string }
-  - { name: providerVersion, type: string, isRequired: true }
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
-  - { name: enableDeletion, type: boolean }
   - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
-  - { name: terraformStateAccount, type: AWSAccount_v1, isRequired: true }
-  - { name: deletionApprovals, type: DeletionApproval_v1, isList: true }
   - { name: enforceTwofactor, type: boolean }
   - { name: type, type: string }
 
@@ -1817,44 +1811,8 @@ confs:
     fieldMap:
       account: NamespaceTerraformResourceCloudflareAccount_v1
       zone: NamespaceTerraformResourceCloudflareZone_v1
-      worker_script: NamespaceTerraformResourceCloudflareWorkerScript_v1
-      logpush_ownership_challenge: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
-      logpush_job: NamespaceTerraformResourceLogpushJob_v1
-      logpull_retention: NamespaceTerraformResourceLogpullRetention_v1
   fields:
   - { name: provider, type: string, isRequired: true }
-
-- name: NamespaceTerraformResourceLogpushJob_v1
-  interface: NamespaceTerraformResourceCloudflare_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: zone, type: string }
-  - { name: enabled, type: boolean }
-  - { name: identifier, type: string, isRequired: true}
-  - { name: destination_conf, type: string, isRequired: true }
-  - { name: logpull_options, type: string }
-  - { name: ownership_challenge, type: string }
-  - { name: dataset, type: string }
-  - { name: frequency, type: string }
-  - { name: name, type: string }
-  - { name: filter, type: string }
-  - { name: kind, type: string }
-
-- name: NamespaceTerraformResourceLogpushOwnershipChallenge_v1
-  interface: NamespaceTerraformResourceCloudflare_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: zone, type: string }
-  - { name: identifier, type: string, isRequired: true}
-  - { name: destination_conf, type: string, isRequired: true }
-
-- name: NamespaceTerraformResourceLogpullRetention_v1
-  interface: NamespaceTerraformResourceCloudflare_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: zone, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true}
-  - { name: enabled, type: boolean, isRequired: true }
 
 - name: NamespaceTerraformResourceCloudflareZone_v1
   interface: NamespaceTerraformResourceCloudflare_v1
@@ -1862,20 +1820,9 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: identifier, type: string, isRequired: true }
   - { name: defaults, type: string, isRequired: true, isResource: true }
-  - { name: zone, type: string, isRequired: true }
   - { name: delete, type: boolean }
   - { name: managed_by_erv2, type: boolean }
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
-  - { name: plan, type: string }
-  - { name: type, type: string }
-  - { name: settings, type: json }
-  - { name: argo, type: CloudflareZoneArgo_v1 }
-  - { name: tiered_cache, type: CloudflareZoneTieredCache_v1 }
-  - { name: cache_reserve, type: CloudflareZoneCacheReserve_v1 }
-  - { name: dns_records, type: CloudflareDnsRecord_v1, isList: true }
-  - { name: workers, type: CloudflareZoneWorker_v1, isList: true }
-  - { name: certificates, type: CloudflareZoneCertificate_v1, isList: true }
-  - { name: custom_ssl_certificates, type: CloudflareCustomSSLCertificate_v1, isList: true }
 
 - name: NamespaceTerraformResourceCloudflareAccount_v1
   interface: NamespaceTerraformResourceCloudflare_v1
@@ -1886,69 +1833,6 @@ confs:
   - { name: delete, type: boolean }
   - { name: managed_by_erv2, type: boolean }
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
-
-- name: CloudflareZoneArgo_v1
-  fields:
-  - { name: tiered_caching, type: boolean }
-  - { name: smart_routing, type: boolean }
-
-- name: CloudflareZoneTieredCache_v1
-  fields:
-  - { name: cache_type, type: string, isRequired: true }
-
-- name: CloudflareZoneCacheReserve_v1
-  fields:
-  - { name: enabled, type: boolean }
-
-- name: CloudflareZoneWorker_v1
-  fields:
-  - { name: identifier, type: string, isRequired: true }
-  - { name: pattern, type: string, isRequired: true }
-  - { name: script_name, type: string, isRequired: true }
-
-- name: CloudflareZoneCertificate_v1
-  fields:
-  - { name: identifier, type: string, isRequired: true }
-  - { name: type, type: string, isRequired: true }
-  - { name: hosts, type: string, isRequired: true, isList: true }
-  - { name: validation_method, type: string, isRequired: true }
-  - { name: validity_days, type: int, isRequired: true }
-  - { name: certificate_authority, type: string, isRequired: true }
-  - { name: cloudflare_branding, type: boolean }
-  - { name: wait_for_active_status, type: boolean }
-
-- name: CertificateSecret_v1
-  fields:
-  - { name: certificate, type: VaultSecret_v1, isRequired: true }
-  - { name: key, type: VaultSecret_v1, isRequired: true }
-
-- name: CloudflareCustomSSLCertificate_v1
-  fields:
-  - { name: identifier, type: string, isRequired: true }
-  - { name: type, type: string, isRequired: true }
-  - { name: bundle_method, type: string }
-  - { name: geo_restrictions, type: string }
-  - { name: certificate_secret, type: CertificateSecret_v1, isRequired: true }
-
-- name: NamespaceTerraformResourceCloudflareWorkerScript_v1
-  interface: NamespaceTerraformResourceCloudflare_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: content_from_github, type: CloudflareZoneWorkerScriptContentFromGithub_v1 }
-  - { name: vars, type: CloudflareZoneWorkerScriptVars_v1, isList: true }
-
-- name: CloudflareZoneWorkerScriptContentFromGithub_v1
-  fields:
-  - { name: repo, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: ref, type: string, isRequired: true }
-
-- name: CloudflareZoneWorkerScriptVars_v1
-  fields:
-  - { name: name, type: string, isRequired: true }
-  - { name: text, type: string, isRequired: true }
 
 - name: TerraformRepo_v1
   datafile: /aws/terraform-repo-1.yml
@@ -3881,7 +3765,6 @@ confs:
       per-aws-account: AWSAccountSharding_v1
       per-openshift-cluster: OpenshiftClusterSharding_v1
       per-ocm-organization: OCMOrganizationSharding_v1
-      per-cloudflare-dns-zone: CloudflareDNSZoneSharding_v1
   fields:
   - { name: strategy, type: string, isRequired: true}
 
@@ -3895,19 +3778,6 @@ confs:
   fields:
   - { name: name, type: string, isRequired: true }
   - { name: imageRef, type: string, isRequired: false }
-
-- name: CloudflareDNSZoneSharding_v1
-  interface: IntegrationSharding_v1
-  fields:
-  - { name: strategy, type: string, isRequired: true }
-  - { name: shardSpecOverrides, type: CloudflareDNSZoneShardSpecOverride_v1, isList: true }
-
-- name: CloudflareDNSZoneShardSpecOverride_v1
-  fields:
-  - { name: shard, type: CloudflareDnsZone_v1, isRequired: true}
-  - { name: imageRef, type: string, isRequired: false }
-  - { name: resources, type: DeployResources_v1, isRequired: false }
-  - { name: disabled, type: boolean, isRequired: false}
 
 - name: OpenshiftClusterSharding_v1
   interface: IntegrationSharding_v1
@@ -4204,7 +4074,6 @@ confs:
   - { name: gabi_instances_v1, type: GabiInstance_v1, isList: true, datafileSchema: /app-sre/gabi-instance-1.yml }
   - { name: resource_template_tests_v1, type: ResourceTemplateTest_v1, isList: true, datafileSchema: /app-interface/resource-template-test-1.yml }
   - { name: dns_zone_v1, type: DnsZone_v1, isList: true, datafileSchema: /dependencies/dns-zone-1.yml }
-  - { name: cloudflare_dns_zone_v1, type: CloudflareDnsZone_v1, isList: true, datafileSchema: /cloudflare/dns-zone-1.yml }
   - { name: slack_workspaces_v1, type: SlackWorkspace_v1, isList: true, datafileSchema: /dependencies/slack-workspace-1.yml }
   - { name: slo_document_v1, type: SLODocument_v1, isList: true, datafileSchema: /app-sre/slo-document-1.yml}
   - { name: shared_resources_v1, type: SharedResources_v1, isList: true, datafileSchema: /openshift/shared-resources-1.yml }
@@ -4447,43 +4316,6 @@ confs:
   - { name: allowed_vault_secret_paths, type: string, isList: true }
   - { name: origin, type: string, isRequired: true }
   - { name: records, type: DnsRecord_v1, isList: true }
-
-- name: CloudflareDnsRecordDataSettings_v1
-  fields:
-  - { name: algorithm, type: int }
-  - { name: key_tag, type: int }
-  - { name: flags, type: int }
-  - { name: protocol, type: int }
-  - { name: public_key, type: string }
-  - { name: digest_type, type: int }
-  - { name: digest, type: string }
-  - { name: tag, type: string }
-  - { name: value, type: string }
-
-- name: CloudflareDnsRecord_v1
-  fields:
-  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
-  - { name: name, type: string, isRequired: true }
-  - { name: type, type: string, isRequired: true}
-  - { name: ttl, type: int, isRequired: true}
-  - { name: value, type: string }
-  - { name: data, type: CloudflareDnsRecordDataSettings_v1 }
-  - { name: proxied, type: boolean }
-  - { name: priority, type: int }
-
-- name: CloudflareDnsZone_v1
-  datafile: /cloudflare/dns-zone-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: identifier, type: string, isRequired: true, isUnique: true}
-  - { name: account, type: CloudflareAccount_v1, isRequired: true }
-  - { name: zone, type: string, isRequired: true }
-  - { name: type, type: string }
-  - { name: plan, type: string }
-  - { name: records, type: CloudflareDnsRecord_v1, isList: true }
-  - { name: max_records, type: int }
-  - { name: delete, type: boolean }
 
 - name: SLODocumentSLOSLOParameters_v1
   fields:

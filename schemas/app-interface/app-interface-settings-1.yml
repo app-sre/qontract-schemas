@@ -226,16 +226,6 @@ properties:
     required:
     - readTimeout
     - connectTimeout
-  cloudflareEmailDomainAllowList:
-    type: array
-    description: |
-      List of email domains allowed for Cloudflare access.
-    items:
-      type: string
-  cloudflareDNSZoneMaxRecords:
-    type: integer
-    description: |
-      Maximum number of DNS records allowed per zone in Cloudflare.
   state:
     type: object
     description: |

@@ -16,7 +16,6 @@ properties:
     - aws
     - cloudflare
     - gcp-project
-    - cna-experimental
   provisioner:
     "$ref": "/common-1.json#/definitions/crossref"
     description: the provisioning entity
