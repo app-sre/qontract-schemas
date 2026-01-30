@@ -85,6 +85,9 @@ properties:
       googleChat:
         type: boolean
         description: ship logs to google chat
+      slackErrorFilter:
+        type: boolean
+        description: ship logs to an errors-only slack channel
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
   fluentdResources:
