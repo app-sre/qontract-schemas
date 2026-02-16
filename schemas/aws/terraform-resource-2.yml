@@ -706,6 +706,15 @@ oneOf:
           - db.m7g.8xlarge
           - db.m7g.12xlarge
           - db.m7g.16xlarge
+          - db.m8g.large
+          - db.m8g.xlarge
+          - db.m8g.2xlarge
+          - db.m8g.4xlarge
+          - db.m8g.8xlarge
+          - db.m8g.12xlarge
+          - db.m8g.16xlarge
+          - db.m8g.24xlarge
+          - db.m8g.48xlarge
           - db.r4.large
           - db.r4.xlarge
           - db.r4.2xlarge
