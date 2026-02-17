@@ -22,6 +22,8 @@ properties:
     - glitchtip-access-reporter
     - glitchtip-access-revalidation
     - saas-metrics-exporter
+    - app-sre-tekton-access-reporter
+    - app-sre-tekton-access-revalidation
   disableUnleash:
     type: boolean
     description: disable integration interaction with unleash instance
