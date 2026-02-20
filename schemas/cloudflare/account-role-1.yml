@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Account Role"
+description: |
+  Schema for defining a role assignment within a Cloudflare account.
+  This schema enables declarative management of user or service roles
+  in Cloudflare, supporting automation, compliance, and access control.
+  Each account role specifies the Cloudflare account, a unique name,
+  a description, and a list of roles to assign.
 
 additionalProperties: false
 properties:
@@ -9,17 +16,34 @@ properties:
     type: string
     enum:
     - /cloudflare/account-role-1.yml
+
   account:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/cloudflare/account-1.yml"
+    description: |
+      Reference to the Cloudflare account where this role assignment
+      applies. Links the role to a specific managed account.
+
   name:
     type: string
+    description: |
+      The unique name for this account role assignment. Used to identify
+      and reference the role within the Cloudflare account.
+
   description:
     type: string
+    description: |
+      A human-readable description of the account role, its purpose,
+      or any relevant operational context.
+
   roles:
     type: array
     items:
       type: string
+    description: |
+      A list of Cloudflare roles to assign. Each entry should be a valid
+      Cloudflare role identifier, such as 'Administrator', 'DNS Editor',
+      or 'Billing'.
 
 required:
 - $schema
