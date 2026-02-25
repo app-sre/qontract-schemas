@@ -3710,6 +3710,7 @@ confs:
   - { name: slack, type: boolean }
   - { name: googleChat, type: boolean }
   - { name: slackErrorFilter, type: boolean }
+  - { name: govSlack, type: boolean }
 
 - name: IntegrationSpec_v1
   fields:

@@ -90,6 +90,9 @@ properties:
       slackErrorFilter:
         type: boolean
         description: ship logs to an errors-only slack channel
+      govSlack:
+        type: boolean
+        description: ship logs/creates conditionals for gov slack 
   resources:
     "$ref": "/openshift/deploy-resources-1.yml"
   fluentdResources:
