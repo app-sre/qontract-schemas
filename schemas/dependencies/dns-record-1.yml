@@ -2,6 +2,13 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "DNS Record"
+description: |
+  Schema for referencing a DNS record as a dependency. This schema enables
+  app-interface to declare DNS records for integration, documentation, and
+  automation purposes. It does not provision or manage the lifecycle of the
+  DNS record itself. Supports standard and advanced DNS record types, routing
+  policies, health checks, and integration with OpenShift clusters and namespaces.
 
 additionalProperties: false
 properties:
@@ -9,8 +16,13 @@ properties:
     type: string
     enum:
     - /dependencies/dns-record-1.yml
+
   name:
     type: string
+    description: |
+      The DNS name for this record (e.g., 'www.example.com'). This is the
+      hostname or subdomain to which the record applies.
+
   'type':
     type: string
     enum:
@@ -22,28 +34,55 @@ properties:
     - SPF
     - SRV
     - TXT
+    description: |
+      The DNS record type. Supported types include A, AAAA, CNAME, MX, NS,
+      SPF, SRV, and TXT.
+
   ttl:
     type: integer
+    description: |
+      The time-to-live (TTL) for this DNS record, in seconds. Determines how
+      long the record is cached by resolvers.
+
   alias:
     type: object
+    description: |
+      Alias configuration for this DNS record. Used to point the record to
+      another DNS name, typically for AWS Route53 alias records.
     properties:
       name:
         type: string
+        description: |
+          The DNS name to which this alias points.
       zone_id:
         type: string
+        description: |
+          The hosted zone ID for the alias target.
       evaluate_target_health:
         type: boolean
+        description: |
+          If true, evaluates the health of the alias target when routing traffic.
     required:
     - name
     - zone_id
     - evaluate_target_health
+
   weighted_routing_policy:
     type: object
+    description: |
+      Weighted routing policy configuration. Used to distribute traffic across
+      multiple resources based on assigned weights.
     properties:
       weight:
         type: integer
+        description: |
+          The weight assigned to this record for weighted routing.
+
   geolocation_routing_policy:
     type: object
+    description: |
+      Geolocation routing policy configuration. Used to route traffic based on
+      the geographic location of the requestor.
     oneOf:
     - properties:
         continent:
@@ -56,38 +95,68 @@ properties:
           - OC  # Oceania
           - NA  # North America
           - SA  # South America
+          description: |
+            The continent code for geolocation routing.
         subdivision:
           type: string
+          description: |
+            The subdivision (e.g., state or province) for geolocation routing.
       required:
       - continent
     - properties:
         country:
           type: string
+          description: |
+            The country code for geolocation routing.
         subdivision:
           type: string
+          description: |
+            The subdivision (e.g., state or province) for geolocation routing.
       required:
       - country
+
   set_identifier:
     type: string
+    description: |
+      An identifier for this record set. Used to distinguish between multiple
+      records with the same name and type in advanced routing scenarios.
+
   records:
     type: array
     items:
       type: string
+    description: |
+      A list of record values for this DNS record. For example, IP addresses
+      for A/AAAA records, or target hostnames for CNAME records.
+
   failover_routing_policy:
     type: object
+    description: |
+      Failover routing policy configuration. Used to route traffic to primary
+      or secondary resources based on health checks.
     properties:
       'type':
         type: string
         enum:
         - PRIMARY
         - SECONDARY
+        description: |
+          Indicates whether this record is the PRIMARY or SECONDARY target.
+
   _healthcheck:
     type: object
+    description: |
+      Health check configuration for this DNS record. Used to monitor the
+      health of the target and influence routing decisions.
     properties:
       fqdn:
         type: string
+        description: |
+          The fully qualified domain name to check.
       port:
         type: integer
+        description: |
+          The port to use for the health check.
       'type':
         type: string
         enum:
@@ -96,46 +165,80 @@ properties:
         - HTTP_STR_MATCH
         - HTTPS_STR_MATCH
         - TCP
+        description: |
+          The protocol or method for the health check.
       resource_path:
         type: string
+        description: |
+          The resource path to check (for HTTP/HTTPS checks).
       failure_threshold:
         type: integer
+        description: |
+          The number of consecutive failures before considering the target unhealthy.
       request_interval:
         type: integer
+        description: |
+          The interval (in seconds) between health check requests.
       search_string:
         type: string
+        description: |
+          The string to search for in the response (for string match checks).
+
   _target_cluster:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/openshift/cluster-1.yml"
+    description: |
+      Reference to the OpenShift cluster associated with this DNS record.
+      Used for integration with cluster-managed DNS resources.
+
   _target_namespace_zone:
     type: object
-    description: a namespace and a route53 zone name provisioned within that namespace
+    description: |
+      Reference to a namespace and a Route53 zone name provisioned within
+      that namespace. Used for advanced DNS management in OpenShift.
     additionalProperties: false
     properties:
       namespace:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/openshift/namespace-1.yml"
+        description: |
+          Reference to the OpenShift namespace.
       name:
         "$ref": "/common-1.json#/definitions/k8sValidContainerName"
+        description: |
+          The Route53 zone name within the namespace.
     required:
     - namespace
     - name
+
   _records_from_vault:
     type: array
+    description: |
+      A list of records to source from Vault secrets. Each entry specifies
+      the Vault path, field, key, and version to retrieve the record value.
     items:
       type: object
       properties:
         path:
           type: string
+          description: |
+            The Vault path to the secret.
         field:
           type: string
+          description: |
+            The field within the secret to use.
         key:
           type: string
+          description: |
+            The key within the field to use, if applicable.
         version:
           type: integer
+          description: |
+            The version of the secret to retrieve.
       required:
       - path
       - field
+
 oneOf:
 - required:
   - records
@@ -147,6 +250,7 @@ oneOf:
   - alias
 - required:
   - _records_from_vault
+
 required:
 - name
 - type
