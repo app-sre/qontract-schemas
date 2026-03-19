@@ -37,8 +37,6 @@ properties:
     type: string
   issueReopenState:
     type: string
-  wontFixResolution:
-    type: string
   reopenDuration:
     type: string
   disable:
