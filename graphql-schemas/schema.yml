@@ -611,7 +611,6 @@ confs:
   - { name: issueType, type: string }
   - { name: issueResolveState, type: string }
   - { name: issueReopenState, type: string }
-  - { name: wontFixResolution, type: string }
   - { name: reopenDuration, type: string }
   - { name: disable, type: DisableJiraBoardAutomations_v1 }
   - { name: issueFields, type: JiraBoardIssueField_v1, isList: true }
