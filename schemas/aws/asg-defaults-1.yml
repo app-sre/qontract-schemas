@@ -198,6 +198,54 @@ properties:
         description: |
           A list of EC2 instance types to exclude from selection.
 
+  metadata_options:
+    type: object
+    additionalProperties: false
+    description: |
+      Customize the metadata options for the instance.
+    properties:
+      http_endpoint:
+        type: string
+        enum:
+        - enabled
+        - disabled
+        description: |
+          Enables or disables the HTTP metadata endpoint on instances.
+          Default is 'enabled'.
+      http_protocol_ipv6:
+        type: string
+        enum:
+        - enabled
+        - disabled
+        description: |
+          Enables or disables the IPv6 endpoint for the instance metadata service.
+          Default is 'disabled'.
+      http_put_response_hop_limit:
+        type: integer
+        minimum: 1
+        maximum: 64
+        description: |
+          The desired HTTP PUT response hop limit for instance metadata requests.
+          The larger the number, the further instance metadata requests can travel.
+          Default is 1.
+      http_tokens:
+        type: string
+        enum:
+        - optional
+        - required
+        description: |
+          Indicates whether IMDSv2 is required. Set to 'required' to enforce IMDSv2,
+          where you must send a session token in your instance metadata retrieval requests.
+          Default is 'optional'.
+      instance_metadata_tags:
+        type: string
+        enum:
+        - enabled
+        - disabled
+        description: |
+          Set to 'enabled' to allow access to instance tags from the instance metadata,
+          or 'disabled' to turn off access. Default is 'disabled'.
+
 required:
 - "$schema"
 - max_size
