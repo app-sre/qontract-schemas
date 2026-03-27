@@ -12,6 +12,7 @@ properties:
     type: string
     enum:
     - monitoring.coreos.com/v1
+    - monitoring.rhobs/v1
   kind:
     type: string
     enum:
