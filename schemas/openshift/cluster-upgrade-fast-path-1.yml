@@ -1,0 +1,38 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/cluster-upgrade-fast-path-1.yml
+  description:
+    type: string
+  towardsVersions:
+    description: |
+      List of versions or version regexes that the cluster needs to
+      upgrade towards. Once a cluster reaches or surpasses on of these
+      versions, the effect of the upgrade fast path is disabled.
+    type: array
+    items:
+      type: string
+  schedule:
+    description: |
+      The allowed maintenance window for cluster upgrades while the fast
+      path upgrade policy is in effect. If present, this schedule overwrites
+      the one from the cluster upgrade policy. The schedule is a cron-like
+      expression.
+    type: string
+    pattern: '(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5}'
+  speedUpFactor:
+    description: |
+      The speed up factor scales down the required soak days for a version
+      on a cluster.
+    type: number
+    minimum: 1
+required:
+- towardsVersions
+- speedUpFactor
