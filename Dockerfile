@@ -14,7 +14,7 @@ USER 0
 RUN microdnf -y install make && microdnf -y clean all
 USER 1001
 
-COPY --from=ghcr.io/astral-sh/uv:0.9.26@sha256:9a23023be68b2ed09750ae636228e903a54a05ea56ed03a934d00fe9fbeded4b /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.11.3@sha256:90bbb3c16635e9627f49eec6539f956d70746c409209041800a0280b93152823 /uv /bin/uv
 
 ENV \
     # use venv from ubi image
