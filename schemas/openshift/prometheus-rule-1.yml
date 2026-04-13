@@ -149,6 +149,8 @@ properties:
                           type: string
                         jiralert:
                           type: string
+                        rule_group:
+                          type: string
                       dependencies:
                         app_team:
                         - service
