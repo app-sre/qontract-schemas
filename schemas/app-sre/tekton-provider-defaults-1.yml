@@ -87,6 +87,5 @@ required:
 - labels
 - name
 - description
-- retention
 - taskTemplates
 - pipelineTemplates

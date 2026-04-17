@@ -3206,16 +3206,9 @@ confs:
   - { name: provider, type: string, isRequired: true }
   - { name: defaults, type: PipelinesProviderTektonProviderDefaults_v1, isRequired: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
-  - { name: retention, type: PipelinesProviderRetention_v1 }
   - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isList: true }
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1 }
   - { name: deployResources, type: DeployResources_v1 }
-
-- name: PipelinesProviderRetention_v1
-  fields:
-  - { name: days, type: int }
-  - { name: minimum, type: int }
-  - { name: maximum, type: int }
 
 - name: PipelinesProviderTektonObjectTemplate_v1
   fields:
@@ -3236,7 +3229,6 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: labels, type: json, isRequired: true }
   - { name: description, type: string, isRequired: true }
-  - { name: retention, type: PipelinesProviderRetention_v1, isRequired: true }
   - { name: taskTemplates, type: PipelinesProviderTektonObjectTemplate_v1, isRequired: true, isList: true }
   - { name: pipelineTemplates, type: PipelinesProviderPipelineTemplates_v1, isRequired: true }
   - { name: deployResources, type: DeployResources_v1 }
