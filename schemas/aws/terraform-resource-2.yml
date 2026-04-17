@@ -326,6 +326,12 @@ properties:
       A jinja2 templated object to define the shape of the secret to be created in Secrets
       Manager instead of copying the vault secret as is.
     "$ref": "/common-1.json#/definitions/labels"
+  msk_cluster:
+    type: string
+    description: Identifier of the MSK cluster resource in the same externalResources block
+  service_execution_role:
+    type: string
+    description: Identifier of the aws-iam-role resource in the same externalResources block
 
 oneOf:
 - additionalProperties: false
@@ -1978,6 +1984,45 @@ oneOf:
   required:
   - identifier
   - defaults
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - msk-connect
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    output_format:
+      "$ref": "/openshift/terraform-output-format-1.yml"
+    defaults:
+      "$ref": "/common-1.json#/definitions/resourceref"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    msk_cluster:
+      type: string
+      description: Identifier of the MSK cluster resource in the same externalResources block
+    service_execution_role:
+      type: string
+      description: Identifier of the aws-iam-role resource in the same externalResources block
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - defaults
+  - msk_cluster
+  - service_execution_role
 - additionalProperties: false
   properties:
     provider:

@@ -1916,6 +1916,7 @@ confs:
       rosa-authenticator: NamespaceTerraformResourceRosaAuthenticator_V1
       rosa-authenticator-vpce: NamespaceTerraformResourceRosaAuthenticatorVPCE_V1
       msk: NamespaceTerraformResourceMsk_v1
+      msk-connect: NamespaceTerraformResourceMskConnect_v1
       module-poc: NamespaceTerraformResourceModulePoC_v1
 
   fields:
@@ -2064,6 +2065,23 @@ confs:
   - { name: managed_by_erv2, type: boolean}
   - { name: delete, type: boolean}
   - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1}
+  - { name: tags, type: json }
+
+- name: NamespaceTerraformResourceMskConnect_v1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: region, type: string, isContextUnique: true }
+  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
+  - { name: defaults, type: string, isRequired: true, isResource: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
+  - { name: msk_cluster, type: string, isRequired: true }
+  - { name: service_execution_role, type: string, isRequired: true }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: delete, type: boolean }
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
   - { name: tags, type: json }
 
 - name: MskSecretParameters_v1

@@ -1,0 +1,135 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /aws/msk-connect-defaults-1.yml
+  custom_plugin:
+    type: object
+    additionalProperties: false
+    properties:
+      s3_bucket:
+        type: string
+        description: S3 bucket name where the plugin archive is stored
+      s3_key:
+        type: string
+        description: S3 object key of the plugin archive
+      s3_object_version:
+        type: string
+        description: S3 object version of the plugin archive
+      content_type:
+        type: string
+        enum:
+        - zip
+        - jar
+        description: Content type of the plugin archive
+    required:
+    - s3_bucket
+    - s3_key
+    - content_type
+  connector_configuration:
+    type: object
+    description: Kafka Connect connector configuration properties (key-value pairs, plugin-specific)
+  kafka_connect_version:
+    type: string
+    description: Kafka Connect version (default 3.7.1, set by ERv2 module)
+  capacity:
+    type: object
+    additionalProperties: false
+    description: Connector capacity configuration (default provisioned 1 MCU 1 worker, set by ERv2 module)
+    properties:
+      autoscaling:
+        type: object
+        additionalProperties: false
+        properties:
+          min_worker_count:
+            type: integer
+            minimum: 1
+          max_worker_count:
+            type: integer
+            minimum: 1
+          mcu_count:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 4
+            - 8
+          scale_in_policy:
+            type: object
+            additionalProperties: false
+            properties:
+              cpu_utilization_percentage:
+                type: integer
+                minimum: 1
+                maximum: 100
+          scale_out_policy:
+            type: object
+            additionalProperties: false
+            properties:
+              cpu_utilization_percentage:
+                type: integer
+                minimum: 1
+                maximum: 100
+        required:
+        - min_worker_count
+        - max_worker_count
+      provisioned_capacity:
+        type: object
+        additionalProperties: false
+        properties:
+          worker_count:
+            type: integer
+            minimum: 1
+          mcu_count:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 4
+            - 8
+        required:
+        - worker_count
+  worker_configuration:
+    type: string
+    description: Worker configuration properties (optional, default JSON converter no schemas)
+  log_delivery:
+    type: object
+    additionalProperties: false
+    description: Log delivery configuration (optional)
+    properties:
+      cloudwatch_logs:
+        type: object
+        additionalProperties: false
+        properties:
+          enabled:
+            type: boolean
+          retention_in_days:
+            type: integer
+        required:
+        - enabled
+        - retention_in_days
+      s3:
+        type: object
+        additionalProperties: false
+        properties:
+          enabled:
+            type: boolean
+          bucket:
+            type: string
+          prefix:
+            type: string
+        required:
+        - enabled
+        - bucket
+    required:
+    - cloudwatch_logs
+required:
+- "$schema"
+- custom_plugin
+- connector_configuration
+- log_delivery
