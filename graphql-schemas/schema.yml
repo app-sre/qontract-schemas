@@ -2887,7 +2887,6 @@ confs:
   - { name: jira, type: JiraServer_v1 }
   - { name: mirror, type: string }
   - { name: imageBuildUrl, type: string }
-  - { name: managePermissions, type: boolean }
   - { name: blockedVersions, type: string, isList: true }
   - { name: hotfixVersions, type: string, isList: true }
 

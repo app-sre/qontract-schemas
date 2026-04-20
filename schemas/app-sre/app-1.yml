@@ -327,9 +327,6 @@ properties:
           format: uri
           pattern: "^https:\/\/.+(?<!\/)$"
           description: URL for the component's image build job (jenkins job, rhtap pipeline page, etc.)
-        managePermissions:
-          type: boolean
-          description: should permissions be managed on the repository
         blockedVersions:
           type: array
           items:
