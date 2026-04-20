@@ -259,6 +259,17 @@ properties:
       type: string
   openshift_ingress_load_balancer_arn:
     type: string
+  openshift_service_name:
+    type: string
+  allowed_consumer_clusters:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-1.yml"
+  allowed_principal_arns:
+    type: array
+    items:
+      type: string
   insights_callback_urls:
     type: array
     items:
@@ -2058,5 +2069,46 @@ oneOf:
   required:
   - identifier
   - module
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - vpc-endpoint-service
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    openshift_service_name:
+      type: string
+      description: Name of the OpenShift Service (type LoadBalancer) in the target namespace whose NLB is exposed via the VPC Endpoint Service
+    allowed_consumer_clusters:
+      type: array
+      description: Clusters allowed to connect to the VPC Endpoint Service. Each cluster's account uid and terraformUsername are used to build an IAM principal ARN of the form arn:aws:iam::<uid>:user/<terraformUsername>
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/cluster-1.yml"
+    allowed_principal_arns:
+      type: array
+      description: Explicit IAM principal ARNs allowed to connect to the VPC Endpoint Service
+      items:
+        type: string
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - openshift_service_name
 required:
 - provider
