@@ -53,30 +53,6 @@ properties:
       Reference to the OpenShift namespace where the pipelines provider
       resources will be deployed.
 
-  retention:
-    description: |
-      Describes the retention policy for builds. Specifies how many builds
-      are kept, both by time (days) and by minimum/maximum count.
-    additionalProperties: false
-    properties:
-      days:
-        description: |
-          Maximum retention expressed in days. Builds older than this will
-          be deleted, unless protected by minimum or maximum settings.
-        type: integer
-      minimum:
-        description: |
-          Minimum number of builds that will always be kept, regardless of
-          the 'days' setting.
-        type: integer
-      maximum:
-        description: |
-          Maximum number of builds that will be kept, even if within the
-          retention period.
-        type: integer
-    required:
-    - days
-
   taskTemplates:
     type: array
     description: |
@@ -116,24 +92,6 @@ oneOf:
     namespace:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/openshift/namespace-1.yml"
-    retention:
-      oneOf:
-      - additionalProperties: false
-        properties:
-          days:
-            type: integer
-          minimum:
-            type: integer
-        required:
-        - days
-      - additionalProperties: false
-        properties:
-          days:
-            type: integer
-          maximum:
-            type: integer
-        required:
-        - days
     taskTemplates:
       description: |
         Tekton Task jinja2 templates that will be used to create the corresponding
