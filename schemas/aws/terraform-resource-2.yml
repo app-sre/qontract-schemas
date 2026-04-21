@@ -270,6 +270,8 @@ properties:
     type: array
     items:
       type: string
+  endpoint_service_name:
+    type: string
   insights_callback_urls:
     type: array
     items:
@@ -2110,5 +2112,38 @@ oneOf:
   required:
   - identifier
   - openshift_service_name
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - vpc-endpoint
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    endpoint_service_name:
+      type: string
+      description: Name of the VPC Endpoint Service to connect to (e.g. com.amazonaws.vpce.<region>.<service-id>)
+    vpc:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/vpc-1.yml"
+      description: VPC in which to create the endpoint. Private subnets are selected automatically.
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - endpoint_service_name
+  - vpc
 required:
 - provider
