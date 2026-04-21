@@ -1919,6 +1919,7 @@ confs:
       msk-connect: NamespaceTerraformResourceMskConnect_v1
       module-poc: NamespaceTerraformResourceModulePoC_v1
       vpc-endpoint-service: NamespaceTerraformResourceVpcEndpointService_v1
+      vpc-endpoint: NamespaceTerraformResourceVpcEndpoint_v1
 
   fields:
   - { name: provider, type: string, isRequired: true }
@@ -2093,6 +2094,21 @@ confs:
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: openshift_service_name, type: string, isRequired: true }
   - { name: allowed_consumer_clusters, type: Cluster_v1, isList: true }
+  - { name: output_resource_name, type: string }
+  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
+  - { name: annotations, type: json }
+  - { name: managed_by_erv2, type: boolean }
+  - { name: delete, type: boolean }
+  - { name: module_overrides, type: ExternalResourcesModuleOverrides_v1 }
+  - { name: tags, type: json }
+
+- name: NamespaceTerraformResourceVpcEndpoint_v1
+  interface: NamespaceTerraformResourceAWS_v1
+  fields:
+  - { name: provider, type: string, isRequired: true, isContextUnique: true }
+  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
+  - { name: endpoint_service_name, type: string, isRequired: true }
+  - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
