@@ -39,64 +39,71 @@ properties:
     description: Kafka Connect version (default 3.7.1, set by ERv2 module)
   capacity:
     type: object
-    additionalProperties: false
     description: Connector capacity configuration (default provisioned 1 MCU 1 worker, set by ERv2 module)
-    properties:
-      autoscaling:
-        type: object
-        additionalProperties: false
-        properties:
-          min_worker_count:
-            type: integer
-            minimum: 1
-          max_worker_count:
-            type: integer
-            minimum: 1
-          mcu_count:
-            type: integer
-            enum:
-            - 1
-            - 2
-            - 4
-            - 8
-          scale_in_policy:
-            type: object
-            additionalProperties: false
-            properties:
-              cpu_utilization_percentage:
-                type: integer
-                minimum: 1
-                maximum: 100
-          scale_out_policy:
-            type: object
-            additionalProperties: false
-            properties:
-              cpu_utilization_percentage:
-                type: integer
-                minimum: 1
-                maximum: 100
-        required:
-        - min_worker_count
-        - max_worker_count
-      provisioned_capacity:
-        type: object
-        additionalProperties: false
-        properties:
-          worker_count:
-            type: integer
-            minimum: 1
-          mcu_count:
-            type: integer
-            enum:
-            - 1
-            - 2
-            - 4
-            - 8
-        required:
-        - worker_count
+    oneOf:
+    - additionalProperties: false
+      required:
+      - autoscaling
+      properties:
+        autoscaling:
+          type: object
+          additionalProperties: false
+          properties:
+            min_worker_count:
+              type: integer
+              minimum: 1
+            max_worker_count:
+              type: integer
+              minimum: 1
+            mcu_count:
+              type: integer
+              enum:
+              - 1
+              - 2
+              - 4
+              - 8
+            scale_in_policy:
+              type: object
+              additionalProperties: false
+              properties:
+                cpu_utilization_percentage:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+            scale_out_policy:
+              type: object
+              additionalProperties: false
+              properties:
+                cpu_utilization_percentage:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+          required:
+          - min_worker_count
+          - max_worker_count
+    - additionalProperties: false
+      required:
+      - provisioned_capacity
+      properties:
+        provisioned_capacity:
+          type: object
+          additionalProperties: false
+          properties:
+            worker_count:
+              type: integer
+              minimum: 1
+            mcu_count:
+              type: integer
+              enum:
+              - 1
+              - 2
+              - 4
+              - 8
+          required:
+          - worker_count
   worker_configuration:
     type: string
-    description: Worker configuration properties (optional, default JSON converter no schemas)
+    description: Optional multiline worker configuration properties
   log_delivery:
     type: object
     additionalProperties: false
