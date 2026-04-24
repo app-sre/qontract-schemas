@@ -96,6 +96,7 @@ confs:
   fields:
   - { name: serverUrl, type: string, isRequired: true }
   - { name: baseDn, type: string, isRequired: true }
+  - { name: credentials, type: VaultSecret_v1 }
 
 - name: JiraWatcherSettings_v1
   fields:
