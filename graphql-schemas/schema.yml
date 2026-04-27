@@ -3578,6 +3578,12 @@ confs:
     synthetic:
       schema: /app-sre/schedule-1.yml
       subAttr: schedule.users
+  - name: sre_checkpoints
+    type: SRECheckpoint_v1
+    isList: true
+    synthetic:
+      schema: /app-sre/sre-checkpoint-1.yml
+      subAttr: sre
 
 - name: Bot_v1
   datafile: /access/bot-1.yml
@@ -3863,8 +3869,9 @@ confs:
   fields:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
+  - { name: labels, type: json, isRequired: true }
   - { name: app, type: App_v1, isRequired: true }
+  - { name: sre, type: User_v1, isRequired: true }
   - { name: date, type: string, isRequired: true }
   - { name: issue, type: string, isRequired: true }
 
