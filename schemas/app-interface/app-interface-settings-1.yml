@@ -123,6 +123,10 @@ properties:
         type: string
         description: |
           Base DN for LDAP queries.
+      credentials:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: |
+          Vault secret containing LDAP bind credentials (bind_dn and bind_password).
   dependencies:
     type: array
     description: |
