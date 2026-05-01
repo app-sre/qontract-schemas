@@ -34,11 +34,11 @@ properties:
   allowedToBypassPublicPeeringRestriction:
     type: boolean
     description: |
-      In normal operation, peering with a public cluster is not
-      allowed for security reasons. In very rare cases we need an
-      exception for the prohibition. Use this option with extreme
-      caution and after consulting the appropriate security
-      professionals.
+      In normal operation, peering a pair of public clusters is not allowed
+      (they could simply communicate over the Internet). In very rare cases we
+      need an exception from the prohibition to gain more performance security
+      for the interesting traffic. Use this option with extreme caution and
+      after consulting the appropriate security professionals.
   auth:
     type: array
     items:
