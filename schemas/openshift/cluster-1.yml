@@ -37,8 +37,10 @@ properties:
       In normal operation, peering a pair of public clusters is not allowed
       (they could simply communicate over the Internet). In very rare cases we
       need an exception from the prohibition to gain more performance security
-      for the interesting traffic. Use this option with extreme caution and
-      after consulting the appropriate security professionals.
+      for the interesting traffic. Use this option with caution as this will
+      incur a financial cost and effect AWS quota limits. In some cases there
+      may be security concerns as well. If in doubt, consult with the
+      appropriate security professionals.
   auth:
     type: array
     items:
