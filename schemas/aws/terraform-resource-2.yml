@@ -259,6 +259,15 @@ properties:
       type: string
   openshift_ingress_load_balancer_arn:
     type: string
+  openshift_service_name:
+    type: string
+  allowed_consumer_clusters:
+    type: array
+    items:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/openshift/cluster-1.yml"
+  endpoint_service_name:
+    type: string
   insights_callback_urls:
     type: array
     items:
@@ -2058,5 +2067,70 @@ oneOf:
   required:
   - identifier
   - module
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - vpc-endpoint-service
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    region:
+      "$ref": "/aws/regions-1.yml#/properties/region"
+    openshift_service_name:
+      type: string
+    allowed_consumer_clusters:
+      type: array
+      items:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/cluster-1.yml"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - openshift_service_name
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - vpc-endpoint
+    identifier:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    endpoint_service_name:
+      type: string
+    vpc:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/aws/vpc-1.yml"
+    output_resource_name:
+      "$ref": "/common-1.json#/definitions/longIdentifier"
+    tags:
+      "$ref": "/common-1.json#/definitions/labels"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+    managed_by_erv2:
+      type: boolean
+      description: Manage the resource with ERv2
+    delete:
+      type: boolean
+      description: Flag a resource to be deleted
+    module_overrides:
+      "$ref": "/external-resources/module-overrides-1.yml"
+  required:
+  - identifier
+  - endpoint_service_name
+  - vpc
 required:
 - provider
