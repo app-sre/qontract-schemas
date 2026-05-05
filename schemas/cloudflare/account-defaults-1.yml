@@ -14,12 +14,6 @@ properties:
   name:
     type: string
     description: "Account name"
-  type:
-    description: |
-      Account type, available values: "standard", "enterprise"
-    enum:
-    - standard
-    - enterprise
   enforce_twofactor:
     description: |
       Indicates whether membership in this account requires that Two-Factor Authentication is enabled

@@ -65,15 +65,6 @@ properties:
       If true, enforces two-factor authentication for all users in this
       Cloudflare account to meet security and compliance requirements.
 
-  type:
-    type: string
-    enum:
-    - standard
-    - enterprise
-    description: |
-      The type of Cloudflare account. Use 'standard' for regular accounts
-      or 'enterprise' for accounts with enterprise features and support.
-
 required:
 - "$schema"
 - name
