@@ -1471,7 +1471,6 @@ confs:
   - { name: accountOwners, type: Owner_v1, isList: true, isRequired: true }
   - { name: apiCredentials, type: VaultSecret_v1, isRequired: true }
   - { name: enforceTwofactor, type: boolean }
-  - { name: type, type: string }
 
 - name: CloudflareAccountRole_v1
   datafile: /cloudflare/account-role-1.yml
