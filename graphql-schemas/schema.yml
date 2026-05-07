@@ -3372,7 +3372,6 @@ confs:
     strategy: fieldMap
     field: service
     fieldMap:
-      github-org: PermissionGithubOrg_v1
       github-org-team: PermissionGithubOrgTeam_v1
       quay-membership: PermissionQuayOrgTeam_v1
       jenkins-role: PermissionJenkinsRole_v1
@@ -3386,18 +3385,6 @@ confs:
   - { name: name, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
   - { name: service, type: string, isRequired: true }
-
-- name: PermissionGithubOrg_v1
-  interface: Permission_v1
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true }
-  - { name: description, type: string, isRequired: true }
-  - { name: service, type: string, isRequired: true }
-  - { name: org, type: string, isRequired: true }
-  - { name: role, type: string }
 
 - name: PermissionGithubOrgTeam_v1
   interface: Permission_v1
