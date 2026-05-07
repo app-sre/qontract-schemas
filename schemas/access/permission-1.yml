@@ -78,18 +78,6 @@ oneOf:
 - properties:
     service:
       enum:
-      - github-org
-    org:
-      type: string
-    role:
-      type: string
-      enum:
-      - owner
-  required:
-  - org
-- properties:
-    service:
-      enum:
       - github-org-team
     org:
       type: string
