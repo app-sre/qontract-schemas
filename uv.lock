@@ -214,7 +214,7 @@ dependencies = [
     { name = "jsonschema" },
     { name = "pyyaml" },
 ]
-sdist = { hash = "sha256:c36922c0f2d2e7e968fc05bc03b42244047e2c07e1bcbab71225e3d65a5be28d" }
+sdist = { hash = "sha256:2cfcfe90b16ba7d28e6c6562336f82bc6921478d9bcb6b4206dc6f09593bcb80" }
 
 [package.metadata]
 requires-dist = [
