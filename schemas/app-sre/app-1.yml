@@ -292,6 +292,14 @@ properties:
               not:
                 enum:
                 - 0
+            merge_limit:
+              type: integer
+              minimum: 1
+              description: "Maximum MRs merged per loop iteration. Defaults to limit if unset."
+            consecutive_failure_limit:
+              type: integer
+              minimum: 1
+              description: "Max consecutive merge failures before halting. Defaults to 3 if unset."
             enable_closing:
               type: boolean
             pipeline_timeout:
