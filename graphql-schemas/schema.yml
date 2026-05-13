@@ -2872,6 +2872,8 @@ confs:
   - { name: rebase, type: boolean, isRequired: true }
   - { name: days_interval, type: int }
   - { name: limit, type: int }
+  - { name: merge_limit, type: int }
+  - { name: consecutive_failure_limit, type: int }
   - { name: enable_closing, type: boolean }
   - { name: pipeline_timeout, type: int }
   - { name: labels_allowed, type: CodeComponentGitlabHousekeepingLabelsAllowed_v1, isList: true }

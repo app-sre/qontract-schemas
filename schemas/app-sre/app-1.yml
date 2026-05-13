@@ -292,6 +292,16 @@ properties:
               not:
                 enum:
                 - 0
+            merge_limit:
+              type: integer
+              not:
+                enum:
+                - 0
+            consecutive_failure_limit:
+              type: integer
+              not:
+                enum:
+                - 0
             enable_closing:
               type: boolean
             pipeline_timeout:
