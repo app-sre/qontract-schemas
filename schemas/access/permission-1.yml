@@ -67,6 +67,19 @@ properties:
   schedule:
     "$ref": "/common-1.json#/definitions/crossref"
     "$schemaRef": "/app-sre/schedule-1.yml"
+  notifications:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        action:
+          type: string
+          enum:
+          - addUser
+          - removeUser
+        message:
+          type: string
   skip:
     type: boolean
   actions:
@@ -163,6 +176,22 @@ oneOf:
     schedule:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/app-sre/schedule-1.yml"
+    notifications:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          action:
+            type: string
+            enum:
+            - addUser
+            - removeUser
+          message:
+            type: string
+        required:
+        - action
+        - message
     description:
       type: string
       maxLength: 140

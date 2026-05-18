@@ -3448,6 +3448,7 @@ confs:
   - { name: channels, type: string, isList: true, isRequired: true }
   - { name: ownersFromRepos, type: string, isList: true }
   - { name: schedule, type: Schedule_v1 }
+  - { name: notifications, type: SlackUsergroupNotification_v1, isList: true }
   - { name: skip, type: boolean }
   - name: roles
     type: Role_v1
@@ -3455,6 +3456,11 @@ confs:
     synthetic:
       schema: /access/role-1.yml
       subAttr: permissions
+
+- name: SlackUsergroupNotification_v1
+  fields:
+  - { name: action, type: string, isRequired: true }
+  - { name: message, type: string, isRequired: true }
 
 - name: Schedule_v1
   datafile: /app-sre/schedule-1.yml
