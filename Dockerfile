@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7-1778562320@sha256:12db9874bd753eb98b1ab3d840e75de5d6842ac0604fbd68c012adefe97140be AS prod
+FROM registry.access.redhat.com/ubi10/ubi-minimal:10.2-1779862102@sha256:7dc60d7777e010c50f5e041ff069112b379c3d5eef2823d20871c67cf663f10c AS prod
 
 WORKDIR /schemas
 
@@ -6,7 +6,7 @@ COPY schemas schemas
 COPY graphql-schemas graphql-schemas
 COPY LICENSE /licenses/LICENSE
 
-FROM registry.access.redhat.com/ubi9/python-312-minimal:9.7-1778590112@sha256:445709dc989a00efecaa10244f5c502ecb1604b5b1fbb8fe21e9e9ffb3e36254 AS test
+FROM registry.access.redhat.com/ubi10/python-314-minimal:10.2-1779887616@sha256:0c5b5d198178280e65577e63251ee5ee49435e1a711bef4e4b5b471723e0ed3c AS test
 
 WORKDIR /schemas
 
