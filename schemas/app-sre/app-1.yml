@@ -322,7 +322,7 @@ properties:
                 description: List of tests must pass before merging.
             multi_merge:
               type: boolean
-              description: "Enable optimistic multi-merge (OMM) for this repo. Defaults to false if unset."
+              description: "Enable optimistic multi-merge (OMM) for this repo."
           required:
           - enabled
           - rebase
