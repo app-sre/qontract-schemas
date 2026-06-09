@@ -83,7 +83,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
-    background: #ffffff;
+    background: var(--bg-primary);
 }
 
 code, .monospace {
@@ -95,7 +95,7 @@ code, .monospace {
     padding: 2rem;
     text-align: center;
     background: var(--warning);
-    color: #000;
+    color: var(--text-primary);
 }
 
 /* Header */
@@ -105,13 +105,13 @@ code, .monospace {
     left: 0;
     right: 0;
     height: 60px;
-    background: var(--text-dark);
-    color: white;
+    background: var(--header-bg);
+    color: var(--header-text);
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #34495e;
+    border-bottom: 2px solid var(--border);
     z-index: 100;
 }
 
@@ -129,15 +129,15 @@ code, .monospace {
 .search-input {
     width: 100%;
     padding: 0.5rem 2rem 0.5rem 0.75rem;
-    border: 1px solid #4a5f7f;
+    border: 1px solid var(--border);
     border-radius: 4px;
-    background: #34495e;
-    color: white;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
     font-size: 0.9rem;
 }
 
 .search-input::placeholder {
-    color: #95a5a6;
+    color: var(--text-muted);
 }
 
 .search-input:focus {
@@ -152,7 +152,7 @@ code, .monospace {
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: white;
+    color: var(--header-text);
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0 0.25rem;
@@ -210,7 +210,7 @@ code, .monospace {
 }
 
 .category-header:hover {
-    background: #dde0e3;
+    background: var(--bg-tertiary);
 }
 
 .category-toggle {
@@ -297,7 +297,7 @@ code, .monospace {
 }
 
 .schema-path-badge {
-    background: #e7f3ff;
+    background: var(--type-ref-bg);
     padding: 0.25rem 0.5rem;
     border-radius: 3px;
     font-family: monospace;
@@ -362,7 +362,7 @@ code, .monospace {
 }
 
 .properties-table tbody tr.ref-property {
-    background: #fffbf0;
+    background: var(--type-enum-bg);
 }
 
 .properties-table tbody tr:hover {
@@ -387,20 +387,20 @@ code, .monospace {
     font-weight: 500;
 }
 
-.type-string { background: #e9ecef; }
-.type-number { background: #d1ecf1; }
-.type-boolean { background: #e7d4f8; }
-.type-enum { background: #fff3cd; }
-.type-ref { background: #d4edff; }
-.type-array { background: #d4edda; }
-.type-object { background: #f8d7da; }
+.type-string { background: var(--type-string-bg); }
+.type-number { background: var(--type-ref-bg); }
+.type-boolean { background: var(--type-object-bg); }
+.type-enum { background: var(--type-enum-bg); }
+.type-ref { background: var(--type-ref-bg); }
+.type-array { background: var(--type-array-bg); }
+.type-object { background: var(--type-object-bg); }
 
 .prop-description {
     color: var(--text-muted);
 }
 
 .prop-description.empty {
-    color: #bbb;
+    color: var(--text-muted);
     font-style: italic;
 }
 
@@ -478,7 +478,7 @@ code, .monospace {
 }
 
 .tree-path {
-    background: #e7f3ff;
+    background: var(--type-ref-bg);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
 }
@@ -499,7 +499,7 @@ code, .monospace {
 
 .badge-self-ref {
     background: var(--warning);
-    color: #000;
+    color: var(--text-primary);
 }
 
 .badge-array {
