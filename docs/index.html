@@ -17,9 +17,15 @@
     <!-- Header -->
     <header class="header">
         <h1 class="header-title">Qontract Schema Viewer</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
-            <button id="searchClear" class="search-clear" style="display: none;">×</button>
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
+                <button id="searchClear" class="search-clear" style="display: none;">×</button>
+            </div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-label">Light</span>
+            </button>
         </div>
     </header>
 
@@ -69,9 +75,59 @@
         // ============================================================================
 
         /**
+         * Initialize theme based on localStorage or system preference.
+         */
+        function initTheme() {
+            // Check localStorage first
+            let theme = localStorage.getItem('theme');
+
+            // Fall back to system preference
+            if (!theme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+            }
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // Update button (if it exists - may not on first load)
+            const iconEl = document.querySelector('.theme-icon');
+            const labelEl = document.querySelector('.theme-label');
+            if (iconEl && labelEl) {
+                const icon = theme === 'dark' ? '🌙' : '☀️';
+                const label = theme === 'dark' ? 'Dark' : 'Light';
+                iconEl.textContent = icon;
+                labelEl.textContent = label;
+            }
+        }
+
+        /**
+         * Toggle between light and dark themes.
+         */
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+
+            // Update button
+            const icon = newTheme === 'dark' ? '🌙' : '☀️';
+            const label = newTheme === 'dark' ? 'Dark' : 'Light';
+            document.querySelector('.theme-icon').textContent = icon;
+            document.querySelector('.theme-label').textContent = label;
+
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        /**
          * Initialize the application by loading schema data and setting up event listeners.
          */
         async function init() {
+            // Initialize theme first
+            initTheme();
+
             try {
                 // Load schemas.json
                 const response = await fetch('schemas.json');
@@ -111,6 +167,9 @@
         function setupEventListeners() {
             const searchInput = document.getElementById('searchInput');
             const searchClear = document.getElementById('searchClear');
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 
             // Search input with debouncing
             searchInput.addEventListener('input', (e) => {
@@ -287,57 +346,82 @@
             header.appendChild(pathBadge);
             header.appendChild(meta);
 
-            // Create tabs
-            const tabsContainer = document.createElement('div');
-            tabsContainer.className = 'tabs';
+            // NEW CODE - side-by-side layout
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'schema-content';
 
-            const propertiesTab = document.createElement('div');
-            propertiesTab.className = 'tab active';
-            propertiesTab.textContent = 'Properties';
-            propertiesTab.addEventListener('click', () => switchTab('properties'));
+            // Properties section
+            const propertiesSection = document.createElement('section');
+            propertiesSection.className = 'properties-section';
+            const propertiesHeader = document.createElement('h3');
+            propertiesHeader.className = 'section-header properties-header';
+            propertiesHeader.textContent = 'Properties';
+            propertiesSection.appendChild(propertiesHeader);
+            propertiesSection.appendChild(renderPropertiesTab());
 
-            const dependenciesTab = document.createElement('div');
-            dependenciesTab.className = 'tab';
-            dependenciesTab.textContent = 'Dependencies';
-            dependenciesTab.addEventListener('click', () => switchTab('dependencies'));
+            // Dependencies section
+            const dependenciesSection = document.createElement('section');
+            dependenciesSection.className = 'dependencies-section';
+            const dependenciesHeader = document.createElement('h3');
+            dependenciesHeader.className = 'section-header dependencies-header';
+            dependenciesHeader.textContent = 'Dependencies';
+            dependenciesSection.appendChild(dependenciesHeader);
+            dependenciesSection.appendChild(renderDependenciesTab());
 
-            tabsContainer.appendChild(propertiesTab);
-            tabsContainer.appendChild(dependenciesTab);
-
-            // Create tab content containers
-            const propertiesContent = document.createElement('div');
-            propertiesContent.id = 'properties-tab';
-            propertiesContent.className = 'tab-content active';
-            propertiesContent.appendChild(renderPropertiesTab());
-
-            const dependenciesContent = document.createElement('div');
-            dependenciesContent.id = 'dependencies-tab';
-            dependenciesContent.className = 'tab-content';
-            dependenciesContent.appendChild(renderDependenciesTab());
+            contentContainer.appendChild(propertiesSection);
+            contentContainer.appendChild(dependenciesSection);
 
             // Build main panel
             mainPanel.innerHTML = '';
             mainPanel.appendChild(header);
-            mainPanel.appendChild(tabsContainer);
-            mainPanel.appendChild(propertiesContent);
-            mainPanel.appendChild(dependenciesContent);
+            mainPanel.appendChild(contentContainer);
+
+            // Update sidebar focus
+            updateSidebarFocus(schemaPath);
         }
 
         /**
-         * Switch between tabs.
+         * Update sidebar to highlight and scroll to the currently loaded schema.
+         * Expands parent category if collapsed.
+         *
+         * @param {string} schemaPath - Path of the schema to focus (e.g., "app-sre/app-1.yml")
          */
-        function switchTab(tabName) {
-            // Update tab buttons
-            document.querySelectorAll('.tabs .tab').forEach(tab => {
-                tab.classList.remove('active');
+        function updateSidebarFocus(schemaPath) {
+            // Remove old active state and highlight
+            document.querySelectorAll('.schema-item.active').forEach(el => {
+                el.classList.remove('active', 'sidebar-highlight');
             });
-            event.target.classList.add('active');
 
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
+            // Find target schema item
+            const schemaItem = document.querySelector(`[data-schema-path="${schemaPath}"]`);
+            if (!schemaItem) return;
+
+            // Expand parent category if collapsed
+            const category = schemaItem.closest('.category');
+            if (category) {
+                const categoryHeader = category.querySelector('.category-header');
+                const toggleIcon = categoryHeader.querySelector('.category-toggle');
+                const isCollapsed = toggleIcon.textContent.trim() === '▶';
+
+                if (isCollapsed) {
+                    // Simulate click to expand category
+                    categoryHeader.click();
+                }
+            }
+
+            // Apply active state and highlight animation
+            schemaItem.classList.add('active', 'sidebar-highlight');
+
+            // Scroll into view (centered in sidebar)
+            schemaItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
             });
-            document.getElementById(`${tabName}-tab`).classList.add('active');
+
+            // Remove highlight animation after 1 second
+            setTimeout(() => {
+                schemaItem.classList.remove('sidebar-highlight');
+            }, 1000);
         }
 
         // ============================================================================
