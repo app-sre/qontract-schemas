@@ -510,7 +510,9 @@
                     refLink.onclick = (e) => {
                         e.preventDefault();
                         e.stopPropagation(); // Prevent row click if expandable
-                        selectSchema(prop.schemaRef);
+                        // Remove leading slash from schemaRef to match schema keys
+                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
+                        selectSchema(schemaPath);
                     };
                     descCell.appendChild(refLink);
                 }
@@ -596,7 +598,9 @@
                             nestedRefLink.onclick = (e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                selectSchema(nestedProp.schemaRef);
+                                // Remove leading slash from schemaRef to match schema keys
+                                const schemaPath = nestedProp.schemaRef.startsWith('/') ? nestedProp.schemaRef.substring(1) : nestedProp.schemaRef;
+                                selectSchema(schemaPath);
                             };
                             nestedDescCell.appendChild(nestedRefLink);
                         }
@@ -782,7 +786,9 @@
                     targetLink.textContent = dep.targetSchema;
                     targetLink.addEventListener('click', (e) => {
                         e.preventDefault();
-                        selectSchema(dep.targetSchema);
+                        // Remove leading slash from targetSchema to match schema keys
+                        const schemaPath = dep.targetSchema.startsWith('/') ? dep.targetSchema.substring(1) : dep.targetSchema;
+                        selectSchema(schemaPath);
                     });
                     target.appendChild(targetLink);
 
@@ -844,7 +850,9 @@
                     link.textContent = ref.schema;
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
-                        selectSchema(ref.schema);
+                        // Remove leading slash from schema to match schema keys
+                        const schemaPath = ref.schema.startsWith('/') ? ref.schema.substring(1) : ref.schema;
+                        selectSchema(schemaPath);
                     });
 
                     const at = document.createElement('span');
