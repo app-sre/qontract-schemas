@@ -94,7 +94,15 @@ def _parse_property(name: str, definition: Dict[str, Any], required_fields: List
     if "$ref" in definition:
         constraints["ref"] = definition["$ref"]
 
-    return {
+    # Extract nested properties for objects
+    nested_properties = None
+    if prop_type == "object" and "properties" in definition and not definition.get("$schemaRef"):
+        nested_required = definition.get("required", [])
+        nested_properties = []
+        for nested_name, nested_def in definition["properties"].items():
+            nested_properties.append(_parse_property(nested_name, nested_def, nested_required))
+
+    result = {
         "name": name,
         "type": prop_type,
         "required": name in required_fields,
@@ -103,6 +111,11 @@ def _parse_property(name: str, definition: Dict[str, Any], required_fields: List
         "schemaRef": definition.get("$schemaRef"),
         "propertyPath": f".{name}"
     }
+
+    if nested_properties is not None:
+        result["nestedProperties"] = nested_properties
+
+    return result
 
 
 def extract_dependencies(schema_data: Dict[str, Any], schema_path: str) -> List[Dict[str, Any]]:

@@ -519,7 +519,106 @@
                 constraintsCell.appendChild(renderConstraints(prop.constraints));
                 row.appendChild(constraintsCell);
 
-                tbody.appendChild(row);
+                // Add expand indicator for objects with nested properties
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    row.style.cursor = 'pointer';
+                    row.title = 'Click to expand/collapse nested properties';
+
+                    // Add expand icon to name cell
+                    const expandIcon = document.createElement('span');
+                    expandIcon.className = 'expand-icon';
+                    expandIcon.textContent = '▶';
+                    expandIcon.style.marginRight = '0.5rem';
+                    expandIcon.style.fontSize = '0.8em';
+                    expandIcon.style.color = 'var(--primary)';
+                    nameCell.insertBefore(expandIcon, nameCell.firstChild);
+
+                    // Create nested row (hidden by default)
+                    const nestedRow = document.createElement('tr');
+                    nestedRow.className = 'nested-properties-row';
+                    nestedRow.style.display = 'none';
+
+                    const nestedCell = document.createElement('td');
+                    nestedCell.colSpan = 5;
+                    nestedCell.style.paddingLeft = '3rem';
+                    nestedCell.style.background = 'var(--bg-secondary)';
+
+                    const nestedTable = document.createElement('table');
+                    nestedTable.className = 'nested-properties-table';
+                    nestedTable.style.width = '100%';
+                    nestedTable.style.fontSize = '0.85em';
+
+                    const nestedTbody = document.createElement('tbody');
+                    prop.nestedProperties.forEach(nestedProp => {
+                        const nestedPropRow = document.createElement('tr');
+
+                        // Name
+                        const nestedNameCell = document.createElement('td');
+                        nestedNameCell.textContent = nestedProp.name;
+                        nestedNameCell.style.fontFamily = 'monospace';
+                        nestedNameCell.style.fontWeight = '600';
+                        nestedPropRow.appendChild(nestedNameCell);
+
+                        // Type
+                        const nestedTypeCell = document.createElement('td');
+                        if (nestedProp.schemaRef) {
+                            const nestedRefLink = document.createElement('a');
+                            nestedRefLink.href = '#';
+                            nestedRefLink.className = 'schema-link';
+                            nestedRefLink.textContent = `→ ${nestedProp.schemaRef.split('/').pop()}`;
+                            nestedRefLink.onclick = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                selectSchema(nestedProp.schemaRef);
+                            };
+                            nestedTypeCell.appendChild(nestedRefLink);
+                        } else {
+                            const nestedTypeBadge = document.createElement('span');
+                            nestedTypeBadge.className = `type-badge type-${getTypeClass(nestedProp.type)}`;
+                            nestedTypeBadge.textContent = nestedProp.type;
+                            nestedTypeCell.appendChild(nestedTypeBadge);
+                        }
+                        nestedPropRow.appendChild(nestedTypeCell);
+
+                        // Required
+                        const nestedReqCell = document.createElement('td');
+                        nestedReqCell.textContent = nestedProp.required ? '✓' : '';
+                        nestedReqCell.style.textAlign = 'center';
+                        nestedPropRow.appendChild(nestedReqCell);
+
+                        // Description
+                        const nestedDescCell = document.createElement('td');
+                        nestedDescCell.textContent = nestedProp.description || '(no description)';
+                        nestedDescCell.style.color = 'var(--text-muted)';
+                        nestedPropRow.appendChild(nestedDescCell);
+
+                        // Constraints
+                        const nestedConstrCell = document.createElement('td');
+                        nestedConstrCell.appendChild(renderConstraints(nestedProp.constraints));
+                        nestedPropRow.appendChild(nestedConstrCell);
+
+                        nestedTbody.appendChild(nestedPropRow);
+                    });
+
+                    nestedTable.appendChild(nestedTbody);
+                    nestedCell.appendChild(nestedTable);
+                    nestedRow.appendChild(nestedCell);
+
+                    // Toggle handler
+                    row.addEventListener('click', (e) => {
+                        // Don't toggle if clicking on a link
+                        if (e.target.tagName === 'A') return;
+
+                        const isExpanded = nestedRow.style.display !== 'none';
+                        nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                        expandIcon.textContent = isExpanded ? '▶' : '▼';
+                    });
+
+                    tbody.appendChild(row);
+                    tbody.appendChild(nestedRow);
+                } else {
+                    tbody.appendChild(row);
+                }
             });
 
             table.appendChild(tbody);
