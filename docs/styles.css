@@ -398,10 +398,6 @@ code, .monospace {
     border-bottom: 1px solid var(--border);
 }
 
-.properties-table tbody tr.ref-property {
-    background: var(--type-enum-bg);
-}
-
 .properties-table tbody tr:hover {
     background: var(--bg-light);
 }

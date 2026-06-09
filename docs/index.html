@@ -466,11 +466,6 @@
             state.currentSchema.properties.forEach(prop => {
                 const row = document.createElement('tr');
 
-                // Check if this is a reference property
-                if (prop.schemaRef || prop.constraints.ref) {
-                    row.classList.add('ref-property');
-                }
-
                 // Name cell
                 const nameCell = document.createElement('td');
                 nameCell.className = 'prop-name';
@@ -480,24 +475,11 @@
                 // Type cell
                 const typeCell = document.createElement('td');
 
-                // If this property has a schemaRef, make it a clickable link
-                if (prop.schemaRef) {
-                    const refLink = document.createElement('a');
-                    refLink.href = '#';
-                    refLink.className = 'schema-link';
-                    refLink.textContent = `→ ${prop.schemaRef.split('/').pop()}`;
-                    refLink.style.fontWeight = '500';
-                    refLink.onclick = (e) => {
-                        e.preventDefault();
-                        selectSchema(prop.schemaRef);
-                    };
-                    typeCell.appendChild(refLink);
-                } else {
-                    const typeBadge = document.createElement('span');
-                    typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
-                    typeBadge.textContent = prop.type;
-                    typeCell.appendChild(typeBadge);
-                }
+                // Always show type badge first
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+                typeBadge.textContent = prop.type;
+                typeCell.appendChild(typeBadge);
 
                 row.appendChild(typeCell);
 
@@ -510,7 +492,27 @@
                 // Description cell
                 const descCell = document.createElement('td');
                 descCell.className = prop.description ? 'prop-description' : 'prop-description empty';
-                descCell.textContent = prop.description || '(no description)';
+
+                // Add description text
+                const descText = document.createTextNode(prop.description || '(no description)');
+                descCell.appendChild(descText);
+
+                // If there's a schema reference, add it as a clickable link
+                if (prop.schemaRef) {
+                    descCell.appendChild(document.createElement('br'));
+                    const refLabel = document.createTextNode('ref: ');
+                    descCell.appendChild(refLabel);
+
+                    const refLink = document.createElement('a');
+                    refLink.href = '#';
+                    refLink.className = 'schema-link';
+                    refLink.textContent = prop.schemaRef;
+                    refLink.onclick = (e) => {
+                        e.preventDefault();
+                        selectSchema(prop.schemaRef);
+                    };
+                    descCell.appendChild(refLink);
+                }
 
                 row.appendChild(descCell);
 
