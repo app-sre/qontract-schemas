@@ -103,6 +103,73 @@ def _parse_property(name: str, definition: Dict[str, Any], required_fields: List
     }
 
 
+def extract_dependencies(schema_data: Dict[str, Any], schema_path: str) -> List[Dict[str, Any]]:
+    """
+    Extract all $schemaRef dependencies from a schema.
+
+    Args:
+        schema_data: Parsed schema dict
+        schema_path: Path of this schema (for self-ref detection)
+
+    Returns:
+        List of dependency dicts with propertyPath and targetSchema
+    """
+    dependencies = []
+    properties = schema_data.get("properties", {})
+
+    def walk_properties(props: Dict[str, Any], path_prefix: str = "", in_array: bool = False):
+        """Recursively walk properties to find $schemaRef."""
+        for prop_name, prop_def in props.items():
+            current_path = f"{path_prefix}.{prop_name}"
+
+            # Check if this property is a reference
+            if "$schemaRef" in prop_def:
+                target = prop_def["$schemaRef"]
+                # Normalize path: remove leading slash
+                if target.startswith("/"):
+                    target = target[1:]
+
+                # Calculate nesting level (count dots in path)
+                nesting_level = current_path.count(".")
+
+                dependencies.append({
+                    "propertyPath": current_path,
+                    "targetSchema": target,
+                    "isArray": in_array,
+                    "isNested": nesting_level >= 3
+                })
+
+            # Recurse into nested objects
+            if prop_def.get("type") == "object" and "properties" in prop_def:
+                walk_properties(prop_def["properties"], current_path, in_array)
+
+            # Recurse into array items
+            if prop_def.get("type") == "array" and "items" in prop_def:
+                items = prop_def["items"]
+                if isinstance(items, dict):
+                    # Check if items itself is a reference
+                    if "$schemaRef" in items:
+                        target = items["$schemaRef"]
+                        if target.startswith("/"):
+                            target = target[1:]
+
+                        nesting_level = current_path.count(".")
+
+                        dependencies.append({
+                            "propertyPath": current_path + "[]",
+                            "targetSchema": target,
+                            "isArray": True,
+                            "isNested": nesting_level >= 3
+                        })
+                    # Or recurse into object properties within array items
+                    elif items.get("type") == "object" and "properties" in items:
+                        walk_properties(items["properties"], current_path + "[]", True)
+
+    walk_properties(properties)
+
+    return dependencies
+
+
 if __name__ == "__main__":
     # Entry point for CLI execution
     pass

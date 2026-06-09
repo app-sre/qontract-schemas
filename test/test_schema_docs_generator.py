@@ -119,3 +119,88 @@ def test_parse_schema_file_json(tmp_path):
     assert id_prop["type"] == "string"
     assert id_prop["required"] is True
     assert id_prop["constraints"]["pattern"] == "^[a-z0-9-]+$"
+
+
+def test_extract_dependencies_simple_ref():
+    from generate_schema_docs import extract_dependencies
+
+    schema_data = {
+        "properties": {
+            "product": {
+                "type": "object",
+                "$schemaRef": "/app-sre/product-1.yml"
+            }
+        }
+    }
+
+    result = extract_dependencies(schema_data, "test-1.yml")
+
+    assert len(result) == 1
+    assert result[0]["propertyPath"] == ".product"
+    assert result[0]["targetSchema"] == "app-sre/product-1.yml"
+    assert result[0]["isArray"] is False
+    assert result[0]["isNested"] is False
+
+
+def test_extract_dependencies_array_ref():
+    from generate_schema_docs import extract_dependencies
+
+    schema_data = {
+        "properties": {
+            "dependencies": {
+                "type": "array",
+                "items": {
+                    "$schemaRef": "/dependencies/dependency-1.yml"
+                }
+            }
+        }
+    }
+
+    result = extract_dependencies(schema_data, "test-1.yml")
+
+    assert len(result) == 1
+    assert result[0]["propertyPath"] == ".dependencies[]"
+    assert result[0]["targetSchema"] == "dependencies/dependency-1.yml"
+    assert result[0]["isArray"] is True
+    assert result[0]["isNested"] is False
+
+
+def test_extract_dependencies_nested_ref():
+    from generate_schema_docs import extract_dependencies
+
+    schema_data = {
+        "properties": {
+            "codeComponents": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "gitlabHousekeeping": {
+                            "type": "object",
+                            "properties": {
+                                "labels_allowed": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "role": {
+                                                "$schemaRef": "/access/role-1.yml"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    result = extract_dependencies(schema_data, "test-1.yml")
+
+    assert len(result) == 1
+    assert result[0]["propertyPath"] == ".codeComponents[].gitlabHousekeeping.labels_allowed[].role"
+    assert result[0]["targetSchema"] == "access/role-1.yml"
+    assert result[0]["isArray"] is True
+    assert result[0]["isNested"] is True
