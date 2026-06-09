@@ -292,7 +292,10 @@ code, .monospace {
 .schema-item.active {
     background: var(--primary);
     color: white;
-    font-weight: 500;
+    font-weight: 600;
+    border-left: 4px solid white;
+    padding-left: calc(0.75rem - 4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .schema-item.hidden {
@@ -533,7 +536,8 @@ code, .monospace {
 
 .badge-self-ref {
     background: var(--warning);
-    color: var(--text-primary);
+    color: #000;
+    font-weight: 600;
 }
 
 .badge-array {
