@@ -375,6 +375,53 @@
             mainPanel.innerHTML = '';
             mainPanel.appendChild(header);
             mainPanel.appendChild(contentContainer);
+
+            // Update sidebar focus
+            updateSidebarFocus(schemaPath);
+        }
+
+        /**
+         * Update sidebar to highlight and scroll to the currently loaded schema.
+         * Expands parent category if collapsed.
+         *
+         * @param {string} schemaPath - Path of the schema to focus (e.g., "app-sre/app-1.yml")
+         */
+        function updateSidebarFocus(schemaPath) {
+            // Remove old active state and highlight
+            document.querySelectorAll('.schema-item.active').forEach(el => {
+                el.classList.remove('active', 'sidebar-highlight');
+            });
+
+            // Find target schema item
+            const schemaItem = document.querySelector(`[data-schema-path="${schemaPath}"]`);
+            if (!schemaItem) return;
+
+            // Expand parent category if collapsed
+            const category = schemaItem.closest('.category');
+            if (category) {
+                const categoryHeader = category.querySelector('.category-header');
+                const toggleIcon = categoryHeader.querySelector('.category-toggle');
+                const isCollapsed = toggleIcon.textContent.trim() === '▶';
+
+                if (isCollapsed) {
+                    // Simulate click to expand category
+                    categoryHeader.click();
+                }
+            }
+
+            // Apply active state and highlight animation
+            schemaItem.classList.add('active', 'sidebar-highlight');
+
+            // Scroll into view (centered in sidebar)
+            schemaItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            // Remove highlight animation after 1 second
+            setTimeout(() => {
+                schemaItem.classList.remove('sidebar-highlight');
+            }, 1000);
         }
 
         // ============================================================================
