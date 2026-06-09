@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qontract Schema Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <noscript>
+        <div class="noscript-message">
+            This tool requires JavaScript. Please enable it or view schemas directly on
+            <a href="https://github.com/app-sre/qontract-schemas">GitHub</a>.
+        </div>
+    </noscript>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="header-title">Qontract Schema Viewer</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
+            <button id="searchClear" class="search-clear" style="display: none;">×</button>
+        </div>
+    </header>
+
+    <!-- Main layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Schemas</span>
+            </div>
+            <div class="sidebar-content" id="sidebarContent">
+                <!-- Categories will be rendered here -->
+            </div>
+        </aside>
+
+        <!-- Main panel -->
+        <main class="main-panel" id="mainPanel">
+            <div class="welcome-message">
+                <h2>Welcome to Qontract Schema Viewer</h2>
+                <p>Select a schema from the sidebar to view its details.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Error display -->
+    <div id="errorDisplay" class="error-display" style="display: none;">
+        <h2>Error Loading Schema Data</h2>
+        <p id="errorMessage"></p>
+        <p>Please regenerate the documentation using <code>make generate-docs</code></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
