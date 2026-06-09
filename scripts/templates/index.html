@@ -346,40 +346,35 @@
             header.appendChild(pathBadge);
             header.appendChild(meta);
 
-            // Create tabs
-            const tabsContainer = document.createElement('div');
-            tabsContainer.className = 'tabs';
+            // NEW CODE - side-by-side layout
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'schema-content';
 
-            const propertiesTab = document.createElement('div');
-            propertiesTab.className = 'tab active';
-            propertiesTab.textContent = 'Properties';
-            propertiesTab.addEventListener('click', () => switchTab('properties'));
+            // Properties section
+            const propertiesSection = document.createElement('section');
+            propertiesSection.className = 'properties-section';
+            const propertiesHeader = document.createElement('h3');
+            propertiesHeader.className = 'section-header properties-header';
+            propertiesHeader.textContent = 'Properties';
+            propertiesSection.appendChild(propertiesHeader);
+            propertiesSection.appendChild(renderPropertiesTab());
 
-            const dependenciesTab = document.createElement('div');
-            dependenciesTab.className = 'tab';
-            dependenciesTab.textContent = 'Dependencies';
-            dependenciesTab.addEventListener('click', () => switchTab('dependencies'));
+            // Dependencies section
+            const dependenciesSection = document.createElement('section');
+            dependenciesSection.className = 'dependencies-section';
+            const dependenciesHeader = document.createElement('h3');
+            dependenciesHeader.className = 'section-header dependencies-header';
+            dependenciesHeader.textContent = 'Dependencies';
+            dependenciesSection.appendChild(dependenciesHeader);
+            dependenciesSection.appendChild(renderDependenciesTab());
 
-            tabsContainer.appendChild(propertiesTab);
-            tabsContainer.appendChild(dependenciesTab);
-
-            // Create tab content containers
-            const propertiesContent = document.createElement('div');
-            propertiesContent.id = 'properties-tab';
-            propertiesContent.className = 'tab-content active';
-            propertiesContent.appendChild(renderPropertiesTab());
-
-            const dependenciesContent = document.createElement('div');
-            dependenciesContent.id = 'dependencies-tab';
-            dependenciesContent.className = 'tab-content';
-            dependenciesContent.appendChild(renderDependenciesTab());
+            contentContainer.appendChild(propertiesSection);
+            contentContainer.appendChild(dependenciesSection);
 
             // Build main panel
             mainPanel.innerHTML = '';
             mainPanel.appendChild(header);
-            mainPanel.appendChild(tabsContainer);
-            mainPanel.appendChild(propertiesContent);
-            mainPanel.appendChild(dependenciesContent);
+            mainPanel.appendChild(contentContainer);
         }
 
         // ============================================================================
