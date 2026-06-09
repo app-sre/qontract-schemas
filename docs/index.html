@@ -257,7 +257,10 @@
                 schemaItem.className = 'schema-item';
                 schemaItem.setAttribute('data-schema-path', schemaPath);
                 schemaItem.textContent = schemaFile;
-                schemaItem.addEventListener('click', () => selectSchema(schemaPath));
+                schemaItem.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent category collapse
+                    selectSchema(schemaPath);
+                });
                 schemasDiv.appendChild(schemaItem);
             });
 
