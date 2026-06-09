@@ -509,6 +509,7 @@
                     refLink.textContent = prop.schemaRef;
                     refLink.onclick = (e) => {
                         e.preventDefault();
+                        e.stopPropagation(); // Prevent row click if expandable
                         selectSchema(prop.schemaRef);
                     };
                     descCell.appendChild(refLink);
@@ -563,23 +564,11 @@
 
                         // Type
                         const nestedTypeCell = document.createElement('td');
-                        if (nestedProp.schemaRef) {
-                            const nestedRefLink = document.createElement('a');
-                            nestedRefLink.href = '#';
-                            nestedRefLink.className = 'schema-link';
-                            nestedRefLink.textContent = `→ ${nestedProp.schemaRef.split('/').pop()}`;
-                            nestedRefLink.onclick = (e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                selectSchema(nestedProp.schemaRef);
-                            };
-                            nestedTypeCell.appendChild(nestedRefLink);
-                        } else {
-                            const nestedTypeBadge = document.createElement('span');
-                            nestedTypeBadge.className = `type-badge type-${getTypeClass(nestedProp.type)}`;
-                            nestedTypeBadge.textContent = nestedProp.type;
-                            nestedTypeCell.appendChild(nestedTypeBadge);
-                        }
+                        // Always show type badge
+                        const nestedTypeBadge = document.createElement('span');
+                        nestedTypeBadge.className = `type-badge type-${getTypeClass(nestedProp.type)}`;
+                        nestedTypeBadge.textContent = nestedProp.type;
+                        nestedTypeCell.appendChild(nestedTypeBadge);
                         nestedPropRow.appendChild(nestedTypeCell);
 
                         // Required
@@ -590,8 +579,28 @@
 
                         // Description
                         const nestedDescCell = document.createElement('td');
-                        nestedDescCell.textContent = nestedProp.description || '(no description)';
+                        const nestedDescText = document.createTextNode(nestedProp.description || '(no description)');
+                        nestedDescCell.appendChild(nestedDescText);
                         nestedDescCell.style.color = 'var(--text-muted)';
+
+                        // Add ref link if exists
+                        if (nestedProp.schemaRef) {
+                            nestedDescCell.appendChild(document.createElement('br'));
+                            const nestedRefLabel = document.createTextNode('ref: ');
+                            nestedDescCell.appendChild(nestedRefLabel);
+
+                            const nestedRefLink = document.createElement('a');
+                            nestedRefLink.href = '#';
+                            nestedRefLink.className = 'schema-link';
+                            nestedRefLink.textContent = nestedProp.schemaRef;
+                            nestedRefLink.onclick = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                selectSchema(nestedProp.schemaRef);
+                            };
+                            nestedDescCell.appendChild(nestedRefLink);
+                        }
+
                         nestedPropRow.appendChild(nestedDescCell);
 
                         // Constraints
