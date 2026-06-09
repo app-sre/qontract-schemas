@@ -2,6 +2,8 @@
 """Generate static documentation site from qontract schemas."""
 
 import os
+import json
+import shutil
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import anymarkup
@@ -122,22 +124,28 @@ def extract_dependencies(schema_data: Dict[str, Any], schema_path: str) -> List[
         for prop_name, prop_def in props.items():
             current_path = f"{path_prefix}.{prop_name}"
 
+            # Skip if prop_def is not a dict
+            if not isinstance(prop_def, dict):
+                continue
+
             # Check if this property is a reference
             if "$schemaRef" in prop_def:
                 target = prop_def["$schemaRef"]
-                # Normalize path: remove leading slash
-                if target.startswith("/"):
-                    target = target[1:]
+                # Only process if target is a string
+                if isinstance(target, str):
+                    # Normalize path: remove leading slash
+                    if target.startswith("/"):
+                        target = target[1:]
 
-                # Calculate nesting level (count dots in path)
-                nesting_level = current_path.count(".")
+                    # Calculate nesting level (count dots in path)
+                    nesting_level = current_path.count(".")
 
-                dependencies.append({
-                    "propertyPath": current_path,
-                    "targetSchema": target,
-                    "isArray": in_array,
-                    "isNested": nesting_level >= 3
-                })
+                    dependencies.append({
+                        "propertyPath": current_path,
+                        "targetSchema": target,
+                        "isArray": in_array,
+                        "isNested": nesting_level >= 3
+                    })
 
             # Recurse into nested objects
             if prop_def.get("type") == "object" and "properties" in prop_def:
@@ -150,17 +158,19 @@ def extract_dependencies(schema_data: Dict[str, Any], schema_path: str) -> List[
                     # Check if items itself is a reference
                     if "$schemaRef" in items:
                         target = items["$schemaRef"]
-                        if target.startswith("/"):
-                            target = target[1:]
+                        # Only process if target is a string
+                        if isinstance(target, str):
+                            if target.startswith("/"):
+                                target = target[1:]
 
-                        nesting_level = current_path.count(".")
+                            nesting_level = current_path.count(".")
 
-                        dependencies.append({
-                            "propertyPath": current_path + "[]",
-                            "targetSchema": target,
-                            "isArray": True,
-                            "isNested": nesting_level >= 3
-                        })
+                            dependencies.append({
+                                "propertyPath": current_path + "[]",
+                                "targetSchema": target,
+                                "isArray": True,
+                                "isNested": nesting_level >= 3
+                            })
                     # Or recurse into object properties within array items
                     elif items.get("type") == "object" and "properties" in items:
                         walk_properties(items["properties"], current_path + "[]", True)
@@ -237,6 +247,108 @@ def build_reverse_dependencies(schemas: Dict[str, Dict[str, Any]]) -> Dict[str, 
     return reverse_deps
 
 
+def generate_schema_docs(schemas_dir: str = "schemas", output_dir: str = "docs"):
+    """
+    Main function to generate schema documentation.
+
+    Args:
+        schemas_dir: Path to schemas directory
+        output_dir: Path to output directory for generated files
+    """
+    print(f"Scanning schemas in {schemas_dir}...")
+
+    # 1. Scan schemas directory
+    schema_files = scan_schemas_directory(schemas_dir)
+    print(f"Found {len(schema_files)} schema files")
+
+    # 2. Parse each schema and keep raw schemas for dependency extraction
+    schemas = {}
+    raw_schemas = {}
+    skipped = []
+
+    for relative_path in schema_files:
+        full_path = os.path.join(schemas_dir, relative_path)
+
+        # Parse raw schema first
+        try:
+            raw_schema = anymarkup.parse_file(full_path)
+            raw_schemas[relative_path] = raw_schema
+        except Exception as e:
+            print(f"Warning: Failed to parse {relative_path}: {e}")
+            skipped.append(relative_path)
+            continue
+
+        # Then parse into normalized format
+        schema_data = parse_schema_file(full_path, relative_path)
+
+        if schema_data is None:
+            skipped.append(relative_path)
+            continue
+
+        schemas[relative_path] = schema_data
+
+    if skipped:
+        print(f"Warning: Skipped {len(skipped)} invalid schema files:")
+        for path in skipped:
+            print(f"  - {path}")
+
+    print(f"Successfully parsed {len(schemas)} schemas")
+
+    # 3. Extract dependencies for each schema from raw schemas
+    for schema_path, raw_schema in raw_schemas.items():
+        if schema_path in schemas:
+            dependencies = extract_dependencies(raw_schema, schema_path)
+            schemas[schema_path]["dependencies"] = dependencies
+
+    # 4. Build reverse dependencies
+    reverse_deps = build_reverse_dependencies(schemas)
+    for schema_path, refs in reverse_deps.items():
+        if schema_path in schemas:
+            schemas[schema_path]["referencedBy"] = refs
+
+    # 5. Build categories
+    categories = build_categories(schemas)
+
+    # 6. Create output structure
+    output = {
+        "categories": categories,
+        "schemas": schemas
+    }
+
+    # 7. Write JSON output
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, "schemas.json")
+
+    with open(output_file, "w") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"Generated {output_file}")
+    print(f"  - {len(categories)} categories")
+    print(f"  - {len(schemas)} schemas")
+
+    # 8. Copy static assets (templates will be created in next task)
+    templates_dir = os.path.join(os.path.dirname(__file__), "templates")
+    if os.path.exists(templates_dir):
+        for asset in ["index.html", "styles.css"]:
+            src = os.path.join(templates_dir, asset)
+            dst = os.path.join(output_dir, asset)
+            if os.path.exists(src):
+                shutil.copy(src, dst)
+                print(f"Copied {asset}")
+
+
+def main():
+    """CLI entry point."""
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Generate schema documentation")
+    parser.add_argument("--schemas-dir", default="schemas", help="Schemas directory")
+    parser.add_argument("--output-dir", default="docs", help="Output directory")
+
+    args = parser.parse_args()
+
+    generate_schema_docs(args.schemas_dir, args.output_dir)
+
+
 if __name__ == "__main__":
-    # Entry point for CLI execution
-    pass
+    main()

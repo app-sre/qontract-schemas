@@ -270,3 +270,74 @@ def test_build_reverse_dependencies():
 
     # app-1.yml should have no reverse dependencies
     assert "app-sre/app-1.yml" not in result
+
+
+def test_generate_schema_docs_integration(tmp_path):
+    import json
+    from generate_schema_docs import generate_schema_docs
+
+    # Create test schemas directory
+    schemas_dir = tmp_path / "schemas"
+    schemas_dir.mkdir()
+
+    # Create app-sre category
+    (schemas_dir / "app-sre").mkdir()
+    (schemas_dir / "app-sre" / "app-1.yml").write_text("""---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  name:
+    type: string
+    description: App name
+  product:
+    $schemaRef: /app-sre/product-1.yml
+required:
+- name
+""")
+
+    (schemas_dir / "app-sre" / "product-1.yml").write_text("""---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  name:
+    type: string
+required:
+- name
+""")
+
+    # Create output directory
+    output_dir = tmp_path / "docs"
+    output_dir.mkdir()
+
+    # Run generator
+    generate_schema_docs(str(schemas_dir), str(output_dir))
+
+    # Verify schemas.json was created
+    assert (output_dir / "schemas.json").exists()
+
+    # Load and validate output
+    with open(output_dir / "schemas.json") as f:
+        data = json.load(f)
+
+    # Check categories
+    assert "categories" in data
+    assert len(data["categories"]) == 1
+    assert data["categories"][0]["name"] == "app-sre"
+    assert len(data["categories"][0]["schemas"]) == 2
+
+    # Check schemas
+    assert "schemas" in data
+    assert "app-sre/app-1.yml" in data["schemas"]
+    assert "app-sre/product-1.yml" in data["schemas"]
+
+    # Check dependencies
+    app_schema = data["schemas"]["app-sre/app-1.yml"]
+    assert len(app_schema["dependencies"]) == 1
+    assert app_schema["dependencies"][0]["targetSchema"] == "app-sre/product-1.yml"
+
+    # Check reverse dependencies
+    product_schema = data["schemas"]["app-sre/product-1.yml"]
+    assert len(product_schema["referencedBy"]) == 1
+    assert product_schema["referencedBy"][0]["schema"] == "app-sre/app-1.yml"
