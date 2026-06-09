@@ -339,6 +339,40 @@ code, .monospace {
     margin-right: 1rem;
 }
 
+/* Schema content (side-by-side layout) */
+.schema-content {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.properties-section {
+    flex: 3; /* 60% */
+    min-width: 0; /* Allow table to shrink */
+}
+
+.dependencies-section {
+    flex: 2; /* 40% */
+    border-left: 2px solid var(--border);
+    padding-left: 1.5rem;
+}
+
+.section-header {
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.properties-header {
+    border-bottom: 2px solid var(--primary);
+}
+
+.dependencies-header {
+    border-bottom: 2px solid var(--success);
+}
+
 /* Properties table */
 .properties-table {
     width: 100%;
@@ -587,5 +621,17 @@ code, .monospace {
 
     .main-panel {
         height: auto;
+    }
+
+    .schema-content {
+        flex-direction: column;
+    }
+
+    .dependencies-section {
+        border-left: none;
+        border-top: 2px solid var(--border);
+        padding-left: 0;
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
     }
 }
