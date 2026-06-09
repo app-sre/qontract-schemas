@@ -6,15 +6,77 @@
 }
 
 :root {
+    /* Semantic colors (keep existing) */
     --primary: #007bff;
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
-    --bg-light: #f8f9fa;
-    --bg-secondary: #e9ecef;
+
+    /* Backgrounds */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+
+    /* Text */
+    --text-primary: #2c3e50;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+
+    /* Borders */
     --border: #dee2e6;
-    --text-muted: #6c757d;
+    --border-light: #e9ecef;
+
+    /* Header */
+    --header-bg: #2c3e50;
+    --header-text: #ffffff;
+
+    /* Type badges */
+    --type-string-bg: #e9ecef;
+    --type-enum-bg: #fff3cd;
+    --type-ref-bg: #d4edff;
+    --type-array-bg: #e7f3ff;
+    --type-object-bg: #f8f9fa;
+
+    /* Legacy variables (for compatibility) */
+    --bg-light: #f8f9fa;
     --text-dark: #2c3e50;
+}
+
+[data-theme="dark"] {
+    /* Backgrounds */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #3a3a3a;
+
+    /* Text */
+    --text-primary: #e0e0e0;
+    --text-secondary: #aaaaaa;
+    --text-muted: #888888;
+
+    /* Borders */
+    --border: #444444;
+    --border-light: #555555;
+
+    /* Header */
+    --header-bg: #0d0d0d;
+    --header-text: #e0e0e0;
+
+    /* Semantic colors (slightly muted for dark mode) */
+    --primary: #64b5f6;
+    --success: #66bb6a;
+    --warning: #ffca28;
+    --danger: #ef5350;
+
+    /* Type badges */
+    --type-string-bg: #3a3a3a;
+    --type-enum-bg: #4a4a2d;
+    --type-ref-bg: #2d3a4a;
+    --type-array-bg: #2d3a4a;
+    --type-object-bg: #3a3a3a;
+
+    /* Legacy variables */
+    --bg-light: #2d2d2d;
+    --text-dark: #e0e0e0;
 }
 
 body {
