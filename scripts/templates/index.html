@@ -255,6 +255,7 @@
                 const schemaPath = category.name === '.' ? schemaFile : `${category.name}/${schemaFile}`;
                 const schemaItem = document.createElement('div');
                 schemaItem.className = 'schema-item';
+                schemaItem.setAttribute('data-schema-path', schemaPath);
                 schemaItem.textContent = schemaFile;
                 schemaItem.addEventListener('click', () => selectSchema(schemaPath));
                 schemasDiv.appendChild(schemaItem);
