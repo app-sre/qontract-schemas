@@ -433,6 +433,123 @@
         // ============================================================================
 
         /**
+         * Recursively render nested properties for a property with sub-properties.
+         * Returns tbody element with all nested properties (and their nested properties if any).
+         */
+        function renderNestedProperties(properties, depth = 1) {
+            const tbody = document.createElement('tbody');
+
+            properties.forEach(prop => {
+                const row = document.createElement('tr');
+
+                // Name cell with indentation
+                const nameCell = document.createElement('td');
+                nameCell.style.fontFamily = 'monospace';
+                nameCell.style.fontWeight = '600';
+                nameCell.style.paddingLeft = `${depth * 1.5}rem`;
+
+                // Add expand icon if this nested property also has nested properties
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    const expandIcon = document.createElement('span');
+                    expandIcon.className = 'expand-icon';
+                    expandIcon.textContent = '▶';
+                    expandIcon.style.marginRight = '0.5rem';
+                    expandIcon.style.fontSize = '0.8em';
+                    expandIcon.style.color = 'var(--primary)';
+                    nameCell.appendChild(expandIcon);
+                }
+
+                nameCell.appendChild(document.createTextNode(prop.name));
+                row.appendChild(nameCell);
+
+                // Type cell
+                const typeCell = document.createElement('td');
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+                typeBadge.textContent = prop.type;
+                typeCell.appendChild(typeBadge);
+                row.appendChild(typeCell);
+
+                // Required cell
+                const reqCell = document.createElement('td');
+                reqCell.textContent = prop.required ? '✓' : '';
+                reqCell.style.textAlign = 'center';
+                row.appendChild(reqCell);
+
+                // Description cell
+                const descCell = document.createElement('td');
+                const descText = document.createTextNode(prop.description || '(no description)');
+                descCell.appendChild(descText);
+                descCell.style.color = 'var(--text-muted)';
+
+                // Add ref link if exists
+                if (prop.schemaRef) {
+                    descCell.appendChild(document.createElement('br'));
+                    const refLabel = document.createTextNode('ref: ');
+                    descCell.appendChild(refLabel);
+
+                    const refLink = document.createElement('a');
+                    refLink.href = '#';
+                    refLink.className = 'schema-link';
+                    refLink.textContent = prop.schemaRef;
+                    refLink.onclick = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
+                        selectSchema(schemaPath);
+                    };
+                    descCell.appendChild(refLink);
+                }
+
+                row.appendChild(descCell);
+
+                // Constraints cell
+                const constrCell = document.createElement('td');
+                constrCell.appendChild(renderConstraints(prop.constraints));
+                row.appendChild(constrCell);
+
+                // If this property has nested properties, create expandable sub-rows
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    row.style.cursor = 'pointer';
+                    row.title = 'Click to expand/collapse nested properties';
+
+                    // Create nested rows container
+                    const nestedRows = renderNestedProperties(prop.nestedProperties, depth + 1);
+
+                    // Hide nested rows by default
+                    Array.from(nestedRows.children).forEach(nestedRow => {
+                        nestedRow.style.display = 'none';
+                        nestedRow.classList.add(`nested-level-${depth}`);
+                    });
+
+                    // Toggle handler
+                    row.addEventListener('click', (e) => {
+                        if (e.target.tagName === 'A') return;
+
+                        const expandIcon = row.querySelector('.expand-icon');
+                        const isExpanded = expandIcon && expandIcon.textContent === '▼';
+
+                        Array.from(nestedRows.children).forEach(nestedRow => {
+                            nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                        });
+
+                        if (expandIcon) {
+                            expandIcon.textContent = isExpanded ? '▶' : '▼';
+                        }
+                    });
+
+                    tbody.appendChild(row);
+                    // Append all nested rows
+                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
+                } else {
+                    tbody.appendChild(row);
+                }
+            });
+
+            return tbody;
+        }
+
+        /**
          * Render the Properties tab with property table.
          */
         function renderPropertiesTab() {
@@ -538,99 +655,34 @@
                     expandIcon.style.color = 'var(--primary)';
                     nameCell.insertBefore(expandIcon, nameCell.firstChild);
 
-                    // Create nested row (hidden by default)
-                    const nestedRow = document.createElement('tr');
-                    nestedRow.className = 'nested-properties-row';
-                    nestedRow.style.display = 'none';
+                    // Render nested properties recursively
+                    const nestedRows = renderNestedProperties(prop.nestedProperties);
 
-                    const nestedCell = document.createElement('td');
-                    nestedCell.colSpan = 5;
-                    nestedCell.style.paddingLeft = '3rem';
-                    nestedCell.style.background = 'var(--bg-secondary)';
-
-                    const nestedTable = document.createElement('table');
-                    nestedTable.className = 'nested-properties-table';
-                    nestedTable.style.width = '100%';
-                    nestedTable.style.fontSize = '0.85em';
-
-                    const nestedTbody = document.createElement('tbody');
-                    prop.nestedProperties.forEach(nestedProp => {
-                        const nestedPropRow = document.createElement('tr');
-
-                        // Name
-                        const nestedNameCell = document.createElement('td');
-                        nestedNameCell.textContent = nestedProp.name;
-                        nestedNameCell.style.fontFamily = 'monospace';
-                        nestedNameCell.style.fontWeight = '600';
-                        nestedPropRow.appendChild(nestedNameCell);
-
-                        // Type
-                        const nestedTypeCell = document.createElement('td');
-                        // Always show type badge
-                        const nestedTypeBadge = document.createElement('span');
-                        nestedTypeBadge.className = `type-badge type-${getTypeClass(nestedProp.type)}`;
-                        nestedTypeBadge.textContent = nestedProp.type;
-                        nestedTypeCell.appendChild(nestedTypeBadge);
-                        nestedPropRow.appendChild(nestedTypeCell);
-
-                        // Required
-                        const nestedReqCell = document.createElement('td');
-                        nestedReqCell.textContent = nestedProp.required ? '✓' : '';
-                        nestedReqCell.style.textAlign = 'center';
-                        nestedPropRow.appendChild(nestedReqCell);
-
-                        // Description
-                        const nestedDescCell = document.createElement('td');
-                        const nestedDescText = document.createTextNode(nestedProp.description || '(no description)');
-                        nestedDescCell.appendChild(nestedDescText);
-                        nestedDescCell.style.color = 'var(--text-muted)';
-
-                        // Add ref link if exists
-                        if (nestedProp.schemaRef) {
-                            nestedDescCell.appendChild(document.createElement('br'));
-                            const nestedRefLabel = document.createTextNode('ref: ');
-                            nestedDescCell.appendChild(nestedRefLabel);
-
-                            const nestedRefLink = document.createElement('a');
-                            nestedRefLink.href = '#';
-                            nestedRefLink.className = 'schema-link';
-                            nestedRefLink.textContent = nestedProp.schemaRef;
-                            nestedRefLink.onclick = (e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                // Remove leading slash from schemaRef to match schema keys
-                                const schemaPath = nestedProp.schemaRef.startsWith('/') ? nestedProp.schemaRef.substring(1) : nestedProp.schemaRef;
-                                selectSchema(schemaPath);
-                            };
-                            nestedDescCell.appendChild(nestedRefLink);
-                        }
-
-                        nestedPropRow.appendChild(nestedDescCell);
-
-                        // Constraints
-                        const nestedConstrCell = document.createElement('td');
-                        nestedConstrCell.appendChild(renderConstraints(nestedProp.constraints));
-                        nestedPropRow.appendChild(nestedConstrCell);
-
-                        nestedTbody.appendChild(nestedPropRow);
+                    // Hide nested rows by default
+                    Array.from(nestedRows.children).forEach(nestedRow => {
+                        nestedRow.style.display = 'none';
+                        nestedRow.classList.add('nested-level-1');
                     });
-
-                    nestedTable.appendChild(nestedTbody);
-                    nestedCell.appendChild(nestedTable);
-                    nestedRow.appendChild(nestedCell);
 
                     // Toggle handler
                     row.addEventListener('click', (e) => {
-                        // Don't toggle if clicking on a link
                         if (e.target.tagName === 'A') return;
 
-                        const isExpanded = nestedRow.style.display !== 'none';
-                        nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                        const isExpanded = expandIcon.textContent === '▼';
+
+                        // Toggle only the immediate children (level-1 nested rows)
+                        Array.from(nestedRows.children).forEach(nestedRow => {
+                            if (nestedRow.classList.contains('nested-level-1')) {
+                                nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                            }
+                        });
+
                         expandIcon.textContent = isExpanded ? '▶' : '▼';
                     });
 
                     tbody.appendChild(row);
-                    tbody.appendChild(nestedRow);
+                    // Append all nested rows
+                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
                 } else {
                     tbody.appendChild(row);
                 }

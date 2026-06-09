@@ -94,13 +94,29 @@ def _parse_property(name: str, definition: Dict[str, Any], required_fields: List
     if "$ref" in definition:
         constraints["ref"] = definition["$ref"]
 
-    # Extract nested properties for objects
+    # Extract nested properties for objects and arrays
     nested_properties = None
+
+    # Handle objects with properties
     if prop_type == "object" and "properties" in definition and not definition.get("$schemaRef"):
         nested_required = definition.get("required", [])
         nested_properties = []
         for nested_name, nested_def in definition["properties"].items():
+            # Recursively parse nested properties
             nested_properties.append(_parse_property(nested_name, nested_def, nested_required))
+
+    # Handle arrays with object items
+    elif prop_type == "array" and "items" in definition:
+        items_def = definition["items"]
+        # Items can be a dict or list - only process if dict
+        if isinstance(items_def, dict):
+            # If array items are objects with properties, extract them
+            if items_def.get("type") == "object" and "properties" in items_def and not items_def.get("$schemaRef"):
+                nested_required = items_def.get("required", [])
+                nested_properties = []
+                for nested_name, nested_def in items_def["properties"].items():
+                    # Recursively parse nested properties
+                    nested_properties.append(_parse_property(nested_name, nested_def, nested_required))
 
     result = {
         "name": name,

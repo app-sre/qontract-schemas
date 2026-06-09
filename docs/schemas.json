@@ -929,7 +929,32 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".notifications"
+          "propertyPath": ".notifications",
+          "nestedProperties": [
+            {
+              "name": "action",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "addUser",
+                  "removeUser"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".action"
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".message"
+            }
+          ]
         },
         {
           "name": "skip",
@@ -1129,7 +1154,36 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".glitchtip_roles"
+          "propertyPath": ".glitchtip_roles",
+          "nestedProperties": [
+            {
+              "name": "organization",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/dependencies/glitchtip-organization-1.yml",
+              "propertyPath": ".organization"
+            },
+            {
+              "name": "role",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "member",
+                  "admin",
+                  "manager",
+                  "owner"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".role"
+            }
+          ]
         },
         {
           "name": "sendgrid_accounts",
@@ -1156,7 +1210,47 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".self_service"
+          "propertyPath": ".self_service",
+          "nestedProperties": [
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".description"
+            },
+            {
+              "name": "change_type",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/app-interface/change-type-1.yml",
+              "propertyPath": ".change_type"
+            },
+            {
+              "name": "resources",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".resources"
+            },
+            {
+              "name": "datafiles",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".datafiles"
+            }
+          ]
         },
         {
           "name": "ldapGroup",
@@ -1205,7 +1299,29 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".memberSources"
+          "propertyPath": ".memberSources",
+          "nestedProperties": [
+            {
+              "name": "provider",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/access/membership-provider-1.yml",
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".group"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -2216,7 +2332,38 @@
           "description": "List of dependencies required by the app-interface instance.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".dependencies"
+          "propertyPath": ".dependencies",
+          "nestedProperties": [
+            {
+              "name": "type",
+              "type": "enum",
+              "required": true,
+              "description": "The type of dependency (e.g., OpenShift, AWS, GitHub).\n",
+              "constraints": {
+                "enum": [
+                  "openshift",
+                  "aws",
+                  "github",
+                  "gitlab",
+                  "quay",
+                  "ci-int",
+                  "ci-ext",
+                  "kafka"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".type"
+            },
+            {
+              "name": "services",
+              "type": "array",
+              "required": true,
+              "description": "List of service references associated with the dependency.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".services"
+            }
+          ]
         },
         {
           "name": "credentials",
@@ -2225,7 +2372,29 @@
           "description": "List of GraphQL client credential instantiations.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".credentials"
+          "propertyPath": ".credentials",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "The name of the credential.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "secret",
+              "type": "unknown",
+              "required": true,
+              "description": "Vault secret containing the credential.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/vaultSecret"
+              },
+              "schemaRef": null,
+              "propertyPath": ".secret"
+            }
+          ]
         },
         {
           "name": "sqlQuery",
@@ -2546,7 +2715,27 @@
           "description": "Custom messages used in integrations.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".customMessages"
+          "propertyPath": ".customMessages",
+          "nestedProperties": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": "Unique ID of the custom message.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".id"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": true,
+              "description": "Content of the custom message.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".content"
+            }
+          ]
         },
         {
           "name": "terraformResourcesProviderExclusions",
@@ -2555,7 +2744,36 @@
           "description": "Exclusions for Terraform resources by provider.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".terraformResourcesProviderExclusions"
+          "propertyPath": ".terraformResourcesProviderExclusions",
+          "nestedProperties": [
+            {
+              "name": "provider",
+              "type": "string",
+              "required": true,
+              "description": "The provider for the exclusion.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "excludeAllProvisioners",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether to exclude all provisioners.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".excludeAllProvisioners"
+            },
+            {
+              "name": "excludeProvisioners",
+              "type": "array",
+              "required": false,
+              "description": "List of provisioners to exclude.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".excludeProvisioners"
+            }
+          ]
         },
         {
           "name": "terraformResourcesProviderExclusionsByProvisioner",
@@ -2564,7 +2782,29 @@
           "description": "Deprecated object for Terraform resource exclusions by provisioner.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".terraformResourcesProviderExclusionsByProvisioner"
+          "propertyPath": ".terraformResourcesProviderExclusionsByProvisioner",
+          "nestedProperties": [
+            {
+              "name": "provisioner",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/aws/account-1.yml",
+              "propertyPath": ".provisioner"
+            },
+            {
+              "name": "excludedProviders",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".excludedProviders"
+            }
+          ]
         },
         {
           "name": "imagePatternsBlockRules",
@@ -2573,7 +2813,27 @@
           "description": "Configuration to block specific image patterns from being deployed to environments\nmatching the label selector. This allows blocking non-compliant images (e.g.,\nredhat-user-workloads) from production environments.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".imagePatternsBlockRules"
+          "propertyPath": ".imagePatternsBlockRules",
+          "nestedProperties": [
+            {
+              "name": "environmentLabelSelector",
+              "type": "object",
+              "required": true,
+              "description": "Key-value pairs to match environment labels. All specified labels must match\nfor the block to apply. Example: {type: production}\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".environmentLabelSelector"
+            },
+            {
+              "name": "imagePatterns",
+              "type": "array",
+              "required": true,
+              "description": "List of image patterns to block (e.g., quay.io/redhat-user-workloads)",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".imagePatterns"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -3001,7 +3261,97 @@
             "minItems": 1
           },
           "schemaRef": null,
-          "propertyPath": ".changes"
+          "propertyPath": ".changes",
+          "nestedProperties": [
+            {
+              "name": "provider",
+              "type": "enum",
+              "required": false,
+              "description": "The provider for the change. Supported providers include\n`jsonPath` and `change-type`.\n",
+              "constraints": {
+                "enum": [
+                  "jsonPath",
+                  "change-type"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "changeSchema",
+              "type": "string",
+              "required": false,
+              "description": "The schema defining the structure of the change.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".changeSchema"
+            },
+            {
+              "name": "jsonPathSelectors",
+              "type": "array",
+              "required": false,
+              "description": "A list of JSONPath selectors used to identify the changes.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".jsonPathSelectors"
+            },
+            {
+              "name": "changeTypes",
+              "type": "array",
+              "required": false,
+              "description": "A list of additional change types associated with this change.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".changeTypes"
+            },
+            {
+              "name": "context",
+              "type": "object",
+              "required": false,
+              "description": "Context for the change, including selectors and conditions.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".context",
+              "nestedProperties": [
+                {
+                  "name": "selector",
+                  "type": "string",
+                  "required": false,
+                  "description": "The selector used to identify the context for the change.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".selector"
+                },
+                {
+                  "name": "where",
+                  "type": "enum",
+                  "required": false,
+                  "description": "Specifies where the context applies. Supported values\ninclude `backrefs`.\n",
+                  "constraints": {
+                    "enum": [
+                      "backrefs"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".where"
+                },
+                {
+                  "name": "when",
+                  "type": "enum",
+                  "required": false,
+                  "description": "Specifies when the context applies. Supported values\ninclude `added` and `removed`.\n",
+                  "constraints": {
+                    "enum": [
+                      "added",
+                      "removed"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".when"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "implicitOwnership",
@@ -3185,7 +3535,40 @@
           "description": "A list of access permissions for the database.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".access"
+          "propertyPath": ".access",
+          "nestedProperties": [
+            {
+              "name": "grants",
+              "type": "array",
+              "required": true,
+              "description": "A list of grants specifying the permissions for the database.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".grants"
+            },
+            {
+              "name": "target",
+              "type": "object",
+              "required": true,
+              "description": "The target schema within the database for the access permissions.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".target",
+              "nestedProperties": [
+                {
+                  "name": "dbschema",
+                  "type": "unknown",
+                  "required": false,
+                  "description": "The schema within the database to which the access applies.\n",
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/psqlIdentifier"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".dbschema"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -3328,7 +3711,155 @@
           "description": "A list of test cases for Prometheus rules.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".tests"
+          "propertyPath": ".tests",
+          "nestedProperties": [
+            {
+              "name": "interval",
+              "type": "string",
+              "required": true,
+              "description": "The interval at which the test is executed.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".interval"
+            },
+            {
+              "name": "input_series",
+              "type": "array",
+              "required": true,
+              "description": "A list of input time series for the test.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".input_series",
+              "nestedProperties": [
+                {
+                  "name": "series",
+                  "type": "string",
+                  "required": true,
+                  "description": "The name of the input time series.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".series"
+                },
+                {
+                  "name": "values",
+                  "type": "string",
+                  "required": true,
+                  "description": "The values for the input time series.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".values"
+                }
+              ]
+            },
+            {
+              "name": "alert_rule_test",
+              "type": "array",
+              "required": false,
+              "description": "A list of alert rule tests to validate alerting behavior.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".alert_rule_test",
+              "nestedProperties": [
+                {
+                  "name": "eval_time",
+                  "type": "string",
+                  "required": true,
+                  "description": "The evaluation time for the alert rule test.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".eval_time"
+                },
+                {
+                  "name": "alertname",
+                  "type": "string",
+                  "required": true,
+                  "description": "The name of the alert being tested.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".alertname"
+                },
+                {
+                  "name": "exp_alerts",
+                  "type": [
+                    "array",
+                    null
+                  ],
+                  "required": false,
+                  "description": "The expected alerts generated by the test.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".exp_alerts"
+                }
+              ]
+            },
+            {
+              "name": "promql_expr_test",
+              "type": "array",
+              "required": false,
+              "description": "A list of PromQL expression tests to validate query behavior.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".promql_expr_test",
+              "nestedProperties": [
+                {
+                  "name": "expr",
+                  "type": "unknown",
+                  "required": false,
+                  "description": "The PromQL expression being tested.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".expr"
+                },
+                {
+                  "name": "eval_time",
+                  "type": "string",
+                  "required": false,
+                  "description": "The evaluation time for the PromQL expression test.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".eval_time"
+                },
+                {
+                  "name": "exp_samples",
+                  "type": "array",
+                  "required": false,
+                  "description": "The expected samples generated by the PromQL expression.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".exp_samples",
+                  "nestedProperties": [
+                    {
+                      "name": "labels",
+                      "type": "string",
+                      "required": true,
+                      "description": "The labels for the expected sample.\n",
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".labels"
+                    },
+                    {
+                      "name": "value",
+                      "type": "number",
+                      "required": true,
+                      "description": "The value of the expected sample.\n",
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".value"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "external_labels",
+              "type": "object",
+              "required": false,
+              "description": "External labels applied to the test environment.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".external_labels"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -3401,7 +3932,20 @@
             "minItems": 1
           },
           "schemaRef": null,
-          "propertyPath": ".queries"
+          "propertyPath": ".queries",
+          "nestedProperties": [
+            {
+              "name": "path",
+              "type": "unknown",
+              "required": true,
+              "description": "The path to the resource query to be tested.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/resourceref"
+              },
+              "schemaRef": null,
+              "propertyPath": ".path"
+            }
+          ]
         },
         {
           "name": "resources",
@@ -3757,7 +4301,27 @@
               "description": "Dynamic variables fetched from GraphQL queries.\n",
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".dynamic"
+              "propertyPath": ".dynamic",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": "The name of the dynamic variable.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "query",
+                  "type": "string",
+                  "required": true,
+                  "description": "The GraphQL query used to fetch the dynamic variable.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".query"
+                }
+              ]
             }
           ]
         },
@@ -3947,7 +4511,29 @@
           "description": "List of links to Grafana Dashboard/Folders associated with the service. Please provide\na title together with the link.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".grafanaUrls"
+          "propertyPath": ".grafanaUrls",
+          "nestedProperties": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".title"
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".url"
+            }
+          ]
         },
         {
           "name": "sopsUrl",
@@ -3990,7 +4576,29 @@
           "description": "Teams or individuals who is/are responsible for the running instance of the software.",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".serviceOwners"
+          "propertyPath": ".serviceOwners",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            }
+          ]
         },
         {
           "name": "serviceNotifications",
@@ -3999,7 +4607,29 @@
           "description": "Teams or individuals who is/are should get notifications related to the service.",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".serviceNotifications"
+          "propertyPath": ".serviceNotifications",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            }
+          ]
         },
         {
           "name": "serviceDocs",
@@ -4026,7 +4656,49 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".artifactRegistryMirrors"
+          "propertyPath": ".artifactRegistryMirrors",
+          "nestedProperties": [
+            {
+              "name": "project",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/gcp/project-1.yml",
+              "propertyPath": ".project"
+            },
+            {
+              "name": "items",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".items",
+              "nestedProperties": [
+                {
+                  "name": "imageURL",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".imageURL"
+                },
+                {
+                  "name": "mirror",
+                  "type": "object (ref)",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": "/dependencies/container-image-mirror-1.yml",
+                  "propertyPath": ".mirror"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "gcrRepos",
@@ -4035,7 +4707,67 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".gcrRepos"
+          "propertyPath": ".gcrRepos",
+          "nestedProperties": [
+            {
+              "name": "project",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/gcp/project-1.yml",
+              "propertyPath": ".project"
+            },
+            {
+              "name": "items",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".items",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".description"
+                },
+                {
+                  "name": "public",
+                  "type": "boolean",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".public"
+                },
+                {
+                  "name": "mirror",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": "/dependencies/container-image-mirror-1.yml",
+                  "propertyPath": ".mirror"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "quayRepos",
@@ -4053,7 +4785,58 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".endPoints"
+          "propertyPath": ".endPoints",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".description"
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".url"
+            },
+            {
+              "name": "monitoring",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".monitoring",
+              "nestedProperties": [
+                {
+                  "name": "provider",
+                  "type": "object (ref)",
+                  "required": true,
+                  "description": "Reference to a monitoring provider to use for this endpoint",
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/dependencies/endpoint-monitoring-provider-1.yml",
+                  "propertyPath": ".provider"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "escalationPolicy",
@@ -4073,7 +4856,360 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".codeComponents"
+          "propertyPath": ".codeComponents",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".description"
+            },
+            {
+              "name": "resource",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "upstream",
+                  "bundle",
+                  "other",
+                  "gitops",
+                  "infrastructure"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".resource"
+            },
+            {
+              "name": "showInReviewQueue",
+              "type": "boolean",
+              "required": false,
+              "description": "Include MRs from this repo in the AppSRE Review Queue",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".showInReviewQueue"
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "pattern": "^https://.+(?<!/)$",
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".url"
+            },
+            {
+              "name": "gitlabSync",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".gitlabSync",
+              "nestedProperties": [
+                {
+                  "name": "sourceProject",
+                  "type": "object",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".sourceProject",
+                  "nestedProperties": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".name"
+                    },
+                    {
+                      "name": "group",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".group"
+                    },
+                    {
+                      "name": "branch",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".branch"
+                    }
+                  ]
+                },
+                {
+                  "name": "destinationProject",
+                  "type": "object",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".destinationProject",
+                  "nestedProperties": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".name"
+                    },
+                    {
+                      "name": "group",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".group"
+                    },
+                    {
+                      "name": "branch",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".branch"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "gitlabRepoOwners",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".gitlabRepoOwners",
+              "nestedProperties": [
+                {
+                  "name": "enabled",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".enabled"
+                },
+                {
+                  "name": "persistentLgtm",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".persistentLgtm"
+                }
+              ]
+            },
+            {
+              "name": "gitlabHousekeeping",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".gitlabHousekeeping",
+              "nestedProperties": [
+                {
+                  "name": "enabled",
+                  "type": "boolean",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".enabled"
+                },
+                {
+                  "name": "rebase",
+                  "type": "boolean",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".rebase"
+                },
+                {
+                  "name": "days_interval",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".days_interval"
+                },
+                {
+                  "name": "limit",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".limit"
+                },
+                {
+                  "name": "merge_limit",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Maximum MRs merged per loop iteration. Defaults to limit if unset.",
+                  "constraints": {
+                    "minimum": 1
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".merge_limit"
+                },
+                {
+                  "name": "consecutive_failure_limit",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Max consecutive merge failures before halting. Defaults to 3 if unset.",
+                  "constraints": {
+                    "minimum": 1
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".consecutive_failure_limit"
+                },
+                {
+                  "name": "enable_closing",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".enable_closing"
+                },
+                {
+                  "name": "pipeline_timeout",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".pipeline_timeout"
+                },
+                {
+                  "name": "labels_allowed",
+                  "type": "array",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".labels_allowed",
+                  "nestedProperties": [
+                    {
+                      "name": "role",
+                      "type": "object (ref)",
+                      "required": true,
+                      "description": null,
+                      "constraints": {
+                        "ref": "/common-1.json#/definitions/crossref"
+                      },
+                      "schemaRef": "/access/role-1.yml",
+                      "propertyPath": ".role"
+                    }
+                  ]
+                },
+                {
+                  "name": "must_pass",
+                  "type": "array",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".must_pass"
+                },
+                {
+                  "name": "multi_merge",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Enable optimistic multi-merge (OMM) for this repo.",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".multi_merge"
+                }
+              ]
+            },
+            {
+              "name": "jira",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/dependencies/jira-server-1.yml",
+              "propertyPath": ".jira"
+            },
+            {
+              "name": "mirror",
+              "type": "string",
+              "required": false,
+              "description": "GitLab repo to mirror from",
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".mirror"
+            },
+            {
+              "name": "imageBuildUrl",
+              "type": "string",
+              "required": false,
+              "description": "URL for the component's image build job (jenkins job, rhtap pipeline page, etc.)",
+              "constraints": {
+                "pattern": "^https://.+(?<!/)$",
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".imageBuildUrl"
+            },
+            {
+              "name": "blockedVersions",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".blockedVersions"
+            },
+            {
+              "name": "hotfixVersions",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".hotfixVersions"
+            }
+          ]
         },
         {
           "name": "glitchtipProjects",
@@ -4272,7 +5408,49 @@
           "description": "A list of changelog entries for the application. Each entry includes\nthe date of the change and a list of changes made.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".changelog"
+          "propertyPath": ".changelog",
+          "nestedProperties": [
+            {
+              "name": "date",
+              "type": "unknown",
+              "required": true,
+              "description": "The date when the changes were made, in ISO 8601 format.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/date"
+              },
+              "schemaRef": null,
+              "propertyPath": ".date"
+            },
+            {
+              "name": "changes",
+              "type": "array",
+              "required": true,
+              "description": "A list of changes made on the specified date. Each change includes\ntags and a description.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".changes",
+              "nestedProperties": [
+                {
+                  "name": "tags",
+                  "type": "array",
+                  "required": false,
+                  "description": "A list of tags categorizing the change (e.g., `bugfix`,\n`feature`, `improvement`).\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".tags"
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "required": true,
+                  "description": "A detailed description of the change made.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".description"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -4332,7 +5510,31 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".teams"
+          "propertyPath": ".teams",
+          "nestedProperties": [
+            {
+              "name": "permissions",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".permissions"
+            },
+            {
+              "name": "role",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "read"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".role"
+            }
+          ]
         },
         {
           "name": "items",
@@ -4341,7 +5543,45 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".items"
+          "propertyPath": ".items",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".description"
+            },
+            {
+              "name": "public",
+              "type": "boolean",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".public"
+            },
+            {
+              "name": "mirror",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": "/dependencies/container-image-mirror-1.yml",
+              "propertyPath": ".mirror"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -4438,7 +5678,83 @@
           "description": "Action arguments that can be used to customize the behavior of the action.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".arguments"
+          "propertyPath": ".arguments",
+          "nestedProperties": [
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "action_user",
+              "type": "string",
+              "required": false,
+              "description": "The user filter for the action list.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".action_user"
+            },
+            {
+              "name": "max_age_minutes",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum age of actions to include in the list, in minutes.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".max_age_minutes"
+            },
+            {
+              "name": "identifier",
+              "type": "string",
+              "required": false,
+              "description": "The external resource identifier regex pattern to match.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".identifier"
+            },
+            {
+              "name": "cronjob",
+              "type": "string",
+              "required": false,
+              "description": "The cronjob name regex pattern to match.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".cronjob"
+            },
+            {
+              "name": "api_version",
+              "type": "string",
+              "required": false,
+              "description": "The api version regex pattern to match.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".api_version"
+            },
+            {
+              "name": "kind",
+              "type": "string",
+              "required": false,
+              "description": "The kind regex pattern to match.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".kind"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name regex pattern to match.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -5097,7 +6413,42 @@
           "description": "A list of deployment instances for this GABI configuration. Each\ninstance specifies the AWS account, identifier, and namespace.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".instances"
+          "propertyPath": ".instances",
+          "nestedProperties": [
+            {
+              "name": "account",
+              "type": "unknown",
+              "required": true,
+              "description": "Reference to the AWS account associated with this GABI instance deployment.\n",
+              "constraints": {
+                "ref": "/aws/tenant_accounts-1.yml#/properties/account"
+              },
+              "schemaRef": null,
+              "propertyPath": ".account"
+            },
+            {
+              "name": "identifier",
+              "type": "unknown",
+              "required": true,
+              "description": "A unique identifier for this deployment instance.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/longIdentifier"
+              },
+              "schemaRef": null,
+              "propertyPath": ".identifier"
+            },
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": "Reference to the OpenShift namespace where this GABI instance is deployed.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            }
+          ]
         },
         {
           "name": "expirationDate",
@@ -5317,7 +6668,53 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".managed"
+          "propertyPath": ".managed",
+          "nestedProperties": [
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": {
+                "type": "object",
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "enum": [
+                      "/openshift/namespace-1.yml",
+                      "/openshift/lean-namespace-1.yml"
+                    ]
+                  }
+                }
+              },
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "spec",
+              "type": "unknown",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/app-sre/integration-spec-1.yml"
+              },
+              "schemaRef": null,
+              "propertyPath": ".spec"
+            },
+            {
+              "name": "sharding",
+              "type": "unknown",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/app-sre/integration-sharding-1.yml"
+              },
+              "schemaRef": null,
+              "propertyPath": ".sharding"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -5373,7 +6770,94 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".shardSpecOverrides"
+          "propertyPath": ".shardSpecOverrides",
+          "nestedProperties": [
+            {
+              "name": "shard",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": {
+                "type": "object",
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "enum": [
+                      "/openshift/cluster-1.yml",
+                      "/openshift/openshift-cluster-manager-1.yml",
+                      "/aws/account-1.yml"
+                    ]
+                  }
+                }
+              },
+              "propertyPath": ".shard"
+            },
+            {
+              "name": "imageRef",
+              "type": "string",
+              "required": false,
+              "description": "Image ref used by the shard.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".imageRef"
+            },
+            {
+              "name": "resources",
+              "type": "unknown",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/openshift/deploy-resources-1.yml"
+              },
+              "schemaRef": null,
+              "propertyPath": ".resources"
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".disabled"
+            },
+            {
+              "name": "subSharding",
+              "type": "object",
+              "required": false,
+              "description": "Sub-sharding strategy used by a shard.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".subSharding",
+              "nestedProperties": [
+                {
+                  "name": "strategy",
+                  "type": "enum",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "enum": [
+                      "static"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".strategy"
+                },
+                {
+                  "name": "shards",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".shards"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -5460,7 +6944,45 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".extraEnv"
+          "propertyPath": ".extraEnv",
+          "nestedProperties": [
+            {
+              "name": "secretName",
+              "type": "string",
+              "required": false,
+              "description": "secret name to get environment variable from",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".secretName"
+            },
+            {
+              "name": "secretKey",
+              "type": "string",
+              "required": false,
+              "description": "secret key to get value from and to use as the environment variable name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".secretKey"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "environment variable name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "environment variable value",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".value"
+            }
+          ]
         },
         {
           "name": "imageRef",
@@ -5755,7 +7277,60 @@
           "description": "A list of announcement configurations for this maintenance. Each\nannouncement specifies a provider (such as statuspage), the page to\nannounce on, and notification options for subscribers.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".announcements"
+          "propertyPath": ".announcements",
+          "nestedProperties": [
+            {
+              "name": "provider",
+              "type": "enum",
+              "required": true,
+              "description": "The provider used for the maintenance announcement.\n",
+              "constraints": {
+                "enum": [
+                  "statuspage"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "page",
+              "type": "object (ref)",
+              "required": false,
+              "description": "Reference to the status page where the maintenance will be\nannounced.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/dependencies/status-page-1.yml",
+              "propertyPath": ".page"
+            },
+            {
+              "name": "remindSubscribers",
+              "type": "boolean",
+              "required": false,
+              "description": "If true, subscribers will be reminded before the maintenance\nstarts.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".remindSubscribers"
+            },
+            {
+              "name": "notifySubscribersOnStart",
+              "type": "boolean",
+              "required": false,
+              "description": "If true, subscribers will be notified when the maintenance\nbegins.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".notifySubscribersOnStart"
+            },
+            {
+              "name": "notifySubscribersOnCompletion",
+              "type": "boolean",
+              "required": false,
+              "description": "If true, subscribers will be notified when the maintenance\nis completed.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".notifySubscribersOnCompletion"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -6160,7 +7735,29 @@
           "description": "Teams or individuals who is/are responsible for the running instance of the software.",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".productOwners"
+          "propertyPath": ".productOwners",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -6497,7 +8094,91 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".resourceTemplates"
+          "propertyPath": ".resourceTemplates",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".url"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "pattern": "^\\/.*"
+              },
+              "schemaRef": null,
+              "propertyPath": ".path"
+            },
+            {
+              "name": "provider",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "openshift-template",
+                  "directory",
+                  "helm"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "hash_length",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".hash_length"
+            },
+            {
+              "name": "parameters",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".parameters"
+            },
+            {
+              "name": "secretParameters",
+              "type": "array",
+              "required": false,
+              "description": "resource template level parameters from vault secrets",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".secretParameters"
+            },
+            {
+              "name": "targets",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".targets"
+            }
+          ]
         },
         {
           "name": "takeover",
@@ -6799,7 +8480,38 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".promotion_data"
+              "propertyPath": ".promotion_data",
+              "nestedProperties": [
+                {
+                  "name": "channel",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".channel"
+                },
+                {
+                  "name": "data",
+                  "type": "array",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".data",
+                  "nestedProperties": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".type"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -6859,7 +8571,29 @@
           "description": "wait for all images to exist before triggering a deployment",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".images"
+          "propertyPath": ".images",
+          "nestedProperties": [
+            {
+              "name": "org",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/dependencies/quay-org-1.yml",
+              "propertyPath": ".org"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "image repository name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            }
+          ]
         },
         {
           "name": "slos",
@@ -6971,7 +8705,40 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".schedule"
+          "propertyPath": ".schedule",
+          "nestedProperties": [
+            {
+              "name": "start",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "date"
+              },
+              "schemaRef": null,
+              "propertyPath": ".start"
+            },
+            {
+              "name": "end",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "date"
+              },
+              "schemaRef": null,
+              "propertyPath": ".end"
+            },
+            {
+              "name": "users",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".users"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -7050,7 +8817,82 @@
             "maxItems": 37
           },
           "schemaRef": null,
-          "propertyPath": ".acceptanceCriteria"
+          "propertyPath": ".acceptanceCriteria",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "enum",
+              "required": true,
+              "description": "The unique identifier for the acceptance criterion, such as\nCONTINUITY-0001 or INCIDENT-MGMT-0001. Each criterion maps to\na specific requirement for production readiness.\n",
+              "constraints": {
+                "enum": [
+                  "CONTINUITY-0001",
+                  "CONTINUITY-0002",
+                  "CONTINUITY-0003",
+                  "INCIDENT-MGMT-0001",
+                  "INCIDENT-MGMT-0002",
+                  "INCIDENT-MGMT-0003",
+                  "INCIDENT-MGMT-0004",
+                  "INCIDENT-MGMT-0005",
+                  "INCIDENT-MGMT-0006",
+                  "INCIDENT-MGMT-0007",
+                  "INCIDENT-MGMT-0008",
+                  "OBSERVABILITY-0001",
+                  "OBSERVABILITY-0002",
+                  "OBSERVABILITY-0003",
+                  "OBSERVABILITY-0004",
+                  "OBSERVABILITY-0005",
+                  "OBSERVABILITY-0006",
+                  "RELEASING-0001",
+                  "RELEASING-0002",
+                  "RELEASING-0003",
+                  "RELEASING-0004",
+                  "RELEASING-0005",
+                  "RELIABILITY-0001",
+                  "RELIABILITY-0002",
+                  "RELIABILITY-0003",
+                  "RELIABILITY-0004",
+                  "RELIABILITY-0005",
+                  "RELIABILITY-0006",
+                  "RELIABILITY-0007",
+                  "RELIABILITY-0008",
+                  "RELIABILITY-0009",
+                  "RELIABILITY-0010",
+                  "RELIABILITY-0011",
+                  "SECURITY-0001",
+                  "SECURITY-0002",
+                  "SECURITY-0003",
+                  "SECURITY-0004"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "status",
+              "type": "enum",
+              "required": true,
+              "description": "The current status of the acceptance criterion. Use 'green' for\nfully met, 'yellow' for partially met or in progress, and 'red'\nfor not met.\n",
+              "constraints": {
+                "enum": [
+                  "green",
+                  "yellow",
+                  "red"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".status"
+            },
+            {
+              "name": "comment",
+              "type": "string",
+              "required": false,
+              "description": "Optional comment providing additional context, explanation, or\njustification for the status of this criterion.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".comment"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -7121,7 +8963,75 @@
           "description": "A list of namespaces where this SLO document applies. Each entry\nspecifies the target namespace, optional SLO namespace for alerting,\nand Prometheus access configuration.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".namespaces"
+          "propertyPath": ".namespaces",
+          "nestedProperties": [
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": "Reference to the OpenShift namespace where the SLO applies.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "SLONamespace",
+              "type": "object (ref)",
+              "required": false,
+              "description": "Namespace where PrometheusRule objects for SLO alerts will be created.\nUsed with the slo-to-status-board flow, which depends on the status-board service.\nIf omitted, defaults to the observability namespace of the cluster.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".SLONamespace"
+            },
+            {
+              "name": "prometheusAccess",
+              "type": "object",
+              "required": false,
+              "description": "Configuration for accessing Prometheus target specified in SLONamespace, including\nURL and credentials.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".prometheusAccess",
+              "nestedProperties": [
+                {
+                  "name": "url",
+                  "type": "string",
+                  "required": true,
+                  "description": "The URL of the Prometheus instance.\n",
+                  "constraints": {
+                    "format": "uri"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".url"
+                },
+                {
+                  "name": "username",
+                  "type": "unknown",
+                  "required": false,
+                  "description": "Vault secret for the Prometheus username.\n",
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/vaultSecret"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".username"
+                },
+                {
+                  "name": "password",
+                  "type": "unknown",
+                  "required": false,
+                  "description": "Vault secret for the Prometheus password.\n",
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/vaultSecret"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".password"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "slos",
@@ -7130,7 +9040,161 @@
           "description": "A list of SLO definitions for this service or component. Each SLO\nspecifies the SLI type, specification, target, time window, and\nsupporting details such as Prometheus expressions and dashboards.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".slos"
+          "propertyPath": ".slos",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "The name of the SLO, typically the service or metric being measured.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "SLIType",
+              "type": "enum",
+              "required": true,
+              "description": "The type of Service Level Indicator (SLI) being measured, such as\nlatency, availability, or correctness.\n",
+              "constraints": {
+                "enum": [
+                  "latency",
+                  "availability",
+                  "correctness",
+                  "quality",
+                  "freshness",
+                  "coverage",
+                  "correcteness",
+                  "throughput",
+                  "durability"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".SLIType"
+            },
+            {
+              "name": "SLISpecification",
+              "type": "string",
+              "required": true,
+              "description": "A clear description of the SLI metric being measured, e.g.,\n\"The proportion of valid requests served successfully.\"\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".SLISpecification"
+            },
+            {
+              "name": "SLODetails",
+              "type": "string",
+              "required": true,
+              "description": "A thorough description of this SLO, including:\n  * SLI description: What is being measured\n  * SLI rationale: Why it is measured\n  * Implementation details: How it is measured\n  * SLO rationale: Why the targets were chosen\n  * Alerting: How alerting is implemented\nMust be a URL to a GitHub or GitLab document.\n",
+              "constraints": {
+                "pattern": "^https?://(github.com|gitlab.cee.redhat.com)/",
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".SLODetails"
+            },
+            {
+              "name": "SLOTargetUnit",
+              "type": "enum",
+              "required": true,
+              "description": "The unit for the SLO target and Prometheus expression:\n  * Use 'percent_0_1' for values between 0 and 1\n  * Use 'percent_0_100' for values between 0 and 100\n",
+              "constraints": {
+                "enum": [
+                  "percent_0_1",
+                  "percent_0_100"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".SLOTargetUnit"
+            },
+            {
+              "name": "SLOParameters",
+              "type": "object",
+              "required": true,
+              "description": "Parameters for the SLO, such as the time window over which it is\nmeasured (e.g., \"28d\" for 28 days).\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".SLOParameters",
+              "nestedProperties": [
+                {
+                  "name": "window",
+                  "type": "string",
+                  "required": true,
+                  "description": "The time window for measuring the SLO, in days (e.g., \"28d\").\n",
+                  "constraints": {
+                    "pattern": "^[0-9]+d"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".window"
+                }
+              ]
+            },
+            {
+              "name": "expr",
+              "type": "unknown",
+              "required": true,
+              "description": "The Prometheus expression used to calculate the SLO. Should be\nexpressed in the units of 'SLOTargetUnit'. This expression is\nprocessed with Jinja using the SLOParameters as input.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".expr"
+            },
+            {
+              "name": "SLOTarget",
+              "type": "number",
+              "required": true,
+              "description": "The numeric goal for the SLO, expressed in the unit specified by\n'SLOTargetUnit' (e.g., 99.9 for percent_0_100).\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".SLOTarget"
+            },
+            {
+              "name": "prometheusRules",
+              "type": "string",
+              "required": true,
+              "description": "File reference to Prometheus rules associated with this SLO\ndefinition.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".prometheusRules"
+            },
+            {
+              "name": "prometheusRulesTests",
+              "type": "string",
+              "required": false,
+              "description": "The location of the Prometheus rules tests for the associated rules.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".prometheusRulesTests"
+            },
+            {
+              "name": "dashboard",
+              "type": "string",
+              "required": true,
+              "description": "The URL of the Grafana dashboard for visualizing this SLO.\n",
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".dashboard"
+            },
+            {
+              "name": "SLIErrorQuery",
+              "type": "string",
+              "required": false,
+              "description": "Prometheus expression for querying error portion of metric utilized for measuring SLO.\nBy defining this and SLITotalQuery, multi-window multi-burnrate prometheus rules will\nbe generated for the SLO.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".SLIErrorQuery"
+            },
+            {
+              "name": "SLITotalQuery",
+              "type": "string",
+              "required": false,
+              "description": "Prometheus expression for querying total samples of metric utilized for measuring SLO.\nBy defining this and SLIErrorQuery, multi-window multi-burnrate prometheus rules will\nbe generated for the SLO.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".SLITotalQuery"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -7580,7 +9644,47 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".slack"
+              "propertyPath": ".slack",
+              "nestedProperties": [
+                {
+                  "name": "workspace",
+                  "type": "object (ref)",
+                  "required": true,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/dependencies/slack-workspace-1.yml",
+                  "propertyPath": ".workspace"
+                },
+                {
+                  "name": "channel",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".channel"
+                },
+                {
+                  "name": "icon_emoji",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".icon_emoji"
+                },
+                {
+                  "name": "username",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".username"
+                }
+              ]
             }
           ]
         }
@@ -7754,7 +9858,29 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".accountOwners"
+          "propertyPath": ".accountOwners",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            }
+          ]
         },
         {
           "name": "securityContact",
@@ -8506,7 +10632,66 @@
           "description": "A list of block device mappings for the ASG instances, specifying\ndevice names and EBS volume configurations.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".block_device_mappings"
+          "propertyPath": ".block_device_mappings",
+          "nestedProperties": [
+            {
+              "name": "device_name",
+              "type": "string",
+              "required": false,
+              "description": "The device name exposed to the instance (e.g., /dev/xvda).\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".device_name"
+            },
+            {
+              "name": "ebs",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".ebs",
+              "nestedProperties": [
+                {
+                  "name": "volume_size",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The size of the EBS volume (in GiB).\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".volume_size"
+                },
+                {
+                  "name": "volume_type",
+                  "type": "enum",
+                  "required": false,
+                  "description": "The type of EBS volume to attach.\n",
+                  "constraints": {
+                    "enum": [
+                      "standard",
+                      "gp2",
+                      "gp3",
+                      "io1",
+                      "io2",
+                      "sc1",
+                      "st1"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".volume_type"
+                },
+                {
+                  "name": "encrypted",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "If true, the EBS volume will be encrypted.\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".encrypted"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "instance_requirements",
@@ -10465,7 +12650,46 @@
             "minItems": 1
           },
           "schemaRef": null,
-          "propertyPath": ".parameters"
+          "propertyPath": ".parameters",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "value",
+              "type": [
+                "string",
+                "integer",
+                "number",
+                "boolean"
+              ],
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".value"
+            },
+            {
+              "name": "apply_method",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "immediate",
+                  "pending-reboot"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".apply_method"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -10619,7 +12843,36 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".quotas"
+          "propertyPath": ".quotas",
+          "nestedProperties": [
+            {
+              "name": "serviceCode",
+              "type": "string",
+              "required": true,
+              "description": "Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the ListServices operation.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".serviceCode"
+            },
+            {
+              "name": "quotaCode",
+              "type": "string",
+              "required": true,
+              "description": "Specifies the quota identifier. To find the quota code for a specific quota, use the ListServiceQuotas operation, and look for the QuotaCode response in the output for the quota you want.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".quotaCode"
+            },
+            {
+              "name": "value",
+              "type": "number",
+              "required": true,
+              "description": "Specifies the new, increased value for the quota.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".value"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -11020,7 +13273,77 @@
           "description": "Authentication configuration for the proxy. We currently only support auth via secret, hence the required fields.",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".auth"
+          "propertyPath": ".auth",
+          "nestedProperties": [
+            {
+              "name": "auth_scheme",
+              "type": "enum",
+              "required": true,
+              "description": "The type of authentication that the proxy uses for connections from the proxy to the underlying database",
+              "constraints": {
+                "enum": [
+                  "SECRETS"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".auth_scheme"
+            },
+            {
+              "name": "client_password_auth_type",
+              "type": "enum",
+              "required": false,
+              "description": "The type of authentication the proxy uses for connections from clients",
+              "constraints": {
+                "enum": [
+                  "POSTGRES_SCRAM_SHA_256",
+                  "POSTGRES_MD5"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".client_password_auth_type"
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": "A user-specified description about the authentication used by a proxy to log in as a specific database user",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".description"
+            },
+            {
+              "name": "iam_auth",
+              "type": "enum",
+              "required": false,
+              "description": "Whether to require or allow AWS Identity and Access Management (IAM) authentication for connections to the proxy",
+              "constraints": {
+                "enum": [
+                  "DISABLED",
+                  "REQUIRED"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".iam_auth"
+            },
+            {
+              "name": "secret_name",
+              "type": "string",
+              "required": true,
+              "description": "Secret name that the proxy uses to authenticate to the RDS DB instance or Aurora DB cluster",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".secret_name"
+            },
+            {
+              "name": "username",
+              "type": "string",
+              "required": false,
+              "description": "The name of the database user to which the proxy connects",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".username"
+            }
+          ]
         },
         {
           "name": "connection_borrow_timeout",
@@ -12220,7 +14543,31 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".image"
+          "propertyPath": ".image",
+          "nestedProperties": [
+            {
+              "name": "upstream",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".upstream",
+              "nestedProperties": [
+                {
+                  "name": "instance",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/dependencies/jenkins-instance-1.yml",
+                  "propertyPath": ".instance"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "secrets_prefix",
@@ -12382,7 +14729,32 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".subscriptions"
+          "propertyPath": ".subscriptions",
+          "nestedProperties": [
+            {
+              "name": "protocol",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "email",
+                  "sms"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".protocol"
+            },
+            {
+              "name": "endpoint",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".endpoint"
+            }
+          ]
         },
         {
           "name": "records",
@@ -12409,7 +14781,31 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".users"
+          "propertyPath": ".users",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "unknown",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/identifierLowercase64"
+              },
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "secret",
+              "type": "unknown",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/vaultSecret"
+              },
+              "schemaRef": null,
+              "propertyPath": ".secret"
+            }
+          ]
         },
         {
           "name": "managed_by_erv2",
@@ -12710,7 +15106,27 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".subnets"
+          "propertyPath": ".subnets",
+          "nestedProperties": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".id"
+            },
+            {
+              "name": "privacy",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".privacy"
+            }
+          ]
         },
         {
           "name": "private_subnet_tags",
@@ -12976,7 +15392,29 @@
           "description": "A list of individuals or teams responsible for this Cloudflare\naccount. Each entry must include a name and email address for\ncontact and accountability.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".accountOwners"
+          "propertyPath": ".accountOwners",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "The name of the account owner.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": "The email address of the account owner.\n",
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            }
+          ]
         },
         {
           "name": "apiCredentials",
@@ -13050,7 +15488,29 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".members"
+          "propertyPath": ".members",
+          "nestedProperties": [
+            {
+              "name": "email",
+              "type": "string",
+              "required": true,
+              "description": "The contact email address of the user\n",
+              "constraints": {
+                "format": "email"
+              },
+              "schemaRef": null,
+              "propertyPath": ".email"
+            },
+            {
+              "name": "roles",
+              "type": "array",
+              "required": true,
+              "description": "Array of roles associated with this member. Note the value is role name like `Administrator Read Only`\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".roles"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -14385,7 +16845,45 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": "._records_from_vault"
+          "propertyPath": "._records_from_vault",
+          "nestedProperties": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".path"
+            },
+            {
+              "name": "field",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".field"
+            },
+            {
+              "name": "key",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".key"
+            },
+            {
+              "name": "version",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".version"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -15120,7 +17618,31 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".projectRequests"
+          "propertyPath": ".projectRequests",
+          "nestedProperties": [
+            {
+              "name": "group",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "service"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".group"
+            },
+            {
+              "name": "projects",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".projects"
+            }
+          ]
         },
         {
           "name": "description",
@@ -16044,7 +18566,27 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".buildsCleanupRules"
+          "propertyPath": ".buildsCleanupRules",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "keep_hours",
+              "type": "integer",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".keep_hours"
+            }
+          ]
         },
         {
           "name": "workerFleets",
@@ -16053,7 +18595,192 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".workerFleets"
+          "propertyPath": ".workerFleets",
+          "nestedProperties": [
+            {
+              "name": "account",
+              "type": "unknown",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/aws/tenant_accounts-1.yml#/properties/account"
+              },
+              "schemaRef": null,
+              "propertyPath": ".account"
+            },
+            {
+              "name": "identifier",
+              "type": "unknown",
+              "required": true,
+              "description": "ASG used for this Jenkins cloud, need to match an ASG identifier.",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/longIdentifier"
+              },
+              "schemaRef": null,
+              "propertyPath": ".identifier"
+            },
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "sshConnector",
+              "type": "object",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".sshConnector",
+              "nestedProperties": [
+                {
+                  "name": "credentialsId",
+                  "type": "string",
+                  "required": true,
+                  "description": "Jenkins credential name of ssh private key to be used for logging in to the remote host.",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".credentialsId"
+                },
+                {
+                  "name": "jvmOptions",
+                  "type": "string",
+                  "required": false,
+                  "description": "JAVA Options to set in the agents",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".jvmOptions"
+                },
+                {
+                  "name": "launchTimeoutSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".launchTimeoutSeconds"
+                },
+                {
+                  "name": "maxNumRetries",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".maxNumRetries"
+                },
+                {
+                  "name": "port",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".port"
+                },
+                {
+                  "name": "retryWaitTime",
+                  "type": "integer",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".retryWaitTime"
+                },
+                {
+                  "name": "sshHostKeyVerificationStrategy",
+                  "type": "enum",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "enum": [
+                      "nonVerifyingKeyVerificationStrategy"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".sshHostKeyVerificationStrategy"
+                }
+              ]
+            },
+            {
+              "name": "fsRoot",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".fsRoot"
+            },
+            {
+              "name": "labelString",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".labelString"
+            },
+            {
+              "name": "numExecutors",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".numExecutors"
+            },
+            {
+              "name": "idleMinutes",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".idleMinutes"
+            },
+            {
+              "name": "minSpareSize",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".minSpareSize"
+            },
+            {
+              "name": "maxTotalUses",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".maxTotalUses"
+            },
+            {
+              "name": "noDelayProvision",
+              "type": "boolean",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".noDelayProvision"
+            },
+            {
+              "name": "alwaysReconnect",
+              "type": "boolean",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".alwaysReconnect"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -16256,7 +18983,27 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".issueFields"
+          "propertyPath": ".issueFields",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "The Jira field name as shown in the UI",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "The value to set the field to as a string as shown in the UI",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".value"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -16442,7 +19189,27 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".mappings"
+          "propertyPath": ".mappings",
+          "nestedProperties": [
+            {
+              "name": "severity",
+              "type": "string",
+              "required": true,
+              "description": "alert severity",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".severity"
+            },
+            {
+              "name": "priority",
+              "type": "string",
+              "required": true,
+              "description": "ticket priority",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".priority"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -16895,7 +19662,36 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".mirrorFilters"
+          "propertyPath": ".mirrorFilters",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "Name of the repository to filter.",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "tags",
+              "type": "array",
+              "required": false,
+              "description": "This limits which tags to mirror to the ones in the list.\nThey will take preference over the ones excluded.\nRegular expressions are supported.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".tags"
+            },
+            {
+              "name": "tagsExclude",
+              "type": "array",
+              "required": false,
+              "description": "Tags to exclude. Regular expression are supported.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".tagsExclude"
+            }
+          ]
         },
         {
           "name": "managedTeams",
@@ -17016,7 +19812,65 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".ocm_environments"
+          "propertyPath": ".ocm_environments",
+          "nestedProperties": [
+            {
+              "name": "ocm",
+              "type": "object (ref)",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/openshift-cluster-manager-1.yml",
+              "propertyPath": ".ocm"
+            },
+            {
+              "name": "creator_role_arn",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".creator_role_arn"
+            },
+            {
+              "name": "installer_role_arn",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".installer_role_arn"
+            },
+            {
+              "name": "support_role_arn",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".support_role_arn"
+            },
+            {
+              "name": "controlplane_role_arn",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".controlplane_role_arn"
+            },
+            {
+              "name": "worker_role_arn",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".worker_role_arn"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -17291,7 +20145,27 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".methods"
+              "propertyPath": ".methods",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "args",
+                  "type": "object",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".args"
+                }
+              ]
             }
           ]
         },
@@ -17302,7 +20176,18 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".integrations"
+          "propertyPath": ".integrations",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            }
+          ]
         },
         {
           "name": "managedUsergroups",
@@ -17410,7 +20295,40 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".products"
+          "propertyPath": ".products",
+          "nestedProperties": [
+            {
+              "name": "productEnvironment",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/app-sre/environment-1.yml",
+              "propertyPath": ".productEnvironment"
+            },
+            {
+              "name": "appSelectors",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".appSelectors",
+              "nestedProperties": [
+                {
+                  "name": "exclude",
+                  "type": "array",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".exclude"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -17712,7 +20630,51 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".matchers"
+              "propertyPath": ".matchers",
+              "nestedProperties": [
+                {
+                  "name": "matchExpression",
+                  "type": "object",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".matchExpression",
+                  "nestedProperties": [
+                    {
+                      "name": "alert",
+                      "type": "string",
+                      "required": false,
+                      "description": null,
+                      "constraints": {},
+                      "schemaRef": null,
+                      "propertyPath": ".alert"
+                    },
+                    {
+                      "name": "labels",
+                      "type": "unknown",
+                      "required": false,
+                      "description": null,
+                      "constraints": {
+                        "ref": "/common-1.json#/definitions/labels"
+                      },
+                      "schemaRef": null,
+                      "propertyPath": ".labels"
+                    }
+                  ]
+                },
+                {
+                  "name": "componentStatus",
+                  "type": "unknown",
+                  "required": true,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/statusPageStatus"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".componentStatus"
+                }
+              ]
             }
           ]
         },
@@ -17842,7 +20804,27 @@
           "description": "holds information which bucket key stores the terraform state per integration",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".integrations"
+          "propertyPath": ".integrations",
+          "nestedProperties": [
+            {
+              "name": "integration",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".integration"
+            },
+            {
+              "name": "key",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".key"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -17970,7 +20952,67 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".secrets"
+          "propertyPath": ".secrets",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "namespace",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "tokens",
+              "type": "array",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".tokens",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": "Name used in the Dynatrace API as prefix for token.\nNote, that due to Dynatrace API the token name length is limited.\n",
+                  "constraints": {
+                    "maxLength": 46
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "keyNameInSecret",
+                  "type": "string",
+                  "required": false,
+                  "description": "Key for this token inside the openshift secret object. If not set, uses \"name\"",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".keyNameInSecret"
+                },
+                {
+                  "name": "scopes",
+                  "type": "array",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".scopes"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -18104,7 +21146,36 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".channels"
+          "propertyPath": ".channels",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "image",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".image"
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".version"
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -18832,7 +21903,43 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".auth"
+          "propertyPath": ".auth",
+          "nestedProperties": [
+            {
+              "name": "service",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "github-org",
+                  "github-org-team",
+                  "oidc",
+                  "rhidp"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".service"
+            },
+            {
+              "name": "org",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".org"
+            },
+            {
+              "name": "team",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".team"
+            }
+          ]
         },
         {
           "name": "observabilityNamespace",
@@ -19184,7 +22291,29 @@
             "maxItems": 1
           },
           "schemaRef": null,
-          "propertyPath": ".additionalRouters"
+          "propertyPath": ".additionalRouters",
+          "nestedProperties": [
+            {
+              "name": "private",
+              "type": "boolean",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".private"
+            },
+            {
+              "name": "route_selectors",
+              "type": "unknown",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/labels"
+              },
+              "schemaRef": null,
+              "propertyPath": ".route_selectors"
+            }
+          ]
         },
         {
           "name": "network",
@@ -19247,7 +22376,133 @@
             "minItems": 1
           },
           "schemaRef": null,
-          "propertyPath": ".machinePools"
+          "propertyPath": ".machinePools",
+          "nestedProperties": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "maxLength": 15
+              },
+              "schemaRef": null,
+              "propertyPath": ".id"
+            },
+            {
+              "name": "instance_type",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".instance_type"
+            },
+            {
+              "name": "labels",
+              "type": "unknown",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/labels"
+              },
+              "schemaRef": null,
+              "propertyPath": ".labels"
+            },
+            {
+              "name": "subnet",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".subnet"
+            },
+            {
+              "name": "taints",
+              "type": "array",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".taints",
+              "nestedProperties": [
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".key"
+                },
+                {
+                  "name": "value",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".value"
+                },
+                {
+                  "name": "effect",
+                  "type": "enum",
+                  "required": true,
+                  "description": null,
+                  "constraints": {
+                    "enum": [
+                      "NoSchedule",
+                      "NoExecute",
+                      "PreferNoSchedule"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".effect"
+                }
+              ]
+            },
+            {
+              "name": "replicas",
+              "type": "integer",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".replicas"
+            },
+            {
+              "name": "autoscale",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".autoscale",
+              "nestedProperties": [
+                {
+                  "name": "min_replicas",
+                  "type": "integer",
+                  "required": true,
+                  "description": null,
+                  "constraints": {
+                    "minimum": 1
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".min_replicas"
+                },
+                {
+                  "name": "max_replicas",
+                  "type": "integer",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".max_replicas"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "peering",
@@ -19265,7 +22520,178 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".connections"
+              "propertyPath": ".connections",
+              "nestedProperties": [
+                {
+                  "name": "provider",
+                  "type": "enum",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "enum": [
+                      "account-vpc",
+                      "account-vpc-mesh",
+                      "account-tgw",
+                      "cluster-vpc-requester",
+                      "cluster-vpc-accepter"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".provider"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".description"
+                },
+                {
+                  "name": "vpc",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/aws/vpc-1.yml",
+                  "propertyPath": ".vpc"
+                },
+                {
+                  "name": "cluster",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/openshift/cluster-1.yml",
+                  "propertyPath": ".cluster"
+                },
+                {
+                  "name": "account",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/aws/account-1.yml",
+                  "propertyPath": ".account"
+                },
+                {
+                  "name": "awsInfrastructureManagementAccount",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/aws/account-1.yml",
+                  "propertyPath": ".awsInfrastructureManagementAccount"
+                },
+                {
+                  "name": "tags",
+                  "type": "object",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".tags"
+                },
+                {
+                  "name": "manageRoutes",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".manageRoutes"
+                },
+                {
+                  "name": "manageAccountRoutes",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".manageAccountRoutes"
+                },
+                {
+                  "name": "manageSecurityGroups",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".manageSecurityGroups"
+                },
+                {
+                  "name": "manageRoute53Associations",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".manageRoute53Associations"
+                },
+                {
+                  "name": "allowPrivateHcpApiAccess",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "if set to true, enable traffic from attached TGW to reach the API and oauth server\nof a private HCP by adapting the VPC endpoint security group\n",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".allowPrivateHcpApiAccess"
+                },
+                {
+                  "name": "cidrBlock",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cidrBlock"
+                },
+                {
+                  "name": "cidrBlocks",
+                  "type": "array",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cidrBlocks"
+                },
+                {
+                  "name": "delete",
+                  "type": "boolean",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".delete"
+                },
+                {
+                  "name": "assumeRole",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".assumeRole"
+                }
+              ]
             }
           ]
         },
@@ -19363,7 +22789,34 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".awsInfrastructureAccess"
+          "propertyPath": ".awsInfrastructureAccess",
+          "nestedProperties": [
+            {
+              "name": "awsGroup",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/aws/group-1.yml",
+              "propertyPath": ".awsGroup"
+            },
+            {
+              "name": "accessLevel",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "read-only",
+                  "network-mgmt"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".accessLevel"
+            }
+          ]
         },
         {
           "name": "awsInfrastructureManagementAccounts",
@@ -19372,7 +22825,43 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".awsInfrastructureManagementAccounts"
+          "propertyPath": ".awsInfrastructureManagementAccounts",
+          "nestedProperties": [
+            {
+              "name": "account",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/aws/account-1.yml",
+              "propertyPath": ".account"
+            },
+            {
+              "name": "accessLevel",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "read-only",
+                  "network-mgmt"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".accessLevel"
+            },
+            {
+              "name": "default",
+              "type": "boolean",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".default"
+            }
+          ]
         },
         {
           "name": "prometheus",
@@ -19951,7 +23440,72 @@
           "description": "List of default labels to apply to clusters by external configuration labels",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".labelDefaults"
+          "propertyPath": ".labelDefaults",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "matchSubscriptionLabels",
+              "type": "object",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".matchSubscriptionLabels"
+            },
+            {
+              "name": "subscriptionLabelTemplate",
+              "type": "object",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".subscriptionLabelTemplate",
+              "nestedProperties": [
+                {
+                  "name": "path",
+                  "type": "unknown",
+                  "required": true,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/resourceref"
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".path"
+                },
+                {
+                  "name": "type",
+                  "type": "enum",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "enum": [
+                      "jinja2",
+                      "extracurlyjinja2"
+                    ]
+                  },
+                  "schemaRef": null,
+                  "propertyPath": ".type"
+                },
+                {
+                  "name": "variables",
+                  "type": "object",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".variables"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "clusters",
@@ -19960,7 +23514,56 @@
           "description": "List of clusters to define dynatrace token provider labels for",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".clusters"
+          "propertyPath": ".clusters",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "cluster name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "serverUrl",
+              "type": "string",
+              "required": true,
+              "description": "cluster server url",
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".serverUrl"
+            },
+            {
+              "name": "clusterId",
+              "type": "string",
+              "required": true,
+              "description": "cluster ID",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".clusterId"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "required": true,
+              "description": "subscription ID",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".subscriptionId"
+            },
+            {
+              "name": "subscriptionLabels",
+              "type": "object",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".subscriptionLabels"
+            }
+          ]
         }
       ],
       "dependencies": [
@@ -20247,7 +23850,168 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".limits"
+          "propertyPath": ".limits",
+          "nestedProperties": [
+            {
+              "name": "type",
+              "type": "enum",
+              "required": false,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "Container",
+                  "Pod"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".type"
+            },
+            {
+              "name": "default",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".default",
+              "nestedProperties": [
+                {
+                  "name": "cpu",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cpu"
+                },
+                {
+                  "name": "memory",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".memory"
+                }
+              ]
+            },
+            {
+              "name": "defaultRequest",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".defaultRequest",
+              "nestedProperties": [
+                {
+                  "name": "cpu",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cpu"
+                },
+                {
+                  "name": "memory",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".memory"
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".max",
+              "nestedProperties": [
+                {
+                  "name": "cpu",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cpu"
+                },
+                {
+                  "name": "memory",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".memory"
+                }
+              ]
+            },
+            {
+              "name": "maxLimitRequestRatio",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".maxLimitRequestRatio",
+              "nestedProperties": [
+                {
+                  "name": "cpu",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cpu"
+                },
+                {
+                  "name": "memory",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".memory"
+                }
+              ]
+            },
+            {
+              "name": "min",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".min",
+              "nestedProperties": [
+                {
+                  "name": "cpu",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".cpu"
+                },
+                {
+                  "name": "memory",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".memory"
+                }
+              ]
+            }
+          ]
         }
       ],
       "dependencies": [],
@@ -20483,7 +24247,27 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".managedResourceTypeOverrides"
+          "propertyPath": ".managedResourceTypeOverrides",
+          "nestedProperties": [
+            {
+              "name": "resource",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".resource"
+            },
+            {
+              "name": "override",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".override"
+            }
+          ]
         },
         {
           "name": "managedResourceNames",
@@ -20577,7 +24361,38 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".openshiftServiceAccountTokens"
+          "propertyPath": ".openshiftServiceAccountTokens",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "serviceAccountName",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".serviceAccountName"
+            }
+          ]
         },
         {
           "name": "glitchtipProjects",
@@ -20874,7 +24689,40 @@
           "description": "trigger a job in jenkins following an addon upgrade",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".addonUpgradeTests"
+          "propertyPath": ".addonUpgradeTests",
+          "nestedProperties": [
+            {
+              "name": "addon",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/cluster-addon-1.yml",
+              "propertyPath": ".addon"
+            },
+            {
+              "name": "instance",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/dependencies/jenkins-instance-1.yml",
+              "propertyPath": ".instance"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            }
+          ]
         },
         {
           "name": "recommendedVersions",
@@ -20883,7 +24731,45 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".recommendedVersions"
+          "propertyPath": ".recommendedVersions",
+          "nestedProperties": [
+            {
+              "name": "recommendedVersion",
+              "type": "string",
+              "required": true,
+              "description": "Recommended version for provisioning new clusters",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".recommendedVersion"
+            },
+            {
+              "name": "initialVersion",
+              "type": "string",
+              "required": true,
+              "description": "Initial version string, as used by the OCM API",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".initialVersion"
+            },
+            {
+              "name": "workload",
+              "type": "string",
+              "required": true,
+              "description": "Workload the version is recommended for",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".workload"
+            },
+            {
+              "name": "channel",
+              "type": "string",
+              "required": false,
+              "description": "Channel version can be found, stable if not set",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".channel"
+            }
+          ]
         },
         {
           "name": "recommendedVersionWeight",
@@ -20948,7 +24834,31 @@
           "description": "List of cluster health check providers",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".ausClusterHealthChecks"
+          "propertyPath": ".ausClusterHealthChecks",
+          "nestedProperties": [
+            {
+              "name": "provider",
+              "type": "enum",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "enum": [
+                  "telemeter"
+                ]
+              },
+              "schemaRef": null,
+              "propertyPath": ".provider"
+            },
+            {
+              "name": "enforced",
+              "type": "boolean",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".enforced"
+            }
+          ]
         },
         {
           "name": "sectors",
@@ -20957,7 +24867,60 @@
           "description": "List of allowed deployment sectors and their dependencies",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".sectors"
+          "propertyPath": ".sectors",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "sector name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "maxParallelUpgrades",
+              "type": "string",
+              "required": false,
+              "description": "The maximum number of upgrades that can happen at any given time within that sector.\nThis string must contain an bare integer or percentage of the number of clusters in the sector.\nDefault is \"100%\", so any number of parallel upgrades is allowed.\n",
+              "constraints": {
+                "pattern": "^([0-9]{1,2}|100)\\%?$"
+              },
+              "schemaRef": null,
+              "propertyPath": ".maxParallelUpgrades"
+            },
+            {
+              "name": "dependencies",
+              "type": "array",
+              "required": false,
+              "description": "list of sectors this one is depending on",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".dependencies",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": "sector name",
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "ocm",
+                  "type": "object (ref)",
+                  "required": false,
+                  "description": null,
+                  "constraints": {
+                    "ref": "/common-1.json#/definitions/crossref"
+                  },
+                  "schemaRef": "/openshift/openshift-cluster-manager-1.yml",
+                  "propertyPath": ".ocm"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "upgradePolicyDefaults",
@@ -20975,7 +24938,60 @@
           "description": "List of clusters to define upgrade policies for (no cluster management in such OCM orgs)",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".upgradePolicyClusters"
+          "propertyPath": ".upgradePolicyClusters",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "cluster name",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "serverUrl",
+              "type": "string",
+              "required": false,
+              "description": "cluster server url",
+              "constraints": {
+                "format": "uri"
+              },
+              "schemaRef": null,
+              "propertyPath": ".serverUrl"
+            },
+            {
+              "name": "spec",
+              "type": "object",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".spec",
+              "nestedProperties": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".id"
+                }
+              ]
+            },
+            {
+              "name": "upgradePolicy",
+              "type": "unknown",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/openshift/cluster-upgrade-policy-1.yml"
+              },
+              "schemaRef": null,
+              "propertyPath": ".upgradePolicy"
+            }
+          ]
         },
         {
           "name": "inheritVersionData",
@@ -21659,7 +25675,36 @@
               "description": null,
               "constraints": {},
               "schemaRef": null,
-              "propertyPath": ".groups"
+              "propertyPath": ".groups",
+              "nestedProperties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".name"
+                },
+                {
+                  "name": "interval",
+                  "type": "string",
+                  "required": false,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".interval"
+                },
+                {
+                  "name": "rules",
+                  "type": "array",
+                  "required": true,
+                  "description": null,
+                  "constraints": {},
+                  "schemaRef": null,
+                  "propertyPath": ".rules"
+                }
+              ]
             }
           ]
         }
@@ -21883,7 +25928,38 @@
           "description": null,
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".openshiftServiceAccountTokens"
+          "propertyPath": ".openshiftServiceAccountTokens",
+          "nestedProperties": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".name"
+            },
+            {
+              "name": "namespace",
+              "type": "object (ref)",
+              "required": true,
+              "description": null,
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": "/openshift/namespace-1.yml",
+              "propertyPath": ".namespace"
+            },
+            {
+              "name": "serviceAccountName",
+              "type": "string",
+              "required": true,
+              "description": null,
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".serviceAccountName"
+            }
+          ]
         },
         {
           "name": "glitchtipProjects",
@@ -22154,7 +26230,45 @@
           "description": "A list of mappings from external identity groups (such as GitHub teams)\nto Vault policies. Each mapping specifies the external group and the\nVault policies to assign upon successful authentication. This enables\nfine-grained access control and policy assignment based on identity\nprovider attributes.\n",
           "constraints": {},
           "schemaRef": null,
-          "propertyPath": ".policy_mappings"
+          "propertyPath": ".policy_mappings",
+          "nestedProperties": [
+            {
+              "name": "github_team",
+              "type": "object (ref)",
+              "required": true,
+              "description": "Reference to the GitHub team used for mapping to Vault policies.\n",
+              "constraints": {
+                "ref": "/common-1.json#/definitions/crossref"
+              },
+              "schemaRef": {
+                "type": "object",
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "enum": [
+                      "/access/permission-1.yml"
+                    ]
+                  },
+                  "service": {
+                    "type": "string",
+                    "enum": [
+                      "github-org-team"
+                    ]
+                  }
+                }
+              },
+              "propertyPath": ".github_team"
+            },
+            {
+              "name": "policies",
+              "type": "array",
+              "required": true,
+              "description": "A list of Vault policies to assign to users authenticated via this\nexternal group.\n",
+              "constraints": {},
+              "schemaRef": null,
+              "propertyPath": ".policies"
+            }
+          ]
         }
       ],
       "dependencies": [
