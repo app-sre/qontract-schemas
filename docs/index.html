@@ -479,10 +479,26 @@
 
                 // Type cell
                 const typeCell = document.createElement('td');
-                const typeBadge = document.createElement('span');
-                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
-                typeBadge.textContent = prop.type;
-                typeCell.appendChild(typeBadge);
+
+                // If this property has a schemaRef, make it a clickable link
+                if (prop.schemaRef) {
+                    const refLink = document.createElement('a');
+                    refLink.href = '#';
+                    refLink.className = 'schema-link';
+                    refLink.textContent = `→ ${prop.schemaRef.split('/').pop()}`;
+                    refLink.style.fontWeight = '500';
+                    refLink.onclick = (e) => {
+                        e.preventDefault();
+                        selectSchema(prop.schemaRef);
+                    };
+                    typeCell.appendChild(refLink);
+                } else {
+                    const typeBadge = document.createElement('span');
+                    typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+                    typeBadge.textContent = prop.type;
+                    typeCell.appendChild(typeBadge);
+                }
+
                 row.appendChild(typeCell);
 
                 // Required cell
@@ -495,14 +511,6 @@
                 const descCell = document.createElement('td');
                 descCell.className = prop.description ? 'prop-description' : 'prop-description empty';
                 descCell.textContent = prop.description || '(no description)';
-
-                // If there's a schema reference, add it
-                if (prop.schemaRef) {
-                    const refSpan = document.createElement('span');
-                    refSpan.className = 'schema-ref-type';
-                    refSpan.textContent = `ref: ${prop.schemaRef}`;
-                    descCell.appendChild(refSpan);
-                }
 
                 row.appendChild(descCell);
 
