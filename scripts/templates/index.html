@@ -403,13 +403,13 @@
             // Expand parent category if collapsed
             const category = schemaItem.closest('.category');
             if (category) {
-                const categoryHeader = category.querySelector('.category-header');
-                const toggleIcon = categoryHeader.querySelector('.category-toggle');
-                const isCollapsed = toggleIcon.textContent.trim() === '▶';
+                const schemasDiv = category.querySelector('.category-schemas');
+                const toggleIcon = category.querySelector('.category-toggle');
 
-                if (isCollapsed) {
-                    // Simulate click to expand category
-                    categoryHeader.click();
+                // Only expand if currently collapsed
+                if (!schemasDiv.classList.contains('expanded')) {
+                    toggleIcon.classList.add('expanded');
+                    schemasDiv.classList.add('expanded');
                 }
             }
 
