@@ -121,6 +121,12 @@ code, .monospace {
     margin: 0;
 }
 
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .search-container {
     position: relative;
     width: 350px;
@@ -160,6 +166,34 @@ code, .monospace {
 
 .search-clear:hover {
     color: var(--danger);
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.theme-label {
+    font-weight: 500;
 }
 
 /* Layout */
@@ -559,9 +593,21 @@ code, .monospace {
         padding: 1rem;
     }
 
-    .search-container {
+    .header-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
         width: 100%;
         margin-top: 0.5rem;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .theme-toggle {
+        width: 100%;
+        justify-content: center;
     }
 
     .layout {
