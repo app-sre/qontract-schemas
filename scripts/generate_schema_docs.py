@@ -170,6 +170,73 @@ def extract_dependencies(schema_data: Dict[str, Any], schema_path: str) -> List[
     return dependencies
 
 
+def build_categories(schemas: Dict[str, Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Group schemas by directory (first path segment).
+
+    Args:
+        schemas: Dict of schema_path -> schema_data
+
+    Returns:
+        List of category dicts with name and schema list
+    """
+    categories_dict = {}
+
+    for schema_path in schemas.keys():
+        # Extract category (directory name)
+        if "/" in schema_path:
+            category = schema_path.split("/")[0]
+            schema_name = schema_path.split("/", 1)[1]
+        else:
+            # Root level file (e.g., common-1.json)
+            category = "."
+            schema_name = schema_path
+
+        if category not in categories_dict:
+            categories_dict[category] = []
+
+        categories_dict[category].append(schema_name)
+
+    # Convert to list and sort
+    categories = []
+    for name, schema_list in sorted(categories_dict.items()):
+        categories.append({
+            "name": name,
+            "schemas": sorted(schema_list)
+        })
+
+    return categories
+
+
+def build_reverse_dependencies(schemas: Dict[str, Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Build reverse dependency map (what references each schema).
+
+    Args:
+        schemas: Dict of schema_path -> schema_data
+
+    Returns:
+        Dict of target_schema -> list of {schema, propertyPath}
+    """
+    reverse_deps = {}
+
+    for schema_path, schema_data in schemas.items():
+        dependencies = schema_data.get("dependencies", [])
+
+        for dep in dependencies:
+            target = dep["targetSchema"]
+
+            if target not in reverse_deps:
+                reverse_deps[target] = []
+
+            reverse_deps[target].append({
+                "schema": schema_path,
+                "propertyPath": dep["propertyPath"]
+            })
+
+    return reverse_deps
+
+
 if __name__ == "__main__":
     # Entry point for CLI execution
     pass

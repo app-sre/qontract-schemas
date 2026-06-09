@@ -204,3 +204,69 @@ def test_extract_dependencies_nested_ref():
     assert result[0]["targetSchema"] == "access/role-1.yml"
     assert result[0]["isArray"] is True
     assert result[0]["isNested"] is True
+
+
+def test_build_categories():
+    from generate_schema_docs import build_categories
+
+    schemas = {
+        "app-sre/app-1.yml": {"path": "app-sre/app-1.yml"},
+        "app-sre/product-1.yml": {"path": "app-sre/product-1.yml"},
+        "aws/account-1.yml": {"path": "aws/account-1.yml"},
+        "common-1.json": {"path": "common-1.json"},
+    }
+
+    result = build_categories(schemas)
+
+    assert len(result) == 3
+
+    # Check app-sre category
+    app_sre = next(c for c in result if c["name"] == "app-sre")
+    assert len(app_sre["schemas"]) == 2
+    assert "app-1.yml" in app_sre["schemas"]
+    assert "product-1.yml" in app_sre["schemas"]
+
+    # Check aws category
+    aws = next(c for c in result if c["name"] == "aws")
+    assert len(aws["schemas"]) == 1
+    assert "account-1.yml" in aws["schemas"]
+
+    # Check root category (common-1.json)
+    root = next(c for c in result if c["name"] == ".")
+    assert len(root["schemas"]) == 1
+    assert "common-1.json" in root["schemas"]
+
+
+def test_build_reverse_dependencies():
+    from generate_schema_docs import build_reverse_dependencies
+
+    schemas = {
+        "app-sre/app-1.yml": {
+            "dependencies": [
+                {"targetSchema": "app-sre/product-1.yml", "propertyPath": ".product"},
+                {"targetSchema": "app-sre/escalation-policy-1.yml", "propertyPath": ".escalationPolicy"}
+            ]
+        },
+        "app-sre/product-1.yml": {
+            "dependencies": []
+        },
+        "app-sre/escalation-policy-1.yml": {
+            "dependencies": []
+        }
+    }
+
+    result = build_reverse_dependencies(schemas)
+
+    # product-1.yml should be referenced by app-1.yml
+    assert "app-sre/product-1.yml" in result
+    assert len(result["app-sre/product-1.yml"]) == 1
+    assert result["app-sre/product-1.yml"][0]["schema"] == "app-sre/app-1.yml"
+    assert result["app-sre/product-1.yml"][0]["propertyPath"] == ".product"
+
+    # escalation-policy-1.yml should be referenced by app-1.yml
+    assert "app-sre/escalation-policy-1.yml" in result
+    assert len(result["app-sre/escalation-policy-1.yml"]) == 1
+    assert result["app-sre/escalation-policy-1.yml"][0]["schema"] == "app-sre/app-1.yml"
+
+    # app-1.yml should have no reverse dependencies
+    assert "app-sre/app-1.yml" not in result
