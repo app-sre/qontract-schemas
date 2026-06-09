@@ -75,9 +75,59 @@
         // ============================================================================
 
         /**
+         * Initialize theme based on localStorage or system preference.
+         */
+        function initTheme() {
+            // Check localStorage first
+            let theme = localStorage.getItem('theme');
+
+            // Fall back to system preference
+            if (!theme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+            }
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // Update button (if it exists - may not on first load)
+            const iconEl = document.querySelector('.theme-icon');
+            const labelEl = document.querySelector('.theme-label');
+            if (iconEl && labelEl) {
+                const icon = theme === 'dark' ? '🌙' : '☀️';
+                const label = theme === 'dark' ? 'Dark' : 'Light';
+                iconEl.textContent = icon;
+                labelEl.textContent = label;
+            }
+        }
+
+        /**
+         * Toggle between light and dark themes.
+         */
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+
+            // Update button
+            const icon = newTheme === 'dark' ? '🌙' : '☀️';
+            const label = newTheme === 'dark' ? 'Dark' : 'Light';
+            document.querySelector('.theme-icon').textContent = icon;
+            document.querySelector('.theme-label').textContent = label;
+
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        /**
          * Initialize the application by loading schema data and setting up event listeners.
          */
         async function init() {
+            // Initialize theme first
+            initTheme();
+
             try {
                 // Load schemas.json
                 const response = await fetch('schemas.json');
@@ -117,6 +167,9 @@
         function setupEventListeners() {
             const searchInput = document.getElementById('searchInput');
             const searchClear = document.getElementById('searchClear');
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 
             // Search input with debouncing
             searchInput.addEventListener('input', (e) => {
