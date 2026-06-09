@@ -635,3 +635,37 @@ code, .monospace {
         margin-top: 1.5rem;
     }
 }
+
+/* Sidebar highlight animation */
+.sidebar-highlight {
+    animation: pulse 1s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+/* Dark mode pulse (different color) */
+[data-theme="dark"] .sidebar-highlight {
+    animation: pulse-dark 1s ease-out;
+}
+
+@keyframes pulse-dark {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 181, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(100, 181, 246, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 181, 246, 0);
+    }
+}
