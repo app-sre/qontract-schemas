@@ -5,5 +5,3 @@ test/__pycache__/
 .DS_Store
 schemas/.DS_Store
 /docs/
-!/docs/superpowers/
-!/docs/superpowers/**
