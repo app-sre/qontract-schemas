@@ -16,7 +16,13 @@
 
     <!-- Header -->
     <header class="header">
-        <h1 class="header-title">Qontract Schema Viewer</h1>
+        <div class="header-start">
+            <button id="sidebarToggle" class="sidebar-toggle" type="button"
+                    aria-label="Open schema navigation" aria-expanded="false" aria-controls="sidebar">
+                <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <h1 class="header-title">Qontract Schema Viewer</h1>
+        </div>
         <div class="header-controls">
             <div class="search-container">
                 <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
@@ -28,6 +34,8 @@
             </button>
         </div>
     </header>
+
+    <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
 
     <!-- Main layout -->
     <div class="layout">
@@ -65,10 +73,112 @@
         const state = {
             data: null,
             currentSchema: null,
+            currentSchemaPath: null,
             searchQuery: '',
             filteredSchemas: [],
             debounceTimer: null
         };
+
+        // ============================================================================
+        // ROUTING
+        // ============================================================================
+
+        /**
+         * Read the schema path from the current URL (hash or query string).
+         */
+        function getSchemaPathFromLocation() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#/') && hash.length > 2) {
+                return decodeURIComponent(hash.slice(2));
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const fromQuery = params.get('schema');
+            if (fromQuery) {
+                return fromQuery;
+            }
+
+            if (history.state && history.state.schemaPath) {
+                return history.state.schemaPath;
+            }
+
+            return null;
+        }
+
+        /**
+         * Build a shareable URL for a schema path.
+         */
+        function buildSchemaUrl(schemaPath) {
+            const base = `${window.location.origin}${window.location.pathname}`;
+            return `${base}#/${schemaPath}`;
+        }
+
+        /**
+         * Update the browser URL for the current schema selection.
+         */
+        function setSchemaUrl(schemaPath, { replace = false } = {}) {
+            const url = buildSchemaUrl(schemaPath);
+            const historyState = { schemaPath };
+
+            if (replace) {
+                history.replaceState(historyState, '', url);
+            } else {
+                history.pushState(historyState, '', url);
+            }
+        }
+
+        /**
+         * Build a GitHub URL for a schema source file.
+         */
+        function buildGitHubSchemaUrl(schemaPath) {
+            return `https://github.com/app-sre/qontract-schemas/blob/main/schemas/${schemaPath}`;
+        }
+
+        /**
+         * Clear the schema from the URL and return to the home view.
+         */
+        function clearSchemaUrl({ replace = false } = {}) {
+            const url = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+
+            if (replace) {
+                history.replaceState({}, '', url);
+            } else {
+                history.pushState({}, '', url);
+            }
+        }
+
+        /**
+         * Navigate based on the current URL without pushing history.
+         */
+        function navigateFromLocation() {
+            const schemaPath = getSchemaPathFromLocation();
+
+            if (!schemaPath) {
+                if (state.currentSchemaPath === null) {
+                    return;
+                }
+                showWelcome();
+                return;
+            }
+
+            if (schemaPath === state.currentSchemaPath && state.currentSchema) {
+                return;
+            }
+
+            if (!state.data || !state.data.schemas[schemaPath]) {
+                showSchemaNotFound(schemaPath);
+                return;
+            }
+
+            selectSchema(schemaPath, { updateUrl: false });
+        }
+
+        /**
+         * Handle browser back/forward and manual hash edits.
+         */
+        function handleRouteChange() {
+            navigateFromLocation();
+        }
 
         // ============================================================================
         // DATA LOADING AND INITIALIZATION
@@ -142,6 +252,9 @@
                 // Setup event listeners
                 setupEventListeners();
 
+                // Open schema from URL if present
+                navigateFromLocation();
+
                 // Hide error display
                 document.getElementById('errorDisplay').style.display = 'none';
             } catch (error) {
@@ -161,12 +274,63 @@
         }
 
         // ============================================================================
+        // SIDEBAR (MOBILE)
+        // ============================================================================
+
+        function isMobileSidebar() {
+            return window.matchMedia('(max-width: 992px)').matches;
+        }
+
+        function setSidebarOpen(open) {
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            document.body.classList.toggle('sidebar-open', open);
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.setAttribute('aria-label', open ? 'Close schema navigation' : 'Open schema navigation');
+            overlay.hidden = !open;
+        }
+
+        function closeSidebarIfMobile() {
+            if (isMobileSidebar()) {
+                setSidebarOpen(false);
+            }
+        }
+
+        function setupSidebarToggle() {
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            toggle.addEventListener('click', () => {
+                setSidebarOpen(!document.body.classList.contains('sidebar-open'));
+            });
+
+            overlay.addEventListener('click', () => {
+                setSidebarOpen(false);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    setSidebarOpen(false);
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (!isMobileSidebar()) {
+                    setSidebarOpen(false);
+                }
+            });
+        }
+
+        // ============================================================================
         // EVENT LISTENERS
         // ============================================================================
 
         function setupEventListeners() {
             const searchInput = document.getElementById('searchInput');
             const searchClear = document.getElementById('searchClear');
+
+            setupSidebarToggle();
 
             // Theme toggle
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
@@ -196,6 +360,9 @@
                 searchClear.style.display = 'none';
                 performSearch();
             });
+
+            window.addEventListener('popstate', handleRouteChange);
+            window.addEventListener('hashchange', handleRouteChange);
         }
 
         // ============================================================================
@@ -283,38 +450,87 @@
         /**
          * Select a schema and display its details.
          */
-        function selectSchema(schemaPath) {
+        function selectSchema(schemaPath, options = {}) {
+            const { updateUrl = true, replaceUrl = false } = options;
+
             if (!state.data || !state.data.schemas) {
                 return;
             }
 
-            state.currentSchema = state.data.schemas[schemaPath];
-            if (!state.currentSchema) {
+            if (!state.data.schemas[schemaPath]) {
+                if (updateUrl) {
+                    setSchemaUrl(schemaPath, { replace: replaceUrl });
+                }
+                showSchemaNotFound(schemaPath);
                 return;
             }
 
-            // Update active schema in sidebar
-            updateActiveSchemaSidebar(schemaPath);
+            state.currentSchema = state.data.schemas[schemaPath];
+            state.currentSchemaPath = schemaPath;
 
-            // Render schema details
+            updateActiveSchemaSidebar(schemaPath);
             renderSchemaDetails(schemaPath);
+
+            if (updateUrl) {
+                const currentPath = getSchemaPathFromLocation();
+                if (currentPath !== schemaPath || replaceUrl) {
+                    setSchemaUrl(schemaPath, { replace: replaceUrl });
+                }
+            }
+
+            document.title = `${schemaPath} - Qontract Schema Viewer`;
+            closeSidebarIfMobile();
+        }
+
+        /**
+         * Show the welcome screen when no schema is selected.
+         */
+        function showWelcome() {
+            state.currentSchema = null;
+            state.currentSchemaPath = null;
+            document.title = 'Qontract Schema Viewer';
+
+            document.querySelectorAll('.schema-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const mainPanel = document.getElementById('mainPanel');
+            mainPanel.innerHTML = `
+                <div class="welcome-message">
+                    <h2>Welcome to Qontract Schema Viewer</h2>
+                    <p>Select a schema from the sidebar to view its details.</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show an error when the URL points to an unknown schema.
+         */
+        function showSchemaNotFound(schemaPath) {
+            state.currentSchema = null;
+            state.currentSchemaPath = schemaPath;
+            document.title = `Not found: ${schemaPath} - Qontract Schema Viewer`;
+
+            document.querySelectorAll('.schema-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const mainPanel = document.getElementById('mainPanel');
+            mainPanel.innerHTML = `
+                <div class="welcome-message schema-not-found">
+                    <h2>Schema not found</h2>
+                    <p>No schema matches <code>${escapeHtml(schemaPath)}</code>.</p>
+                    <p>Select a schema from the sidebar or check the URL.</p>
+                </div>
+            `;
         }
 
         /**
          * Update the active schema highlighting in the sidebar.
          */
         function updateActiveSchemaSidebar(schemaPath) {
-            // Remove active class from all items
             document.querySelectorAll('.schema-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // Add active class to selected item
-            const fileName = schemaPath.includes('/') ? schemaPath.split('/').pop() : schemaPath;
-            document.querySelectorAll('.schema-item').forEach(item => {
-                if (item.textContent === fileName) {
-                    item.classList.add('active');
-                }
+                item.classList.toggle('active', item.getAttribute('data-schema-path') === schemaPath);
             });
         }
 
@@ -331,8 +547,12 @@
             const title = document.createElement('h2');
             title.textContent = state.currentSchema.path;
 
-            const pathBadge = document.createElement('span');
+            const pathBadge = document.createElement('a');
             pathBadge.className = 'schema-path-badge';
+            pathBadge.href = buildGitHubSchemaUrl(schemaPath);
+            pathBadge.target = '_blank';
+            pathBadge.rel = 'noopener noreferrer';
+            pathBadge.title = 'View schema source on GitHub';
             pathBadge.textContent = state.currentSchema.path;
 
             const meta = document.createElement('div');
@@ -432,121 +652,419 @@
         // PROPERTIES TAB RENDERING
         // ============================================================================
 
+        const PROPERTY_COLUMNS = [
+            { label: 'Name', className: 'col-name' },
+            { label: 'Type', className: 'col-type' },
+            { label: 'Required', className: 'col-required' },
+            { label: 'Description', className: 'col-description' },
+            { label: 'Constraints', className: 'col-constraints' }
+        ];
+
         /**
-         * Recursively render nested properties for a property with sub-properties.
-         * Returns tbody element with all nested properties (and their nested properties if any).
+         * Add column width hints to a property table.
          */
-        function renderNestedProperties(properties, depth = 1) {
+        function appendPropertyColgroup(table) {
+            const colgroup = document.createElement('colgroup');
+            PROPERTY_COLUMNS.forEach(({ className }) => {
+                const col = document.createElement('col');
+                col.className = className;
+                colgroup.appendChild(col);
+            });
+            table.appendChild(colgroup);
+        }
+
+        /**
+         * Create a single property table row.
+         */
+        function createPropertyRow(prop, depth, hasNested) {
+            const row = document.createElement('tr');
+            row.className = 'prop-row';
+            if (hasNested) {
+                row.classList.add('prop-row-expandable');
+            }
+            row.dataset.depth = String(depth);
+
+            const nameCell = document.createElement('td');
+            nameCell.className = 'prop-name col-name';
+
+            const nameContent = document.createElement('div');
+            nameContent.className = 'prop-name-content';
+            nameContent.style.setProperty('--depth', String(depth));
+
+            if (hasNested) {
+                const expandBtn = document.createElement('button');
+                expandBtn.type = 'button';
+                expandBtn.className = 'expand-toggle';
+                expandBtn.textContent = '▶';
+                expandBtn.setAttribute('aria-label', `Expand ${prop.name} properties`);
+                expandBtn.setAttribute('aria-expanded', 'false');
+                nameContent.appendChild(expandBtn);
+            } else if (depth > 0) {
+                const spacer = document.createElement('span');
+                spacer.className = 'expand-toggle-spacer';
+                spacer.setAttribute('aria-hidden', 'true');
+                nameContent.appendChild(spacer);
+            }
+
+            const nameLabel = document.createElement('span');
+            nameLabel.className = 'prop-name-label';
+            nameLabel.textContent = prop.name;
+            nameContent.appendChild(nameLabel);
+
+            if (hasNested && prop.nestedCount) {
+                const countBadge = document.createElement('span');
+                countBadge.className = 'nested-count-badge';
+                countBadge.textContent = `${prop.nestedCount} ${prop.nestedCount === 1 ? 'property' : 'properties'}`;
+                nameContent.appendChild(countBadge);
+            }
+
+            nameCell.appendChild(nameContent);
+
+            if (prop.propertyPath && depth > 0) {
+                const pathHint = document.createElement('div');
+                pathHint.className = 'prop-path-hint';
+                pathHint.textContent = prop.propertyPath;
+                nameCell.appendChild(pathHint);
+            }
+
+            row.appendChild(nameCell);
+
+            const typeCell = document.createElement('td');
+            typeCell.className = 'col-type';
+            const typeBadge = document.createElement('span');
+            typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+            typeBadge.textContent = prop.type;
+            typeCell.appendChild(typeBadge);
+
+            if (prop.oneOf) {
+                const oneOfBadge = document.createElement('span');
+                oneOfBadge.className = 'oneof-badge';
+                oneOfBadge.textContent = 'oneOf';
+                typeCell.appendChild(oneOfBadge);
+            }
+
+            row.appendChild(typeCell);
+
+            const reqCell = document.createElement('td');
+            reqCell.className = 'prop-required col-required';
+            reqCell.textContent = prop.required ? '✓' : '';
+            row.appendChild(reqCell);
+
+            const descCell = document.createElement('td');
+            descCell.className = prop.description
+                ? 'prop-description col-description'
+                : 'prop-description empty col-description';
+            descCell.appendChild(document.createTextNode(prop.description || '(no description)'));
+
+            if (prop.schemaRef) {
+                descCell.appendChild(document.createElement('br'));
+                descCell.appendChild(document.createTextNode('ref: '));
+
+                const refLink = document.createElement('a');
+                refLink.href = '#';
+                refLink.className = 'schema-link';
+                refLink.textContent = prop.schemaRef;
+                refLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const schemaPath = prop.schemaRef.startsWith('/')
+                        ? prop.schemaRef.substring(1)
+                        : prop.schemaRef;
+                    selectSchema(schemaPath);
+                });
+                descCell.appendChild(refLink);
+            }
+
+            row.appendChild(descCell);
+
+            const constrCell = document.createElement('td');
+            constrCell.className = 'col-constraints';
+            constrCell.appendChild(renderConstraints(prop.constraints));
+            row.appendChild(constrCell);
+
+            return row;
+        }
+
+        /**
+         * Render an expandable variant card for oneOf branches with inline properties.
+         */
+        function renderOneOfVariantCard(branch) {
+            const card = document.createElement('div');
+            card.className = 'oneof-variant-card';
+
+            const header = document.createElement('div');
+            header.className = 'oneof-variant-header';
+
+            const toggleIcon = document.createElement('span');
+            toggleIcon.className = 'expand-toggle';
+            toggleIcon.textContent = '▶';
+            toggleIcon.setAttribute('aria-hidden', 'true');
+            header.appendChild(toggleIcon);
+
+            const label = document.createElement('span');
+            label.textContent = branch.label;
+            header.appendChild(label);
+
+            const body = document.createElement('div');
+            body.className = 'oneof-variant-body';
+            body.hidden = true;
+
+            if (branch.properties && branch.properties.length > 0) {
+                const table = document.createElement('table');
+                table.className = 'properties-table properties-table-nested';
+                appendPropertyColgroup(table);
+                table.appendChild(renderPropertyRows(branch.properties, 0));
+
+                const tableWrapper = document.createElement('div');
+                tableWrapper.className = 'table-scroll';
+                tableWrapper.appendChild(table);
+                body.appendChild(tableWrapper);
+            }
+
+            header.addEventListener('click', () => {
+                const willExpand = body.hidden;
+                body.hidden = !willExpand;
+                toggleIcon.textContent = willExpand ? '▼' : '▶';
+            });
+
+            card.appendChild(header);
+            card.appendChild(body);
+            return card;
+        }
+
+        /**
+         * Render a oneOf constraint or variant panel for a property.
+         */
+        function renderOneOfPanel(prop) {
+            const panel = document.createElement('div');
+            panel.className = 'oneof-panel';
+            if (!prop.oneOf || !prop.oneOf.branches || !prop.oneOf.branches.length) {
+                return panel;
+            }
+
+            const { kind, branches } = prop.oneOf;
+
+            if (kind === 'required_sets' || kind === 'ref_alternatives') {
+                const title = document.createElement('div');
+                title.className = 'oneof-panel-title';
+                title.textContent = kind === 'ref_alternatives'
+                    ? 'Item may match one of:'
+                    : 'Exactly one of:';
+                panel.appendChild(title);
+
+                const list = document.createElement('ul');
+                list.className = 'oneof-panel-list';
+                branches.forEach(branch => {
+                    const item = document.createElement('li');
+                    if (kind === 'ref_alternatives' && branch.schemaRef) {
+                        const link = document.createElement('a');
+                        link.className = 'schema-link';
+                        link.href = '#';
+                        link.textContent = branch.inline ? `Inline: ${branch.schemaRef}` : branch.schemaRef;
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const path = branch.schemaRef.startsWith('/')
+                                ? branch.schemaRef.slice(1)
+                                : branch.schemaRef;
+                            selectSchema(path);
+                        });
+                        item.appendChild(link);
+                    } else {
+                        item.textContent = branch.label;
+                    }
+                    list.appendChild(item);
+                });
+                panel.appendChild(list);
+                return panel;
+            }
+
+            const title = document.createElement('div');
+            title.className = 'oneof-panel-title';
+            title.textContent = 'Variants:';
+            panel.appendChild(title);
+
+            branches.forEach(branch => {
+                panel.appendChild(renderOneOfVariantCard(branch));
+            });
+            return panel;
+        }
+
+        /**
+         * Toggle nested property table visibility for an expandable row.
+         */
+        function toggleNestedRow(parentRow, nestedRow, toggleBtn) {
+            const willExpand = nestedRow.hidden;
+            nestedRow.hidden = !willExpand;
+            toggleBtn.textContent = willExpand ? '▼' : '▶';
+            toggleBtn.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
+            toggleBtn.setAttribute(
+                'aria-label',
+                willExpand ? `Collapse ${toggleBtn.dataset.propName} properties` : `Expand ${toggleBtn.dataset.propName} properties`
+            );
+            parentRow.classList.toggle('prop-row-expanded', willExpand);
+
+            if (!willExpand) {
+                nestedRow.querySelectorAll('.prop-nested-row').forEach(row => {
+                    row.hidden = true;
+                });
+                nestedRow.querySelectorAll('.expand-toggle').forEach(btn => {
+                    btn.textContent = '▶';
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+                nestedRow.querySelectorAll('.prop-row-expandable').forEach(row => {
+                    row.classList.remove('prop-row-expanded');
+                });
+            }
+        }
+
+        /**
+         * Recursively render property rows, using nested tables for child properties.
+         */
+        function renderPropertyRows(properties, depth = 0) {
             const tbody = document.createElement('tbody');
 
             properties.forEach(prop => {
-                const row = document.createElement('tr');
+                const hasNested = prop.nestedProperties && prop.nestedProperties.length > 0;
+                const row = createPropertyRow(prop, depth, hasNested);
+                tbody.appendChild(row);
 
-                // Name cell with indentation
-                const nameCell = document.createElement('td');
-                nameCell.style.fontFamily = 'monospace';
-                nameCell.style.fontWeight = '600';
-                nameCell.style.paddingLeft = `${depth * 1.5}rem`;
-
-                // Add expand icon if this nested property also has nested properties
-                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
-                    const expandIcon = document.createElement('span');
-                    expandIcon.className = 'expand-icon';
-                    expandIcon.textContent = '▶';
-                    expandIcon.style.marginRight = '0.5rem';
-                    expandIcon.style.fontSize = '0.8em';
-                    expandIcon.style.color = 'var(--primary)';
-                    nameCell.appendChild(expandIcon);
+                if (prop.oneOf && !hasNested) {
+                    const detailRow = document.createElement('tr');
+                    detailRow.className = 'prop-oneof-row';
+                    const detailCell = document.createElement('td');
+                    detailCell.colSpan = 5;
+                    detailCell.appendChild(renderOneOfPanel(prop));
+                    detailRow.appendChild(detailCell);
+                    tbody.appendChild(detailRow);
                 }
 
-                nameCell.appendChild(document.createTextNode(prop.name));
-                row.appendChild(nameCell);
+                if (hasNested) {
+                    const nestedRow = document.createElement('tr');
+                    nestedRow.className = 'prop-nested-row';
+                    nestedRow.hidden = true;
 
-                // Type cell
-                const typeCell = document.createElement('td');
-                const typeBadge = document.createElement('span');
-                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
-                typeBadge.textContent = prop.type;
-                typeCell.appendChild(typeBadge);
-                row.appendChild(typeCell);
+                    const nestedCell = document.createElement('td');
+                    nestedCell.className = 'prop-nested-cell';
+                    nestedCell.colSpan = 5;
 
-                // Required cell
-                const reqCell = document.createElement('td');
-                reqCell.textContent = prop.required ? '✓' : '';
-                reqCell.style.textAlign = 'center';
-                row.appendChild(reqCell);
+                    const nestedTable = document.createElement('table');
+                    nestedTable.className = 'properties-table properties-table-nested';
+                    appendPropertyColgroup(nestedTable);
+                    nestedTable.appendChild(renderPropertyRows(prop.nestedProperties, depth + 1));
 
-                // Description cell
-                const descCell = document.createElement('td');
-                const descText = document.createTextNode(prop.description || '(no description)');
-                descCell.appendChild(descText);
-                descCell.style.color = 'var(--text-muted)';
+                    const nestedTableWrapper = document.createElement('div');
+                    nestedTableWrapper.className = 'table-scroll';
+                    nestedTableWrapper.appendChild(nestedTable);
+                    nestedCell.appendChild(nestedTableWrapper);
 
-                // Add ref link if exists
-                if (prop.schemaRef) {
-                    descCell.appendChild(document.createElement('br'));
-                    const refLabel = document.createTextNode('ref: ');
-                    descCell.appendChild(refLabel);
+                    if (prop.oneOf) {
+                        nestedCell.appendChild(renderOneOfPanel(prop));
+                    }
 
-                    const refLink = document.createElement('a');
-                    refLink.href = '#';
-                    refLink.className = 'schema-link';
-                    refLink.textContent = prop.schemaRef;
-                    refLink.onclick = (e) => {
+                    nestedRow.appendChild(nestedCell);
+                    tbody.appendChild(nestedRow);
+
+                    const toggleBtn = row.querySelector('.expand-toggle');
+                    toggleBtn.dataset.propName = prop.name;
+                    toggleBtn.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
-                        selectSchema(schemaPath);
-                    };
-                    descCell.appendChild(refLink);
-                }
-
-                row.appendChild(descCell);
-
-                // Constraints cell
-                const constrCell = document.createElement('td');
-                constrCell.appendChild(renderConstraints(prop.constraints));
-                row.appendChild(constrCell);
-
-                // If this property has nested properties, create expandable sub-rows
-                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
-                    row.style.cursor = 'pointer';
-                    row.title = 'Click to expand/collapse nested properties';
-
-                    // Create nested rows container
-                    const nestedRows = renderNestedProperties(prop.nestedProperties, depth + 1);
-
-                    // Hide nested rows by default
-                    Array.from(nestedRows.children).forEach(nestedRow => {
-                        nestedRow.style.display = 'none';
-                        nestedRow.classList.add(`nested-level-${depth}`);
+                        toggleNestedRow(row, nestedRow, toggleBtn);
                     });
-
-                    // Toggle handler
-                    row.addEventListener('click', (e) => {
-                        if (e.target.tagName === 'A') return;
-
-                        const expandIcon = row.querySelector('.expand-icon');
-                        const isExpanded = expandIcon && expandIcon.textContent === '▼';
-
-                        Array.from(nestedRows.children).forEach(nestedRow => {
-                            nestedRow.style.display = isExpanded ? 'none' : 'table-row';
-                        });
-
-                        if (expandIcon) {
-                            expandIcon.textContent = isExpanded ? '▶' : '▼';
-                        }
-                    });
-
-                    tbody.appendChild(row);
-                    // Append all nested rows
-                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
-                } else {
-                    tbody.appendChild(row);
                 }
             });
 
             return tbody;
+        }
+
+        /**
+         * Render a subsection header plus property table for the given properties.
+         */
+        function renderPropertiesSection(title, properties) {
+            const section = document.createElement('div');
+            section.className = 'schema-properties-subsection';
+
+            const header = document.createElement('h3');
+            header.className = 'section-header properties-header';
+            header.textContent = title;
+            section.appendChild(header);
+
+            const table = document.createElement('table');
+            table.className = 'properties-table';
+            appendPropertyColgroup(table);
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            PROPERTY_COLUMNS.forEach(({ label, className }) => {
+                const th = document.createElement('th');
+                th.className = className;
+                th.textContent = label;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            table.appendChild(renderPropertyRows(properties));
+
+            const tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-scroll';
+            tableWrapper.appendChild(table);
+            section.appendChild(tableWrapper);
+
+            return section;
+        }
+
+        /**
+         * Look up a property definition for schema-root oneOf shared optional names.
+         * Shared optional props are filtered out of schema.properties but remain on branches.
+         */
+        function lookupSchemaOneOfProperty(schema, name) {
+            const fromProperties = schema.properties.find(p => p.name === name);
+            if (fromProperties) {
+                return fromProperties;
+            }
+            for (const branch of schema.schemaOneOf.branches) {
+                if (!branch.properties) {
+                    continue;
+                }
+                const prop = branch.properties.find(p => p.name === name);
+                if (prop) {
+                    return prop;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Render schema-root oneOf layout: common props, variant cards, shared optional.
+         */
+        function renderSchemaOneOfLayout(schema) {
+            const wrapper = document.createElement('div');
+            const { schemaOneOf } = schema;
+
+            if (schema.properties.length > 0) {
+                wrapper.appendChild(renderPropertiesSection('Common properties', schema.properties));
+            }
+
+            const variantsHeader = document.createElement('h3');
+            variantsHeader.className = 'section-header schema-variants-section';
+            variantsHeader.textContent = 'Variants';
+            wrapper.appendChild(variantsHeader);
+
+            schemaOneOf.branches.forEach(branch => {
+                wrapper.appendChild(renderOneOfVariantCard(branch));
+            });
+
+            const shared = schemaOneOf.sharedOptionalPropertyNames || [];
+            if (shared.length > 0) {
+                const sharedProps = shared
+                    .map(name => lookupSchemaOneOfProperty(schema, name))
+                    .filter(Boolean);
+                if (sharedProps.length > 0) {
+                    wrapper.appendChild(renderPropertiesSection('Shared optional', sharedProps));
+                }
+            }
+
+            return wrapper;
         }
 
         /**
@@ -560,137 +1078,31 @@
                 return container;
             }
 
+            if (state.currentSchema.schemaOneOf) {
+                container.appendChild(renderSchemaOneOfLayout(state.currentSchema));
+                return container;
+            }
+
             const table = document.createElement('table');
             table.className = 'properties-table';
+            appendPropertyColgroup(table);
 
-            // Table header
             const thead = document.createElement('thead');
             const headerRow = document.createElement('tr');
-
-            const headers = ['Name', 'Type', 'Required', 'Description', 'Constraints'];
-            headers.forEach(headerText => {
+            PROPERTY_COLUMNS.forEach(({ label, className }) => {
                 const th = document.createElement('th');
-                th.textContent = headerText;
+                th.className = className;
+                th.textContent = label;
                 headerRow.appendChild(th);
             });
-
             thead.appendChild(headerRow);
             table.appendChild(thead);
+            table.appendChild(renderPropertyRows(state.currentSchema.properties));
 
-            // Table body
-            const tbody = document.createElement('tbody');
-
-            state.currentSchema.properties.forEach(prop => {
-                const row = document.createElement('tr');
-
-                // Name cell
-                const nameCell = document.createElement('td');
-                nameCell.className = 'prop-name';
-                nameCell.textContent = prop.name;
-                row.appendChild(nameCell);
-
-                // Type cell
-                const typeCell = document.createElement('td');
-
-                // Always show type badge first
-                const typeBadge = document.createElement('span');
-                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
-                typeBadge.textContent = prop.type;
-                typeCell.appendChild(typeBadge);
-
-                row.appendChild(typeCell);
-
-                // Required cell
-                const requiredCell = document.createElement('td');
-                requiredCell.className = 'prop-required';
-                requiredCell.textContent = prop.required ? '✓' : '';
-                row.appendChild(requiredCell);
-
-                // Description cell
-                const descCell = document.createElement('td');
-                descCell.className = prop.description ? 'prop-description' : 'prop-description empty';
-
-                // Add description text
-                const descText = document.createTextNode(prop.description || '(no description)');
-                descCell.appendChild(descText);
-
-                // If there's a schema reference, add it as a clickable link
-                if (prop.schemaRef) {
-                    descCell.appendChild(document.createElement('br'));
-                    const refLabel = document.createTextNode('ref: ');
-                    descCell.appendChild(refLabel);
-
-                    const refLink = document.createElement('a');
-                    refLink.href = '#';
-                    refLink.className = 'schema-link';
-                    refLink.textContent = prop.schemaRef;
-                    refLink.onclick = (e) => {
-                        e.preventDefault();
-                        e.stopPropagation(); // Prevent row click if expandable
-                        // Remove leading slash from schemaRef to match schema keys
-                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
-                        selectSchema(schemaPath);
-                    };
-                    descCell.appendChild(refLink);
-                }
-
-                row.appendChild(descCell);
-
-                // Constraints cell
-                const constraintsCell = document.createElement('td');
-                constraintsCell.appendChild(renderConstraints(prop.constraints));
-                row.appendChild(constraintsCell);
-
-                // Add expand indicator for objects with nested properties
-                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
-                    row.style.cursor = 'pointer';
-                    row.title = 'Click to expand/collapse nested properties';
-
-                    // Add expand icon to name cell
-                    const expandIcon = document.createElement('span');
-                    expandIcon.className = 'expand-icon';
-                    expandIcon.textContent = '▶';
-                    expandIcon.style.marginRight = '0.5rem';
-                    expandIcon.style.fontSize = '0.8em';
-                    expandIcon.style.color = 'var(--primary)';
-                    nameCell.insertBefore(expandIcon, nameCell.firstChild);
-
-                    // Render nested properties recursively
-                    const nestedRows = renderNestedProperties(prop.nestedProperties);
-
-                    // Hide nested rows by default
-                    Array.from(nestedRows.children).forEach(nestedRow => {
-                        nestedRow.style.display = 'none';
-                        nestedRow.classList.add('nested-level-1');
-                    });
-
-                    // Toggle handler
-                    row.addEventListener('click', (e) => {
-                        if (e.target.tagName === 'A') return;
-
-                        const isExpanded = expandIcon.textContent === '▼';
-
-                        // Toggle only the immediate children (level-1 nested rows)
-                        Array.from(nestedRows.children).forEach(nestedRow => {
-                            if (nestedRow.classList.contains('nested-level-1')) {
-                                nestedRow.style.display = isExpanded ? 'none' : 'table-row';
-                            }
-                        });
-
-                        expandIcon.textContent = isExpanded ? '▶' : '▼';
-                    });
-
-                    tbody.appendChild(row);
-                    // Append all nested rows
-                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
-                } else {
-                    tbody.appendChild(row);
-                }
-            });
-
-            table.appendChild(tbody);
-            container.appendChild(table);
-
+            const tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-scroll';
+            tableWrapper.appendChild(table);
+            container.appendChild(tableWrapper);
             return container;
         }
 
@@ -705,7 +1117,8 @@
                 'boolean': 'boolean',
                 'enum': 'enum',
                 'object': 'object',
-                'array': 'array'
+                'array': 'array',
+                'array[object]': 'array'
             };
 
             if (type.includes('ref')) {
@@ -956,23 +1369,37 @@
                     continue;
                 }
 
-                // Search in properties
+                // Search in properties (including nested)
                 if (schemaData.properties) {
-                    for (const prop of schemaData.properties) {
-                        if (prop.name.toLowerCase().includes(query)) {
-                            state.filteredSchemas.push(schemaPath);
-                            break;
-                        }
-                        if (prop.description && prop.description.toLowerCase().includes(query)) {
-                            state.filteredSchemas.push(schemaPath);
-                            break;
-                        }
+                    if (propertyTreeMatchesQuery(schemaData.properties, query)) {
+                        state.filteredSchemas.push(schemaPath);
                     }
                 }
             }
 
             // Update sidebar visibility
             updateSidebarVisibility();
+        }
+
+        /**
+         * Search property names/descriptions recursively.
+         */
+        function propertyTreeMatchesQuery(properties, query) {
+            for (const prop of properties) {
+                if (prop.name.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.description && prop.description.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.propertyPath && prop.propertyPath.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.nestedProperties && propertyTreeMatchesQuery(prop.nestedProperties, query)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**

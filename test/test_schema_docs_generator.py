@@ -93,6 +93,236 @@ required:
     assert status_prop["constraints"]["default"] == "active"
 
 
+def test_parse_one_of_required_sets(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  access:
+    type: array
+    items:
+      properties:
+        namespace:
+          type: string
+        role:
+          type: string
+        cluster:
+          type: string
+        group:
+          type: string
+      oneOf:
+      - required:
+        - namespace
+        - role
+      - required:
+        - cluster
+        - group
+required:
+- access
+"""
+    schema_file = tmp_path / "role-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "role-1.yml")
+    access = next(p for p in result["properties"] if p["name"] == "access")
+    items_props = access["nestedProperties"]
+    assert len(items_props) == 4
+
+    one_of = access.get("oneOf")
+    assert one_of is not None
+    assert one_of["kind"] == "required_sets"
+    assert len(one_of["branches"]) == 2
+    labels = {b["label"] for b in one_of["branches"]}
+    assert "namespace + role" in labels
+    assert "cluster + group" in labels
+
+
+def test_parse_property_nested_object_without_type(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  access:
+    type: array
+    items:
+      properties:
+        namespace:
+          type: string
+        role:
+          type: string
+      required:
+      - namespace
+required:
+- access
+"""
+    schema_file = tmp_path / "role-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "role-1.yml")
+    access_prop = next(p for p in result["properties"] if p["name"] == "access")
+
+    assert access_prop["type"] == "array[object]"
+    assert access_prop["nestedCount"] == 2
+    assert {p["name"] for p in access_prop["nestedProperties"]} == {"namespace", "role"}
+    assert access_prop["nestedProperties"][0]["propertyPath"] == ".access[].namespace"
+
+
+def test_parse_property_nested_object_inferred_type(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  source:
+    properties:
+      provider:
+        type: string
+      url:
+        type: string
+    required:
+    - provider
+required:
+- source
+"""
+    schema_file = tmp_path / "membership-provider-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "membership-provider-1.yml")
+    source_prop = next(p for p in result["properties"] if p["name"] == "source")
+
+    assert source_prop["type"] == "object"
+    assert source_prop["nestedCount"] == 2
+    assert source_prop["nestedProperties"][0]["propertyPath"] == ".source.provider"
+
+
+def test_parse_schema_one_of_permission_style(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  labels:
+    type: object
+  name:
+    type: string
+  description:
+    type: string
+  service:
+    type: string
+  org:
+    type: string
+  team:
+    type: string
+  quayOrg:
+    type: string
+  skip:
+    type: boolean
+oneOf:
+- properties:
+    service:
+      enum:
+      - github-org-team
+    org:
+      type: string
+    team:
+      type: string
+  required:
+  - org
+  - team
+- properties:
+    service:
+      enum:
+      - quay-membership
+    quayOrg:
+      type: string
+    team:
+      type: string
+  required:
+  - quayOrg
+  - team
+required:
+- name
+"""
+    schema_file = tmp_path / "permission-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "permission-1.yml")
+
+    assert "schemaOneOf" in result
+    assert result["schemaOneOf"]["kind"] == "variants"
+    assert len(result["schemaOneOf"]["branches"]) == 2
+
+    prop_names = {p["name"] for p in result["properties"]}
+    assert "org" not in prop_names
+    assert "quayOrg" not in prop_names
+    assert "name" in prop_names
+    assert "skip" in prop_names
+
+
+def test_parse_one_of_ref_alternatives(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  quayRepos:
+    type: array
+    items:
+      oneOf:
+      - $ref: /app-sre/app-quay-repos-1.yml
+      - $ref: /common-1.json#/definitions/crossref
+        $schemaRef: /app-sre/app-quay-repos-1.yml
+required:
+- quayRepos
+"""
+    schema_file = tmp_path / "app-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "app-1.yml")
+    quay = next(p for p in result["properties"] if p["name"] == "quayRepos")
+
+    assert quay["oneOf"]["kind"] == "ref_alternatives"
+    assert len(quay["oneOf"]["branches"]) == 2
+    schema_refs = {b.get("schemaRef") for b in quay["oneOf"]["branches"]}
+    assert "/app-sre/app-quay-repos-1.yml" in schema_refs
+
+
+def test_parse_property_deeply_nested_paths(tmp_path):
+    schema_content = """---
+$schema: /metaschema-1.json
+version: "1.0"
+type: object
+properties:
+  codeComponents:
+    type: array
+    items:
+      type: object
+      properties:
+        gitlabSync:
+          type: object
+          properties:
+            sourceProject:
+              type: object
+              properties:
+                name:
+                  type: string
+required:
+- codeComponents
+"""
+    schema_file = tmp_path / "app-1.yml"
+    schema_file.write_text(schema_content)
+
+    result = parse_schema_file(str(schema_file), "app-1.yml")
+    code_components = next(p for p in result["properties"] if p["name"] == "codeComponents")
+    gitlab_sync = next(p for p in code_components["nestedProperties"] if p["name"] == "gitlabSync")
+    source_project = next(p for p in gitlab_sync["nestedProperties"] if p["name"] == "sourceProject")
+    name_prop = next(p for p in source_project["nestedProperties"] if p["name"] == "name")
+
+    assert name_prop["propertyPath"] == ".codeComponents[].gitlabSync.sourceProject.name"
+
+
 def test_parse_schema_file_json(tmp_path):
     schema_content = """{
   "$schema": "/metaschema-1.json",

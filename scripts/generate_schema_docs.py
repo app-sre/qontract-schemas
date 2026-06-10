@@ -58,7 +58,7 @@ def parse_schema_file(file_path: str, relative_path: str) -> Optional[Dict[str, 
     for prop_name, prop_def in schema_properties.items():
         properties.append(_parse_property(prop_name, prop_def, required_fields))
 
-    return {
+    result = {
         "path": relative_path,
         "version": version,
         "description": description,
@@ -67,18 +67,240 @@ def parse_schema_file(file_path: str, relative_path: str) -> Optional[Dict[str, 
         "referencedBy": []   # Populated later
     }
 
+    schema_one_of = _parse_schema_one_of(schema, properties)
+    if schema_one_of:
+        exclusive = set()
+        for branch in schema.get("oneOf", []):
+            if isinstance(branch, dict):
+                exclusive |= _branch_property_names(branch)
+        properties = [
+            p for p in properties
+            if p["name"] not in exclusive or p["name"] in schema_one_of["commonPropertyNames"]
+        ]
+        result["schemaOneOf"] = schema_one_of
+        result["properties"] = properties
 
-def _parse_property(name: str, definition: Dict[str, Any], required_fields: List[str]) -> Dict[str, Any]:
-    """Parse a single property definition."""
-    prop_type = definition.get("type", "unknown")
+    return result
 
-    # Detect enum type
-    if "enum" in definition:
-        prop_type = "enum"
 
-    # Detect reference type
+def _is_required_only_branch(branch: Dict[str, Any]) -> bool:
+    """Return True when a oneOf branch only specifies required fields."""
+    if not isinstance(branch, dict):
+        return False
+    return set(branch.keys()).issubset({"required"}) and "required" in branch
+
+
+def _is_ref_branch(branch: Dict[str, Any]) -> bool:
+    """Return True when a oneOf branch is a schema reference alternative."""
+    if not isinstance(branch, dict) or branch.get("properties"):
+        return False
+    if branch.get("$schemaRef"):
+        return True
+    ref = branch.get("$ref")
+    if isinstance(ref, str) and ref.startswith("/") and ref.endswith(".yml"):
+        return True
+    return False
+
+
+def _branch_discriminator(branch: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    """Detect a single-value enum/const discriminator on a oneOf branch."""
+    props = branch.get("properties") or {}
+    for field, definition in props.items():
+        if not isinstance(definition, dict):
+            continue
+        enum_vals = definition.get("enum")
+        if isinstance(enum_vals, list) and len(enum_vals) == 1:
+            return {"field": field, "value": str(enum_vals[0])}
+        if "const" in definition:
+            return {"field": field, "value": str(definition["const"])}
+    return None
+
+
+def _branch_label(branch: Dict[str, Any], kind: str, index: int = 0) -> str:
+    """Generate a human-readable label for a oneOf branch."""
+    if kind == "variants":
+        discriminator = _branch_discriminator(branch)
+        if discriminator:
+            return f"{discriminator['field']}: {discriminator['value']}"
+    if kind == "required_sets":
+        required = branch.get("required") or []
+        if required:
+            return " + ".join(required)
+    required = branch.get("required") or []
+    if required:
+        return " + ".join(required)
+    return f"Option {index + 1}"
+
+
+def _detect_discriminator(
+    branches: List[Dict[str, Any]],
+    properties: Optional[Dict[str, Any]],
+) -> Optional[str]:
+    """Detect a discriminator property from const/enum values across branches."""
+    if not properties or not branches:
+        return None
+
+    for prop_name in properties:
+        values = set()
+        all_have_const = True
+        for branch in branches:
+            branch_properties = branch.get("properties", {})
+            if prop_name not in branch_properties:
+                all_have_const = False
+                break
+            prop_def = branch_properties[prop_name]
+            if "const" in prop_def:
+                values.add(prop_def["const"])
+            elif "enum" in prop_def and len(prop_def["enum"]) == 1:
+                values.add(prop_def["enum"][0])
+            else:
+                all_have_const = False
+                break
+        if all_have_const and len(values) == len(branches):
+            return prop_name
+
+    return None
+
+
+def _classify_one_of(
+    branches: List[Dict[str, Any]],
+    properties: Optional[Dict[str, Any]],
+) -> str:
+    """Classify the kind of oneOf constraint."""
+    if all(_is_required_only_branch(branch) for branch in branches):
+        return "required_sets"
+    ref_count = sum(1 for branch in branches if _is_ref_branch(branch))
+    if ref_count == len(branches):
+        return "ref_alternatives"
+    return "variants"
+
+
+def _parse_one_of_branch(
+    branch: Dict[str, Any],
+    property_path: str,
+    kind: str,
+    properties: Optional[Dict[str, Any]],
+    index: int = 0,
+) -> Dict[str, Any]:
+    """Parse a single oneOf branch into a normalized structure."""
+    result: Dict[str, Any] = {
+        "label": _branch_label(branch, kind, index),
+        "discriminator": _branch_discriminator(branch) if kind == "variants" else None,
+    }
+    if kind in ("required_sets", "variants"):
+        result["required"] = branch.get("required") or []
+    schema_ref = branch.get("$schemaRef")
+    if not schema_ref and isinstance(branch.get("$ref"), str):
+        ref = branch["$ref"]
+        if ref.startswith("/") and ref.endswith(".yml"):
+            schema_ref = ref
+    result["schemaRef"] = schema_ref
+    result["inline"] = bool(branch.get("properties") and not branch.get("$schemaRef"))
+    if branch.get("properties") and not branch.get("$schemaRef"):
+        nested_required = branch.get("required") or []
+        result["properties"] = [
+            _parse_property(name, definition, nested_required, property_path)
+            for name, definition in branch["properties"].items()
+        ]
+    else:
+        result["properties"] = None
+    return result
+
+
+def _parse_one_of(definition: Dict[str, Any], property_path: str) -> Optional[Dict[str, Any]]:
+    """Parse oneOf constraints from a schema definition."""
+    one_of = definition.get("oneOf")
+    if not one_of or not isinstance(one_of, list):
+        return None
+
+    properties = definition.get("properties")
+    kind = _classify_one_of(one_of, properties)
+    branches = [
+        _parse_one_of_branch(branch, property_path, kind, properties, index)
+        for index, branch in enumerate(one_of)
+    ]
+
+    return {
+        "kind": kind,
+        "branches": branches,
+        "propertyPath": property_path,
+    }
+
+
+def _branch_property_names(branch: Dict[str, Any]) -> set:
+    """Return property names defined on a oneOf branch."""
+    return set((branch.get("properties") or {}).keys())
+
+
+def _parse_schema_one_of(
+    raw_schema: Dict[str, Any],
+    properties: List[Dict[str, Any]],
+) -> Optional[Dict[str, Any]]:
+    """Parse schema-root oneOf into variant metadata and property splits."""
+    branches_raw = raw_schema.get("oneOf")
+    if not isinstance(branches_raw, list) or not branches_raw:
+        return None
+
+    schema_properties = raw_schema.get("properties")
+    branches = [
+        _parse_one_of_branch(branch, "", "variants", schema_properties, index)
+        for index, branch in enumerate(branches_raw)
+        if isinstance(branch, dict)
+    ]
+    if not branches:
+        return None
+
+    exclusive = set()
+    for branch in branches_raw:
+        if isinstance(branch, dict):
+            exclusive |= _branch_property_names(branch)
+
+    common_names: List[str] = []
+    shared_optional_names: List[str] = []
+    root_required = raw_schema.get("required") or []
+
+    for prop in properties:
+        name = prop["name"]
+        if name not in exclusive:
+            continue
+        if name in root_required:
+            common_names.append(name)
+
+    for prop in properties:
+        name = prop["name"]
+        if name in exclusive and name not in common_names:
+            shared_optional_names.append(name)
+
+    return {
+        "kind": "variants",
+        "branches": branches,
+        "commonPropertyNames": common_names,
+        "sharedOptionalPropertyNames": shared_optional_names,
+    }
+
+
+def _resolve_property_type(definition: Dict[str, Any]) -> str:
+    """Resolve the display type for a schema property definition."""
     if "$schemaRef" in definition:
-        prop_type = "object (ref)"
+        return "object (ref)"
+    if "enum" in definition:
+        return "enum"
+    if "type" in definition:
+        return definition["type"]
+    if "properties" in definition:
+        return "object"
+    return "unknown"
+
+
+def _parse_property(
+    name: str,
+    definition: Dict[str, Any],
+    required_fields: List[str],
+    path_prefix: str = "",
+) -> Dict[str, Any]:
+    """Parse a single property definition."""
+    property_path = f"{path_prefix}.{name}" if path_prefix else f".{name}"
+    prop_type = _resolve_property_type(definition)
 
     # Extract constraints
     constraints = {}
@@ -94,42 +316,57 @@ def _parse_property(name: str, definition: Dict[str, Any], required_fields: List
     if "$ref" in definition:
         constraints["ref"] = definition["$ref"]
 
-    # Extract nested properties for objects and arrays
+    # Extract nested properties for inline objects and array item objects
     nested_properties = None
+    nested_from_array = False
+    items_one_of = None
 
-    # Handle objects with properties
-    if prop_type == "object" and "properties" in definition and not definition.get("$schemaRef"):
+    if not definition.get("$schemaRef") and "properties" in definition:
         nested_required = definition.get("required", [])
         nested_properties = []
         for nested_name, nested_def in definition["properties"].items():
-            # Recursively parse nested properties
-            nested_properties.append(_parse_property(nested_name, nested_def, nested_required))
-
-    # Handle arrays with object items
+            nested_properties.append(
+                _parse_property(nested_name, nested_def, nested_required, property_path)
+            )
     elif prop_type == "array" and "items" in definition:
         items_def = definition["items"]
-        # Items can be a dict or list - only process if dict
-        if isinstance(items_def, dict):
-            # If array items are objects with properties, extract them
-            if items_def.get("type") == "object" and "properties" in items_def and not items_def.get("$schemaRef"):
-                nested_required = items_def.get("required", [])
-                nested_properties = []
-                for nested_name, nested_def in items_def["properties"].items():
-                    # Recursively parse nested properties
-                    nested_properties.append(_parse_property(nested_name, nested_def, nested_required))
+        item_path = f"{property_path}[]"
+        if isinstance(items_def, dict) and not items_def.get("$schemaRef") and "properties" in items_def:
+            nested_required = items_def.get("required", [])
+            nested_properties = []
+            for nested_name, nested_def in items_def["properties"].items():
+                nested_properties.append(
+                    _parse_property(nested_name, nested_def, nested_required, item_path)
+                )
+            nested_from_array = True
+            if "oneOf" in items_def:
+                items_one_of = _parse_one_of(items_def, item_path)
+        elif isinstance(items_def, dict) and "oneOf" in items_def:
+            items_one_of = _parse_one_of(items_def, item_path)
+
+    display_type = prop_type
+    if nested_from_array and nested_properties:
+        display_type = "array[object]"
 
     result = {
         "name": name,
-        "type": prop_type,
+        "type": display_type,
         "required": name in required_fields,
         "description": definition.get("description"),
         "constraints": constraints if constraints else {},
         "schemaRef": definition.get("$schemaRef"),
-        "propertyPath": f".{name}"
+        "propertyPath": property_path,
     }
 
     if nested_properties is not None:
         result["nestedProperties"] = nested_properties
+        result["nestedCount"] = len(nested_properties)
+
+    one_of = _parse_one_of(definition, property_path)
+    if one_of:
+        result["oneOf"] = one_of
+    elif items_one_of:
+        result["oneOf"] = items_one_of
 
     return result
 
