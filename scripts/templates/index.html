@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qontract Schema Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <noscript>
+        <div class="noscript-message">
+            This tool requires JavaScript. Please enable it or view schemas directly on
+            <a href="https://github.com/app-sre/qontract-schemas">GitHub</a>.
+        </div>
+    </noscript>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-start">
+            <button id="sidebarToggle" class="sidebar-toggle" type="button"
+                    aria-label="Open schema navigation" aria-expanded="false" aria-controls="sidebar">
+                <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <h1 class="header-title">Qontract Schema Viewer</h1>
+        </div>
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
+                <button id="searchClear" class="search-clear" style="display: none;">×</button>
+            </div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-label">Light</span>
+            </button>
+        </div>
+    </header>
+
+    <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
+
+    <!-- Main layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Schemas</span>
+            </div>
+            <div class="sidebar-content" id="sidebarContent">
+                <!-- Categories will be rendered here -->
+            </div>
+        </aside>
+
+        <!-- Main panel -->
+        <main class="main-panel" id="mainPanel">
+            <div class="welcome-message">
+                <h2>Welcome to Qontract Schema Viewer</h2>
+                <p>Select a schema from the sidebar to view its details.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Error display -->
+    <div id="errorDisplay" class="error-display" style="display: none;">
+        <h2>Error Loading Schema Data</h2>
+        <p id="errorMessage"></p>
+        <p>Please regenerate the documentation using <code>make generate-docs</code></p>
+    </div>
+
+    <script>
+        // ============================================================================
+        // STATE MANAGEMENT
+        // ============================================================================
+
+        const state = {
+            data: null,
+            currentSchema: null,
+            currentSchemaPath: null,
+            searchQuery: '',
+            filteredSchemas: [],
+            debounceTimer: null
+        };
+
+        // ============================================================================
+        // ROUTING
+        // ============================================================================
+
+        /**
+         * Read the schema path from the current URL (hash or query string).
+         */
+        function getSchemaPathFromLocation() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#/') && hash.length > 2) {
+                return decodeURIComponent(hash.slice(2));
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const fromQuery = params.get('schema');
+            if (fromQuery) {
+                return fromQuery;
+            }
+
+            if (history.state && history.state.schemaPath) {
+                return history.state.schemaPath;
+            }
+
+            return null;
+        }
+
+        /**
+         * Build a shareable URL for a schema path.
+         */
+        function buildSchemaUrl(schemaPath) {
+            const base = `${window.location.origin}${window.location.pathname}`;
+            return `${base}#/${schemaPath}`;
+        }
+
+        /**
+         * Update the browser URL for the current schema selection.
+         */
+        function setSchemaUrl(schemaPath, { replace = false } = {}) {
+            const url = buildSchemaUrl(schemaPath);
+            const historyState = { schemaPath };
+
+            if (replace) {
+                history.replaceState(historyState, '', url);
+            } else {
+                history.pushState(historyState, '', url);
+            }
+        }
+
+        /**
+         * Build a GitHub URL for a schema source file.
+         */
+        function buildGitHubSchemaUrl(schemaPath) {
+            return `https://github.com/app-sre/qontract-schemas/blob/main/schemas/${schemaPath}`;
+        }
+
+        /**
+         * Clear the schema from the URL and return to the home view.
+         */
+        function clearSchemaUrl({ replace = false } = {}) {
+            const url = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+
+            if (replace) {
+                history.replaceState({}, '', url);
+            } else {
+                history.pushState({}, '', url);
+            }
+        }
+
+        /**
+         * Navigate based on the current URL without pushing history.
+         */
+        function navigateFromLocation() {
+            const schemaPath = getSchemaPathFromLocation();
+
+            if (!schemaPath) {
+                if (state.currentSchemaPath === null) {
+                    return;
+                }
+                showWelcome();
+                return;
+            }
+
+            if (schemaPath === state.currentSchemaPath && state.currentSchema) {
+                return;
+            }
+
+            if (!state.data || !state.data.schemas[schemaPath]) {
+                showSchemaNotFound(schemaPath);
+                return;
+            }
+
+            selectSchema(schemaPath, { updateUrl: false });
+        }
+
+        /**
+         * Handle browser back/forward and manual hash edits.
+         */
+        function handleRouteChange() {
+            navigateFromLocation();
+        }
+
+        // ============================================================================
+        // DATA LOADING AND INITIALIZATION
+        // ============================================================================
+
+        /**
+         * Initialize theme based on localStorage or system preference.
+         */
+        function initTheme() {
+            // Check localStorage first
+            let theme = localStorage.getItem('theme');
+
+            // Fall back to system preference
+            if (!theme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+            }
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // Update button (if it exists - may not on first load)
+            const iconEl = document.querySelector('.theme-icon');
+            const labelEl = document.querySelector('.theme-label');
+            if (iconEl && labelEl) {
+                const icon = theme === 'dark' ? '🌙' : '☀️';
+                const label = theme === 'dark' ? 'Dark' : 'Light';
+                iconEl.textContent = icon;
+                labelEl.textContent = label;
+            }
+        }
+
+        /**
+         * Toggle between light and dark themes.
+         */
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+
+            // Update button
+            const icon = newTheme === 'dark' ? '🌙' : '☀️';
+            const label = newTheme === 'dark' ? 'Dark' : 'Light';
+            document.querySelector('.theme-icon').textContent = icon;
+            document.querySelector('.theme-label').textContent = label;
+
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        /**
+         * Initialize the application by loading schema data and setting up event listeners.
+         */
+        async function init() {
+            // Initialize theme first
+            initTheme();
+
+            try {
+                // Load schemas.json
+                const response = await fetch('schemas.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load schemas.json: ${response.statusText}`);
+                }
+                state.data = await response.json();
+
+                // Render sidebar with categories and schemas
+                renderSidebar();
+
+                // Setup event listeners
+                setupEventListeners();
+
+                // Open schema from URL if present
+                navigateFromLocation();
+
+                // Hide error display
+                document.getElementById('errorDisplay').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading schema data:', error);
+                showError(error.message);
+            }
+        }
+
+        /**
+         * Display error message to user.
+         */
+        function showError(message) {
+            const errorDisplay = document.getElementById('errorDisplay');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorDisplay.style.display = 'block';
+        }
+
+        // ============================================================================
+        // SIDEBAR (MOBILE)
+        // ============================================================================
+
+        function isMobileSidebar() {
+            return window.matchMedia('(max-width: 992px)').matches;
+        }
+
+        function setSidebarOpen(open) {
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            document.body.classList.toggle('sidebar-open', open);
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.setAttribute('aria-label', open ? 'Close schema navigation' : 'Open schema navigation');
+            overlay.hidden = !open;
+        }
+
+        function closeSidebarIfMobile() {
+            if (isMobileSidebar()) {
+                setSidebarOpen(false);
+            }
+        }
+
+        function setupSidebarToggle() {
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            toggle.addEventListener('click', () => {
+                setSidebarOpen(!document.body.classList.contains('sidebar-open'));
+            });
+
+            overlay.addEventListener('click', () => {
+                setSidebarOpen(false);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    setSidebarOpen(false);
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (!isMobileSidebar()) {
+                    setSidebarOpen(false);
+                }
+            });
+        }
+
+        // ============================================================================
+        // EVENT LISTENERS
+        // ============================================================================
+
+        function setupEventListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const searchClear = document.getElementById('searchClear');
+
+            setupSidebarToggle();
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+            // Search input with debouncing
+            searchInput.addEventListener('input', (e) => {
+                state.searchQuery = e.target.value.trim();
+
+                // Show/hide clear button
+                if (state.searchQuery) {
+                    searchClear.style.display = 'inline-block';
+                } else {
+                    searchClear.style.display = 'none';
+                }
+
+                // Debounce search
+                clearTimeout(state.debounceTimer);
+                state.debounceTimer = setTimeout(() => {
+                    performSearch();
+                }, 300);
+            });
+
+            // Clear button
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                state.searchQuery = '';
+                searchClear.style.display = 'none';
+                performSearch();
+            });
+
+            window.addEventListener('popstate', handleRouteChange);
+            window.addEventListener('hashchange', handleRouteChange);
+        }
+
+        // ============================================================================
+        // SIDEBAR RENDERING
+        // ============================================================================
+
+        /**
+         * Render the sidebar with categories and schemas.
+         */
+        function renderSidebar() {
+            const sidebarContent = document.getElementById('sidebarContent');
+            sidebarContent.innerHTML = '';
+
+            if (!state.data || !state.data.categories) {
+                return;
+            }
+
+            state.data.categories.forEach(category => {
+                const categoryEl = createCategoryElement(category);
+                sidebarContent.appendChild(categoryEl);
+            });
+        }
+
+        /**
+         * Create a category element with toggle and schema list.
+         */
+        function createCategoryElement(category) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+
+            // Category header
+            const header = document.createElement('div');
+            header.className = 'category-header';
+
+            const toggle = document.createElement('span');
+            toggle.className = 'category-toggle';
+            toggle.textContent = '▶';
+
+            const name = document.createElement('span');
+            name.className = 'category-name';
+            name.textContent = category.name === '.' ? 'Root' : category.name;
+
+            const count = document.createElement('span');
+            count.className = 'category-count';
+            count.textContent = category.schemas.length;
+
+            header.appendChild(toggle);
+            header.appendChild(name);
+            header.appendChild(count);
+
+            // Schema list container
+            const schemasDiv = document.createElement('div');
+            schemasDiv.className = 'category-schemas';
+
+            // Create schema items
+            category.schemas.forEach(schemaFile => {
+                const schemaPath = category.name === '.' ? schemaFile : `${category.name}/${schemaFile}`;
+                const schemaItem = document.createElement('div');
+                schemaItem.className = 'schema-item';
+                schemaItem.setAttribute('data-schema-path', schemaPath);
+                schemaItem.textContent = schemaFile;
+                schemaItem.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent category collapse
+                    selectSchema(schemaPath);
+                });
+                schemasDiv.appendChild(schemaItem);
+            });
+
+            // Toggle functionality
+            header.addEventListener('click', () => {
+                toggle.classList.toggle('expanded');
+                schemasDiv.classList.toggle('expanded');
+            });
+
+            categoryDiv.appendChild(header);
+            categoryDiv.appendChild(schemasDiv);
+
+            return categoryDiv;
+        }
+
+        // ============================================================================
+        // SCHEMA SELECTION AND DETAILS RENDERING
+        // ============================================================================
+
+        /**
+         * Select a schema and display its details.
+         */
+        function selectSchema(schemaPath, options = {}) {
+            const { updateUrl = true, replaceUrl = false } = options;
+
+            if (!state.data || !state.data.schemas) {
+                return;
+            }
+
+            if (!state.data.schemas[schemaPath]) {
+                if (updateUrl) {
+                    setSchemaUrl(schemaPath, { replace: replaceUrl });
+                }
+                showSchemaNotFound(schemaPath);
+                return;
+            }
+
+            state.currentSchema = state.data.schemas[schemaPath];
+            state.currentSchemaPath = schemaPath;
+
+            updateActiveSchemaSidebar(schemaPath);
+            renderSchemaDetails(schemaPath);
+
+            if (updateUrl) {
+                const currentPath = getSchemaPathFromLocation();
+                if (currentPath !== schemaPath || replaceUrl) {
+                    setSchemaUrl(schemaPath, { replace: replaceUrl });
+                }
+            }
+
+            document.title = `${schemaPath} - Qontract Schema Viewer`;
+            closeSidebarIfMobile();
+        }
+
+        /**
+         * Show the welcome screen when no schema is selected.
+         */
+        function showWelcome() {
+            state.currentSchema = null;
+            state.currentSchemaPath = null;
+            document.title = 'Qontract Schema Viewer';
+
+            document.querySelectorAll('.schema-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const mainPanel = document.getElementById('mainPanel');
+            mainPanel.innerHTML = `
+                <div class="welcome-message">
+                    <h2>Welcome to Qontract Schema Viewer</h2>
+                    <p>Select a schema from the sidebar to view its details.</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Show an error when the URL points to an unknown schema.
+         */
+        function showSchemaNotFound(schemaPath) {
+            state.currentSchema = null;
+            state.currentSchemaPath = schemaPath;
+            document.title = `Not found: ${schemaPath} - Qontract Schema Viewer`;
+
+            document.querySelectorAll('.schema-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const mainPanel = document.getElementById('mainPanel');
+            mainPanel.innerHTML = `
+                <div class="welcome-message schema-not-found">
+                    <h2>Schema not found</h2>
+                    <p>No schema matches <code>${escapeHtml(schemaPath)}</code>.</p>
+                    <p>Select a schema from the sidebar or check the URL.</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Update the active schema highlighting in the sidebar.
+         */
+        function updateActiveSchemaSidebar(schemaPath) {
+            document.querySelectorAll('.schema-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('data-schema-path') === schemaPath);
+            });
+        }
+
+        /**
+         * Render the schema details panel with tabs.
+         */
+        function renderSchemaDetails(schemaPath) {
+            const mainPanel = document.getElementById('mainPanel');
+
+            // Create schema header
+            const header = document.createElement('div');
+            header.className = 'schema-header';
+
+            const title = document.createElement('h2');
+            title.textContent = state.currentSchema.path;
+
+            const pathBadge = document.createElement('a');
+            pathBadge.className = 'schema-path-badge';
+            pathBadge.href = buildGitHubSchemaUrl(schemaPath);
+            pathBadge.target = '_blank';
+            pathBadge.rel = 'noopener noreferrer';
+            pathBadge.title = 'View schema source on GitHub';
+            pathBadge.textContent = state.currentSchema.path;
+
+            const meta = document.createElement('div');
+            meta.className = 'schema-meta';
+            meta.innerHTML = `<strong>Version:</strong> ${escapeHtml(state.currentSchema.version)}`;
+
+            if (state.currentSchema.description) {
+                const desc = document.createElement('p');
+                desc.style.marginTop = '0.5rem';
+                desc.textContent = state.currentSchema.description;
+                meta.appendChild(desc);
+            }
+
+            header.appendChild(title);
+            header.appendChild(pathBadge);
+            header.appendChild(meta);
+
+            // NEW CODE - side-by-side layout
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'schema-content';
+
+            // Properties section
+            const propertiesSection = document.createElement('section');
+            propertiesSection.className = 'properties-section';
+            const propertiesHeader = document.createElement('h3');
+            propertiesHeader.className = 'section-header properties-header';
+            propertiesHeader.textContent = 'Properties';
+            propertiesSection.appendChild(propertiesHeader);
+            propertiesSection.appendChild(renderPropertiesTab());
+
+            // Dependencies section
+            const dependenciesSection = document.createElement('section');
+            dependenciesSection.className = 'dependencies-section';
+            const dependenciesHeader = document.createElement('h3');
+            dependenciesHeader.className = 'section-header dependencies-header';
+            dependenciesHeader.textContent = 'Dependencies';
+            dependenciesSection.appendChild(dependenciesHeader);
+            dependenciesSection.appendChild(renderDependenciesTab());
+
+            contentContainer.appendChild(propertiesSection);
+            contentContainer.appendChild(dependenciesSection);
+
+            // Build main panel
+            mainPanel.innerHTML = '';
+            mainPanel.appendChild(header);
+            mainPanel.appendChild(contentContainer);
+
+            // Update sidebar focus
+            updateSidebarFocus(schemaPath);
+        }
+
+        /**
+         * Update sidebar to highlight and scroll to the currently loaded schema.
+         * Expands parent category if collapsed.
+         *
+         * @param {string} schemaPath - Path of the schema to focus (e.g., "app-sre/app-1.yml")
+         */
+        function updateSidebarFocus(schemaPath) {
+            // Remove old active state and highlight
+            document.querySelectorAll('.schema-item.active').forEach(el => {
+                el.classList.remove('active', 'sidebar-highlight');
+            });
+
+            // Find target schema item
+            const schemaItem = document.querySelector(`[data-schema-path="${schemaPath}"]`);
+            if (!schemaItem) return;
+
+            // Expand parent category if collapsed
+            const category = schemaItem.closest('.category');
+            if (category) {
+                const schemasDiv = category.querySelector('.category-schemas');
+                const toggleIcon = category.querySelector('.category-toggle');
+
+                // Only expand if currently collapsed
+                if (!schemasDiv.classList.contains('expanded')) {
+                    toggleIcon.classList.add('expanded');
+                    schemasDiv.classList.add('expanded');
+                }
+            }
+
+            // Apply active state and highlight animation
+            schemaItem.classList.add('active', 'sidebar-highlight');
+
+            // Scroll into view (centered in sidebar)
+            schemaItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            // Remove highlight animation after 1 second
+            setTimeout(() => {
+                schemaItem.classList.remove('sidebar-highlight');
+            }, 1000);
+        }
+
+        // ============================================================================
+        // PROPERTIES TAB RENDERING
+        // ============================================================================
+
+        const PROPERTY_COLUMNS = [
+            { label: 'Name', className: 'col-name' },
+            { label: 'Type', className: 'col-type' },
+            { label: 'Required', className: 'col-required' },
+            { label: 'Description', className: 'col-description' },
+            { label: 'Constraints', className: 'col-constraints' }
+        ];
+
+        /**
+         * Add column width hints to a property table.
+         */
+        function appendPropertyColgroup(table) {
+            const colgroup = document.createElement('colgroup');
+            PROPERTY_COLUMNS.forEach(({ className }) => {
+                const col = document.createElement('col');
+                col.className = className;
+                colgroup.appendChild(col);
+            });
+            table.appendChild(colgroup);
+        }
+
+        /**
+         * Create a single property table row.
+         */
+        function createPropertyRow(prop, depth, hasNested) {
+            const row = document.createElement('tr');
+            row.className = 'prop-row';
+            if (hasNested) {
+                row.classList.add('prop-row-expandable');
+            }
+            row.dataset.depth = String(depth);
+
+            const nameCell = document.createElement('td');
+            nameCell.className = 'prop-name col-name';
+
+            const nameContent = document.createElement('div');
+            nameContent.className = 'prop-name-content';
+            nameContent.style.setProperty('--depth', String(depth));
+
+            if (hasNested) {
+                const expandBtn = document.createElement('button');
+                expandBtn.type = 'button';
+                expandBtn.className = 'expand-toggle';
+                expandBtn.textContent = '▶';
+                expandBtn.setAttribute('aria-label', `Expand ${prop.name} properties`);
+                expandBtn.setAttribute('aria-expanded', 'false');
+                nameContent.appendChild(expandBtn);
+            } else if (depth > 0) {
+                const spacer = document.createElement('span');
+                spacer.className = 'expand-toggle-spacer';
+                spacer.setAttribute('aria-hidden', 'true');
+                nameContent.appendChild(spacer);
+            }
+
+            const nameLabel = document.createElement('span');
+            nameLabel.className = 'prop-name-label';
+            nameLabel.textContent = prop.name;
+            nameContent.appendChild(nameLabel);
+
+            if (hasNested && prop.nestedCount) {
+                const countBadge = document.createElement('span');
+                countBadge.className = 'nested-count-badge';
+                countBadge.textContent = `${prop.nestedCount} ${prop.nestedCount === 1 ? 'property' : 'properties'}`;
+                nameContent.appendChild(countBadge);
+            }
+
+            nameCell.appendChild(nameContent);
+
+            if (prop.propertyPath && depth > 0) {
+                const pathHint = document.createElement('div');
+                pathHint.className = 'prop-path-hint';
+                pathHint.textContent = prop.propertyPath;
+                nameCell.appendChild(pathHint);
+            }
+
+            row.appendChild(nameCell);
+
+            const typeCell = document.createElement('td');
+            typeCell.className = 'col-type';
+            const typeBadge = document.createElement('span');
+            typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+            typeBadge.textContent = prop.type;
+            typeCell.appendChild(typeBadge);
+
+            if (prop.oneOf) {
+                const oneOfBadge = document.createElement('span');
+                oneOfBadge.className = 'oneof-badge';
+                oneOfBadge.textContent = 'oneOf';
+                typeCell.appendChild(oneOfBadge);
+            }
+
+            row.appendChild(typeCell);
+
+            const reqCell = document.createElement('td');
+            reqCell.className = 'prop-required col-required';
+            reqCell.textContent = prop.required ? '✓' : '';
+            row.appendChild(reqCell);
+
+            const descCell = document.createElement('td');
+            descCell.className = prop.description
+                ? 'prop-description col-description'
+                : 'prop-description empty col-description';
+            descCell.appendChild(document.createTextNode(prop.description || '(no description)'));
+
+            if (prop.schemaRef) {
+                descCell.appendChild(document.createElement('br'));
+                descCell.appendChild(document.createTextNode('ref: '));
+
+                const refLink = document.createElement('a');
+                refLink.href = '#';
+                refLink.className = 'schema-link';
+                refLink.textContent = prop.schemaRef;
+                refLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const schemaPath = prop.schemaRef.startsWith('/')
+                        ? prop.schemaRef.substring(1)
+                        : prop.schemaRef;
+                    selectSchema(schemaPath);
+                });
+                descCell.appendChild(refLink);
+            }
+
+            row.appendChild(descCell);
+
+            const constrCell = document.createElement('td');
+            constrCell.className = 'col-constraints';
+            constrCell.appendChild(renderConstraints(prop.constraints));
+            row.appendChild(constrCell);
+
+            return row;
+        }
+
+        /**
+         * Render an expandable variant card for oneOf branches with inline properties.
+         */
+        function renderOneOfVariantCard(branch) {
+            const card = document.createElement('div');
+            card.className = 'oneof-variant-card';
+
+            const header = document.createElement('div');
+            header.className = 'oneof-variant-header';
+
+            const toggleIcon = document.createElement('span');
+            toggleIcon.className = 'expand-toggle';
+            toggleIcon.textContent = '▶';
+            toggleIcon.setAttribute('aria-hidden', 'true');
+            header.appendChild(toggleIcon);
+
+            const label = document.createElement('span');
+            label.textContent = branch.label;
+            header.appendChild(label);
+
+            const body = document.createElement('div');
+            body.className = 'oneof-variant-body';
+            body.hidden = true;
+
+            if (branch.properties && branch.properties.length > 0) {
+                const table = document.createElement('table');
+                table.className = 'properties-table properties-table-nested';
+                appendPropertyColgroup(table);
+                table.appendChild(renderPropertyRows(branch.properties, 0));
+
+                const tableWrapper = document.createElement('div');
+                tableWrapper.className = 'table-scroll';
+                tableWrapper.appendChild(table);
+                body.appendChild(tableWrapper);
+            }
+
+            header.addEventListener('click', () => {
+                const willExpand = body.hidden;
+                body.hidden = !willExpand;
+                toggleIcon.textContent = willExpand ? '▼' : '▶';
+            });
+
+            card.appendChild(header);
+            card.appendChild(body);
+            return card;
+        }
+
+        /**
+         * Render a oneOf constraint or variant panel for a property.
+         */
+        function renderOneOfPanel(prop) {
+            const panel = document.createElement('div');
+            panel.className = 'oneof-panel';
+            if (!prop.oneOf || !prop.oneOf.branches || !prop.oneOf.branches.length) {
+                return panel;
+            }
+
+            const { kind, branches } = prop.oneOf;
+
+            if (kind === 'required_sets' || kind === 'ref_alternatives') {
+                const title = document.createElement('div');
+                title.className = 'oneof-panel-title';
+                title.textContent = kind === 'ref_alternatives'
+                    ? 'Item may match one of:'
+                    : 'Exactly one of:';
+                panel.appendChild(title);
+
+                const list = document.createElement('ul');
+                list.className = 'oneof-panel-list';
+                branches.forEach(branch => {
+                    const item = document.createElement('li');
+                    if (kind === 'ref_alternatives' && branch.schemaRef) {
+                        const link = document.createElement('a');
+                        link.className = 'schema-link';
+                        link.href = '#';
+                        link.textContent = branch.inline ? `Inline: ${branch.schemaRef}` : branch.schemaRef;
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const path = branch.schemaRef.startsWith('/')
+                                ? branch.schemaRef.slice(1)
+                                : branch.schemaRef;
+                            selectSchema(path);
+                        });
+                        item.appendChild(link);
+                    } else {
+                        item.textContent = branch.label;
+                    }
+                    list.appendChild(item);
+                });
+                panel.appendChild(list);
+                return panel;
+            }
+
+            const title = document.createElement('div');
+            title.className = 'oneof-panel-title';
+            title.textContent = 'Variants:';
+            panel.appendChild(title);
+
+            branches.forEach(branch => {
+                panel.appendChild(renderOneOfVariantCard(branch));
+            });
+            return panel;
+        }
+
+        /**
+         * Toggle nested property table visibility for an expandable row.
+         */
+        function toggleNestedRow(parentRow, nestedRow, toggleBtn) {
+            const willExpand = nestedRow.hidden;
+            nestedRow.hidden = !willExpand;
+            toggleBtn.textContent = willExpand ? '▼' : '▶';
+            toggleBtn.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
+            toggleBtn.setAttribute(
+                'aria-label',
+                willExpand ? `Collapse ${toggleBtn.dataset.propName} properties` : `Expand ${toggleBtn.dataset.propName} properties`
+            );
+            parentRow.classList.toggle('prop-row-expanded', willExpand);
+
+            if (!willExpand) {
+                nestedRow.querySelectorAll('.prop-nested-row').forEach(row => {
+                    row.hidden = true;
+                });
+                nestedRow.querySelectorAll('.expand-toggle').forEach(btn => {
+                    btn.textContent = '▶';
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+                nestedRow.querySelectorAll('.prop-row-expandable').forEach(row => {
+                    row.classList.remove('prop-row-expanded');
+                });
+            }
+        }
+
+        /**
+         * Recursively render property rows, using nested tables for child properties.
+         */
+        function renderPropertyRows(properties, depth = 0) {
+            const tbody = document.createElement('tbody');
+
+            properties.forEach(prop => {
+                const hasNested = prop.nestedProperties && prop.nestedProperties.length > 0;
+                const row = createPropertyRow(prop, depth, hasNested);
+                tbody.appendChild(row);
+
+                if (prop.oneOf && !hasNested) {
+                    const detailRow = document.createElement('tr');
+                    detailRow.className = 'prop-oneof-row';
+                    const detailCell = document.createElement('td');
+                    detailCell.colSpan = 5;
+                    detailCell.appendChild(renderOneOfPanel(prop));
+                    detailRow.appendChild(detailCell);
+                    tbody.appendChild(detailRow);
+                }
+
+                if (hasNested) {
+                    const nestedRow = document.createElement('tr');
+                    nestedRow.className = 'prop-nested-row';
+                    nestedRow.hidden = true;
+
+                    const nestedCell = document.createElement('td');
+                    nestedCell.className = 'prop-nested-cell';
+                    nestedCell.colSpan = 5;
+
+                    const nestedTable = document.createElement('table');
+                    nestedTable.className = 'properties-table properties-table-nested';
+                    appendPropertyColgroup(nestedTable);
+                    nestedTable.appendChild(renderPropertyRows(prop.nestedProperties, depth + 1));
+
+                    const nestedTableWrapper = document.createElement('div');
+                    nestedTableWrapper.className = 'table-scroll';
+                    nestedTableWrapper.appendChild(nestedTable);
+                    nestedCell.appendChild(nestedTableWrapper);
+
+                    if (prop.oneOf) {
+                        nestedCell.appendChild(renderOneOfPanel(prop));
+                    }
+
+                    nestedRow.appendChild(nestedCell);
+                    tbody.appendChild(nestedRow);
+
+                    const toggleBtn = row.querySelector('.expand-toggle');
+                    toggleBtn.dataset.propName = prop.name;
+                    toggleBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleNestedRow(row, nestedRow, toggleBtn);
+                    });
+                }
+            });
+
+            return tbody;
+        }
+
+        /**
+         * Render a subsection header plus property table for the given properties.
+         */
+        function renderPropertiesSection(title, properties) {
+            const section = document.createElement('div');
+            section.className = 'schema-properties-subsection';
+
+            const header = document.createElement('h3');
+            header.className = 'section-header properties-header';
+            header.textContent = title;
+            section.appendChild(header);
+
+            const table = document.createElement('table');
+            table.className = 'properties-table';
+            appendPropertyColgroup(table);
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            PROPERTY_COLUMNS.forEach(({ label, className }) => {
+                const th = document.createElement('th');
+                th.className = className;
+                th.textContent = label;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            table.appendChild(renderPropertyRows(properties));
+
+            const tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-scroll';
+            tableWrapper.appendChild(table);
+            section.appendChild(tableWrapper);
+
+            return section;
+        }
+
+        /**
+         * Look up a property definition for schema-root oneOf shared optional names.
+         * Shared optional props are filtered out of schema.properties but remain on branches.
+         */
+        function lookupSchemaOneOfProperty(schema, name) {
+            const fromProperties = schema.properties.find(p => p.name === name);
+            if (fromProperties) {
+                return fromProperties;
+            }
+            for (const branch of schema.schemaOneOf.branches) {
+                if (!branch.properties) {
+                    continue;
+                }
+                const prop = branch.properties.find(p => p.name === name);
+                if (prop) {
+                    return prop;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Render schema-root oneOf layout: common props, variant cards, shared optional.
+         */
+        function renderSchemaOneOfLayout(schema) {
+            const wrapper = document.createElement('div');
+            const { schemaOneOf } = schema;
+
+            if (schema.properties.length > 0) {
+                wrapper.appendChild(renderPropertiesSection('Common properties', schema.properties));
+            }
+
+            const variantsHeader = document.createElement('h3');
+            variantsHeader.className = 'section-header schema-variants-section';
+            variantsHeader.textContent = 'Variants';
+            wrapper.appendChild(variantsHeader);
+
+            schemaOneOf.branches.forEach(branch => {
+                wrapper.appendChild(renderOneOfVariantCard(branch));
+            });
+
+            const shared = schemaOneOf.sharedOptionalPropertyNames || [];
+            if (shared.length > 0) {
+                const sharedProps = shared
+                    .map(name => lookupSchemaOneOfProperty(schema, name))
+                    .filter(Boolean);
+                if (sharedProps.length > 0) {
+                    wrapper.appendChild(renderPropertiesSection('Shared optional', sharedProps));
+                }
+            }
+
+            return wrapper;
+        }
+
+        /**
+         * Render the Properties tab with property table.
+         */
+        function renderPropertiesTab() {
+            const container = document.createElement('div');
+
+            if (!state.currentSchema || !state.currentSchema.properties) {
+                container.textContent = 'No properties found.';
+                return container;
+            }
+
+            if (state.currentSchema.schemaOneOf) {
+                container.appendChild(renderSchemaOneOfLayout(state.currentSchema));
+                return container;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'properties-table';
+            appendPropertyColgroup(table);
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            PROPERTY_COLUMNS.forEach(({ label, className }) => {
+                const th = document.createElement('th');
+                th.className = className;
+                th.textContent = label;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            table.appendChild(renderPropertyRows(state.currentSchema.properties));
+
+            const tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-scroll';
+            tableWrapper.appendChild(table);
+            container.appendChild(tableWrapper);
+            return container;
+        }
+
+        /**
+         * Get CSS class for type badge.
+         */
+        function getTypeClass(type) {
+            const typeMap = {
+                'string': 'string',
+                'number': 'number',
+                'integer': 'number',
+                'boolean': 'boolean',
+                'enum': 'enum',
+                'object': 'object',
+                'array': 'array',
+                'array[object]': 'array'
+            };
+
+            if (type.includes('ref')) {
+                return 'ref';
+            }
+
+            return typeMap[type] || 'string';
+        }
+
+        /**
+         * Render constraint badges for a property.
+         */
+        function renderConstraints(constraints) {
+            const container = document.createElement('div');
+
+            if (!constraints || Object.keys(constraints).length === 0) {
+                return container;
+            }
+
+            const constraintList = [];
+
+            // Handle specific constraints
+            if (constraints.pattern) {
+                constraintList.push(`pattern: ${constraints.pattern}`);
+            }
+            if (constraints.enum && Array.isArray(constraints.enum)) {
+                constraintList.push(`enum: ${constraints.enum.join(', ')}`);
+            }
+            if (constraints.minimum !== undefined) {
+                constraintList.push(`min: ${constraints.minimum}`);
+            }
+            if (constraints.maximum !== undefined) {
+                constraintList.push(`max: ${constraints.maximum}`);
+            }
+            if (constraints.minLength) {
+                constraintList.push(`minLen: ${constraints.minLength}`);
+            }
+            if (constraints.maxLength) {
+                constraintList.push(`maxLen: ${constraints.maxLength}`);
+            }
+            if (constraints.format) {
+                constraintList.push(`format: ${constraints.format}`);
+            }
+            if (constraints.default !== undefined) {
+                constraintList.push(`default: ${JSON.stringify(constraints.default)}`);
+            }
+
+            constraintList.forEach(constraint => {
+                const badge = document.createElement('span');
+                badge.className = 'dep-badge badge-array';
+                badge.textContent = constraint;
+                badge.style.display = 'block';
+                badge.style.marginBottom = '0.2rem';
+                container.appendChild(badge);
+            });
+
+            return container;
+        }
+
+        // ============================================================================
+        // DEPENDENCIES TAB RENDERING
+        // ============================================================================
+
+        /**
+         * Render the Dependencies tab with tree view and stats.
+         */
+        function renderDependenciesTab() {
+            const container = document.createElement('div');
+
+            if (!state.currentSchema) {
+                container.textContent = 'No schema selected.';
+                return container;
+            }
+
+            const dependencies = state.currentSchema.dependencies || [];
+            const referencedBy = state.currentSchema.referencedBy || [];
+
+            // Statistics
+            const stats = document.createElement('div');
+            stats.className = 'dependency-stats';
+
+            const outgoingStat = document.createElement('div');
+            outgoingStat.className = 'stat';
+            outgoingStat.innerHTML = `
+                <div class="stat-value">${dependencies.length}</div>
+                <div class="stat-label">Dependencies</div>
+            `;
+
+            const incomingStat = document.createElement('div');
+            incomingStat.className = 'stat';
+            incomingStat.innerHTML = `
+                <div class="stat-value">${referencedBy.length}</div>
+                <div class="stat-label">Referenced By</div>
+            `;
+
+            stats.appendChild(outgoingStat);
+            stats.appendChild(incomingStat);
+
+            container.appendChild(stats);
+
+            // Outgoing dependencies tree
+            if (dependencies.length > 0) {
+                const depsSection = document.createElement('div');
+                const depsTitle = document.createElement('h3');
+                depsTitle.textContent = 'Dependencies (outgoing)';
+                depsTitle.style.marginTop = '1.5rem';
+                depsTitle.style.marginBottom = '1rem';
+                depsSection.appendChild(depsTitle);
+
+                const tree = document.createElement('div');
+                tree.className = 'dependency-tree';
+
+                dependencies.forEach(dep => {
+                    const item = document.createElement('div');
+                    item.className = 'tree-item';
+
+                    const branch = document.createElement('span');
+                    branch.className = 'tree-branch';
+                    branch.textContent = '→';
+
+                    const path = document.createElement('span');
+                    path.className = 'tree-path';
+                    path.textContent = dep.propertyPath;
+
+                    const target = document.createElement('div');
+                    target.className = 'tree-target';
+                    const targetLink = document.createElement('a');
+                    targetLink.className = 'schema-link';
+                    targetLink.href = '#';
+                    targetLink.textContent = dep.targetSchema;
+                    targetLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Remove leading slash from targetSchema to match schema keys
+                        const schemaPath = dep.targetSchema.startsWith('/') ? dep.targetSchema.substring(1) : dep.targetSchema;
+                        selectSchema(schemaPath);
+                    });
+                    target.appendChild(targetLink);
+
+                    // Add badges
+                    const badges = document.createElement('div');
+                    badges.style.marginTop = '0.3rem';
+
+                    if (dep.isArray) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-array';
+                        badge.textContent = 'array';
+                        badges.appendChild(badge);
+                    }
+
+                    if (dep.isNested) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-nested';
+                        badge.textContent = 'nested';
+                        badges.appendChild(badge);
+                    }
+
+                    // Check for self-reference
+                    if (dep.targetSchema === state.currentSchema.path) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-self-ref';
+                        badge.textContent = 'self-ref';
+                        badges.appendChild(badge);
+                    }
+
+                    target.appendChild(badges);
+
+                    item.appendChild(branch);
+                    item.appendChild(path);
+                    item.appendChild(target);
+
+                    tree.appendChild(item);
+                });
+
+                depsSection.appendChild(tree);
+                container.appendChild(depsSection);
+            }
+
+            // Reverse dependencies
+            if (referencedBy.length > 0) {
+                const reverseSection = document.createElement('div');
+                reverseSection.className = 'reverse-deps';
+
+                const reverseTitle = document.createElement('h3');
+                reverseTitle.textContent = 'Referenced By (incoming)';
+                reverseSection.appendChild(reverseTitle);
+
+                referencedBy.forEach(ref => {
+                    const item = document.createElement('div');
+                    item.className = 'reverse-dep-item';
+
+                    const link = document.createElement('a');
+                    link.className = 'schema-link';
+                    link.href = '#';
+                    link.textContent = ref.schema;
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Remove leading slash from schema to match schema keys
+                        const schemaPath = ref.schema.startsWith('/') ? ref.schema.substring(1) : ref.schema;
+                        selectSchema(schemaPath);
+                    });
+
+                    const at = document.createElement('span');
+                    at.style.color = 'var(--text-muted)';
+                    at.textContent = ` at ${ref.propertyPath}`;
+
+                    item.appendChild(link);
+                    item.appendChild(at);
+                    reverseSection.appendChild(item);
+                });
+
+                container.appendChild(reverseSection);
+            }
+
+            return container;
+        }
+
+        // ============================================================================
+        // SEARCH FUNCTIONALITY
+        // ============================================================================
+
+        /**
+         * Perform schema search with filtering.
+         */
+        function performSearch() {
+            if (!state.data || !state.data.schemas) {
+                return;
+            }
+
+            if (!state.searchQuery) {
+                // Show all schemas
+                showAllSchemas();
+                return;
+            }
+
+            const query = state.searchQuery.toLowerCase();
+            state.filteredSchemas = [];
+
+            // Search through all schemas
+            for (const [schemaPath, schemaData] of Object.entries(state.data.schemas)) {
+                if (schemaPath.toLowerCase().includes(query)) {
+                    state.filteredSchemas.push(schemaPath);
+                    continue;
+                }
+
+                // Search in description
+                if (schemaData.description && schemaData.description.toLowerCase().includes(query)) {
+                    state.filteredSchemas.push(schemaPath);
+                    continue;
+                }
+
+                // Search in properties (including nested)
+                if (schemaData.properties) {
+                    if (propertyTreeMatchesQuery(schemaData.properties, query)) {
+                        state.filteredSchemas.push(schemaPath);
+                    }
+                }
+            }
+
+            // Update sidebar visibility
+            updateSidebarVisibility();
+        }
+
+        /**
+         * Search property names/descriptions recursively.
+         */
+        function propertyTreeMatchesQuery(properties, query) {
+            for (const prop of properties) {
+                if (prop.name.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.description && prop.description.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.propertyPath && prop.propertyPath.toLowerCase().includes(query)) {
+                    return true;
+                }
+                if (prop.nestedProperties && propertyTreeMatchesQuery(prop.nestedProperties, query)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Show all schemas in sidebar.
+         */
+        function showAllSchemas() {
+            document.querySelectorAll('.schema-item').forEach(item => {
+                item.classList.remove('hidden');
+            });
+        }
+
+        /**
+         * Update sidebar visibility based on filtered schemas.
+         */
+        function updateSidebarVisibility() {
+            const allSchemaItems = document.querySelectorAll('.schema-item');
+
+            allSchemaItems.forEach(item => {
+                const schemaText = item.textContent;
+                let found = false;
+
+                // Check if this schema is in filtered list
+                for (const schemaPath of state.filteredSchemas) {
+                    const fileName = schemaPath.includes('/') ? schemaPath.split('/').pop() : schemaPath;
+                    if (fileName === schemaText) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Expand categories that have visible items
+            document.querySelectorAll('.category').forEach(category => {
+                const visibleItems = category.querySelectorAll('.schema-item:not(.hidden)');
+                const schemasDiv = category.querySelector('.category-schemas');
+                const toggle = category.querySelector('.category-toggle');
+
+                if (visibleItems.length > 0) {
+                    schemasDiv.classList.add('expanded');
+                    toggle.classList.add('expanded');
+                }
+            });
+        }
+
+        // ============================================================================
+        // UTILITY FUNCTIONS
+        // ============================================================================
+
+        /**
+         * Escape HTML special characters.
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================================================
+        // APP STARTUP
+        // ============================================================================
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -35,5 +35,6 @@ RUN uv lock --locked && \
 
 COPY --from=prod /schemas /schemas
 
+COPY scripts scripts
 COPY test .yamllint Makefile ./
 RUN make _test

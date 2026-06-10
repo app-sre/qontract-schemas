@@ -65,3 +65,10 @@ clean:
 	@find . -name "*.pyc" -delete
 
 bundle-and-validate-schema: bundle validate ## Same as successively running 'bundle' and 'validate'
+
+generate-docs: ## Generate schema documentation site
+	@echo "Generating schema documentation..."
+	@mkdir -p scripts/templates
+	uv run python scripts/generate_schema_docs.py --schemas-dir schemas --output-dir docs
+	@echo "Documentation generated in docs/"
+	@echo "To view locally: cd docs && python -m http.server 8000"

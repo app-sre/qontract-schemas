@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qontract Schema Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <noscript>
+        <div class="noscript-message">
+            This tool requires JavaScript. Please enable it or view schemas directly on
+            <a href="https://github.com/app-sre/qontract-schemas">GitHub</a>.
+        </div>
+    </noscript>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="header-title">Qontract Schema Viewer</h1>
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search schemas, properties...">
+                <button id="searchClear" class="search-clear" style="display: none;">×</button>
+            </div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-label">Light</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Schemas</span>
+            </div>
+            <div class="sidebar-content" id="sidebarContent">
+                <!-- Categories will be rendered here -->
+            </div>
+        </aside>
+
+        <!-- Main panel -->
+        <main class="main-panel" id="mainPanel">
+            <div class="welcome-message">
+                <h2>Welcome to Qontract Schema Viewer</h2>
+                <p>Select a schema from the sidebar to view its details.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Error display -->
+    <div id="errorDisplay" class="error-display" style="display: none;">
+        <h2>Error Loading Schema Data</h2>
+        <p id="errorMessage"></p>
+        <p>Please regenerate the documentation using <code>make generate-docs</code></p>
+    </div>
+
+    <script>
+        // ============================================================================
+        // STATE MANAGEMENT
+        // ============================================================================
+
+        const state = {
+            data: null,
+            currentSchema: null,
+            searchQuery: '',
+            filteredSchemas: [],
+            debounceTimer: null
+        };
+
+        // ============================================================================
+        // DATA LOADING AND INITIALIZATION
+        // ============================================================================
+
+        /**
+         * Initialize theme based on localStorage or system preference.
+         */
+        function initTheme() {
+            // Check localStorage first
+            let theme = localStorage.getItem('theme');
+
+            // Fall back to system preference
+            if (!theme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+            }
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', theme);
+
+            // Update button (if it exists - may not on first load)
+            const iconEl = document.querySelector('.theme-icon');
+            const labelEl = document.querySelector('.theme-label');
+            if (iconEl && labelEl) {
+                const icon = theme === 'dark' ? '🌙' : '☀️';
+                const label = theme === 'dark' ? 'Dark' : 'Light';
+                iconEl.textContent = icon;
+                labelEl.textContent = label;
+            }
+        }
+
+        /**
+         * Toggle between light and dark themes.
+         */
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+
+            // Update button
+            const icon = newTheme === 'dark' ? '🌙' : '☀️';
+            const label = newTheme === 'dark' ? 'Dark' : 'Light';
+            document.querySelector('.theme-icon').textContent = icon;
+            document.querySelector('.theme-label').textContent = label;
+
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        /**
+         * Initialize the application by loading schema data and setting up event listeners.
+         */
+        async function init() {
+            // Initialize theme first
+            initTheme();
+
+            try {
+                // Load schemas.json
+                const response = await fetch('schemas.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load schemas.json: ${response.statusText}`);
+                }
+                state.data = await response.json();
+
+                // Render sidebar with categories and schemas
+                renderSidebar();
+
+                // Setup event listeners
+                setupEventListeners();
+
+                // Hide error display
+                document.getElementById('errorDisplay').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading schema data:', error);
+                showError(error.message);
+            }
+        }
+
+        /**
+         * Display error message to user.
+         */
+        function showError(message) {
+            const errorDisplay = document.getElementById('errorDisplay');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorDisplay.style.display = 'block';
+        }
+
+        // ============================================================================
+        // EVENT LISTENERS
+        // ============================================================================
+
+        function setupEventListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const searchClear = document.getElementById('searchClear');
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+            // Search input with debouncing
+            searchInput.addEventListener('input', (e) => {
+                state.searchQuery = e.target.value.trim();
+
+                // Show/hide clear button
+                if (state.searchQuery) {
+                    searchClear.style.display = 'inline-block';
+                } else {
+                    searchClear.style.display = 'none';
+                }
+
+                // Debounce search
+                clearTimeout(state.debounceTimer);
+                state.debounceTimer = setTimeout(() => {
+                    performSearch();
+                }, 300);
+            });
+
+            // Clear button
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                state.searchQuery = '';
+                searchClear.style.display = 'none';
+                performSearch();
+            });
+        }
+
+        // ============================================================================
+        // SIDEBAR RENDERING
+        // ============================================================================
+
+        /**
+         * Render the sidebar with categories and schemas.
+         */
+        function renderSidebar() {
+            const sidebarContent = document.getElementById('sidebarContent');
+            sidebarContent.innerHTML = '';
+
+            if (!state.data || !state.data.categories) {
+                return;
+            }
+
+            state.data.categories.forEach(category => {
+                const categoryEl = createCategoryElement(category);
+                sidebarContent.appendChild(categoryEl);
+            });
+        }
+
+        /**
+         * Create a category element with toggle and schema list.
+         */
+        function createCategoryElement(category) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+
+            // Category header
+            const header = document.createElement('div');
+            header.className = 'category-header';
+
+            const toggle = document.createElement('span');
+            toggle.className = 'category-toggle';
+            toggle.textContent = '▶';
+
+            const name = document.createElement('span');
+            name.className = 'category-name';
+            name.textContent = category.name === '.' ? 'Root' : category.name;
+
+            const count = document.createElement('span');
+            count.className = 'category-count';
+            count.textContent = category.schemas.length;
+
+            header.appendChild(toggle);
+            header.appendChild(name);
+            header.appendChild(count);
+
+            // Schema list container
+            const schemasDiv = document.createElement('div');
+            schemasDiv.className = 'category-schemas';
+
+            // Create schema items
+            category.schemas.forEach(schemaFile => {
+                const schemaPath = category.name === '.' ? schemaFile : `${category.name}/${schemaFile}`;
+                const schemaItem = document.createElement('div');
+                schemaItem.className = 'schema-item';
+                schemaItem.setAttribute('data-schema-path', schemaPath);
+                schemaItem.textContent = schemaFile;
+                schemaItem.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent category collapse
+                    selectSchema(schemaPath);
+                });
+                schemasDiv.appendChild(schemaItem);
+            });
+
+            // Toggle functionality
+            header.addEventListener('click', () => {
+                toggle.classList.toggle('expanded');
+                schemasDiv.classList.toggle('expanded');
+            });
+
+            categoryDiv.appendChild(header);
+            categoryDiv.appendChild(schemasDiv);
+
+            return categoryDiv;
+        }
+
+        // ============================================================================
+        // SCHEMA SELECTION AND DETAILS RENDERING
+        // ============================================================================
+
+        /**
+         * Select a schema and display its details.
+         */
+        function selectSchema(schemaPath) {
+            if (!state.data || !state.data.schemas) {
+                return;
+            }
+
+            state.currentSchema = state.data.schemas[schemaPath];
+            if (!state.currentSchema) {
+                return;
+            }
+
+            // Update active schema in sidebar
+            updateActiveSchemaSidebar(schemaPath);
+
+            // Render schema details
+            renderSchemaDetails(schemaPath);
+        }
+
+        /**
+         * Update the active schema highlighting in the sidebar.
+         */
+        function updateActiveSchemaSidebar(schemaPath) {
+            // Remove active class from all items
+            document.querySelectorAll('.schema-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to selected item
+            const fileName = schemaPath.includes('/') ? schemaPath.split('/').pop() : schemaPath;
+            document.querySelectorAll('.schema-item').forEach(item => {
+                if (item.textContent === fileName) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        /**
+         * Render the schema details panel with tabs.
+         */
+        function renderSchemaDetails(schemaPath) {
+            const mainPanel = document.getElementById('mainPanel');
+
+            // Create schema header
+            const header = document.createElement('div');
+            header.className = 'schema-header';
+
+            const title = document.createElement('h2');
+            title.textContent = state.currentSchema.path;
+
+            const pathBadge = document.createElement('span');
+            pathBadge.className = 'schema-path-badge';
+            pathBadge.textContent = state.currentSchema.path;
+
+            const meta = document.createElement('div');
+            meta.className = 'schema-meta';
+            meta.innerHTML = `<strong>Version:</strong> ${escapeHtml(state.currentSchema.version)}`;
+
+            if (state.currentSchema.description) {
+                const desc = document.createElement('p');
+                desc.style.marginTop = '0.5rem';
+                desc.textContent = state.currentSchema.description;
+                meta.appendChild(desc);
+            }
+
+            header.appendChild(title);
+            header.appendChild(pathBadge);
+            header.appendChild(meta);
+
+            // NEW CODE - side-by-side layout
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'schema-content';
+
+            // Properties section
+            const propertiesSection = document.createElement('section');
+            propertiesSection.className = 'properties-section';
+            const propertiesHeader = document.createElement('h3');
+            propertiesHeader.className = 'section-header properties-header';
+            propertiesHeader.textContent = 'Properties';
+            propertiesSection.appendChild(propertiesHeader);
+            propertiesSection.appendChild(renderPropertiesTab());
+
+            // Dependencies section
+            const dependenciesSection = document.createElement('section');
+            dependenciesSection.className = 'dependencies-section';
+            const dependenciesHeader = document.createElement('h3');
+            dependenciesHeader.className = 'section-header dependencies-header';
+            dependenciesHeader.textContent = 'Dependencies';
+            dependenciesSection.appendChild(dependenciesHeader);
+            dependenciesSection.appendChild(renderDependenciesTab());
+
+            contentContainer.appendChild(propertiesSection);
+            contentContainer.appendChild(dependenciesSection);
+
+            // Build main panel
+            mainPanel.innerHTML = '';
+            mainPanel.appendChild(header);
+            mainPanel.appendChild(contentContainer);
+
+            // Update sidebar focus
+            updateSidebarFocus(schemaPath);
+        }
+
+        /**
+         * Update sidebar to highlight and scroll to the currently loaded schema.
+         * Expands parent category if collapsed.
+         *
+         * @param {string} schemaPath - Path of the schema to focus (e.g., "app-sre/app-1.yml")
+         */
+        function updateSidebarFocus(schemaPath) {
+            // Remove old active state and highlight
+            document.querySelectorAll('.schema-item.active').forEach(el => {
+                el.classList.remove('active', 'sidebar-highlight');
+            });
+
+            // Find target schema item
+            const schemaItem = document.querySelector(`[data-schema-path="${schemaPath}"]`);
+            if (!schemaItem) return;
+
+            // Expand parent category if collapsed
+            const category = schemaItem.closest('.category');
+            if (category) {
+                const schemasDiv = category.querySelector('.category-schemas');
+                const toggleIcon = category.querySelector('.category-toggle');
+
+                // Only expand if currently collapsed
+                if (!schemasDiv.classList.contains('expanded')) {
+                    toggleIcon.classList.add('expanded');
+                    schemasDiv.classList.add('expanded');
+                }
+            }
+
+            // Apply active state and highlight animation
+            schemaItem.classList.add('active', 'sidebar-highlight');
+
+            // Scroll into view (centered in sidebar)
+            schemaItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            // Remove highlight animation after 1 second
+            setTimeout(() => {
+                schemaItem.classList.remove('sidebar-highlight');
+            }, 1000);
+        }
+
+        // ============================================================================
+        // PROPERTIES TAB RENDERING
+        // ============================================================================
+
+        /**
+         * Recursively render nested properties for a property with sub-properties.
+         * Returns tbody element with all nested properties (and their nested properties if any).
+         */
+        function renderNestedProperties(properties, depth = 1) {
+            const tbody = document.createElement('tbody');
+
+            properties.forEach(prop => {
+                const row = document.createElement('tr');
+
+                // Name cell with indentation
+                const nameCell = document.createElement('td');
+                nameCell.style.fontFamily = 'monospace';
+                nameCell.style.fontWeight = '600';
+                nameCell.style.paddingLeft = `${depth * 1.5}rem`;
+
+                // Add expand icon if this nested property also has nested properties
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    const expandIcon = document.createElement('span');
+                    expandIcon.className = 'expand-icon';
+                    expandIcon.textContent = '▶';
+                    expandIcon.style.marginRight = '0.5rem';
+                    expandIcon.style.fontSize = '0.8em';
+                    expandIcon.style.color = 'var(--primary)';
+                    nameCell.appendChild(expandIcon);
+                }
+
+                nameCell.appendChild(document.createTextNode(prop.name));
+                row.appendChild(nameCell);
+
+                // Type cell
+                const typeCell = document.createElement('td');
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+                typeBadge.textContent = prop.type;
+                typeCell.appendChild(typeBadge);
+                row.appendChild(typeCell);
+
+                // Required cell
+                const reqCell = document.createElement('td');
+                reqCell.textContent = prop.required ? '✓' : '';
+                reqCell.style.textAlign = 'center';
+                row.appendChild(reqCell);
+
+                // Description cell
+                const descCell = document.createElement('td');
+                const descText = document.createTextNode(prop.description || '(no description)');
+                descCell.appendChild(descText);
+                descCell.style.color = 'var(--text-muted)';
+
+                // Add ref link if exists
+                if (prop.schemaRef) {
+                    descCell.appendChild(document.createElement('br'));
+                    const refLabel = document.createTextNode('ref: ');
+                    descCell.appendChild(refLabel);
+
+                    const refLink = document.createElement('a');
+                    refLink.href = '#';
+                    refLink.className = 'schema-link';
+                    refLink.textContent = prop.schemaRef;
+                    refLink.onclick = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
+                        selectSchema(schemaPath);
+                    };
+                    descCell.appendChild(refLink);
+                }
+
+                row.appendChild(descCell);
+
+                // Constraints cell
+                const constrCell = document.createElement('td');
+                constrCell.appendChild(renderConstraints(prop.constraints));
+                row.appendChild(constrCell);
+
+                // If this property has nested properties, create expandable sub-rows
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    row.style.cursor = 'pointer';
+                    row.title = 'Click to expand/collapse nested properties';
+
+                    // Create nested rows container
+                    const nestedRows = renderNestedProperties(prop.nestedProperties, depth + 1);
+
+                    // Hide nested rows by default
+                    Array.from(nestedRows.children).forEach(nestedRow => {
+                        nestedRow.style.display = 'none';
+                        nestedRow.classList.add(`nested-level-${depth}`);
+                    });
+
+                    // Toggle handler
+                    row.addEventListener('click', (e) => {
+                        if (e.target.tagName === 'A') return;
+
+                        const expandIcon = row.querySelector('.expand-icon');
+                        const isExpanded = expandIcon && expandIcon.textContent === '▼';
+
+                        Array.from(nestedRows.children).forEach(nestedRow => {
+                            nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                        });
+
+                        if (expandIcon) {
+                            expandIcon.textContent = isExpanded ? '▶' : '▼';
+                        }
+                    });
+
+                    tbody.appendChild(row);
+                    // Append all nested rows
+                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
+                } else {
+                    tbody.appendChild(row);
+                }
+            });
+
+            return tbody;
+        }
+
+        /**
+         * Render the Properties tab with property table.
+         */
+        function renderPropertiesTab() {
+            const container = document.createElement('div');
+
+            if (!state.currentSchema || !state.currentSchema.properties) {
+                container.textContent = 'No properties found.';
+                return container;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'properties-table';
+
+            // Table header
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+
+            const headers = ['Name', 'Type', 'Required', 'Description', 'Constraints'];
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Table body
+            const tbody = document.createElement('tbody');
+
+            state.currentSchema.properties.forEach(prop => {
+                const row = document.createElement('tr');
+
+                // Name cell
+                const nameCell = document.createElement('td');
+                nameCell.className = 'prop-name';
+                nameCell.textContent = prop.name;
+                row.appendChild(nameCell);
+
+                // Type cell
+                const typeCell = document.createElement('td');
+
+                // Always show type badge first
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `type-badge type-${getTypeClass(prop.type)}`;
+                typeBadge.textContent = prop.type;
+                typeCell.appendChild(typeBadge);
+
+                row.appendChild(typeCell);
+
+                // Required cell
+                const requiredCell = document.createElement('td');
+                requiredCell.className = 'prop-required';
+                requiredCell.textContent = prop.required ? '✓' : '';
+                row.appendChild(requiredCell);
+
+                // Description cell
+                const descCell = document.createElement('td');
+                descCell.className = prop.description ? 'prop-description' : 'prop-description empty';
+
+                // Add description text
+                const descText = document.createTextNode(prop.description || '(no description)');
+                descCell.appendChild(descText);
+
+                // If there's a schema reference, add it as a clickable link
+                if (prop.schemaRef) {
+                    descCell.appendChild(document.createElement('br'));
+                    const refLabel = document.createTextNode('ref: ');
+                    descCell.appendChild(refLabel);
+
+                    const refLink = document.createElement('a');
+                    refLink.href = '#';
+                    refLink.className = 'schema-link';
+                    refLink.textContent = prop.schemaRef;
+                    refLink.onclick = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation(); // Prevent row click if expandable
+                        // Remove leading slash from schemaRef to match schema keys
+                        const schemaPath = prop.schemaRef.startsWith('/') ? prop.schemaRef.substring(1) : prop.schemaRef;
+                        selectSchema(schemaPath);
+                    };
+                    descCell.appendChild(refLink);
+                }
+
+                row.appendChild(descCell);
+
+                // Constraints cell
+                const constraintsCell = document.createElement('td');
+                constraintsCell.appendChild(renderConstraints(prop.constraints));
+                row.appendChild(constraintsCell);
+
+                // Add expand indicator for objects with nested properties
+                if (prop.nestedProperties && prop.nestedProperties.length > 0) {
+                    row.style.cursor = 'pointer';
+                    row.title = 'Click to expand/collapse nested properties';
+
+                    // Add expand icon to name cell
+                    const expandIcon = document.createElement('span');
+                    expandIcon.className = 'expand-icon';
+                    expandIcon.textContent = '▶';
+                    expandIcon.style.marginRight = '0.5rem';
+                    expandIcon.style.fontSize = '0.8em';
+                    expandIcon.style.color = 'var(--primary)';
+                    nameCell.insertBefore(expandIcon, nameCell.firstChild);
+
+                    // Render nested properties recursively
+                    const nestedRows = renderNestedProperties(prop.nestedProperties);
+
+                    // Hide nested rows by default
+                    Array.from(nestedRows.children).forEach(nestedRow => {
+                        nestedRow.style.display = 'none';
+                        nestedRow.classList.add('nested-level-1');
+                    });
+
+                    // Toggle handler
+                    row.addEventListener('click', (e) => {
+                        if (e.target.tagName === 'A') return;
+
+                        const isExpanded = expandIcon.textContent === '▼';
+
+                        // Toggle only the immediate children (level-1 nested rows)
+                        Array.from(nestedRows.children).forEach(nestedRow => {
+                            if (nestedRow.classList.contains('nested-level-1')) {
+                                nestedRow.style.display = isExpanded ? 'none' : 'table-row';
+                            }
+                        });
+
+                        expandIcon.textContent = isExpanded ? '▶' : '▼';
+                    });
+
+                    tbody.appendChild(row);
+                    // Append all nested rows
+                    Array.from(nestedRows.children).forEach(nr => tbody.appendChild(nr));
+                } else {
+                    tbody.appendChild(row);
+                }
+            });
+
+            table.appendChild(tbody);
+            container.appendChild(table);
+
+            return container;
+        }
+
+        /**
+         * Get CSS class for type badge.
+         */
+        function getTypeClass(type) {
+            const typeMap = {
+                'string': 'string',
+                'number': 'number',
+                'integer': 'number',
+                'boolean': 'boolean',
+                'enum': 'enum',
+                'object': 'object',
+                'array': 'array'
+            };
+
+            if (type.includes('ref')) {
+                return 'ref';
+            }
+
+            return typeMap[type] || 'string';
+        }
+
+        /**
+         * Render constraint badges for a property.
+         */
+        function renderConstraints(constraints) {
+            const container = document.createElement('div');
+
+            if (!constraints || Object.keys(constraints).length === 0) {
+                return container;
+            }
+
+            const constraintList = [];
+
+            // Handle specific constraints
+            if (constraints.pattern) {
+                constraintList.push(`pattern: ${constraints.pattern}`);
+            }
+            if (constraints.enum && Array.isArray(constraints.enum)) {
+                constraintList.push(`enum: ${constraints.enum.join(', ')}`);
+            }
+            if (constraints.minimum !== undefined) {
+                constraintList.push(`min: ${constraints.minimum}`);
+            }
+            if (constraints.maximum !== undefined) {
+                constraintList.push(`max: ${constraints.maximum}`);
+            }
+            if (constraints.minLength) {
+                constraintList.push(`minLen: ${constraints.minLength}`);
+            }
+            if (constraints.maxLength) {
+                constraintList.push(`maxLen: ${constraints.maxLength}`);
+            }
+            if (constraints.format) {
+                constraintList.push(`format: ${constraints.format}`);
+            }
+            if (constraints.default !== undefined) {
+                constraintList.push(`default: ${JSON.stringify(constraints.default)}`);
+            }
+
+            constraintList.forEach(constraint => {
+                const badge = document.createElement('span');
+                badge.className = 'dep-badge badge-array';
+                badge.textContent = constraint;
+                badge.style.display = 'block';
+                badge.style.marginBottom = '0.2rem';
+                container.appendChild(badge);
+            });
+
+            return container;
+        }
+
+        // ============================================================================
+        // DEPENDENCIES TAB RENDERING
+        // ============================================================================
+
+        /**
+         * Render the Dependencies tab with tree view and stats.
+         */
+        function renderDependenciesTab() {
+            const container = document.createElement('div');
+
+            if (!state.currentSchema) {
+                container.textContent = 'No schema selected.';
+                return container;
+            }
+
+            const dependencies = state.currentSchema.dependencies || [];
+            const referencedBy = state.currentSchema.referencedBy || [];
+
+            // Statistics
+            const stats = document.createElement('div');
+            stats.className = 'dependency-stats';
+
+            const outgoingStat = document.createElement('div');
+            outgoingStat.className = 'stat';
+            outgoingStat.innerHTML = `
+                <div class="stat-value">${dependencies.length}</div>
+                <div class="stat-label">Dependencies</div>
+            `;
+
+            const incomingStat = document.createElement('div');
+            incomingStat.className = 'stat';
+            incomingStat.innerHTML = `
+                <div class="stat-value">${referencedBy.length}</div>
+                <div class="stat-label">Referenced By</div>
+            `;
+
+            stats.appendChild(outgoingStat);
+            stats.appendChild(incomingStat);
+
+            container.appendChild(stats);
+
+            // Outgoing dependencies tree
+            if (dependencies.length > 0) {
+                const depsSection = document.createElement('div');
+                const depsTitle = document.createElement('h3');
+                depsTitle.textContent = 'Dependencies (outgoing)';
+                depsTitle.style.marginTop = '1.5rem';
+                depsTitle.style.marginBottom = '1rem';
+                depsSection.appendChild(depsTitle);
+
+                const tree = document.createElement('div');
+                tree.className = 'dependency-tree';
+
+                dependencies.forEach(dep => {
+                    const item = document.createElement('div');
+                    item.className = 'tree-item';
+
+                    const branch = document.createElement('span');
+                    branch.className = 'tree-branch';
+                    branch.textContent = '→';
+
+                    const path = document.createElement('span');
+                    path.className = 'tree-path';
+                    path.textContent = dep.propertyPath;
+
+                    const target = document.createElement('div');
+                    target.className = 'tree-target';
+                    const targetLink = document.createElement('a');
+                    targetLink.className = 'schema-link';
+                    targetLink.href = '#';
+                    targetLink.textContent = dep.targetSchema;
+                    targetLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Remove leading slash from targetSchema to match schema keys
+                        const schemaPath = dep.targetSchema.startsWith('/') ? dep.targetSchema.substring(1) : dep.targetSchema;
+                        selectSchema(schemaPath);
+                    });
+                    target.appendChild(targetLink);
+
+                    // Add badges
+                    const badges = document.createElement('div');
+                    badges.style.marginTop = '0.3rem';
+
+                    if (dep.isArray) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-array';
+                        badge.textContent = 'array';
+                        badges.appendChild(badge);
+                    }
+
+                    if (dep.isNested) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-nested';
+                        badge.textContent = 'nested';
+                        badges.appendChild(badge);
+                    }
+
+                    // Check for self-reference
+                    if (dep.targetSchema === state.currentSchema.path) {
+                        const badge = document.createElement('span');
+                        badge.className = 'dep-badge badge-self-ref';
+                        badge.textContent = 'self-ref';
+                        badges.appendChild(badge);
+                    }
+
+                    target.appendChild(badges);
+
+                    item.appendChild(branch);
+                    item.appendChild(path);
+                    item.appendChild(target);
+
+                    tree.appendChild(item);
+                });
+
+                depsSection.appendChild(tree);
+                container.appendChild(depsSection);
+            }
+
+            // Reverse dependencies
+            if (referencedBy.length > 0) {
+                const reverseSection = document.createElement('div');
+                reverseSection.className = 'reverse-deps';
+
+                const reverseTitle = document.createElement('h3');
+                reverseTitle.textContent = 'Referenced By (incoming)';
+                reverseSection.appendChild(reverseTitle);
+
+                referencedBy.forEach(ref => {
+                    const item = document.createElement('div');
+                    item.className = 'reverse-dep-item';
+
+                    const link = document.createElement('a');
+                    link.className = 'schema-link';
+                    link.href = '#';
+                    link.textContent = ref.schema;
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Remove leading slash from schema to match schema keys
+                        const schemaPath = ref.schema.startsWith('/') ? ref.schema.substring(1) : ref.schema;
+                        selectSchema(schemaPath);
+                    });
+
+                    const at = document.createElement('span');
+                    at.style.color = 'var(--text-muted)';
+                    at.textContent = ` at ${ref.propertyPath}`;
+
+                    item.appendChild(link);
+                    item.appendChild(at);
+                    reverseSection.appendChild(item);
+                });
+
+                container.appendChild(reverseSection);
+            }
+
+            return container;
+        }
+
+        // ============================================================================
+        // SEARCH FUNCTIONALITY
+        // ============================================================================
+
+        /**
+         * Perform schema search with filtering.
+         */
+        function performSearch() {
+            if (!state.data || !state.data.schemas) {
+                return;
+            }
+
+            if (!state.searchQuery) {
+                // Show all schemas
+                showAllSchemas();
+                return;
+            }
+
+            const query = state.searchQuery.toLowerCase();
+            state.filteredSchemas = [];
+
+            // Search through all schemas
+            for (const [schemaPath, schemaData] of Object.entries(state.data.schemas)) {
+                if (schemaPath.toLowerCase().includes(query)) {
+                    state.filteredSchemas.push(schemaPath);
+                    continue;
+                }
+
+                // Search in description
+                if (schemaData.description && schemaData.description.toLowerCase().includes(query)) {
+                    state.filteredSchemas.push(schemaPath);
+                    continue;
+                }
+
+                // Search in properties
+                if (schemaData.properties) {
+                    for (const prop of schemaData.properties) {
+                        if (prop.name.toLowerCase().includes(query)) {
+                            state.filteredSchemas.push(schemaPath);
+                            break;
+                        }
+                        if (prop.description && prop.description.toLowerCase().includes(query)) {
+                            state.filteredSchemas.push(schemaPath);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Update sidebar visibility
+            updateSidebarVisibility();
+        }
+
+        /**
+         * Show all schemas in sidebar.
+         */
+        function showAllSchemas() {
+            document.querySelectorAll('.schema-item').forEach(item => {
+                item.classList.remove('hidden');
+            });
+        }
+
+        /**
+         * Update sidebar visibility based on filtered schemas.
+         */
+        function updateSidebarVisibility() {
+            const allSchemaItems = document.querySelectorAll('.schema-item');
+
+            allSchemaItems.forEach(item => {
+                const schemaText = item.textContent;
+                let found = false;
+
+                // Check if this schema is in filtered list
+                for (const schemaPath of state.filteredSchemas) {
+                    const fileName = schemaPath.includes('/') ? schemaPath.split('/').pop() : schemaPath;
+                    if (fileName === schemaText) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Expand categories that have visible items
+            document.querySelectorAll('.category').forEach(category => {
+                const visibleItems = category.querySelectorAll('.schema-item:not(.hidden)');
+                const schemasDiv = category.querySelector('.category-schemas');
+                const toggle = category.querySelector('.category-toggle');
+
+                if (visibleItems.length > 0) {
+                    schemasDiv.classList.add('expanded');
+                    toggle.classList.add('expanded');
+                }
+            });
+        }
+
+        // ============================================================================
+        // UTILITY FUNCTIONS
+        // ============================================================================
+
+        /**
+         * Escape HTML special characters.
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================================================
+        // APP STARTUP
+        // ============================================================================
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
