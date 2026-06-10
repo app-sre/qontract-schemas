@@ -3,8 +3,17 @@ import os
 from pathlib import Path
 import sys
 
-# Add scripts to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+
+def _scripts_dir() -> Path:
+    """Resolve scripts/ for repo checkout and Docker test image layouts."""
+    here = Path(__file__).resolve().parent
+    for candidate in (here / "scripts", here.parent / "scripts"):
+        if candidate.is_dir():
+            return candidate
+    raise RuntimeError("scripts directory not found")
+
+
+sys.path.insert(0, str(_scripts_dir()))
 
 from generate_schema_docs import scan_schemas_directory, parse_schema_file
 
