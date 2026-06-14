@@ -2,6 +2,10 @@
 "$schema": /metaschema-1.json
 version: "1.0"
 type: object
+title: "Schedule"
+description: |
+  Schema for defining a schedule used to automate Slack user group assignments.
+  Schedules specify date ranges and the users assigned for each period.
 
 additionalProperties: false
 properties:
@@ -9,14 +13,27 @@ properties:
     type: string
     enum:
     - /app-sre/schedule-1.yml
+
   labels:
     "$ref": "/common-1.json#/definitions/labels"
+
   name:
     type: string
+    description: |
+      The unique name of the schedule. Used to identify and reference this
+      schedule with Slack user group automation.
+
   description:
     type: string
+    description: |
+      A detailed description of the schedule, its intended use, and any
+      relevant context.
+
   schedule:
     type: array
+    description: |
+      A list of scheduled periods, each specifying a start and end date and
+      the users assigned for that period.
     items:
       type: object
       additionalProperties: false
@@ -24,11 +41,18 @@ properties:
         start:
           type: string
           format: date
+          description: |
+            The start date for this schedule period, in 'YYYY-MM-DD HH:MM' format (UTC).
         end:
           type: string
           format: date
+          description: |
+            The end date for this schedule period, in 'YYYY-MM-DD HH:MM' format (UTC).
         users:
           type: array
+          description: |
+            A list of users assigned to the group for this period. Each entry
+            references a user file in app-interface.
           items:
             "$ref": "/common-1.json#/definitions/crossref"
             "$schemaRef": "/access/user-1.yml"
@@ -36,6 +60,7 @@ properties:
       - start
       - end
       - users
+
 required:
 - $schema
 - labels
