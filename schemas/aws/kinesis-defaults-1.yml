@@ -50,6 +50,18 @@ properties:
   starting_position_timestamp:
     type: string
     format: date-time
+  shard_level_metrics:
+    type: array
+    items:
+      type: string
+      enum:
+      - IncomingBytes
+      - IncomingRecords
+      - IteratorAgeMilliseconds
+      - OutgoingBytes
+      - OutgoingRecords
+      - ReadProvisionedThroughputExceeded
+      - WriteProvisionedThroughputExceeded
 
 required:
 - "$schema"
