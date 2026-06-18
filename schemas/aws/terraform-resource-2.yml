@@ -272,6 +272,10 @@ properties:
       type: string
   endpoint_service_name:
     type: string
+  private_dns_name:
+    type: string
+  private_dns_enabled:
+    type: boolean
   insights_callback_urls:
     type: array
     items:
@@ -2095,6 +2099,9 @@ oneOf:
       description: Explicit IAM principal ARNs allowed to connect to the VPC Endpoint Service
       items:
         type: string
+    private_dns_name:
+      type: string
+      description: Private DNS name to associate with the VPC Endpoint Service for automatic DNS resolution in consumer VPCs. Requires domain ownership verification via TXT record.
     output_resource_name:
       "$ref": "/common-1.json#/definitions/longIdentifier"
     tags:
@@ -2123,6 +2130,9 @@ oneOf:
     endpoint_service_name:
       type: string
       description: Name of the VPC Endpoint Service to connect to (e.g. com.amazonaws.vpce.<region>.<service-id>)
+    private_dns_enabled:
+      type: boolean
+      description: Enable private DNS resolution for the VPC Endpoint. Requires the VPC Endpoint Service to have a verified private DNS name.
     vpc:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/aws/vpc-1.yml"
