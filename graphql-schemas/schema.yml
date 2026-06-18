@@ -2107,6 +2107,7 @@ confs:
   - { name: openshift_service_name, type: string, isRequired: true }
   - { name: allowed_consumer_clusters, type: Cluster_v1, isList: true }
   - { name: allowed_principal_arns, type: string, isList: true }
+  - { name: private_dns_name, type: string }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
   - { name: annotations, type: json }
@@ -2121,6 +2122,7 @@ confs:
   - { name: provider, type: string, isRequired: true, isContextUnique: true }
   - { name: identifier, type: string, isRequired: true, isContextUnique: true }
   - { name: endpoint_service_name, type: string, isRequired: true }
+  - { name: private_dns_enabled, type: boolean }
   - { name: vpc, type: AWSVPC_v1, isRequired: true }
   - { name: output_resource_name, type: string }
   - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
