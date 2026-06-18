@@ -90,3 +90,30 @@ datafiles:
 
 With this definition, `qontract-validator` will validate that the `$schema` attribute of every entry in the list is defined within the enum.
 
+## Schema Documentation
+
+This repository includes a web-based schema viewer for easy navigation and exploration.
+
+### View Online
+
+Visit the [Schema Documentation](https://app-sre.github.io/qontract-schemas/) (available after first deployment)
+
+### Generate Locally
+
+```bash
+make generate-docs
+cd docs && python -m http.server 8000
+```
+
+Then open http://localhost:8000
+
+### Features
+
+- Browse schemas by category
+- View property types, descriptions, and constraints
+- Visualize dependencies between schemas
+- Search across schema names and properties
+- Mobile-responsive interface
+
+See `scripts/README.md` for more details.
+

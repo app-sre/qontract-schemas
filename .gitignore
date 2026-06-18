@@ -4,3 +4,4 @@ data.json
 test/__pycache__/
 .DS_Store
 schemas/.DS_Store
+/docs/
