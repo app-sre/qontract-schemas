@@ -705,10 +705,16 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: managedTeams, type: string, isList: true, isRequired: false }
 
+- name: GitlabSharedWithGroup_v1
+  fields:
+  - { name: group, type: string, isRequired: true }
+  - { name: accessLevel, type: string, isRequired: true }
+
 - name: GitlabProjects_v1
   fields:
   - { name: group, type: string, isRequired: true }
   - { name: projects, type: string, isList: true, isRequired: true }
+  - { name: sharedWithGroups, type: GitlabSharedWithGroup_v1, isList: true }
 
 - name: GitlabInstance_v1
   datafile: /dependencies/gitlab-instance-1.yml
