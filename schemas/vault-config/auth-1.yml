@@ -36,12 +36,14 @@ properties:
     enum:
     - approle
     - github
+    - jwt
     - oidc
     - kubernetes
     description: |
       The type of Vault auth method to enable. Supported types include:
         - 'approle': Machine-to-machine authentication using AppRole IDs and secrets.
         - 'github': User authentication via GitHub organizations and teams.
+        - 'jwt': Machine or user authentication via JSON Web Token validation.
         - 'oidc': User authentication via OpenID Connect providers.
         - 'kubernetes': Service account authentication from Kubernetes clusters.
 
@@ -157,6 +159,36 @@ properties:
           - oidc_client_id
           - oidc_client_secret
           - oidc_client_secret_kv_version
+        - properties:
+            _type:
+              type: string
+              enum:
+              - jwt
+            default_role:
+              type: string
+              description: |
+                The default role to use for JWT authentication.
+            oidc_discovery_url:
+              type: string
+              description: |
+                The OIDC discovery URL used to validate JWT tokens. Mutually
+                exclusive with jwt_validation_pubkeys and jwks_url.
+            jwks_url:
+              type: string
+              description: |
+                The URL to retrieve JSON Web Key Sets for JWT validation.
+                Mutually exclusive with oidc_discovery_url and jwt_validation_pubkeys.
+            jwt_validation_pubkeys:
+              type: array
+              items:
+                type: string
+              description: |
+                A list of PEM-encoded public keys for JWT validation.
+                Mutually exclusive with oidc_discovery_url and jwks_url.
+            bound_issuer:
+              type: string
+              description: |
+                The value against which to match the iss claim in a JWT.
 
   policy_mappings:
     type: array
