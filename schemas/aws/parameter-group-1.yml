@@ -26,6 +26,7 @@ properties:
     - postgres15
     - postgres16
     - postgres17
+    - postgres18
     - redis5.0
     - redis6.x
     - valkey7
