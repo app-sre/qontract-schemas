@@ -1,0 +1,32 @@
+---
+"$schema": /metaschema-1.json
+version: '1.0'
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dynatrace/dynatrace-token-type-1.yml
+  name:
+    type: string
+  description:
+    type: string
+  scopes:
+    description: A list of Dynatrace API scopes
+    type: array
+    items:
+      type: enum
+      enum:
+      - activeGateTokenManagement.create
+      - entities.read
+      - settings.write
+      # ...
+
+required:
+- "$schema"
+- name
+- description
+- scopes
+
