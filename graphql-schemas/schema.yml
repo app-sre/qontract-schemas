@@ -3574,6 +3574,7 @@ confs:
   - { name: quay_username, type: string }
   - { name: pagerduty_username, type: string }
   - { name: aws_username, type: string }
+  - { name: gov_slack_username, type: string, isRequired: false }
   - { name: cloudflare_user, type: string }
   - { name: public_gpg_key, type: string }
   - { name: tag_on_merge_requests, type: boolean }
