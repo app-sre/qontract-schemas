@@ -61,6 +61,12 @@ properties:
       type: string
       description: |
         The name of the team.
+  delete:
+    type: boolean
+    description: |
+      When true, the robot account will be deleted from Quay.
+      Use this to explicitly remove a robot account managed by app-interface.
+      Robots absent from app-interface are never automatically deleted.
 required:
 - $schema
 - labels

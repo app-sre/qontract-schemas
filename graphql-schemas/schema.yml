@@ -3630,6 +3630,7 @@ confs:
   - { name: quay_org, type: QuayOrg_v1 }
   - { name: repositories, type: QuayRepository_v1, isList: true }
   - { name: teams, type: string, isList: true }
+  - { name: delete, type: boolean }
 
 - name: Bot_v1
   datafile: /access/bot-1.yml
