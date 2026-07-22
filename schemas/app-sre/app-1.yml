@@ -287,16 +287,10 @@ properties:
               not:
                 enum:
                 - 0
-            limit:
-              type: integer
-              not:
-                enum:
-                - 0
-              description: "Deprecated: use rebase_limit instead. Maximum MRs rebased per loop iteration."
             rebase_limit:
               type: integer
               minimum: 1
-              description: "Maximum MRs rebased per loop iteration. Takes precedence over limit."
+              description: "Maximum MRs rebased per loop iteration."
             merge_limit:
               type: integer
               minimum: 1

@@ -2905,7 +2905,6 @@ confs:
   - { name: enabled, type: boolean, isRequired: true }
   - { name: rebase, type: boolean, isRequired: true }
   - { name: days_interval, type: int }
-  - { name: limit, type: int }
   - { name: rebase_limit, type: int }
   - { name: merge_limit, type: int }
   - { name: consecutive_failure_limit, type: int }
