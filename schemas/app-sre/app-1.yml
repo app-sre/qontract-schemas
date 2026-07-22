@@ -292,14 +292,19 @@ properties:
               not:
                 enum:
                 - 0
+              description: "Deprecated: use rebase_limit instead. Maximum MRs rebased per loop iteration."
+            rebase_limit:
+              type: integer
+              minimum: 1
+              description: "Maximum MRs rebased per loop iteration. Takes precedence over limit."
             merge_limit:
               type: integer
               minimum: 1
-              description: "Maximum MRs merged per loop iteration. Defaults to limit if unset."
+              description: "Maximum MRs merged per loop iteration. Defaults to rebase_limit if unset."
             consecutive_failure_limit:
               type: integer
               minimum: 1
-              description: "Max consecutive merge failures before halting. Defaults to 3 if unset."
+              description: "Maximum consecutive pipeline failures before halting. Defaults to 3 if unset."
             enable_closing:
               type: boolean
             pipeline_timeout:
