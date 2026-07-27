@@ -38,6 +38,8 @@ properties:
     type: boolean
   tag_on_cluster_updates:
     type: boolean
+  gov_slack_username:
+    type: string
 required:
 - $schema
 - labels
