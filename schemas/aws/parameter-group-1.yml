@@ -17,6 +17,7 @@ properties:
     enum:
     - mysql5.7
     - mysql8.0
+    - mysql8.4
     - postgres9.6
     - postgres10
     - postgres11
