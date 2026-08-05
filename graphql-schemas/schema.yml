@@ -5016,6 +5016,8 @@ confs:
     strategy: fieldMap
     field: type
     fieldMap:
+      action-cancel: AutomatedActionActionCancel_v1
+      action-detail: AutomatedActionActionDetail_v1
       action-list: AutomatedActionActionList_v1
       create-token: AutomatedActionCreateToken_v1
       external-resource-flush-elasticache: AutomatedActionExternalResourceFlushElastiCache_v1
@@ -5040,6 +5042,48 @@ confs:
     synthetic:
       schema: /access/permission-1.yml
       subAttr: actions
+
+- name: AutomatedActionActionCancel_v1
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionActionCancelArgument_v1, isList: true }
+
+- name: AutomatedActionActionCancelArgument_v1
+  fields:
+  - { name: owner, type: string }
+
+- name: AutomatedActionActionDetail_v1
+  interface: AutomatedAction_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: path, type: string, isRequired: true }
+  - { name: type, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: maxOps, type: int, isRequired: true }
+  - { name: instances, type: AutomatedActionsInstance_v1, isList: true, isRequired: true }
+  - name: permissions
+    type: PermissionAutomatedActions_v1
+    isList: true
+    synthetic:
+      schema: /access/permission-1.yml
+      subAttr: actions
+  - { name: arguments, type: AutomatedActionActionDetailArgument_v1, isList: true }
+
+- name: AutomatedActionActionDetailArgument_v1
+  fields:
+  - { name: owner, type: string }
 
 - name: AutomatedActionActionList_v1
   interface: AutomatedAction_v1

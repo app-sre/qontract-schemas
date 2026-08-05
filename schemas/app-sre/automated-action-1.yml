@@ -51,6 +51,10 @@ properties:
         namespace:
           "$ref": "/common-1.json#/definitions/crossref"
           "$schemaRef": "/openshift/namespace-1.yml"
+        # action-cancel and action-detail specific arguments
+        owner:
+          type: string
+          description: The action owner (username) regex pattern to match.
         # action-list specific arguments
         action_user:
           type: string
@@ -85,6 +89,32 @@ required:
 
 # Keep in alphabetical order!!
 oneOf:
+- properties:
+    type:
+      enum:
+      - action-cancel
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          owner:
+            type: string
+            description: The action owner (username) regex pattern to match.
+
+- properties:
+    type:
+      enum:
+      - action-detail
+    arguments:
+      type: array
+      items:
+        type: object
+        properties:
+          owner:
+            type: string
+            description: The action owner (username) regex pattern to match.
+
 - properties:
     type:
       enum:
