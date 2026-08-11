@@ -73,6 +73,9 @@ oneOf:
     service:
       enum:
       - acs
+    instance:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/acs-instance-1.yml"
     clusters:
       type: array
       items:
