@@ -4,6 +4,40 @@ version: "1.0"
 type: object
 
 additionalProperties: false
+definitions:
+  automationTokenEntry:
+    type: object
+    description: "Automation token entry. Operator declares name/namespace/lifecycle, integration populates secret field."
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+        description: "Kubernetes secret name"
+      namespace:
+        type: string
+        description: "Namespace for this secret"
+      active:
+        type: boolean
+        description: "Mark this secret as active (used by consumers). When multiple entries exist, consumers use the one marked active."
+      delete:
+        type: boolean
+        description: "Mark this secret for deletion. Integration will delete both the K8s secret and Vault entry. Cannot be true when active is true."
+      secret:
+        "$ref": "/common-1.json#/definitions/vaultSecret"
+        description: "Auto-populated by integration after token creation. Read-only for operators."
+    required:
+    - name
+    - namespace
+    allOf:
+    - not:
+        properties:
+          active:
+            const: true
+          delete:
+            const: true
+        required:
+        - active
+        - delete
 properties:
   "$schema":
     type: string
@@ -551,11 +585,19 @@ properties:
     "$schemaRef": "/openshift/jump-host-1.yml"
   automationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  automationTokens:
+    type: array
+    items:
+      "$ref": "#/definitions/automationTokenEntry"
   clusterAdmin:
     type: boolean
     description: should enable cluster admin for this cluster
   clusterAdminAutomationToken:
     "$ref": "/common-1.json#/definitions/vaultSecret"
+  clusterAdminAutomationTokens:
+    type: array
+    items:
+      "$ref": "#/definitions/automationTokenEntry"
   description:
     type: string
   internal:
