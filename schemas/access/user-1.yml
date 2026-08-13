@@ -38,7 +38,7 @@ properties:
     type: boolean
   tag_on_cluster_updates:
     type: boolean
-  gov_slack_username:
+  gov_slack_email_local_part:
     type: string
 required:
 - $schema
