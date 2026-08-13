@@ -57,6 +57,13 @@ properties:
     type: string
   managedRepos:
     type: boolean
+  managedRobotAccounts:
+    type: boolean
+    description: |
+      When true, quay-robot-accounts may inventory and reconcile robot accounts
+      for this organization. Defaults to false (opt-in). Requires an
+      automationToken with Administer Organization (and Administer Repositories
+      if repository permissions are managed).
   serverUrl:
     type: string
     format: uri
