@@ -487,6 +487,7 @@ confs:
   - { name: mirror, type: QuayOrg_v1 }
   - { name: mirrorFilters, type: QuayOrgMirrorFilter_v1, isList: true }
   - { name: managedRepos, type: boolean, isRequired: true }
+  - { name: managedRobotAccounts, type: boolean }
   - { name: instance, type: QuayInstance_v1, isRequired: true }
   - { name: serverUrl, type: string }
   - { name: managedTeams, type: string, isList: true, isRequired: true }
