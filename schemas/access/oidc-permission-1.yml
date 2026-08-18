@@ -95,9 +95,11 @@ oneOf:
   oneOf:
   - required:
     - permission_set
+    - instance
     - clusters
   - required:
     - permission_set
+    - instance
     - namespaces
 required:
 - $schema
