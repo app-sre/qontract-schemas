@@ -760,7 +760,7 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
-  - { name: instance, type: AcsInstance_v1 }
+  - { name: instance, type: AcsInstance_v1, isRequired: true }
   - { name: description, type: string }
   - { name: integrations, type: AcsPolicyIntegrations_v1 }
   - { name: severity, type: string, isRequired: true }
@@ -3410,7 +3410,7 @@ confs:
   - { name: name, type: string, isRequired: true, isUnique: true }
   - { name: service, type: string, isRequired: true }
   - { name: description, type: string, isRequired: true }
-  - { name: instance, type: AcsInstance_v1 }
+  - { name: instance, type: AcsInstance_v1, isRequired: true }
   - { name: permission_set, type: string, isRequired: true }
   - { name: clusters, type: Cluster_v1, isList: true }
   - { name: namespaces, type: Namespace_v1, isList: true }

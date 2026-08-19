@@ -145,6 +145,7 @@ properties:
 required:
 - "$schema"
 - name
+- instance
 - severity
 - categories
 - scope
