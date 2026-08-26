@@ -21,16 +21,6 @@ properties:
   labels:
     "$ref": "/common-1.json#/definitions/labels"
 
-  env:
-    type: string
-    description: |
-      Optional environment identifier (e.g. "prod" or "stage") injected as the
-      `env` label on every alert rule generated for this document by the sloth
-      integration. Alertmanager routes SLO alerts to per-environment receivers
-      using this label. Stage and prod are typically modelled as separate SLO
-      documents, each with its own `env` value. When omitted, generated alerts
-      carry no `env` label and cannot be routed by environment.
-
   name:
     "$ref": "/common-1.json#/definitions/identifier"
     description: |
