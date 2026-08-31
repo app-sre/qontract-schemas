@@ -80,6 +80,9 @@ properties:
               type: integer
             port:
               type: integer
+            prefixStartSlaveCmd:
+              type: string
+              description: Prefix to the launch command.
             retryWaitTime:
               type: integer
             sshHostKeyVerificationStrategy:
