@@ -3026,12 +3026,6 @@ confs:
   - { name: codeComponents, type: AppCodeComponents_v1, isList: true }
   - { name: appCode, type: string, isRequired: true }
   - { name: costCenter, type: string }
-  - name: statusPageComponents
-    type: StatusPageComponent_v1
-    isList: true
-    synthetic:
-      schema: /dependencies/status-page-component-1.yml
-      subAttr: app
   - name: namespaces
     type: Namespace_v1
     isList: true
@@ -4167,9 +4161,7 @@ confs:
   - { name: pagerduty_instances_v1, type: PagerDutyInstance_v1, isList: true, datafileSchema: /dependencies/pagerduty-instance-1.yml }
   - { name: ocm_instances_v1, type: OpenShiftClusterManager_v1, isList: true, datafileSchema: /openshift/openshift-cluster-manager-1.yml }
   - { name: ocm_environments_v1, type: OpenShiftClusterManagerEnvironment_v1, isList: true, isRequired: true, datafileSchema: /openshift/openshift-cluster-manager-environment-1.yml }
-  - { name: status_page_v1, type: StatusPage_v1, isList: true, datafileSchema: /dependencies/status-page-1.yml }
-  - { name: status_page_component_v1, type: StatusPageComponent_v1, isList: true, datafileSchema: /dependencies/status-page-component-1.yml }
-  - { name: maintenance_v1, type: Maintenance_v1, isList: true, datafileSchema: /app-sre/maintenance-1.yml }
+
   - { name: endpoint_monitoring_provider_v1, type: EndpointMonitoringProvider_v1, isList: true, isInterface: true, datafileSchema: /dependencies/endpoint-monitoring-provider-1.yml }
   - { name: change_types_v1, type: ChangeType_v1, isList: true, datafileSchema: /app-interface/change-type-1.yml }
   - { name: scorecards_v2, type: Scorecard_v2, isList: true, datafileSchema: /app-sre/scorecard-2.yml }
@@ -4449,47 +4441,6 @@ confs:
   - { name: username, type: VaultSecret_v1 }
   - { name: password, type: VaultSecret_v1 }
 
-- name: StatusPage_v1
-  datafile: /dependencies/status-page-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: description, type: string, isRequired: true }
-  - { name: url, type: string }
-  - { name: provider, type: string, isRequired: true }
-  - { name: apiUrl, type: string, isRequired: true }
-  - { name: credentials, type: VaultSecret_v1, isRequired: true }
-  - { name: pageId, type: string, isRequired: true, isUnique: true }
-  - name: components
-    type: StatusPageComponent_v1
-    isList: true
-    synthetic:
-      schema: /dependencies/status-page-component-1.yml
-      subAttr: page
-  - name: maintenances
-    type: Maintenance_v1
-    isList: true
-    synthetic:
-      schema: /app-sre/maintenance-1.yml
-      subAttr: announcements.page
-
-- name: StatusPageComponent_v1
-  datafile: /dependencies/status-page-component-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: labels, type: json }
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: app, type: App_v1, isRequired: true }
-  - { name: displayName, type: string, isRequired: true }
-  - { name: description, type: string }
-  - { name: instructions, type: string, isRequired: true }
-  - { name: page, type: StatusPage_v1, isRequired: true }
-  - { name: groupName, type: string }
-  - { name: status, type: StatusProvider_v1, isList: true, isInterface: true }
-
 - name: StatusBoard_v1
   datafile: /dependencies/status-board-1.yml
   fields:
@@ -4509,43 +4460,6 @@ confs:
 - name: StatusBoardAppSelector_v1
   fields:
   - { name: exclude, type: string, isList: true }
-
-- name: Maintenance_v1
-  datafile: /app-sre/maintenance-1.yml
-  fields:
-  - { name: schema, type: string, isRequired: true }
-  - { name: path, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true, isUnique: true }
-  - { name: message, type: string, isRequired: true }
-  - { name: affectedServices, type: App_v1, isList: true, isRequired: true }
-  - { name: scheduledStart, type: string, isRequired: true }
-  - { name: scheduledEnd, type: string, isRequired: true }
-  - { name: announcements, type: MaintenanceAnnouncement_v1, isInterface: true, isList: true }
-
-- name: MaintenanceAnnouncement_v1
-  isInterface: true
-  interfaceResolve:
-    strategy: fieldMap
-    field: provider
-    fieldMap:
-      statuspage: MaintenanceStatuspageAnnouncement_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-
-- name: MaintenanceStatuspageAnnouncement_v1
-  interface: MaintenanceAnnouncement_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: page, type: StatusPage_v1, isRequired: true }
-  - { name: remindSubscribers, type: boolean }
-  - { name: notifySubscribersOnStart, type: boolean }
-  - { name: notifySubscribersOnCompletion, type: boolean }
-  - name: statuspageComponents
-    type: StatusPageComponent_v1
-    isList: true
-    synthetic:
-      schema: /dependencies/status-page-component-1.yml
-      subAttr: status.maintenance
 
 - name: EndpointMonitoringProvider_v1
   datafile: /dependencies/endpoint-monitoring-provider-1.yml
@@ -4615,7 +4529,6 @@ confs:
     fieldMap:
       prometheus-alerts: PrometheusAlertsStatusProvider_v1
       manual: ManualStatusProvider_v1
-      maintenance: MaintenanceStatusProvider_v1
   fields:
   - { name: provider, type: string, isRequired: true }
 
@@ -4942,12 +4855,6 @@ confs:
   - { name: outputs_secret_image, type: string, isRequired: false }
   - { name: outputs_secret_version, type: string, isRequired: false }
   - { name: resources, type: DeployResources_v1, isRequired: false}
-
-- name: MaintenanceStatusProvider_v1
-  interface: StatusProvider_v1
-  fields:
-  - { name: provider, type: string, isRequired: true }
-  - { name: maintenance, type: Maintenance_v1, isRequired: true }
 
 - name: DynatraceTokenProviderTokenSpec_v1
   datafile: /dynatrace/dynatrace-token-provider-token-spec-1.yml
