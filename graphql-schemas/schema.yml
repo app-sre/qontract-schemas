@@ -530,6 +530,7 @@ confs:
   - { name: launchTimeoutSeconds, type: int, isRequired: false }
   - { name: maxNumRetries, type: int, isRequired: false}
   - { name: port, type: int, isRequired: false}
+  - { name: prefixStartSlaveCmd, type: string, isRequired: false}
   - { name: retryWaitTime, type: int, isRequired: false}
   - { name: sshHostKeyVerificationStrategy, type: string, isRequired: false}
 
