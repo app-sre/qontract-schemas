@@ -55,6 +55,9 @@ properties:
     items:
       "$ref": "/common-1.json#/definitions/crossref"
       "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+  github:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/github-org-1.yml"
   ownersFromRepos:
     type: array
     items:
@@ -163,6 +166,9 @@ oneOf:
       items:
         "$ref": "/common-1.json#/definitions/crossref"
         "$schemaRef": "/dependencies/pagerduty-target-1.yml"
+    github:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/github-org-1.yml"
     ownersFromRepos:
       type: array
       items:

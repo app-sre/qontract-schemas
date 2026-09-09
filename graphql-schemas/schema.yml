@@ -3488,6 +3488,7 @@ confs:
   - { name: handle, type: string, isRequired: true, isUnique: true }
   - { name: workspace, type: SlackWorkspace_v1, isRequired: true }
   - { name: pagerduty, type: PagerDutyTarget_v1, isList: true }
+  - { name: github, type: GithubOrg_v1 }
   - { name: channels, type: string, isList: true, isRequired: true }
   - { name: ownersFromRepos, type: string, isList: true }
   - { name: schedule, type: Schedule_v1 }
