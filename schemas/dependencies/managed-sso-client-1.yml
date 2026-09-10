@@ -1,0 +1,73 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+description: |
+  A tenant-declared SSO client, registered on Keycloak via its client
+  registration API and reconciled by the managed-sso-client-api integration.
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/managed-sso-client-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifierLowercase64"
+    description: |
+      Short name. The Keycloak clientId:
+      * for openid-connect clients: is derived as "<app.name>-<name>"
+      * for SAML clients: the clientId is the same as the name.
+  description:
+    type: string
+  enabled:
+    type: boolean
+    default: true
+    description: |
+      Whether this client is active on Keycloak. Set to false to deactivate
+      it in place (Keycloak rejects logins/tokens for a disabled client)
+      without deleting this object, which would delete the Keycloak
+      registration and its secret entirely.
+  app:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/app-1.yml"
+    description: The app-interface app this client belongs to
+  protocol:
+    type: string
+    enum:
+    - openid-connect
+    description: |
+      Selects the client type and which of oidc/(future: saml) below applies.
+  keycloakInstance:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/keycloak-instance-1.yml"
+    description: The Keycloak instance to register this client against
+  oidc:
+    "$ref": "/dependencies/managed-sso-client-oidc-1.yml"
+    description: OIDC-specific configuration. Required when protocol is openid-connect.
+  output:
+    "$ref": "/common-1.json#/definitions/vaultSecretPath"
+    description: |
+      Vault path where the tenant-facing credential subset (client_id,
+      client_secret) is written. Optional - if omitted, the reconciler writes
+      to an integration-managed default path instead.
+oneOf:
+- properties:
+    protocol:
+      type: string
+      enum:
+      - openid-connect
+    oidc:
+      "$ref": "/dependencies/managed-sso-client-oidc-1.yml"
+  required:
+  - oidc
+required:
+- "$schema"
+- labels
+- name
+- app
+- protocol
+- keycloakInstance
