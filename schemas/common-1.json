@@ -140,6 +140,10 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
         "path": {
           "type": "string"
         },
