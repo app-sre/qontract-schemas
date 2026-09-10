@@ -1,0 +1,37 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+description: |
+  A Keycloak instance/realm that managed-sso-client-1.yml objects can register clients against.
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/keycloak-instance-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    "$ref": "/common-1.json#/definitions/identifierLowercase64"
+  description:
+    type: string
+  url:
+    type: string
+    format: uri
+    description: |
+      Full base URL of the realm to register clients against, e.g.
+      https://auth.redhat.com/auth/realms/EmployeeIDP. Not the Keycloak
+      server's bare base URL - include the realm path so nothing needs to
+      reconstruct it.
+  initialAccessToken:
+    "$ref": "/common-1.json#/definitions/vaultSecret"
+    description: Vault reference to this realm's initial access token (IAT), used to register new clients
+required:
+- "$schema"
+- labels
+- name
+- url
+- initialAccessToken
