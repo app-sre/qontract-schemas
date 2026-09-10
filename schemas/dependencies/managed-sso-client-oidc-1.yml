@@ -1,0 +1,132 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+description: |
+  OIDC-protocol-specific configuration for a managed-sso-client-1.yml object.
+  Always nested inline under a managed-sso-client-1.yml's `oidc` field, never
+  a standalone data file. Field names mirror Keycloak's ClientRepresentation.
+  Scoped to the most commonly needed OIDC settings only - everything else
+  Keycloak supports keeps its realm/Keycloak default.
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /dependencies/managed-sso-client-oidc-1.yml
+
+  # Client type & flows
+  accessType:
+    type: string
+    enum:
+    - confidential
+    - public
+    - bearer-only
+    default: confidential
+    description: |
+      Keycloak client type / authentication requirement. `confidential`
+      requires a client secret to authenticate and is the right choice for
+      server-side apps that can keep a secret. `public` has no secret - use
+      this for clients that cannot keep a secret confidential, such as
+      single-page apps or native/mobile apps. `bearer-only` never initiates
+      a login itself and only validates bearer tokens issued for another
+      client - use this for a pure backend resource server that is never
+      redirected to directly.
+  directAccessGrantsEnabled:
+    type: boolean
+    description: |
+      Enables the OAuth2 Resource Owner Password Credentials grant: the
+      client collects a username and password itself and exchanges them
+      directly with Keycloak for tokens, with no browser redirect. This
+      skips any identity-provider-level step-up auth, MFA, or consent
+      screen, so it should only be enabled for a trusted first-party client
+      such as an internal CLI - never for a browser-based or third-party
+      client.
+  serviceAccountsEnabled:
+    type: boolean
+    description: |
+      Enables the OAuth2 Client Credentials grant, which gives this client
+      its own Keycloak service-account user for machine-to-machine calls
+      with no end user involved at all - the client authenticates as
+      itself, not on behalf of a user. Requires accessType: confidential;
+      Keycloak rejects this grant on a public client because it depends on
+      the client authenticating with its own secret.
+
+  # URIs
+  redirectUris:
+    type: array
+    items:
+      type: string
+    description: |
+      Allowed redirect URIs for the standard login flow. Keycloak compares
+      the `redirect_uri` login parameter against this list
+      character-for-character and rejects the login attempt if there is no
+      match; a trailing `*` on an entry makes it a prefix match instead.
+      Keep this list as narrow as possible (avoid broad wildcards) since a
+      redirect URI a client doesn't control is effectively an open-redirect
+      / token-theft vector.
+  postLogoutRedirectUris:
+    type: array
+    items:
+      type: string
+    description: |
+      Allowed URIs Keycloak may redirect the browser back to after an
+      RP-initiated logout (a request to Keycloak's end_session_endpoint
+      with a post_logout_redirect_uri parameter). As a Keycloak-specific
+      convenience, a single entry of `+` here means "reuse the same set as
+      redirectUris" instead of duplicating the list.
+  webOrigins:
+    type: array
+    items:
+      type: string
+    description: |
+      Allowed CORS origins for browser JavaScript calling Keycloak's
+      endpoints directly from this client (for example silent token
+      refresh). As a Keycloak-specific convenience, a single entry of `+`
+      here means "derive allowed origins automatically from redirectUris".
+      Leave empty if the client never makes cross-origin browser requests to
+      Keycloak itself.
+
+  # Consent
+  consentRequired:
+    type: boolean
+    description: |
+      If true, Keycloak shows the user a consent screen the first time they
+      authorize this client, listing the scopes being requested. Typically
+      enabled for a third-party client the tenant doesn't fully control, and
+      left disabled for a first-party app the tenant already trusts.
+
+  # Misc
+  fullScopeAllowed:
+    type: boolean
+    description: |
+      Whether this client is automatically granted every realm and client
+      role as an available scope, instead of only the roles explicitly
+      selected via defaultClientScopes/optionalClientScopes. Leave disabled
+      and use explicit scopes for a client that should follow least
+      privilege.
+  defaultClientScopes:
+    type: array
+    items:
+      type: string
+    description: |
+      Client scopes automatically included in every token issued to this
+      client, without the client having to request them via the `scope`
+      parameter. Each scope must already be defined at the realm level -
+      this field only selects which realm-level scopes apply to this client
+      by default.
+  optionalClientScopes:
+    type: array
+    items:
+      type: string
+    description: |
+      Client scopes this client may request via the `scope` parameter but
+      that are not included by default. Each scope must already be defined
+      at the realm level - this field only selects which realm-level scopes
+      this client is allowed to opt into.
+
+required:
+- "$schema"
+- redirectUris
