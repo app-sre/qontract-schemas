@@ -128,5 +128,4 @@ properties:
       this client is allowed to opt into.
 
 required:
-- "$schema"
 - redirectUris
