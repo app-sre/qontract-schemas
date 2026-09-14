@@ -21,6 +21,7 @@ properties:
   url:
     type: string
     format: uri
+    pattern: "^https://"
     description: |
       Full base URL of the realm to register clients against, e.g.
       https://auth.redhat.com/auth/realms/EmployeeIDP. Not the Keycloak
