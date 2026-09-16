@@ -22,9 +22,6 @@ properties:
   description:
     type: string
 
-  enableDynatraceLogging:
-    type: boolean
-
   grafanaUrl:
     type: string
     format: uri

@@ -2752,7 +2752,6 @@ confs:
   - { name: labels, type: json }
   - { name: name, type: string, isRequired: true }
   - { name: delete, type: boolean }
-  - { name: enableDynatraceLogging, type: boolean }
   - { name: description, type: string, isRequired: true }
   - { name: grafanaUrl, type: string }
   - { name: cluster, type: Cluster_v1, isRequired: true }
