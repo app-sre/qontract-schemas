@@ -53,6 +53,9 @@ properties:
     description: output format for certificate. Defaults to PEM
   promtool_version:
     type: string
+  managedSsoClient:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/dependencies/managed-sso-client-1.yml"
 oneOf:
 - "$ref": "/openshift/openshift-resource-vault-secret-1.yml"
 - additionalProperties: false
@@ -145,6 +148,27 @@ oneOf:
   required:
   - path
   - type
+- additionalProperties: false
+  properties:
+    provider:
+      type: string
+      enum:
+      - managed-sso-client
+    name:
+      type: string
+      description: Name of the Kubernetes Secret to create. Defaults to the managed-sso-client's name if omitted.
+    managedSsoClient:
+      "$ref": "/common-1.json#/definitions/crossref"
+      "$schemaRef": "/dependencies/managed-sso-client-1.yml"
+      description: |
+        The managed SSO client whose tenant-facing credentials (client_id,
+        client_secret, issuer) are delivered as this Secret's data.
+    labels:
+      "$ref": "/common-1.json#/definitions/labels"
+    annotations:
+      "$ref": "/common-1.json#/definitions/annotations"
+  required:
+  - managedSsoClient
 - additionalProperties: false
   properties:
     provider:

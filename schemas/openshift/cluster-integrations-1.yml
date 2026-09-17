@@ -32,6 +32,7 @@ properties:
       - openshift-limitranges
       - openshift-serviceaccount-tokens
       - openshift-prometheus-rules
+      - openshift-managed-sso-client-secrets
       - terraform-resources
       - ocm-additional-routers
       - ocm-addons
@@ -51,5 +52,6 @@ properties:
       - cluster-auth-rhidp
       - endpoints-discovery
       - automated-actions
+      - managed-sso-client
 required:
 - integrations
