@@ -22,6 +22,7 @@ properties:
         type: string
         enum:
         - app-interface
+        - ldap
       url:
         type: string
         format: uri
@@ -48,6 +49,14 @@ properties:
       - url
       - username
       - password
+    - additionalProperties: false
+      properties:
+        provider:
+          type: string
+          enum:
+          - ldap
+      required:
+      - provider
 required:
 - name
 - description
