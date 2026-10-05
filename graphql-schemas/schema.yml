@@ -3757,6 +3757,7 @@ confs:
     field: provider
     fieldMap:
       app-interface: AppInterfaceMembershipProviderSource_V1
+      ldap: LdapMembershipProviderSource_V1
   fields:
   - { name: provider, type: string, isRequired: true}
 
@@ -3767,6 +3768,11 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: username, type: VaultSecret_v1, isRequired: true }
   - { name: password, type: VaultSecret_v1, isRequired: true }
+
+- name: LdapMembershipProviderSource_V1
+  interface: MembershipProviderSource_V1
+  fields:
+  - { name: provider, type: string, isRequired: true }
 
 - name: SelfServiceConfig_v1
   fields:
