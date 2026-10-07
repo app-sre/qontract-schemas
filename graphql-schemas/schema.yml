@@ -1926,7 +1926,6 @@ confs:
       dynamodb: NamespaceTerraformResourceDynamoDB_v1
       ecr: NamespaceTerraformResourceECR_v1
       s3-cloudfront: NamespaceTerraformResourceS3CloudFront_v1
-      s3-sqs: NamespaceTerraformResourceS3SQS_v1
       cloudwatch: NamespaceTerraformResourceCloudWatch_v1
       kms: NamespaceTerraformResourceKMS_v1
       elasticsearch: NamespaceTerraformResourceElasticSearch_v1
@@ -2384,20 +2383,6 @@ confs:
   - { name: annotations, type: json }
   - { name: tags, type: json }
   - { name: bucket_policy, type: json }
-
-- name: NamespaceTerraformResourceS3SQS_v1
-  interface: NamespaceTerraformResourceAWS_v1
-  fields:
-  - { name: provider, type: string, isRequired: true, isContextUnique: true }
-  - { name: region, type: string, isContextUnique: true }
-  - { name: identifier, type: string, isRequired: true, isContextUnique: true }
-  - { name: kms_encryption, type: boolean }
-  - { name: defaults, type: string, isRequired: true, isResource: true }
-  - { name: output_resource_name, type: string }
-  - { name: output_format, type: NamespaceTerraformResourceOutputFormat_v1, isInterface: true }
-  - { name: storage_class, type: string }
-  - { name: annotations, type: json }
-  - { name: tags, type: json }
 
 - name: NamespaceTerraformResourceCloudWatch_v1
   interface: NamespaceTerraformResourceAWS_v1
