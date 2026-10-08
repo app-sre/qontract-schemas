@@ -362,7 +362,6 @@ oneOf:
       enum:
       - s3
       - s3-cloudfront
-      - s3-sqs
     region:
       "$ref": "/aws/regions-1.yml#/properties/region"
     identifier:
