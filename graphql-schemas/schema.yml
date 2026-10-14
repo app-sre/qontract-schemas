@@ -94,7 +94,7 @@ confs:
 
 - name: LdapSettings_v1
   fields:
-  - { name: serverUrl, type: string, isRequired: true }
+  - { name: serverUrls, type: string, isList: true, isRequired: true }
   - { name: baseDn, type: string, isRequired: true }
   - { name: credentials, type: VaultSecret_v1 }
 

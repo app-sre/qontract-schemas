@@ -115,10 +115,16 @@ properties:
       LDAP configuration for authentication and directory services.
     additionalProperties: false
     properties:
-      serverUrl:
-        type: string
+      serverUrls:
+        type: array
+        minItems: 1
+        uniqueItems: true
         description: |
-          URL of the LDAP server.
+          URLs of LDAP replicas sharing the base DN and bind credentials.
+          Connections rotate between replicas on lookup failures.
+        items:
+          type: string
+          minLength: 1
       baseDn:
         type: string
         description: |
@@ -127,6 +133,9 @@ properties:
         "$ref": "/common-1.json#/definitions/vaultSecret"
         description: |
           Vault secret containing LDAP bind credentials (bind_dn and bind_password).
+    required:
+    - serverUrls
+    - baseDn
   dependencies:
     type: array
     description: |
