@@ -101,6 +101,9 @@ properties:
           type: integer
         idleMinutes:
           type: integer
+        initOnlineTimeoutSec:
+          type: integer
+          description: Maximum time in seconds to wait for a new EC2 instance to come online. Defaults to 180 seconds.
         minSpareSize:
           type: integer
         maxTotalUses:
