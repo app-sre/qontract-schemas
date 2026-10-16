@@ -545,6 +545,7 @@ confs:
   - { name: labelString, type: string, isRequired: true }
   - { name: numExecutors, type: int }
   - { name: idleMinutes, type: int }
+  - { name: initOnlineTimeoutSec, type: int }
   - { name: minSpareSize, type: int }
   - { name: maxTotalUses, type: int }
   - { name: noDelayProvision, type: boolean }
