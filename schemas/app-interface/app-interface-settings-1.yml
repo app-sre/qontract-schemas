@@ -115,6 +115,11 @@ properties:
       LDAP configuration for authentication and directory services.
     additionalProperties: false
     properties:
+      serverUrl:  # deprecated, use serverUrls instead
+        type: string
+        minLength: 1
+        description: |
+          URL of the primary LDAP server. This field is deprecated and will be removed in future versions. Use `serverUrls` instead.
       serverUrls:
         type: array
         minItems: 1
