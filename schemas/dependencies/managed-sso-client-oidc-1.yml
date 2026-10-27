@@ -111,6 +111,19 @@ properties:
     type: array
     items:
       type: string
+      enum:
+      - openid
+      - profile
+      - email
+      - roles
+      - groups
+      - acr
+      - web-origins
+      - offline_access
+      - address
+      - phone
+      - microprofile-jwt
+      - api
     description: |
       Client scopes automatically included in every token issued to this
       client, without the client having to request them via the `scope`
@@ -121,6 +134,19 @@ properties:
     type: array
     items:
       type: string
+      enum:
+      - openid
+      - profile
+      - email
+      - roles
+      - groups
+      - acr
+      - web-origins
+      - offline_access
+      - address
+      - phone
+      - microprofile-jwt
+      - api
     description: |
       Client scopes this client may request via the `scope` parameter but
       that are not included by default. Each scope must already be defined
