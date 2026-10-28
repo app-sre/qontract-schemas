@@ -124,6 +124,7 @@ properties:
       - phone
       - microprofile-jwt
       - api
+      - regex-filtered-groups
     description: |
       Client scopes automatically included in every token issued to this
       client, without the client having to request them via the `scope`
@@ -147,6 +148,7 @@ properties:
       - phone
       - microprofile-jwt
       - api
+      - regex-filtered-groups
     description: |
       Client scopes this client may request via the `scope` parameter but
       that are not included by default. Each scope must already be defined
