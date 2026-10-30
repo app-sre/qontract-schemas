@@ -3001,6 +3001,15 @@ confs:
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }
   - { name: targets, type: SaasResourceTemplateTarget_v2, isRequired: true, isList: true }
 
+- name: SaasPromotionRef_v1
+  datafile: /app-sre/saas-promotion-ref-1.yml
+  fields:
+  - { name: path, type: string, isRequired: true }
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: description, type: string }
+  - { name: ref, type: string, isRequired: true }
+
 - name: SaasResourceTemplateTarget_v2
   fields:
   - { name: path, type: string }
@@ -3008,7 +3017,8 @@ confs:
   - { name: provider, type: string }
   - { name: namespace, type: Namespace_v1, isContextUnique: true }
   - { name: namespaceSelector, type: SaasResourceTemplateTargetNamespaceSelector_v1, isContextUnique: true }
-  - { name: ref, type: string, isRequired: true }
+  - { name: ref, type: string }
+  - { name: versionRef, type: SaasPromotionRef_v1 }
   - { name: promotion, type: SaasResourceTemplateTargetPromotion_v1 }
   - { name: parameters, type: json }
   - { name: secretParameters, type: SaasSecretParameters_v1, isList: true }

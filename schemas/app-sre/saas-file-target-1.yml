@@ -38,6 +38,9 @@ properties:
   ref:
     type: string
     pattern: '^([0-9a-f]{40}|master|main|internal|stable)$'
+  versionRef:
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/app-sre/saas-promotion-ref-1.yml"
   promotion:
     type: object
     additionalProperties: false
@@ -131,10 +134,16 @@ properties:
     type: boolean
   delete:
     type: boolean
-required:
-- ref
 oneOf:
 - required:
+  - ref
   - namespace
 - required:
+  - ref
+  - namespaceSelector
+- required:
+  - versionRef
+  - namespace
+- required:
+  - versionRef
   - namespaceSelector
