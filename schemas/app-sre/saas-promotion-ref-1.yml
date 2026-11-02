@@ -1,0 +1,25 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /app-sre/saas-promotion-ref-1.yml
+  labels:
+    "$ref": "/common-1.json#/definitions/labels"
+  name:
+    type: string
+  description:
+    type: string
+  ref:
+    type: string
+    pattern: '^[0-9a-f]{40}$'
+required:
+- "$schema"
+- labels
+- name
+- ref
