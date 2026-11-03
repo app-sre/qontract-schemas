@@ -154,6 +154,47 @@ properties:
       that are not included by default. Each scope must already be defined
       at the realm level - this field only selects which realm-level scopes
       this client is allowed to opt into.
+  protocolMappers:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Unique name of this client-level Keycloak protocol mapper.
+        protocol:
+          type: string
+          enum:
+          - openid-connect
+          description: Keycloak protocol; defaults to openid-connect when omitted.
+        protocolMapper:
+          type: string
+          minLength: 1
+          description: Keycloak mapper provider ID, such as oidc-audience-mapper.
+        config:
+          type: object
+          additionalProperties:
+            type: string
+          description: String-valued Keycloak protocol mapper configuration.
+      required:
+      - name
+      - protocolMapper
+      - config
+    description: |
+      Client-level Keycloak protocol mappers. An audience mapper uses
+      protocolMapper: oidc-audience-mapper and config keys
+      included.custom.audience, access.token.claim, and id.token.claim.
+      Unset leaves mappers unmanaged; an explicit list is reconciled.
+  attributes:
+    type: object
+    additionalProperties:
+      type: string
+    description: |
+      Additional string-valued Keycloak OIDC client attributes. Use only for
+      settings without a dedicated field above; declared keys are checked
+      for drift. Unset leaves these attributes unmanaged.
 
 required:
 - redirectUris
