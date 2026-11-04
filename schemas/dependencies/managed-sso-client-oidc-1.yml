@@ -163,16 +163,15 @@ properties:
         name:
           type: string
           minLength: 1
-          description: Unique name of this client-level Keycloak protocol mapper.
-        protocol:
-          type: string
-          enum:
-          - openid-connect
-          description: Keycloak protocol; defaults to openid-connect when omitted.
+          description: |
+            User-chosen name identifying this mapper within the client, such as
+            tempo-gateway-poc-audience. Must be unique within the client.
         protocolMapper:
           type: string
           minLength: 1
-          description: Keycloak mapper provider ID, such as oidc-audience-mapper.
+          description: |
+            Keycloak provider ID selecting the mapper implementation, such as
+            oidc-audience-mapper. Multiple named mappers can use the same provider.
         config:
           type: object
           additionalProperties:
@@ -183,10 +182,18 @@ properties:
       - protocolMapper
       - config
     description: |
-      Client-level Keycloak protocol mappers. An audience mapper uses
-      protocolMapper: oidc-audience-mapper and config keys
-      included.custom.audience, access.token.claim, and id.token.claim.
-      Unset leaves mappers unmanaged; an explicit list is reconciled.
+      Client-level Keycloak protocol mappers. Unset leaves mappers unmanaged;
+      an explicit list is reconciled.
+      Example adding tempo-gateway-poc to access tokens' aud claim:
+        protocolMappers:
+        - name: tempo-gateway-poc-audience
+          protocolMapper: oidc-audience-mapper
+          config:
+            included.custom.audience: tempo-gateway-poc
+            access.token.claim: "true"
+            id.token.claim: "false"
+      Here, name identifies this mapper on the client, while protocolMapper
+      selects Keycloak's audience mapper implementation.
   attributes:
     type: object
     additionalProperties:
