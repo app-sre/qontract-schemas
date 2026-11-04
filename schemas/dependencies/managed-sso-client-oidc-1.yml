@@ -168,7 +168,17 @@ properties:
             tempo-gateway-poc-audience. Must be unique within the client.
         protocolMapper:
           type: string
-          minLength: 1
+          enum:
+          - oidc-address-mapper
+          - oidc-audience-mapper
+          - oidc-full-name-mapper
+          - oidc-sha256-pairwise-sub-mapper
+          - oidc-usermodel-attribute-mapper
+          - oidc-usermodel-property-mapper
+          # Allowed by Keycloak; reserved for future SAML client support.
+          # - saml-role-list-mapper
+          # - saml-user-property-mapper
+          # - saml-user-attribute-mapper
           description: |
             Keycloak provider ID selecting the mapper implementation, such as
             oidc-audience-mapper. Multiple named mappers can use the same provider.
