@@ -4042,6 +4042,13 @@ confs:
   - { name: url, type: string, isRequired: true }
   - { name: initialAccessToken, type: VaultSecret_v1, isRequired: true }
 
+- name: ManagedSsoClientProtocolMapper_v1
+  fields:
+  - { name: name, type: string, isRequired: true }
+  - { name: deleted, type: boolean }
+  - { name: protocolMapper, type: string, isRequired: true }
+  - { name: config, type: json }
+
 - name: ManagedSsoClientOidc_v1
   fields:
   - { name: accessType, type: string }
@@ -4054,6 +4061,8 @@ confs:
   - { name: fullScopeAllowed, type: boolean }
   - { name: defaultClientScopes, type: string, isList: true }
   - { name: optionalClientScopes, type: string, isList: true }
+  - { name: protocolMappers, type: ManagedSsoClientProtocolMapper_v1, isList: true }
+  - { name: attributes, type: json }
 
 - name: ManagedSsoClient_v1
   datafile: /dependencies/managed-sso-client-1.yml
