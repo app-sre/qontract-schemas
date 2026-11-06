@@ -4045,8 +4045,9 @@ confs:
 - name: ManagedSsoClientProtocolMapper_v1
   fields:
   - { name: name, type: string, isRequired: true }
+  - { name: deleted, type: boolean }
   - { name: protocolMapper, type: string, isRequired: true }
-  - { name: config, type: json, isRequired: true }
+  - { name: config, type: json }
 
 - name: ManagedSsoClientOidc_v1
   fields:

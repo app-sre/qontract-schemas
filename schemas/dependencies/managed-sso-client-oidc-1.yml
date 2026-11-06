@@ -166,6 +166,15 @@ properties:
           description: |
             User-chosen name identifying this mapper within the client, such as
             tempo-gateway-poc-audience. Must be unique within the client.
+        deleted:
+          type: boolean
+          default: false
+          description: |
+            Delete the client-level mapper with this name when true. If already
+            absent, no action is needed. Add this flag to the existing mapper
+            declaration, keeping its existing fields. Remove the entire entry
+            after successful reconciliation. The provider and config are ignored
+            when executing deletion.
         protocolMapper:
           type: string
           enum:
@@ -182,18 +191,29 @@ properties:
           description: |
             Keycloak provider ID selecting the mapper implementation, such as
             oidc-audience-mapper. Multiple named mappers can use the same provider.
+            Restricted to the IT-approved mapper types. Adding another type
+            requires an IT request to update the allowlist and a schema change.
         config:
           type: object
           additionalProperties:
             type: string
-          description: String-valued Keycloak protocol mapper configuration.
+          description: |
+            String-valued Keycloak protocol mapper configuration. Defaults to an
+            empty mapping; only declared config keys are managed. Supply the
+            settings required by the mapper for its intended behavior.
       required:
       - name
       - protocolMapper
-      - config
     description: |
-      Client-level Keycloak protocol mappers. Unset leaves mappers unmanaged;
-      an explicit list is reconciled.
+      Client-level Keycloak protocol mapper declarations. Declared mappers are
+      created or updated; only entries with deleted: true are deleted by name.
+      Mappers absent from this list are preserved, including those added outside
+      App-Interface. Unset or an empty list leaves all mappers unmanaged.
+      Keep deletion entries until reconciliation succeeds; they can then be
+      removed. An already absent deletion target requires no action.
+      For mappers with the same name and provider type, only declared config
+      keys are checked for drift and updated; undeclared live config keys
+      are preserved. Removing a config key from YAML does not delete its value.
       Example adding tempo-gateway-poc to access tokens' aud claim:
         protocolMappers:
         - name: tempo-gateway-poc-audience
