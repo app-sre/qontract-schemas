@@ -47,10 +47,13 @@ properties:
     "$schemaRef": "/openshift/quota-1.yml"
 
   networkPoliciesAllow:
+    description: Ingress grants, either source namespace references or self-contained inline rules. Grants are additive.
     type: array
     items:
-      "$ref": "/common-1.json#/definitions/crossref"
-      "$schemaRef": "/openshift/namespace-1.yml"
+      oneOf:
+      - "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+      - "$ref": "/openshift/network-policy-rule-1.yml"
 
   clusterAdmin:
     type: boolean

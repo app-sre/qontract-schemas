@@ -1,0 +1,64 @@
+---
+"$schema": /metaschema-1.json
+version: "1.0"
+type: object
+
+description: A self-contained inline ingress grant in networkPoliciesAllow.
+additionalProperties: false
+properties:
+  "$schema":
+    type: string
+    enum:
+    - /openshift/network-policy-rule-1.yml
+  name:
+    description: Unique NetworkPolicy name within the destination namespace.
+    type: string
+    minLength: 1
+    maxLength: 63
+    pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+  namespace:
+    description: Source namespace; must be on the same cluster as the destination.
+    "$ref": "/common-1.json#/definitions/crossref"
+    "$schemaRef": "/openshift/namespace-1.yml"
+  podSelector:
+    description: Destination pod selector; omitted or empty selects all destination pods.
+    type: object
+    additionalProperties: false
+    properties:
+      matchLabels:
+        description: Labels that must all match on destination pods.
+        "$ref": "/common-1.json#/definitions/labels"
+  sourcePodSelector:
+    description: Pod selector within the source namespace; omitted or empty selects all source pods.
+    type: object
+    additionalProperties: false
+    properties:
+      matchLabels:
+        description: Labels that must all match on source pods.
+        "$ref": "/common-1.json#/definitions/labels"
+  ports:
+    description: Allowed destination ports; omitted allows all ports.
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        port:
+          description: Destination port number.
+          type: integer
+          minimum: 1
+          maximum: 65535
+        protocol:
+          description: Transport protocol; Kubernetes defaults to TCP when omitted.
+          type: string
+          enum:
+          - TCP
+          - UDP
+          - SCTP
+      required:
+      - port
+required:
+- "$schema"
+- name
+- namespace
