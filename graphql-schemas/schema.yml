@@ -2616,7 +2616,7 @@ confs:
   interface: NetworkPolicyPeer_v1
   fields:
   - { name: schema, type: string, isRequired: true }
-  - { name: name, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
   - { name: namespace, type: Namespace_v1, isRequired: true }
   - { name: podSelector, type: NetworkPolicyPodSelector_v1 }
   - { name: sourcePodSelector, type: NetworkPolicyPodSelector_v1 }
