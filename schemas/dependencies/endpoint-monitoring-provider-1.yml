@@ -6,7 +6,8 @@ title: "Endpoint Monitoring Provider"
 description: |
   Schema for referencing an endpoint monitoring provider as a dependency in app-interface.
   This schema enables teams to declare monitoring providers for endpoints, supporting
-  integration with blackbox-exporter and signalfx. Use this schema to specify provider type,
+  integration with blackbox-exporter and prometheus-metrics-importer, with legacy signalfx
+  support during migration. Use this schema to specify provider type,
   check intervals, timeouts, metric labels, and provider-specific configuration for
   endpoint monitoring automation and observability.
 
@@ -37,10 +38,13 @@ properties:
     type: string
     enum:
     - blackbox-exporter
+    - prometheus-metrics-importer
     - signalfx
     description: |
       The provider defines which monitoring implementation will be used for endpoints.
-      Supported values are 'blackbox-exporter' and 'signalfx'.
+      Supported values are 'blackbox-exporter', 'prometheus-metrics-importer', and the
+      legacy 'signalfx' provider. Use 'prometheus-metrics-importer' for backend-independent
+      import of endpoint monitoring results from a Prometheus exporter.
 
   timeout:
     type: string
@@ -90,11 +94,40 @@ properties:
     - namespace
     - exporterUrl
 
+  prometheusMetricsImporter:
+    type: object
+    description: |
+      Configuration for the prometheus-metrics-importer provider. Imports existing
+      endpoint monitoring results from an exporter rather than executing checks.
+    additionalProperties: false
+    properties:
+      namespace:
+        "$ref": "/common-1.json#/definitions/crossref"
+        "$schemaRef": "/openshift/namespace-1.yml"
+        description: |
+          Namespace reference identifying the cluster used for endpoint monitoring.
+      exporterUrl:
+        type: string
+        format: uri
+        description: |
+          Base scrape URL of an exporter accessible by Prometheus, including the
+          metrics path. The exporter must support target filtering at
+          <exporterUrl>/<targetFilterLabel>?target=<endpoint-name>.
+      targetFilterLabel:
+        type: string
+        description: |
+          Metric label containing the endpoint name to filter on, such as 'probe'.
+          Appended to exporterUrl to select the target-filtered scrape endpoint.
+    required:
+    - namespace
+    - exporterUrl
+    - targetFilterLabel
+
   signalFx:
     type: object
     description: |
-      Configuration options specific to the signalfx provider.
-      Used when 'provider' is set to 'signalfx'.
+      Legacy configuration used when 'provider' is set to 'signalfx'.
+      Retained for compatibility during migration to prometheusMetricsImporter.
     additionalProperties: false
     properties:
       namespace:
@@ -140,6 +173,28 @@ oneOf:
       - exporterUrl
   required:
   - blackboxExporter
+- properties:
+    provider:
+      type: string
+      enum:
+      - prometheus-metrics-importer
+    prometheusMetricsImporter:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          "$ref": "/common-1.json#/definitions/crossref"
+          "$schemaRef": "/openshift/namespace-1.yml"
+        exporterUrl:
+          type: string
+        targetFilterLabel:
+          type: string
+      required:
+      - namespace
+      - exporterUrl
+      - targetFilterLabel
+  required:
+  - prometheusMetricsImporter
 - properties:
     provider:
       type: string
