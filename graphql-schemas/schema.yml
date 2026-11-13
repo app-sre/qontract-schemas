@@ -2584,6 +2584,44 @@ confs:
       schema: /openshift/namespace-1.yml
       subAttr: sharedResources
 
+- name: NetworkPolicyPeer_v1
+  isInterface: true
+  interfaceResolve:
+    strategy: fieldMap
+    field: "$schema"
+    fieldMap:
+      /openshift/namespace-1.yml: NetworkPolicyNamespacePeer_v1
+      /openshift/network-policy-rule-1.yml: NetworkPolicyAllowRule_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+
+- name: NetworkPolicyNamespacePeer_v1
+  interface: NetworkPolicyPeer_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true }
+  - { name: cluster, type: Cluster_v1, isRequired: true }
+
+- name: NetworkPolicyPodSelector_v1
+  fields:
+  - { name: matchLabels, type: json }
+
+- name: NetworkPolicyPort_v1
+  fields:
+  - { name: port, type: int, isRequired: true }
+  - { name: protocol, type: string }
+
+- name: NetworkPolicyAllowRule_v1
+  interface: NetworkPolicyPeer_v1
+  fields:
+  - { name: schema, type: string, isRequired: true }
+  - { name: name, type: string, isRequired: true, isContextUnique: true }
+  - { name: namespace, type: Namespace_v1, isRequired: true }
+  - { name: podSelector, type: NetworkPolicyPodSelector_v1 }
+  - { name: sourcePodSelector, type: NetworkPolicyPodSelector_v1 }
+  - { name: ports, type: NetworkPolicyPort_v1, isList: true }
+
 - name: Namespace_v1
   datafile: /openshift/namespace-1.yml
   fields:
@@ -2599,7 +2637,7 @@ confs:
   - { name: environment, type: Environment_v1, isRequired: true}
   - { name: limitRanges, type: LimitRange_v1 }
   - { name: quota, type: ResourceQuota_v1 }
-  - { name: networkPoliciesAllow, type: Namespace_v1, isList: true }
+  - { name: networkPoliciesAllow, type: NetworkPolicyPeer_v1, isList: true, isInterface: true }
   - { name: clusterAdmin, type: boolean }
   - { name: managedByExternal, type: boolean }
   - { name: managedRoles, type: boolean }
