@@ -20,7 +20,12 @@ properties:
   username:
     "$ref": "/common-1.json#/definitions/psqlIdentifier"
     description: |
-      The username for the database access.
+      The username for the database access. Required unless 'role' is set.
+      When 'role' is set, the username can be omitted: it is then managed
+      by the database-access-manager integration and generated
+      deterministically. Keeping an explicit username is only useful to
+      migrate an existing DAM-managed user to the role model without
+      changing the user. Once set, the username cannot be changed.
   database:
     "$ref": "/common-1.json#/definitions/psqlIdentifier"
     description: |
@@ -29,18 +34,28 @@ properties:
     type: boolean
     description: |
       Indicates whether the database access should be deleted.
-  admin:
-    type: boolean
+  role:
+    "$ref": "/common-1.json#/definitions/psqlIdentifier"
     description: |
-      Indicates whether the user should be granted admin-level access to the
-      target schemas of the access list. Admin users can create, alter and
-      drop objects in the target schemas (existing or newly created by the
-      integration) and no permissions are revoked from the database.
-      Requires a non-empty access list and cannot be changed after creation.
+      Optional NOLOGIN owner role. When set, the role owns all managed
+      objects in the target schemas of the access list and the username
+      becomes a member of it, acting as the role by default in new
+      sessions. This enables zero-downtime password rotation: multiple
+      database_access entries can share the same role with different
+      usernames. When the database is the admin default database
+      (e.g. postgres), existing objects owned by the admin user are
+      transferred to the role. The access list may be empty in role
+      mode (only role, user and membership are managed). Cannot be
+      changed after creation.
   access:
     type: array
     description: |
-      A list of access permissions for the database.
+      A list of access permissions for the database. May be empty when
+      'role' is set: only the role, the user and the membership are
+      managed then. In role mode, grants are applied to the owner role
+      and are only meaningful for schemas owned by other roles: on
+      schemas the owner role owns, membership already includes all
+      privileges.
     items:
       type: object
       additionalProperties: false
@@ -52,6 +67,7 @@ properties:
           items:
             type: string
             enum:
+            - ALL
             - SELECT
             - INSERT
             - UPDATE
@@ -75,5 +91,4 @@ properties:
 
 required:
 - name
-- username
 - database
