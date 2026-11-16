@@ -29,6 +29,14 @@ properties:
     type: boolean
     description: |
       Indicates whether the database access should be deleted.
+  admin:
+    type: boolean
+    description: |
+      Indicates whether the user should be granted admin-level access to the
+      target schemas of the access list. Admin users can create, alter and
+      drop objects in the target schemas (existing or newly created by the
+      integration) and no permissions are revoked from the database.
+      Requires a non-empty access list and cannot be changed after creation.
   access:
     type: array
     description: |

@@ -1670,6 +1670,7 @@ confs:
   - { name: username, type: string, isRequired: true }
   - { name: database, type: string, isRequired: true }
   - { name: delete, type: boolean }
+  - { name: admin, type: boolean }
   - { name: access, type: DatabaseAccessAccess_v1, isList: true }
 
 - name: DatabaseAccessAccess_v1
