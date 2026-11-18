@@ -1667,9 +1667,10 @@ confs:
   - { name: schema, type: string, isRequired: true }
   - { name: path, type: string, isRequired: true }
   - { name: name, type: string, isRequired: true, isUnique: true}
-  - { name: username, type: string, isRequired: true }
+  - { name: username, type: string }
   - { name: database, type: string, isRequired: true }
   - { name: delete, type: boolean }
+  - { name: role, type: string }
   - { name: access, type: DatabaseAccessAccess_v1, isList: true }
 
 - name: DatabaseAccessAccess_v1
