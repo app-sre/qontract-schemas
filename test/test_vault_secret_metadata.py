@@ -52,6 +52,34 @@ def get_common_def_validator(schemas, definition_name: str) -> Draft6Validator:
             },
             True,
         ),
+        # Explicit "other" and "unknown" values distinguish reviewed from omitted
+        (
+            {
+                "provider": "vault-secret",
+                "path": "osd-sre/legacy/example",
+                "version": 1,
+                "metadata": {
+                    "rotationRing": "unknown",
+                    "credentialType": "unknown",
+                    "producer": "other",
+                    "pickupMode": "unknown",
+                },
+            },
+            True,
+        ),
+        (
+            {
+                "provider": "vault-secret",
+                "path": "osd-sre/legacy/custom-consumer",
+                "version": 1,
+                "metadata": {
+                    "credentialType": "other",
+                    "producer": "unknown",
+                    "pickupMode": "other",
+                },
+            },
+            True,
+        ),
         # Invalid enum value is rejected
         (
             {

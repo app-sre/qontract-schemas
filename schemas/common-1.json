@@ -143,16 +143,17 @@
       "properties": {
         "owner": {
           "type": "string",
-          "description": "Owning team or component slug override (inherits from app-1.yml if omitted)."
+          "description": "Owning team or component slug. When omitted, downstream inventory tools may fall back to the enclosing app or resource owner where available."
         },
         "rotationRing": {
           "type": "string",
           "enum": [
             "outer",
             "inner",
-            "core"
+            "core",
+            "unknown"
           ],
-          "description": "Incident rotation priority ring (outer=P1 external/hyperscaler, inner=P2 platform, core=P3 internal)."
+          "description": "Incident rotation priority ring (outer=P1 external/hyperscaler, inner=P2 platform, core=P3 internal, unknown=reviewed and pending classification)."
         },
         "credentialType": {
           "type": "string",
@@ -167,9 +168,10 @@
             "tls-cert",
             "k8s-sa-token",
             "pull-secret",
-            "other"
+            "other",
+            "unknown"
           ],
-          "description": "Classification of the credential stored at this Vault path."
+          "description": "Classification of the credential stored at this Vault path (use other for known non-listed types, unknown when reviewed and pending investigation)."
         },
         "producer": {
           "type": "string",
@@ -179,9 +181,11 @@
             "cert-manager",
             "cluster-bots",
             "runtime-operator",
-            "manual"
+            "manual",
+            "other",
+            "unknown"
           ],
-          "description": "System or workflow responsible for generating and rotating the upstream credential."
+          "description": "System or workflow responsible for generating and rotating the upstream credential (use other for known non-listed producers, unknown when pending investigation)."
         },
         "pickupMode": {
           "type": "string",
@@ -191,9 +195,11 @@
             "hot-reload",
             "csi-file",
             "pinned-checksum",
-            "manual-restart"
+            "manual-restart",
+            "other",
+            "unknown"
           ],
-          "description": "Mechanism by which consuming workloads pick up rotated secret values."
+          "description": "Mechanism by which consuming workloads pick up rotated secret values (use other for known non-listed/non-cluster consumers, unknown when pending investigation)."
         }
       }
     },
