@@ -136,6 +136,67 @@
       ],
       "additionalProperties": false
     },
+    "secretMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional rotation and inventory metadata for Vault-backed secrets.",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "Owning team or component slug override (inherits from app-1.yml if omitted)."
+        },
+        "rotationRing": {
+          "type": "string",
+          "enum": [
+            "outer",
+            "inner",
+            "core"
+          ],
+          "description": "Incident rotation priority ring (outer=P1 external/hyperscaler, inner=P2 platform, core=P3 internal)."
+        },
+        "credentialType": {
+          "type": "string",
+          "enum": [
+            "aws-iam-key",
+            "gcp-sa",
+            "rds-password",
+            "elasticache-auth",
+            "msk-scram",
+            "sso-client",
+            "saas-token",
+            "tls-cert",
+            "k8s-sa-token",
+            "pull-secret",
+            "other"
+          ],
+          "description": "Classification of the credential stored at this Vault path."
+        },
+        "producer": {
+          "type": "string",
+          "enum": [
+            "erv2",
+            "terraform-resources",
+            "cert-manager",
+            "cluster-bots",
+            "runtime-operator",
+            "manual"
+          ],
+          "description": "System or workflow responsible for generating and rotating the upstream credential."
+        },
+        "pickupMode": {
+          "type": "string",
+          "enum": [
+            "qontract-recycle",
+            "reloader",
+            "hot-reload",
+            "csi-file",
+            "pinned-checksum",
+            "manual-restart"
+          ],
+          "description": "Mechanism by which consuming workloads pick up rotated secret values."
+        }
+      }
+    },
     "vaultSecret": {
       "additionalProperties": false,
       "type": "object",
@@ -160,6 +221,10 @@
         },
         "version": {
           "type": "integer"
+        },
+        "metadata": {
+          "$ref": "#/definitions/secretMetadata",
+          "description": "Optional rotation and inventory metadata for this Vault secret reference."
         }
       },
       "required": [

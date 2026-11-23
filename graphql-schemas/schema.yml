@@ -424,6 +424,14 @@ confs:
   - { name: path, type: string, isRequired: true }
   - { name: schema, type: string, isRequired: true }
 
+- name: SecretMetadata_v1
+  fields:
+  - { name: owner, type: string }
+  - { name: rotationRing, type: string }
+  - { name: credentialType, type: string }
+  - { name: producer, type: string }
+  - { name: pickupMode, type: string }
+
 - name: VaultSecret_v1
   fields:
   - { name: url, type: string }
@@ -431,6 +439,7 @@ confs:
   - { name: field, type: string, isRequired: true }
   - { name: format, type: string }
   - { name: version, type: int }
+  - { name: metadata, type: SecretMetadata_v1 }
 
 - name: AutomationTokenEntry_v1
   fields:
@@ -1761,6 +1770,7 @@ confs:
   - { name: type, type: string }
   - { name: validate_alertmanager_config, type: boolean }
   - { name: alertmanager_config_key, type: string }
+  - { name: metadata, type: SecretMetadata_v1 }
 
 - name: NamespaceOpenshiftResourceManagedSsoClient_v1
   interface: NamespaceOpenshiftResource_v1
