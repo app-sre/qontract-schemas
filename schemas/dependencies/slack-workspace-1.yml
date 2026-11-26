@@ -63,6 +63,64 @@ properties:
       - channel
       - icon_emoji
       - username
+  incomingWebhooks:
+    description: Incoming webhooks owned by this Slack workspace.
+    type: array
+    items:
+      type: object
+      properties:
+        channel:
+          description: Slack channel name without the leading hash.
+          type: string
+        targets:
+          description: Locations that store the webhook URL for the channel.
+          type: array
+          items:
+            oneOf:
+            - type: object
+              properties:
+                type:
+                  description: Target type.
+                  type: string
+                  enum:
+                  - vault-secret
+                path:
+                  description: Vault secret path.
+                  type: string
+                field:
+                  description: Vault secret field.
+                  type: string
+              required:
+              - type
+              - path
+              - field
+              additionalProperties: false
+            - type: object
+              properties:
+                type:
+                  description: Target type.
+                  type: string
+                  enum:
+                  - hcp-terraform-variable-set
+                project:
+                  description: HCP Terraform project name.
+                  type: string
+                name:
+                  description: HCP Terraform variable set name.
+                  type: string
+                variable:
+                  description: HCP Terraform variable key.
+                  type: string
+              required:
+              - type
+              - project
+              - name
+              - variable
+              additionalProperties: false
+      required:
+      - channel
+      - targets
+      additionalProperties: false
   managedUsergroups:
     type: array
     items:
