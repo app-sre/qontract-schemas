@@ -665,6 +665,7 @@ confs:
   - { name: token, type: VaultSecret_v1, isRequired: true }
   - { name: api_client, type: SlackWorkspaceApiClient_v1 }
   - { name: integrations, type: SlackWorkspaceIntegration_v1, isList: true}
+  - { name: incomingWebhooks, type: SlackWorkspaceIncomingWebhook_v1, isList: true}
   - { name: managedUsergroups, type: string, isList: true, isRequired: true }
 
 - name: SlackWorkspaceApiClient_v1
@@ -689,6 +690,20 @@ confs:
   - { name: channel, type: string, isRequired: true }
   - { name: icon_emoji, type: string, isRequired: true }
   - { name: username, type: string, isRequired: true }
+
+- name: SlackWorkspaceIncomingWebhook_v1
+  fields:
+  - { name: channel, type: string, isRequired: true }
+  - { name: targets, type: SlackWorkspaceIncomingWebhookTarget_v1, isList: true, isRequired: true }
+
+- name: SlackWorkspaceIncomingWebhookTarget_v1
+  fields:
+  - { name: type, type: string, isRequired: true }
+  - { name: path, type: string }
+  - { name: field, type: string }
+  - { name: project, type: string }
+  - { name: name, type: string }
+  - { name: variable, type: string }
 
 - name: DynatraceEnvironment_v1
   datafile: /dependencies/dynatrace-environment-1.yml
